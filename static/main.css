@@ -9,14 +9,15 @@ html {
 
 body {
   background-color: #456c52;
-  font-family: "Nunito", sans-serif;
+  font-family: "Nunito";
 }
 
 nav {
   display: flex;
   background-color: transparent;
   padding: 1rem;
-  font-size: 1.5em;
+  font-size: 1.5rem;
+  font-weight: bold;
   width: 100%;
   justify-content: space-evenly;
 }
@@ -24,11 +25,18 @@ nav {
 nav ul {
   display: flex;
   list-style-type: none;
+  text-shadow: 2px 1px 0px rgba(0, 0, 0, 0.2);
 }
 
 .nav-logo {
   display: flex;
   float: left;
+  color: white;
+}
+
+.nav-logo a {
+    text-decoration: none;
+    color: white;
 }
 
 nav ul li,
@@ -46,17 +54,16 @@ nav ul li a {
   color: white;
 }
 
-nav ul li:nth-child(5) a {
+/* nav ul li:nth-child(5) a {
   color: black;
   padding-left: 10px;
-}
+} */
 
 /* Center content */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
 }
 
 /* Add a title */

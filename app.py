@@ -1,3 +1,5 @@
+# pip install flask_wtf ; pip install wtforms ; pip install flask
+
 from flask import Flask, render_template, request
 from wtforms import *
 from forms import *
@@ -10,7 +12,7 @@ app.config["WTF_CSRF_ENABLED"] = False
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title='Home', selected="home")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -22,7 +24,7 @@ def login():
         password = result.get("password")
         return render_template("account.html", username=username, password=password)
 
-    return render_template("login.html", form=form)
+    return render_template("login.html", form=form, title='Login', selected="login")
 
 
 if __name__ in '__main__':

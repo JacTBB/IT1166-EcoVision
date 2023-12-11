@@ -1,30 +1,29 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>{{ title }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/static/home.css" />
     <link rel="stylesheet" href="/static/main.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <nav>
-      <div class="nav-logo">Logo</div>
-      <ul>
-        <li><a href="{{ url_for('index') }}">Home</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">News</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="{{ url_for('login') }}">Login</a></li>
-      </ul>
+        <div class="nav-logo"><a href="#">EcoVision</a></div>
+        <ul>
+            <li><a id="{% if selected == 'home' %}nav-selected{% endif %}" href="{{ url_for('index') }}">Home</a></li>
+            <li><a id="{% if selected == 'services' %}nav-selected{% endif %}" href="#">Services</a></li>
+            <li><a id="{% if selected == 'news' %}nav-selected{% endif %}" href="#">News</a></li>
+            <li><a id="{% if selected == 'contact' %}nav-selected{% endif %}" href="#">Contact Us</a></li>
+            <li><a id="{% if selected == 'login' %}nav-selected{% endif %}" href="{{ url_for('login') }}">Login</a></li>
+        </ul>
     </nav>
     <div class="container">{% block content %} {% endblock content %}</div>
-  </body>
+</body>
+
 </html>
