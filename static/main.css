@@ -1,6 +1,6 @@
 /* Set background color */
 body {
-  background-color: navy;
+  background-color: navy !important;
 }
 
 /* Center content */
