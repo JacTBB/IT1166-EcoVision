@@ -7,8 +7,8 @@
     <title>{{ title }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/static/home.css" />
-    <link rel="stylesheet" href="/static/main.css" />
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
@@ -18,12 +18,14 @@
         <ul>
             <li><a id="{% if selected == 'home' %}nav-selected{% endif %}" href="{{ url_for('index') }}">Home</a></li>
             <li><a id="{% if selected == 'services' %}nav-selected{% endif %}" href="#">Services</a></li>
-            <li><a id="{% if selected == 'news' %}nav-selected{% endif %}" href="#">News</a></li>
+            <li><a id="{% if selected == 'news' %}nav-selected{% endif %}" href="{{ url_for('news') }}">News</a></li>
             <li><a id="{% if selected == 'contact' %}nav-selected{% endif %}" href="#">Contact Us</a></li>
             <li><a id="{% if selected == 'login' %}nav-selected{% endif %}" href="{{ url_for('login') }}">Login</a></li>
         </ul>
     </nav>
-    <div class="container">{% block content %} {% endblock content %}</div>
+
+    {% block content %} {% endblock content %}
+    
 </body>
 
 </html>

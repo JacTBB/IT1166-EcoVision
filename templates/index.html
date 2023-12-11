@@ -1,8 +1,15 @@
 {% extends "layout.html" %} {% block content %}
-<div class="home-container">
-  <img src="/static/assets/img/leaves.jpg" />
-  <div>
-    <p>Welcome</p>
-  </div>
+
+<div class="container">
+    <div class="home">
+        <img src="{{ url_for('static', filename='images/leaves.jpg') }}" />
+        <div>
+          <p>Welcome</p>
+        </div>
+      
+      </div>
+
+
 </div>
+
 {% endblock %}

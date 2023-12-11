@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
+
+*,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #456c52;
+  font-family: "Nunito";
+}
+
+nav {
+  display: flex;
+  background-color: transparent;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 100%;
+  justify-content: space-evenly;
+  position: fixed;
+  z-index: 1;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  text-shadow: 2px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.nav-logo {
+  display: flex;
+  float: left;
+  color: white;
+}
+
+.nav-logo a {
+  text-decoration: none;
+  color: white;
+}
+
+nav ul li,
+.nav-logo {
+  display: inline-flex;
+  margin-right: 1rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #c5d7c5;
+}
+
+#nav-selected {
+  color: white;
+}
+
+/* nav ul li:nth-child(5) a {
+  color: black;
+  padding-left: 10px;
+} */
+
+/* Center content */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Add a title */
+h1 {
+  font-size: 3rem;
+  text-align: center;
+  color: #333;
+}
+
+/* Home */
+
+.container .home img {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-position: center center;
+  object-fit: cover;
+  z-index: -1;
+  filter: opacity(0.5);
+}
+
+.container .home {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.container .home div p {
+  font-size: 5em;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* News */
+
+.container .news img {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-position: center center;
+  object-fit: cover;
+  z-index: -1;
+  filter: opacity(0.5);
+}
+
+.container .news {
+  position: relative;
+  display: flex;
+  align-items: top;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.container .news .news-header {
+  margin-top: 100px;
+}

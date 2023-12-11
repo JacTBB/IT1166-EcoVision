@@ -4,15 +4,20 @@ from flask import Flask, render_template, request
 from wtforms import *
 from forms import *
 
-
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
-app.config["WTF_CSRF_ENABLED"] = False
+
+STATIC_URL = 'static/'
 
 
 @app.route('/')
 def index():
     return render_template('index.html', title='Home', selected="home")
+
+
+@app.route('/news')
+def news():
+    return render_template('news.html', title='News', selected="news")
 
 
 @app.route('/login', methods=['GET', 'POST'])
