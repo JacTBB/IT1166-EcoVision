@@ -1,0 +1,8 @@
+{% extends "layout.html" %} {% block content %}
+<form action="" method="post">
+  <p>{{form.username.label}} {{form.username(size=20)}}</p>
+  <p>{{form.password.label}} {{form.password(size=20)}}</p>
+  <p>{{form.submit()}}</p>
+</form>
+
+{% endblock content %}
