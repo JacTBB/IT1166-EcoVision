@@ -8,30 +8,47 @@ html {
 }
 
 body {
-  background-color: #456C52;
+  background-color: #456c52;
   font-family: "Nunito", sans-serif;
 }
 
 nav {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   background-color: transparent;
   padding: 1rem;
+  font-size: 1.5em;
+  width: 100%;
+  justify-content: space-evenly;
 }
 
 nav ul {
+  display: flex;
   list-style-type: none;
 }
 
-nav ul li {
-  display: inline-block;
+.nav-logo {
+  display: flex;
+  float: left;
+}
+
+nav ul li,
+.nav-logo {
+  display: inline-flex;
   margin-right: 1rem;
 }
 
 nav ul li a {
   text-decoration: none;
+  color: #c5d7c5;
+}
+
+#nav-selected {
   color: white;
+}
+
+nav ul li:nth-child(5) a {
+  color: black;
+  padding-left: 10px;
 }
 
 /* Center content */
@@ -47,20 +64,4 @@ h1 {
   font-size: 3rem;
   text-align: center;
   color: #333;
-}
-
-/* Add a button */
-.btn {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background-color: #333;
-  color: #fff;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  margin-top: 2rem;
-}
-
-.btn:hover {
-  background-color: #555;
 }
