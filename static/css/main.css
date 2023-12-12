@@ -16,7 +16,7 @@ nav {
   display: flex;
   background-color: transparent;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: bold;
   width: 100%;
   justify-content: space-evenly;
@@ -27,7 +27,7 @@ nav {
 nav ul {
   display: flex;
   list-style-type: none;
-  text-shadow: 2px 1px 0px rgba(0, 0, 0, 0.2);
+  text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .nav-logo {
@@ -56,19 +56,13 @@ nav ul li a {
   color: white;
 }
 
-/* nav ul li:nth-child(5) a {
-  color: black;
-  padding-left: 10px;
-} */
-
-/* Center content */
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-/* Add a title */
 h1 {
   font-size: 3rem;
   text-align: center;
@@ -105,7 +99,7 @@ h1 {
 
 /* News */
 
-.container .news img {
+.container .news > img {
   position: absolute;
   height: 100vh;
   width: 100%;
@@ -120,12 +114,50 @@ h1 {
 .container .news {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: top;
-  justify-content: center;
+  justify-content: top;
   height: 100vh;
   width: 100%;
 }
 
 .container .news .news-header {
   margin-top: 100px;
+}
+
+.news-section {
+}
+
+.news-row {
+  display: flex;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.news-section .news-column {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.news-section .news-column {
+  margin: 5px;
+}
+
+.news-section .catalog {
+  display: flex;
+  flex-direction: column;
+  height: 540px;
+  width: 350px;
+}
+
+.news-section .catalog > img {
+  height: 300px;
+  width: 350px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.news-section .catalog > div {
+  padding: 5px;
 }

@@ -1,31 +1,59 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{{ title }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-</head>
 
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+
+  <body>
     <nav>
-        <div class="nav-logo"><a href="#">EcoVision</a></div>
-        <ul>
-            <li><a id="{% if selected == 'home' %}nav-selected{% endif %}" href="{{ url_for('index') }}">Home</a></li>
-            <li><a id="{% if selected == 'services' %}nav-selected{% endif %}" href="#">Services</a></li>
-            <li><a id="{% if selected == 'news' %}nav-selected{% endif %}" href="{{ url_for('news') }}">News</a></li>
-            <li><a id="{% if selected == 'contact' %}nav-selected{% endif %}" href="#">Contact Us</a></li>
-            <li><a id="{% if selected == 'login' %}nav-selected{% endif %}" href="{{ url_for('login') }}">Login</a></li>
-        </ul>
+      <div class="nav-logo"><a href="#">EcoVision</a></div>
+      <ul>
+        <li>
+          <a
+            id="{% if selected == 'home' %}nav-selected{% endif %}"
+            href="{{ url_for('index') }}"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            id="{% if selected == 'services' %}nav-selected{% endif %}"
+            href="#"
+            >Services</a
+          >
+        </li>
+        <li>
+          <a
+            id="{% if selected == 'news' %}nav-selected{% endif %}"
+            href="{{ url_for('news') }}"
+            >News</a
+          >
+        </li>
+        <li>
+          <a id="{% if selected == 'contact' %}nav-selected{% endif %}" href="#"
+            >Contact Us</a
+          >
+        </li>
+        <li>
+          <a
+            id="{% if selected == 'login' %}nav-selected{% endif %}"
+            href="{{ url_for('login') }}"
+            >Login</a
+          >
+        </li>
+      </ul>
     </nav>
 
     {% block content %} {% endblock content %}
-    
-</body>
-
+  </body>
 </html>

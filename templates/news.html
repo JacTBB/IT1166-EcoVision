@@ -1,18 +1,39 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="container">
-    <div class="news">
-        <img src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}">
-        <div class="news-header">
-            <h1>Latest News</h1>
-            <p>Here you can find the latest news about the game.</p>
-        </div>
-
-        <div class="section">
-            
-        </div>
+  <div class="news">
+    <img
+      src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}"
+    />
+    <div class="news-header">
+      <h1>Latest News</h1>
     </div>
+
+    <div class="news-section">
+      <div class="featured-news"></div>
+      <div class="news-row">
+        <div class="news-column">
+          <div class="catalog">
+            <img
+              src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}"
+            />
+            <div>
+              <h3>awdawd</h3>
+              <p>awdawdawd</p>
+            </div>
+          </div>
+          <div class="catalog">
+            <img
+              src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}"
+            />
+            <div>
+              <h3>awdawd</h3>
+              <p>awdawdawd</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-    
+
 {% endblock %}
