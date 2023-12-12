@@ -1,10 +1,12 @@
 {% extends "layout.html" %} {% block content %}
-<div class="login-container">
-  <form action="" method="post">
-    <p>{{form.username.label}} {{form.username(size=20)}}</p>
-    <p>{{form.password.label}} {{form.password(size=20)}}</p>
-    <p>{{form.submit()}}</p>
-  </form>
+<div class="container">
+  <div class="login-container">
+    <form action="" method="post">
+      <div>{{form.username(size=20)}}</div>
+      <div>{{form.password}}</div>
+      <div>{{form.submit()}}</div>
+    </form>
+  </div>
 </div>
 
 {% endblock content %}

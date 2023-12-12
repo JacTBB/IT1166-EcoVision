@@ -7,6 +7,10 @@ html {
   box-sizing: border-box;
 }
 
+::selection {
+  background: green;
+}
+
 body {
   background-color: #456c52;
   font-family: "Nunito";
@@ -125,8 +129,8 @@ h1 {
   margin-top: 100px;
 }
 
-.news-section {
-}
+/* .news-section {
+} */
 
 .news-row {
   display: flex;
@@ -160,4 +164,68 @@ h1 {
 
 .news-section .catalog > div {
   padding: 5px;
+}
+
+/* Login */
+
+.login-container {
+  margin-top: 100px;
+  height: 500px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(28, 48, 27, 0.2);
+  border-radius: 17px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Nunito";
+}
+
+.login-container form input {
+  height: 40px;
+  width: 250px;
+  border: 1px solid white;
+  margin: 5px;
+  border-radius: 17px;
+  padding-left: 15px;
+  font-size: 20px;
+}
+
+.login-container form input::placeholder {
+  position: relative;
+  line-height: 0px;
+  font-family: "Nunito";
+  word-wrap: break-word;
+  font-size: 18px;
+}
+
+.login-container form input[type="submit"] {
+  color: black;
+  font-family: "Nunito";
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid white;
+  border-radius: 17px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-container form input[type="submit"]:hover {
+  background-color: #c5d7c5;
+}
+
+.login-container form input:focus {
+  outline: 2px solid black;
+  border-radius: 2rem;
 }
