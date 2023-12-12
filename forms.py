@@ -3,6 +3,6 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username')
-    password = PasswordField('Password')
+    username = StringField('Username', render_kw={"placeholder": "Username"})
+    password = PasswordField('Password', render_kw={"placeholder": "Password"})
     submit = SubmitField('Login')
