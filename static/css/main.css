@@ -130,12 +130,14 @@ h1 {
   margin-top: 100px;
 }
 
-/* .news-section {
-} */
+.news-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .news-row {
   display: flex;
-  border: 1px solid black;
   margin: 10px;
 }
 
@@ -152,13 +154,14 @@ h1 {
 .news-section .catalog {
   display: flex;
   flex-direction: column;
-  height: 540px;
-  width: 350px;
+  height: 550px;
+  width: 400px;
+  border: 1px solid black;
 }
 
 .news-section .catalog > img {
   height: 300px;
-  width: 350px;
+  width: auto;
   object-fit: cover;
   object-position: center;
 }

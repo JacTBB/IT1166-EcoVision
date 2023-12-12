@@ -1,6 +1,7 @@
 # pip install flask_wtf ; pip install wtforms ; pip install flask
 
-from flask import Flask, render_template, request
+import os
+from flask import Flask, render_template, request, url_for, send_from_directory
 from wtforms import *
 from forms import *
 
@@ -8,6 +9,12 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
 
 STATIC_URL = 'static/'
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/')
