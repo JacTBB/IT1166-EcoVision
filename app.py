@@ -1,11 +1,8 @@
-# pip install flask_wtf ; pip install wtforms ; pip install flask
-
-from ast import dump
 import os
 from flask import Flask, render_template, request, url_for, send_from_directory
-from wtforms import *
-from news import *
 
+# local python files
+from news import *
 from forms import *
 
 
