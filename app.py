@@ -1,9 +1,13 @@
 # pip install flask_wtf ; pip install wtforms ; pip install flask
 
+from ast import dump
 import os
 from flask import Flask, render_template, request, url_for, send_from_directory
 from wtforms import *
+import shelve
+
 from forms import *
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
@@ -24,6 +28,9 @@ def index():
 
 @app.route('/news')
 def news():
+    with shelve.open("news") as sh:
+        pass
+
     return render_template('news.html', title='News', selected="news")
 
 
