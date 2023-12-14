@@ -17,25 +17,23 @@
       </div>
       <div class="news-row">
         <div class="news-column">
+          {% for key, value in data.items() %}
           <div class="catalog">
             <img src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}" />
             <div>
               <div>
-                <h2>How Singapore plans to import solar power from the world’s largest solar plant</h2>
-                <p class="news-date">20 May 2023</p>
-                <p class="news-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad quos mollitia
-                  dolorum dolor
-                  explicabo
-                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit eveniet
-                  minima? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi id
-                  accusamus maiores quod.</p>
+                <h2>{{ value.title }}</h2>
+                <p class="news-date">{{ value.date }}</p>
+                <p class="news-description">{{ value.description }}</p>
               </div>
               <div>
                 <a href="#" class="readmore">Read more</a>
               </div>
             </div>
           </div>
+
+          {% endfor %}
+
           <div class="catalog">
             <img src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}" />
             <div>
@@ -45,9 +43,11 @@
                 <p class="news-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad quos mollitia
                   dolorum dolor
                   explicabo
-                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit eveniet
+                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit
+                  eveniet
                   minima? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi id
+                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi
+                  id
                   accusamus maiores quod.</p>
               </div>
               <div>
@@ -65,79 +65,22 @@
                 <p class="news-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad quos mollitia
                   dolorum dolor
                   explicabo
-                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit eveniet
+                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit
+                  eveniet
                   minima? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi id
+                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi
+                  id
                   accusamus maiores quod.</p>
               </div>
               <div>
                 <a href="#" class="readmore">Read more</a>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="news-column">
-          <div class="catalog">
-            <img src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}" />
-            <div>
-              <div>
-                <h2>How Singapore plans to import solar power from the world’s largest solar plant</h2>
-                <p class="news-date">20 May 2023</p>
-                <p class="news-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad quos mollitia
-                  dolorum dolor
-                  explicabo
-                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit eveniet
-                  minima? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi id
-                  accusamus maiores quod.</p>
-              </div>
-              <div>
-                <a href="#" class="readmore">Read more</a>
-              </div>
-            </div>
-          </div>
-          <div class="catalog">
-            <img src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}" />
-            <div>
-              <div>
-                <h2>How Singapore plans to import solar power from the world’s largest solar plant</h2>
-                <p class="news-date">20 May 2023</p>
-                <p class="news-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad quos mollitia
-                  dolorum dolor
-                  explicabo
-                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit eveniet
-                  minima? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi id
-                  accusamus maiores quod.</p>
-              </div>
-              <div>
-                <a href="#" class="readmore">Read more</a>
-              </div>
-            </div>
-          </div>
 
-          <div class="catalog">
-            <img src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}" />
-            <div>
-              <div>
-                <h2>How Singapore plans to import solar power from the world’s largest solar plant</h2>
-                <p class="news-date">20 May 2023</p>
-                <p class="news-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad quos mollitia
-                  dolorum dolor
-                  explicabo
-                  fugit earum aspernatur culpa ab modi illo impedit totam cum, dolores blanditiis error suscipit eveniet
-                  minima? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem ratione perspiciatis amet culpa animi id
-                  accusamus maiores quod.</p>
-              </div>
-              <div>
-                <a href="#" class="readmore">Read more</a>
-              </div>
-            </div>
           </div>
         </div>
+
       </div>
     </div>
-  </div>
 
-  {% endblock %}
+    {% endblock %}

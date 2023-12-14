@@ -189,6 +189,10 @@ h1 {
 .news-section .news-column {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 1300px;
   gap: 20px;
   margin: 10px;
 }

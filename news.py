@@ -1,16 +1,44 @@
-
-
-
-#sample data
-
-
+import datetime
 import shelve
 
-with shelve.open("news") as data:
-    number = 1
-    data["news"] = {
-        "postid": 1,
-        "Date": "12/1/2023",
-        "description": "hello"
-    }
 
+class Post:
+    def __init__(self, postid, title, date, description):
+        self.postid = postid
+        self.title = title
+        self.date = datetime.datetime.strptime(date, "%d %m %Y").date()
+        self.description = description
+
+
+# sample data
+postid = 1
+with shelve.open("news") as data:
+    for i in range(1, 5):
+        data[str(postid)] = Post(postid, "TEstESt", "20 10 2023", "heleeo")
+        postid += 1
+
+
+# read database
+# try:
+#     with shelve.open("news") as data:
+#         for k, v in sorted(data.items()):
+#             print(v.postid, v.date, v.description)
+
+# except IOError:
+#     print("Error: can\'t find file or read data")
+
+
+# while True:
+#     try:
+#         inputDate = input("Enter date in format 'DD MM YYYY': ")
+#         if inputDate == "exit":
+#             break
+#         inputDescription = input("Enter description: ")
+
+#         with shelve.open("news") as data:
+#             post_id = len(data) + 1
+#             h = data[str(post_id)] = Post(post_id, inputDate, inputDescription)
+#             print("Post added")
+#             print(h.postid, h.date, h.description)
+#     except ValueError:
+#         print("Incorrect data format, should be DD MM YYYY")

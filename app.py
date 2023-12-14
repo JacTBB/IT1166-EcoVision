@@ -4,7 +4,7 @@ from ast import dump
 import os
 from flask import Flask, render_template, request, url_for, send_from_directory
 from wtforms import *
-import shelve
+from news import *
 
 from forms import *
 
@@ -28,10 +28,9 @@ def index():
 
 @app.route('/news')
 def news():
-    with shelve.open("news") as sh:
-        pass
+    news = shelve.open("news")
 
-    return render_template('news.html', title='News', selected="news")
+    return render_template('news.html', title='News', selected="news", data=news)
 
 
 @app.route('/login', methods=['GET', 'POST'])
