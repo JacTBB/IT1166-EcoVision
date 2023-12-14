@@ -220,12 +220,9 @@ h1 {
 .news-description {
   height: 150px;
   overflow: hidden;
-}
-
-.news-description::after {
-  content: "...";
-  position: absolute;
-  background: linear-gradient(transparent, #32533d);
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
 
