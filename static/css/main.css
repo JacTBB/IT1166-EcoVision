@@ -191,8 +191,8 @@ h1 {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  width: 1300px;
+  justify-content: flex-start;
+  width: 1240px;
   gap: 20px;
   margin: 10px;
 }

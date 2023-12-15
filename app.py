@@ -25,9 +25,9 @@ def index():
 
 @app.route('/news')
 def news():
-    news = shelve.open("news")
+    news = shelve.open("news").items()
 
-    return render_template('news.html', title='News', selected="news", data=news)
+    return render_template('news.html', title='News', selected="news", data=sorted(news, reverse=True))
 
 
 @app.route('/login', methods=['GET', 'POST'])
