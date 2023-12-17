@@ -76,6 +76,10 @@ h1 {
 
 /* Home */
 
+.home-page {
+  gap: 10px;
+}
+
 .container .home img {
   position: absolute;
   height: 100vh;
@@ -100,6 +104,79 @@ h1 {
 .container .home div p {
   font-size: 5em;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.home-aboutus {
+  background-color: #4b7e5c;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.home-aboutus > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: white;
+  width: 50%;
+  text-align: center;
+  font-size: 18px;
+  gap: 5px;
+  font-weight: 600;
+}
+
+.home-news {
+  background-color: #32533d;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.home-news .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.home-news .catalog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 550px;
+  width: 400px;
+  background: #6b9478;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.home-news .catalog > img {
+  position: relative;
+  height: 250px;
+  width: auto;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.home-news .catalog > div {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.home-news .catalog > div > div > * {
+  padding-bottom: 5px;
 }
 
 /* News */

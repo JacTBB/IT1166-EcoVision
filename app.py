@@ -20,7 +20,14 @@ def favicon():
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Home', selected="home")
+    news = shelve.open("news").items()
+    return render_template('index.html', title='Home', selected="home", news=sorted(news, reverse=True))
+
+
+@app.route('/services')
+def services():
+
+    return render_template('services.html', title='Services', selected="services")
 
 
 @app.route('/news')
