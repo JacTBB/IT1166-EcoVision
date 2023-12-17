@@ -9,67 +9,65 @@
     </div>
 
     <div class="news-section">
-      <div class="news-row">
-        <div class="news-column">
-          <div class="featured-news">
-            <img
-              src="{{ url_for('static', filename='images/Australia to Singapore.jpg')}}"
-              alt=""
-            />
+      <div class="news-column">
+        <div class="featured-news">
+          <img
+            src="{{ url_for('static', filename='images/Australia to Singapore.jpg')}}"
+            alt=""
+          />
+          <div>
+            <h2>
+              How Singapore plans to import solar power from the world’s largest
+              solar plant
+            </h2>
+            <p class="news-date">20 May 2023</p>
+            <a href="#" class="readmore">Read more</a>
+          </div>
+        </div>
+        {% for key, value in data %}
+        <a href="{{ url_for('news', postid=value.postid) }}"
+          ><div class="catalog postid_{{ value.postid }}">
+            <div class="catalog-image-container">
+              <img
+                src="{{ url_for('static', filename='images/' + value.image) }}"
+              />
+            </div>
+            <div class="news-head">
+              <h2>{{ value.title }}</h2>
+              <p class="news-date">{{ value.date }}</p>
+            </div>
+          </div>
+        </a>
+
+        {% endfor %}
+
+        <!-- <div class="catalog">
+          <img
+            src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}"
+          />
+          <div>
             <div>
               <h2>
                 How Singapore plans to import solar power from the world’s
                 largest solar plant
               </h2>
               <p class="news-date">20 May 2023</p>
+              <p class="news-description">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad
+                quos mollitia dolorum dolor explicabo fugit earum aspernatur
+                culpa ab modi illo impedit totam cum, dolores blanditiis error
+                suscipit eveniet minima? Lorem ipsum dolor sit, amet
+                consectetur adipisicing elit. Deleniti, laborum minus quod
+                assumenda explicabo quidem at nisi! Sed, quia hic voluptatem
+                ratione perspiciatis amet culpa animi id accusamus maiores
+                quod.
+              </p>
+            </div>
+            <div>
               <a href="#" class="readmore">Read more</a>
             </div>
           </div>
-          {% for key, value in data %}
-          <a href="{{ url_for('news', postid=value.postid) }}"
-            ><div class="catalog postid_{{ value.postid }}">
-              <div class="catalog-image-container">
-                <img
-                  src="{{ url_for('static', filename='images/' + value.image) }}"
-                />
-              </div>
-              <div class="news-head">
-                <h2>{{ value.title }}</h2>
-                <p class="news-date">{{ value.date }}</p>
-              </div>
-            </div>
-          </a>
-
-          {% endfor %}
-
-          <!-- <div class="catalog">
-            <img
-              src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}"
-            />
-            <div>
-              <div>
-                <h2>
-                  How Singapore plans to import solar power from the world’s
-                  largest solar plant
-                </h2>
-                <p class="news-date">20 May 2023</p>
-                <p class="news-description">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad
-                  quos mollitia dolorum dolor explicabo fugit earum aspernatur
-                  culpa ab modi illo impedit totam cum, dolores blanditiis error
-                  suscipit eveniet minima? Lorem ipsum dolor sit, amet
-                  consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem
-                  ratione perspiciatis amet culpa animi id accusamus maiores
-                  quod.
-                </p>
-              </div>
-              <div>
-                <a href="#" class="readmore">Read more</a>
-              </div>
-            </div>
-          </div> -->
-        </div>
+        </div> -->
       </div>
     </div>
 
