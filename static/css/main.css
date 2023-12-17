@@ -238,8 +238,12 @@ h1 {
   display: flex;
   object-fit: cover;
   object-position: center;
-  pointer-events: none;
   border-radius: 16px;
+}
+
+.featured-news:hover img {
+  transform: scale(1.02);
+  transition: 0.3s;
 }
 
 .featured-news > div {
