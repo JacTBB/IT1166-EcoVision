@@ -21,20 +21,22 @@
   </div>
 
   <div class="home-news">
+    <h2>News</h2>
     <div class="row">
       {% for key, value in news %} {% if key <= "3" %}
-      <div class="catalog postid_{{ value.postid }}">
-        <img src="{{ url_for('static', filename='images/' + value.image) }}" />
-        <div>
-          <div>
+      <a href="{{ url_for('news', postid=value.postid) }}"
+        ><div class="catalog postid_{{ value.postid }}">
+          <div class="catalog-image-container">
+            <img
+              src="{{ url_for('static', filename='images/' + value.image) }}"
+            />
+          </div>
+          <div class="news-head">
             <h2>{{ value.title }}</h2>
             <p class="news-date">{{ value.date }}</p>
           </div>
-          <div>
-            <a href="#" class="readmore">Read more</a>
-          </div>
         </div>
-      </div>
+      </a>
       {% endif %} {% endfor %}
     </div>
   </div>

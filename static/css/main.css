@@ -134,10 +134,12 @@ h1 {
 .home-news {
   background-color: #32533d;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 20px;
+  color: white;
 }
 
 .home-news .row {
@@ -230,6 +232,7 @@ h1 {
   background-color: #578166;
   color: white;
   border-radius: 16px;
+  transition: 0.3s;
 }
 
 .featured-news img {
@@ -239,6 +242,8 @@ h1 {
   object-fit: cover;
   object-position: center;
   border-radius: 16px;
+  transition: 0.3s;
+  pointer-events: none;
 }
 
 .featured-news:hover img {
@@ -310,6 +315,7 @@ h1 {
   height: 100%;
   width: 100%;
   background-size: cover;
+  pointer-events: none;
 }
 
 .news-section .news-column > a:hover .catalog-image-container > img {
