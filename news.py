@@ -14,9 +14,15 @@ class Post:
 # sample data
 postid = 1
 with shelve.open("news") as data:
-    for i in range(1, 5):
+    for i in range(1, 3):
         data[str(postid)] = Post(postid, "20 10 2023",
-                                 "Cover-image-1-495x400.jpg",  "TEstESt", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, iure eos aspernatur autem dicta minima et commodi? Quia tempora voluptatibus fugit labore dolor reiciendis facilis. Nam eligendi deserunt minus unde?")
+                                 "Cover-image-1-495x400.jpg",  "Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, iure eos aspernatur autem dicta minima et commodi? Quia tempora voluptatibus fugit labore dolor reiciendis facilis. Nam eligendi deserunt minus unde?")
+        postid += 1
+
+    postid = 3
+    for i in range(3, 5):
+        data[str(postid)] = Post(postid, "20 10 2023",
+                                 "Cover-image-1-495x400.jpg",  "Lorem ipsum dolor sit amsum dolor snsectetur", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, iure eos aspernatur autem dicta minima et commodi? Quia tempora voluptatibus fugit labore dolor reiciendis facilis. Nam eligendi deserunt minus unde?")
         postid += 1
 
 # read database
