@@ -20,13 +20,13 @@ with shelve.open("news") as data:
         postid += 1
 
 # read database
-try:
-    with shelve.open("news") as data:
-        for k, v in sorted(data.items()):
-            print(v.postid, v.date, v.description, v.image, v.title)
+# try:
+#     with shelve.open("news") as data:
+#         for k, v in sorted(data.items()):
+#             print(v.postid, v.date, v.description, v.image, v.title)
 
-except IOError:
-    print("Error: can\'t find file or read data")
+# except IOError:
+#     print("Error: can\'t find file or read data")
 
 
 # while True:
