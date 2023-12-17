@@ -1,10 +1,42 @@
 {% extends "layout.html" %} {% block content %}
 
-<div class="container">
+<div class="container home-page">
   <div class="home">
     <img src="{{ url_for('static', filename='images/leaves.jpg') }}" />
     <div>
       <p>Welcome</p>
+    </div>
+  </div>
+
+  <div class="home-aboutus">
+    <div>
+      <p>About Us</p>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat eius
+        architecto, delectus cumque accusantium tempora optio quasi enim, autem
+        omnis beatae sed non asperiores harum numquam. Facilis, quaerat
+        quibusdam! Laudantium.
+      </p>
+    </div>
+  </div>
+
+  <div class="home-news">
+    <div class="row">
+      {% for key, value in news %} {% if key <= "3" %}
+      <div class="catalog postid_{{ value.postid }}">
+        <img src="{{ url_for('static', filename='images/' + value.image) }}" />
+        <div>
+          <div>
+            <h2>{{ value.title }}</h2>
+            <p class="news-date">{{ value.date }}</p>
+            <p class="news-description">{{ value.description }}</p>
+          </div>
+          <div>
+            <a href="#" class="readmore">Read more</a>
+          </div>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
     </div>
   </div>
 </div>
