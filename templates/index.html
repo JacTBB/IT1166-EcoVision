@@ -10,7 +10,7 @@
 
   <div class="home-aboutus">
     <div>
-      <p>About Us</p>
+      <h3>About Us</h3>
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat eius
         architecto, delectus cumque accusantium tempora optio quasi enim, autem
@@ -23,22 +23,23 @@
   <div class="home-news">
     <h2>News</h2>
     <div class="row">
-      {% for key, value in news %} {% if key <= "3" %}
-      <a href="{{ url_for('news', postid=value.postid) }}"
-        ><div class="catalog postid_{{ value.postid }}">
+      {% for key, value in news %} {% if key <= "3" %} <a href="{{ url_for('news', postid=value.postid) }}">
+        <div class="catalog postid_{{ value.postid }}">
           <div class="catalog-image-container">
-            <img
-              src="{{ url_for('static', filename='images/' + value.image) }}"
-            />
+            <img src="{{ url_for('static', filename='images/' + value.image) }}" />
           </div>
           <div class="news-head">
             <h2>{{ value.title }}</h2>
-            <p class="news-date">{{ value.date }}</p>
           </div>
         </div>
-      </a>
-      {% endif %} {% endfor %}
+        </a>
+        {% endif %} {% endfor %}
     </div>
+  </div>
+
+  <div class="home-services">
+    <h2>Services</h2>
+
   </div>
 </div>
 
