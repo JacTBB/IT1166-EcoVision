@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>{{ title }}</title>
+    <title>{{ title }} - EcoVision</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -11,6 +11,14 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main.css') }}"
     />
+    {% if selected == 'article' %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',
+  filename='css/article.css') }}"
+    />
+    {% endif %}
+
     <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/main.js')}}"></script>
   </head>

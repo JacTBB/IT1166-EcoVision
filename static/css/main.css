@@ -97,6 +97,7 @@ h1 {
   object-fit: cover;
   z-index: -1;
   filter: brightness(0.7) contrast(0.8) saturate(1.2) blur(1px);
+  object-position: top center;
 }
 
 .container .home {

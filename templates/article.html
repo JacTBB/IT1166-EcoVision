@@ -1,0 +1,12 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container article-page">
+    <div class="article">
+        <div>
+            <p>{{ article.date }}</p>
+            <h1>{{ article.title }}</h1>
+            <p>{{ article.content }}</p>
+            <p>{{ article.image }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

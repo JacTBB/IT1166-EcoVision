@@ -33,7 +33,14 @@ def services():
 @app.route('/news')
 def news():
     news = shelve.open("news").items()
-
+    postid = request.args.get('postid')
+    if postid is not None:
+        news = shelve.open("news")
+        return render_template('article.html',
+                               title=news[str(postid)].title +
+                               " | News Article",
+                               selected='article',
+                               article=news[str(postid)])
     return render_template('news.html', title='News', selected="news", data=sorted(news, reverse=True))
 
 
