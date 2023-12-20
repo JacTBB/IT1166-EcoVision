@@ -27,11 +27,12 @@ nav {
   justify-content: space-evenly;
   position: fixed;
   z-index: 1;
-  transition: 0.3s linear;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease-out;
 }
 
 .nav-background {
-  transition: 0.3s linear;
+  transition: 0.3s ease-in;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -244,10 +245,17 @@ h1 {
 .container .news .news-header {
   margin-top: 50px;
   white-space: nowrap;
+  width: 100%;
+  padding-left: 0;
+  padding-bottom: 0;
 }
 
 .news-header {
   padding: 50px;
+}
+
+.news-header h1 {
+  text-align: left;
 }
 
 .news-section {
@@ -256,6 +264,8 @@ h1 {
   justify-content: center;
   align-items: center;
   color: white;
+  width: 940px;
+  margin: 0 auto;
 }
 
 .featured-news {
