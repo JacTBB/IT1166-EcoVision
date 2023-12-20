@@ -21,7 +21,7 @@ with shelve.open("news") as data:
         postid += 1
 
     postid = 3
-    for i in range(3, 5):
+    for i in range(3, 7):
         data[str(postid)] = Post("Cover-image-1-495x400.jpg", "Title",
                                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, <b>iure eos aspernatur autem dicta minima et commodi?</b> Quia tempora voluptatibus fugit labore dolor reiciendis facilis. Nam eligendi deserunt minus unde?", "Author", "20 10 2023", postid)
         postid += 1

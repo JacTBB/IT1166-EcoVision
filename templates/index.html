@@ -12,10 +12,8 @@
     <div>
       <h3>About Us</h3>
       <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat eius
-        architecto, delectus cumque accusantium tempora optio quasi enim, autem
-        omnis beatae sed non asperiores harum numquam. Facilis, quaerat
-        quibusdam! Laudantium.
+        We as a company are dedicated to providing the best service to our customers. We are a small company that is
+        growing and we are looking to expand our services to the entire country. (This is a test paragraph)
       </p>
     </div>
   </div>
@@ -23,7 +21,7 @@
   <div class="home-news">
     <h2>News</h2>
     <div class="row">
-      {% for key, value in news %} {% if key <= "3" %} <a href="{{ url_for('news', postid=value.postid) }}">
+      {% for key, value in news %} {% if key >= display_posts %} <a href="{{ url_for('news', postid=value.postid) }}">
         <div class="catalog postid_{{ value.postid }}">
           <div class="catalog-image-container">
             <img src="{{ url_for('static', filename='images/' + value.image) }}" />
@@ -32,8 +30,8 @@
             <h2>{{ value.title }}</h2>
           </div>
         </div>
-        </a>
-        {% endif %} {% endfor %}
+      </a>
+      {% endif %} {% endfor %}
     </div>
   </div>
 
