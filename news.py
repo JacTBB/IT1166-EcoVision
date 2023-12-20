@@ -5,7 +5,8 @@ import shelve
 class Post:
     def __init__(self, image, title, content, author, date, postid):
         self.postid = postid
-        self.date = datetime.datetime.strptime(date, "%d %m %Y").date()
+        self.date = datetime.datetime.strptime(
+            date, "%d %m %Y").date().strftime("%B %d, %Y")
         self.image = image
         self.title = title
         self.content = content
@@ -17,7 +18,7 @@ postid = 1
 with shelve.open("news") as data:
     for i in range(1, 3):
         data[str(postid)] = Post("Cover-image-1-495x400.jpg", "Title",
-                                 "Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur", "Author", "20 10 2023", postid)
+                                 "Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur", "Author", "20 11 2023", postid)
         postid += 1
 
     postid = 3
