@@ -7,20 +7,27 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
-    />
     {% if selected == 'article' %}
     <link
       rel="stylesheet"
       href="{{ url_for('static',
-  filename='css/article.css') }}"
+    filename='css/article.css') }}"
+    />
+
+    {% endif %} {% if selected == 'services' %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='css/services.css') }}"
     />
     {% endif %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
 
-    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js')}}"></script>
   </head>
 
   <body>
@@ -66,5 +73,11 @@
     </nav>
 
     {% block content %} {% endblock content %}
+
+    <footer>
+      <div>
+        <p><a href="{{ url_for('index')}}">EcoVision</a> &copy; 2023</p>
+      </div>
+    </footer>
   </body>
 </html>

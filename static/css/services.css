@@ -1,0 +1,33 @@
+/* Services */
+
+.services-container {
+  color: white;
+  margin: 0 auto;
+}
+
+.services-container .header {
+  margin-top: 100px;
+  text-align: center;
+  width: 942px;
+  padding: 20px;
+  margin-bottom: 100px;
+}
+
+.services-container .products-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.services-container .products-list .product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  background-color: #578166;
+}
