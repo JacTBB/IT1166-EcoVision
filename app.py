@@ -59,5 +59,10 @@ def login():
     return render_template("login.html", form=form, title='Login', selected="login")
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('oops.html'), 404
+
+
 if __name__ in '__main__':
     app.run(debug=True)
