@@ -1,10 +1,10 @@
 import os
-from flask import Flask, render_template, request, url_for, send_from_directory
+from flask import Flask, flash, render_template, request, url_for, send_from_directory
+
 
 # local python files
 from news import *
 from forms import *
-
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
@@ -50,7 +50,7 @@ def news():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if form.is_submitted():
+    if form.validate_on_submit():
         result = request.form
         username = result.get("username")
         password = result.get("password")
