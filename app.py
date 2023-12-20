@@ -1,6 +1,5 @@
 import os
-from flask import Flask, flash, render_template, request, url_for, send_from_directory
-
+from flask import Flask, render_template, request, send_from_directory
 
 # local python files
 from news import *
