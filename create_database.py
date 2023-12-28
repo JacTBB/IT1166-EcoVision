@@ -36,19 +36,3 @@ with shelve.open("news") as data:
 
 # except IOError:
 #     print("Error: can\'t find file or read data")
-
-
-# while True:
-#     try:
-#         inputDate = input("Enter date in format 'DD MM YYYY': ")
-#         if inputDate == "exit":
-#             break
-#         inputDescription = input("Enter description: ")
-
-#         with shelve.open("news") as data:
-#             post_id = len(data) + 1
-#             h = data[str(post_id)] = Post(post_id, inputDate, inputDescription)
-#             print("Post added")
-#             print(h.postid, h.date, h.description)
-#     except ValueError:
-#         print("Incorrect data format, should be DD MM YYYY")
