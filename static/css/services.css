@@ -31,3 +31,7 @@
   padding: 20px;
   background-color: #578166;
 }
+
+.services-container .products-list .product .product-info {
+  text-align: center;
+}
