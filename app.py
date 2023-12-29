@@ -78,26 +78,43 @@ def news():
 def login():
     form = LoginForm()
     error_message = None
+    admin = request.args.get('admin')
+    requestAdminLogin = False
+    if admin is not None:
+        requestAdminLogin = True
+
     if form.validate_on_submit():
         result = request.form
 
         try:
             username = result.get("username")
-            query = query_data(Customer, filter_by={
-                               'username': username}, all=False)
+            if admin is not None:
+                query = query_data(Admin, filter_by={
+                                   'username': username}, all=False)
 
-            if query is not None:
-                if query.username == result.get("username") and query.password == result.get("password"):
-                    return render_template("account.html", username=query.username, password=query.password)
+                if query is not None:
+                    if query.username == result.get("username") and query.password == result.get("password"):
+                        return "I am Admin"
+                        return render_template("admin.html", username=query.username, password=query.password)
+                else:
+                    error_message = "Invalid username or password"
+
             else:
-                error_message = "Invalid username or password"
+                query = query_data(Customer, filter_by={
+                    'username': username}, all=False)
+
+                if query is not None:
+                    if query.username == result.get("username") and query.password == result.get("password"):
+                        return render_template("account.html", username=query.username, password=query.password)
+                else:
+                    error_message = "Invalid username or password"
 
             db.session.commit()
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-    return render_template("login.html", form=form, title='Login', selected="login", error_message=error_message)
+    return render_template("login.html", form=form, title='Login', selected="login", error_message=error_message, requestAdminLogin=requestAdminLogin)
 
 
 @app.errorhandler(404)

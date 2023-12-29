@@ -98,17 +98,15 @@ input[type='password']:focus {
     border-radius: 2rem;
 }
 
-.error-message::before {
-    font-family: 'Font Awesome 5 Pro';
-    content: "";
-    margin-right: 10px;
-
-}
-
 .error-message {
-    color: #e43c3c;
+    color: #a31818;
     font-size: 18px;
     font-weight: bold;
     margin-top: 10px;
     text-align: center;
+}
+
+.error-message i {
+    font-family: 'Font Awesome 5 Pro';
+    margin-right: 10px;
 }

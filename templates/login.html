@@ -10,8 +10,12 @@
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
     </form>
+    {% if requestAdminLogin %}
+    <p class="error-message"><i class="fa-regular fa-circle-info"></i>Admin Page</p>
+
+    {% endif %}
     {% if error_message %}
-    <p class="error-message">{{ error_message }}</p>
+    <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
     {% endif %}
   </div>
 </div>
