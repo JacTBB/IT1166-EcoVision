@@ -1,7 +1,7 @@
-from concurrent.futures import thread
-from enum import auto
 import os
+import select
 from flask import Flask, render_template, request, send_from_directory
+from sqlalchemy import column
 
 # local python files
 from create_database import *
@@ -59,9 +59,20 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         result = request.form
-        username = result.get("username")
-        password = result.get("password")
-        return render_template("account.html", username=username, password=password)
+
+        try:
+            username = result.get("username")
+
+            query = db.session.query(Customer).filter_by(
+                username=username).first()
+
+            if query.username == result.get("username") and query.password == result.get("password"):
+                return render_template("account.html", username=query.username, password=query.password)
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
 
     return render_template("login.html", form=form, title='Login', selected="login")
 
@@ -72,15 +83,4 @@ def page_not_found(e):
 
 
 if __name__ in '__main__':
-    with app.app_context():
-        # Query user = User.query.filter_by(name='John Doe').first()
-
-        User = User.query.all()
-        Author = Author.query.all()
-        Admin = Admin.query.all()
-
-        print(User)
-        print(Author)
-        print(Admin)
-
     app.run(debug=True)
