@@ -1,8 +1,8 @@
 import os
 from flask import Flask, render_template, request, send_from_directory
+from sqlalchemy import column, false
 
 # local python files
-# from create_database import *
 from forms import *
 from models import *
 
@@ -17,6 +17,30 @@ with app.app_context():
     db.create_all()  # create database tables for our data models
 
 
+def query_data(model, limit=None, order_by=None, filter_by=None, all=True):
+    query = db.session.query(model)
+
+    if order_by is not None:
+        query = query.order_by(order_by)
+
+    if limit is not None:
+        query = query.limit(limit)
+
+    if filter_by is not None:
+        query = query.filter_by(**filter_by)
+
+    if limit is not None and order_by is not None:
+        query = query.order_by(order_by).limit(limit)
+
+    if limit is not None and filter_by is not None:
+        query = query.filter_by(**filter_by).limit(limit)
+
+    if all is False:
+        return query.first()
+
+    return query.all()
+
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -25,12 +49,7 @@ def favicon():
 
 @app.route('/')
 def index():
-    query = db.session.query(Post).order_by(Post.date.desc()).limit(3).all()
-
-    for i, post in enumerate(query):
-        print(f"Post {i+1}: {post.id}")
-
-    return render_template('index.html', title='Home', selected="home", news=query)
+    return render_template('index.html', title='Home', selected="home", news=query_data(Post, limit=3))
 
 
 @app.route('/services')
@@ -41,16 +60,16 @@ def services():
 
 @app.route('/news')
 def news():
-    query = db.session.query(Post).order_by(Post.date.desc()).all()
+    query = query_data(Post)
     postid = request.args.get('postid')
-    print(query)
-    # if postid is not None:
-    #     news = shelve.open("news")
-    #     return render_template('article.html',
-    #                            title=news[str(postid)].title +
-    #                            " | News Article",
-    #                            selected='article',
-    #                            article=news[str(postid)])
+    if postid is not None:
+        query = query_data(Post, filter_by={'postid': postid}, all=False)
+        if query is not None:
+            return render_template('article.html',
+                                   title=query.title +  # type: ignore
+                                   " | News Article",
+                                   selected='article',
+                                   article=query)
     return render_template('news.html', title='News', selected="news", data=query)
     return "Under Maintenance"
 
@@ -63,9 +82,8 @@ def login():
 
         try:
             username = result.get("username")
-
-            query = db.session.query(Customer).filter_by(
-                username=username).first()
+            query = query_data(Customer, filter_by={
+                               'username': username}, all=False)
 
             if query is not None:
                 if query.username == result.get("username") and query.password == result.get("password"):
