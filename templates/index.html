@@ -28,7 +28,7 @@
           </div>
           <div class="news-head">
             <h2>{{ post.title }}</h2>
-            <p>{{ post.date }}</p>
+            <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
           </div>
         </div>
       </a>
