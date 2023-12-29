@@ -1,4 +1,4 @@
-$(document).ready(function ($) {
+$(document).ready(function () {
   $(window).scroll(function () {
     var scrollTopPosition =
       document.documentElement.scrollTop || document.body.scrollTop;

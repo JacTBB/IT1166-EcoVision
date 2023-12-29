@@ -23,17 +23,17 @@
             <p class="news-date">20 May 2023</p>
           </div>
         </div>
-        {% for key, value in data %}
-        <a href="{{ url_for('news', postid=value.postid) }}"
-          ><div class="catalog postid_{{ value.postid }}">
+        {% for post in data %}
+        <a href="{{ url_for('news', postid=post.postid) }}"
+          ><div class="catalog postid_{{ post.postid }}">
             <div class="catalog-image-container">
               <img
-                src="{{ url_for('static', filename='images/' + value.image) }}"
+                src="{{ url_for('static', filename='images/' + post.image_name) }}"
               />
             </div>
             <div class="news-head">
-              <h3>{{ value.title }}</h3>
-              <p class="news-date">{{ value.date }}</p>
+              <h3>{{ post.title }}</h3>
+              <p class="news-date">{{ post.date }}</p>
             </div>
           </div>
         </a>

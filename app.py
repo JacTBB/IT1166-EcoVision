@@ -1,10 +1,8 @@
 import os
-import select
 from flask import Flask, render_template, request, send_from_directory
-from sqlalchemy import column
 
 # local python files
-from create_database import *
+# from create_database import *
 from forms import *
 from models import *
 
@@ -27,11 +25,12 @@ def favicon():
 
 @app.route('/')
 def index():
-    news = shelve.open("news")
-    get_maxPosts = max(news.keys())
-    display_posts = str(int(get_maxPosts) - 2)
+    query = db.session.query(Post).order_by(Post.date.desc()).limit(3).all()
 
-    return render_template('index.html', title='Home', selected="home", news=sorted(news.items(), reverse=True), maxPosts=get_maxPosts, display_posts=display_posts)
+    for i, post in enumerate(query):
+        print(f"Post {i+1}: {post.id}")
+
+    return render_template('index.html', title='Home', selected="home", news=query)
 
 
 @app.route('/services')
@@ -42,16 +41,18 @@ def services():
 
 @app.route('/news')
 def news():
-    news = shelve.open("news").items()
+    query = db.session.query(Post).order_by(Post.date.desc()).all()
     postid = request.args.get('postid')
-    if postid is not None:
-        news = shelve.open("news")
-        return render_template('article.html',
-                               title=news[str(postid)].title +
-                               " | News Article",
-                               selected='article',
-                               article=news[str(postid)])
-    return render_template('news.html', title='News', selected="news", data=sorted(news, reverse=True))
+    print(query)
+    # if postid is not None:
+    #     news = shelve.open("news")
+    #     return render_template('article.html',
+    #                            title=news[str(postid)].title +
+    #                            " | News Article",
+    #                            selected='article',
+    #                            article=news[str(postid)])
+    return render_template('news.html', title='News', selected="news", data=query)
+    return "Under Maintenance"
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -66,8 +67,9 @@ def login():
             query = db.session.query(Customer).filter_by(
                 username=username).first()
 
-            if query.username == result.get("username") and query.password == result.get("password"):
-                return render_template("account.html", username=query.username, password=query.password)
+            if query is not None:
+                if query.username == result.get("username") and query.password == result.get("password"):
+                    return render_template("account.html", username=query.username, password=query.password)
 
             db.session.commit()
         except Exception as e:
@@ -83,4 +85,4 @@ def page_not_found(e):
 
 
 if __name__ in '__main__':
-    app.run(debug=True)
+    app.run(port=80, debug=True)

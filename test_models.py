@@ -1,4 +1,4 @@
-from __init__ import db, app
+from app import db, app
 from models import *
 
 with app.app_context():
@@ -12,14 +12,11 @@ with app.app_context():
     query = db.session.query(Customer).filter_by(
         username="test").first()
 
-    print(query.username)
+    if query is not None:
+        print(query.username)
 
-    Customer = Customer.query.all()
-    Author = Author.query.all()
-    Admin = Admin.query.all()
-
-    print(Customer)
-    print(Author)
-    print(Admin)
-
-    pass
+    for i in range(5):
+        post = Post(title="test", content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur", author="test",
+                    image_name="Cover-image-1-495x400.jpg", postid=i+5)
+        db.session.add(post)
+        db.session.commit()
