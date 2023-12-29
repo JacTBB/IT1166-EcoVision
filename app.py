@@ -86,26 +86,24 @@ def login():
     if form.validate_on_submit():
         result = request.form
 
+        def query_login(model, user, pw, page=None):
+            query = query_data(model, filter_by={
+                'username': user}, all=False)
+            if query is not None:
+                if query.username == user and query.password == pw:
+                    return True
+
         try:
             username = result.get("username")
+            password = result.get("password")
             if admin is not None:
-                query = query_data(Admin, filter_by={
-                                   'username': username}, all=False)
-
-                if query is not None:
-                    if query.username == result.get("username") and query.password == result.get("password"):
-                        return "I am Admin"
-                        return render_template("admin.html", username=query.username, password=query.password)
+                if query_login(Admin, username, password):
+                    return render_template("admin.html", password=password, username=username)
                 else:
                     error_message = "Invalid username or password"
-
             else:
-                query = query_data(Customer, filter_by={
-                    'username': username}, all=False)
-
-                if query is not None:
-                    if query.username == result.get("username") and query.password == result.get("password"):
-                        return render_template("account.html", username=query.username, password=query.password)
+                if query_login(Customer, username, password):
+                    return render_template("account.html", password=password, username=username)
                 else:
                     error_message = "Invalid username or password"
 
@@ -113,7 +111,6 @@ def login():
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
-
     return render_template("login.html", form=form, title='Login', selected="login", error_message=error_message, requestAdminLogin=requestAdminLogin)
 
 
