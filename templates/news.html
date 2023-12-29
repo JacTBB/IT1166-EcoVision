@@ -1,9 +1,7 @@
 {% extends "layout.html" %} {% block content %}
 <div class="container">
   <div class="news">
-    <img
-      src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}"
-    />
+    <img src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}" />
 
     <div class="news-section">
       <div class="news-header">
@@ -11,10 +9,7 @@
       </div>
       <div class="news-column">
         <div class="featured-news">
-          <img
-            src="{{ url_for('static', filename='images/Australia to Singapore.jpg')}}"
-            alt=""
-          />
+          <img src="{{ url_for('static', filename='images/Australia to Singapore.jpg')}}" alt="" />
           <div>
             <h2>
               How Singapore plans to import solar power from the world’s largest
@@ -24,12 +19,10 @@
           </div>
         </div>
         {% for post in data %}
-        <a href="{{ url_for('news', postid=post.postid) }}"
-          ><div class="catalog postid_{{ post.postid }}">
+        <a href="{{ url_for('news', postid=post.postid) }}">
+          <div class="catalog postid_{{ post.postid }}">
             <div class="catalog-image-container">
-              <img
-                src="{{ url_for('static', filename='images/' + post.image_name) }}"
-              />
+              <img src="{{ url_for('static', filename='images/' + post.image_name) }}" loading="lazy" />
             </div>
             <div class="news-head">
               <h3>{{ post.title }}</h3>

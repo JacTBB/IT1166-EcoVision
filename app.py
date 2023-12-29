@@ -77,6 +77,7 @@ def news():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    error_message = None
     if form.validate_on_submit():
         result = request.form
 
@@ -88,13 +89,15 @@ def login():
             if query is not None:
                 if query.username == result.get("username") and query.password == result.get("password"):
                     return render_template("account.html", username=query.username, password=query.password)
+            else:
+                error_message = "Invalid username or password"
 
             db.session.commit()
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-    return render_template("login.html", form=form, title='Login', selected="login")
+    return render_template("login.html", form=form, title='Login', selected="login", error_message=error_message)
 
 
 @app.errorhandler(404)

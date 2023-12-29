@@ -21,7 +21,7 @@
   <div class="home-news">
     <h2>News</h2>
     <div class="row">
-      {% for post in news %} <a href="{{ url_for('news', postid=post.postid) }}">
+      {% for post in news|sort(attribute="postid", reverse=true) %} <a href="{{ url_for('news', postid=post.postid) }}">
         <div class="catalog postid_{{ post.postid }}">
           <div class="catalog-image-container">
             <img src="{{ url_for('static', filename='images/' + post.image_name) }}" />

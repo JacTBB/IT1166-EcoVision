@@ -90,9 +90,10 @@ footer {
 footer div {
   color: white;
   padding: 20px;
-  background-color: #456c52;
+  /* background-color: #456c52; */
   text-align: center;
 }
+
 footer a {
   color: white;
   text-decoration: none;
@@ -144,7 +145,7 @@ footer a {
   width: 100%;
 }
 
-.home-aboutus > div {
+.home-aboutus>div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -169,7 +170,7 @@ footer a {
   color: white;
 }
 
-.home-news .row > a {
+.home-news .row>a {
   display: flex;
   color: white;
   text-decoration: none;
@@ -179,7 +180,7 @@ footer a {
 
 .home-news .row {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
@@ -203,9 +204,10 @@ footer a {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  font-size: 15px;
 }
 
-.home-news .catalog > div > div > * {
+.home-news .catalog>div>div>* {
   padding-bottom: 5px;
 }
 
@@ -219,7 +221,7 @@ footer a {
   flex-shrink: 1;
 }
 
-.home-news .catalog-image-container > img {
+.home-news .catalog-image-container>img {
   object-fit: cover;
   transition: 0.3s;
   height: 100%;
@@ -230,7 +232,7 @@ footer a {
 
 /* News */
 
-.container .news > img {
+.container .news>img {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -306,7 +308,7 @@ footer a {
   transition: 0.3s;
 }
 
-.featured-news > div {
+.featured-news>div {
   margin-left: 30px;
   display: flex;
   flex-direction: column;
@@ -335,7 +337,7 @@ footer a {
   flex-grow: 1;
 }
 
-.news-section .news-column > a {
+.news-section .news-column>a {
   display: flex;
   color: white;
   text-decoration: none;
@@ -364,7 +366,7 @@ footer a {
   flex-shrink: 1;
 }
 
-.news-section .catalog-image-container > img {
+.news-section .catalog-image-container>img {
   object-fit: cover;
   transition: 0.3s;
   height: 100%;
@@ -373,7 +375,7 @@ footer a {
   pointer-events: none;
 }
 
-.news-section .news-column > a:hover .catalog-image-container > img {
+.news-section .news-column>a:hover .catalog-image-container>img {
   transform: scale(1.02);
   transition: 0.3s;
 }
@@ -389,7 +391,7 @@ footer a {
 
 .news-section .catalog .news-head .news-date {
   color: #e7e7e7;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .news-description {
@@ -405,91 +407,27 @@ footer a {
   .news-section .news-column {
     width: 740px;
   }
+
   .news-section .catalog {
     width: 352px;
   }
 }
+
 @media screen and (max-width: 768px) {
   .news-header h1 {
     padding-left: 20px;
   }
+
   .featured-news {
     display: none;
   }
+
   .news-section .news-column {
     width: 100%;
     justify-content: center;
   }
+
   .news-section .catalog {
     width: 432px;
   }
-}
-
-/* Login */
-
-.login-container {
-  margin-top: 100px;
-  height: 500px;
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(28, 48, 27, 0.2);
-  border-radius: 17px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-  font-family: "Nunito";
-}
-
-.login-container > p {
-  font-weight: bold;
-}
-
-.login-container form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-container form input {
-  height: 40px;
-  width: 250px;
-  border: 1px solid white;
-  margin: 5px;
-  border-radius: 17px;
-  padding-left: 15px;
-  padding-right: 15px;
-  font-size: 20px;
-}
-
-.login-container form input::placeholder {
-  position: relative;
-  line-height: 0px;
-  font-family: "Nunito";
-  word-wrap: break-word;
-  font-size: 18px;
-}
-
-.login-container form input[type="submit"] {
-  color: black;
-  font-family: "Nunito";
-  font-size: 20px;
-  font-weight: bold;
-  border: 1px solid white;
-  border-radius: 17px;
-  height: 40px;
-  padding: 0;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.login-container form input[type="submit"]:hover {
-  background-color: #c5d7c5;
-}
-
-.login-container form input:focus {
-  outline: 2px solid black;
-  border-radius: 2rem;
 }
