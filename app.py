@@ -1,6 +1,5 @@
 import os
-from flask import Flask, render_template, request, send_from_directory
-from sqlalchemy import column, false
+from flask import Flask, make_response, render_template, request, send_from_directory, session
 
 # local python files
 from forms import *
@@ -9,9 +8,12 @@ from models import *
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+app.secret_key = "123"
 
-db.init_app(app)
 STATIC_URL = 'static/'
+
+ckeditor = CKEditor(app)
+db.init_app(app)
 
 with app.app_context():
     db.create_all()  # create database tables for our data models
@@ -41,6 +43,18 @@ def query_data(model, limit=None, order_by=None, filter_by=None, all=True):
     return query.all()
 
 
+@app.route("/set_cookie")
+def set_cookie():
+    resp = make_response()
+    resp.set_cookie('username', 'admin')
+    return resp
+
+
+@app.route("/admin")
+def admin():
+    return "hi"
+
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -54,7 +68,6 @@ def index():
 
 @app.route('/services')
 def services():
-
     return render_template('services.html', title='Services', selected="services")
 
 
@@ -63,13 +76,13 @@ def news():
     query = query_data(Post)
     postid = request.args.get('postid')
     if postid is not None:
+        form = ArticleForm()
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
             return render_template('article.html',
-                                   title=query.title +  # type: ignore
-                                   " | News Article",
+                                   title=query.title,
                                    selected='article',
-                                   article=query)
+                                   article=query, form=form)
     return render_template('news.html', title='News', selected="news", data=query)
     return "Under Maintenance"
 
@@ -91,6 +104,7 @@ def login():
                 'username': user}, all=False)
             if query is not None:
                 if query.username == user and query.password == pw:
+                    session['username'] = user
                     return True
 
         try:
@@ -111,6 +125,7 @@ def login():
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
+
     return render_template("login.html", form=form, title='Login', selected="login", error_message=error_message, requestAdminLogin=requestAdminLogin)
 
 

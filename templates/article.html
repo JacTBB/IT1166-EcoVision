@@ -1,12 +1,20 @@
+<head> {{ ckeditor.load() }}</head>
 {% extends "layout.html" %} {% block content %}
 <div class="container article-page">
     <div class="article">
         <div>
-            <p>{{ article.date }}</p>
-            <h1>{{ article.title }}</h1>
+            <p>{{ article.date.strftime('%B %d, %Y') }}</p>
+            <p>{{ article.title }}</p>
             <p>{{ article.content }}</p>
             <p>{{ article.image }}</p>
         </div>
     </div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.title.label }} {{ form.title() }}
+        {{ form.content.label(class_='ckeditor') }} {{ form.content(class_='ckeditor') }}
+        <input type="submit" value="Submit">
+    </form>
+    {{ ckeditor.config() }}
 </div>
 {% endblock %}

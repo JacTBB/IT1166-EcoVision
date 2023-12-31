@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, DateTime, DATETIME
+from sqlalchemy import Integer, String, DateTime, DATETIME, null
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -8,10 +8,11 @@ class Base(DeclarativeBase):
     pass
 
 
-db = SQLAlchemy(model_class=Base)
+db = SQLAlchemy()
 
 
-class Customer(db.Model):
+class User(db.Model):
+    __abstract__ = True
     id: Mapped[int] = mapped_column(
         Integer, primary_key=True, autoincrement=True)
     username: Mapped[str] = mapped_column(String)
@@ -23,26 +24,16 @@ class Customer(db.Model):
         return f"{self.username} {self.email} {self.password} {self.type}"
 
 
-class Author(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(80))
-    email = db.Column(db.String())
-    password = db.Column(db.String())
-    type = db.Column(db.String())
-
-    def __repr__(self) -> str:
-        return f"{self.username} {self.email} {self.password} {self.type}"
+class Customer(User):
+    pass
 
 
-class Admin(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(80))
-    email = db.Column(db.String())
-    password = db.Column(db.String())
-    type = db.Column(db.String())
+class Author(User):
+    pass
 
-    def __repr__(self) -> str:
-        return f"{self.username} {self.email} {self.password} {self.type}"
+
+class Admin(User):
+    email: Mapped[str] = mapped_column(String, nullable=True)
 
 
 class Post(db.Model):
