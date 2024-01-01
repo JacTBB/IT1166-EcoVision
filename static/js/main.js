@@ -9,4 +9,5 @@ $(document).ready(function () {
       $("nav").removeClass("nav-background ");
     }
   });
+
 });

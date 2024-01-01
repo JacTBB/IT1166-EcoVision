@@ -10,6 +10,7 @@
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
     </form>
+    {{userType}}
     {% if requestAdminLogin %}
     <p class="error-message"><i class="fa-regular fa-circle-info"></i>Admin Page</p>
 
