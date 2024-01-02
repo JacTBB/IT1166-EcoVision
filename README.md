@@ -7,6 +7,7 @@ Install Requirements
 
 Initialising Database
 `python test_models.py`
+For every new updated commits remove old database, and initialise again
 
 Running Flask App
 `python serve.py`

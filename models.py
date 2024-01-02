@@ -1,7 +1,9 @@
-from datetime import datetime
+from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, DateTime, DATETIME, null
+from sqlalchemy import Integer, String, DateTime, DATETIME
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 class Base(DeclarativeBase):
@@ -11,17 +13,18 @@ class Base(DeclarativeBase):
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __abstract__ = True
     id: Mapped[int] = mapped_column(
         Integer, primary_key=True, autoincrement=True)
-    username: Mapped[str] = mapped_column(String)
-    email: Mapped[str] = mapped_column(String)
-    password: Mapped[str] = mapped_column(String)
-    type: Mapped[str] = mapped_column(String)
+    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    password_hash: Mapped[str] = mapped_column(String)
 
-    def __repr__(self) -> str:
-        return f"{self.username} {self.email} {self.password} {self.type}"
+    def set_password(self, password: str) -> None:
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password: str) -> bool:
+        return check_password_hash(self.password_hash, password)
 
 
 class Customer(User):
@@ -33,7 +36,7 @@ class Author(User):
 
 
 class Admin(User):
-    email: Mapped[str] = mapped_column(String, nullable=True)
+    pass
 
 
 class Post(db.Model):
@@ -45,6 +48,3 @@ class Post(db.Model):
         DateTime, default=datetime.utcnow)
     image_name = db.Column(db.String())
     postid: Mapped[int] = mapped_column(Integer, unique=True, nullable=False)
-
-    def __repr__(self) -> str:
-        return f"{self.title} {self.content} {self.author} {self.date} {self.image_name}"

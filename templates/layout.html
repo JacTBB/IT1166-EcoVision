@@ -53,7 +53,7 @@
         <a id="{% if selected == 'contact' %}nav-selected{% endif %}" href="#">Contact Us</a>
       </li>
       <li>
-        {% if userType == "user" or userType == "admin" %}
+        {% if current_user_is_loggedin == true %}
         <a href="{{ url_for('logout') }}">Logout</a>
         {% else %}
         <a id="{% if selected == 'login' %}nav-selected{% endif %}" href="{{ url_for('login') }}">Login</a>
