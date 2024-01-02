@@ -2,13 +2,13 @@ from app import db, app
 from models import *
 
 with app.app_context():
-    customer = Customer(username="test", email="email@gmail.com",
-                        password="123", type="user")
+    customer = Customer(username="user")
+    customer.set_password('user')
     db.session.add(customer)
     db.session.commit()
 
-    admin = Admin(username="admin",
-                  password="123", type="admin")
+    admin = Admin(username="admin")
+    admin.set_password('admin')
     db.session.add(admin)
     db.session.commit()
 
