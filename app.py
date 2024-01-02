@@ -1,9 +1,12 @@
 import os
 from flask import Flask, make_response, redirect, render_template, request, send_from_directory, session, url_for
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
+
 
 # local python files
 from forms import *
 from models import *
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
@@ -11,6 +14,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SESSION_COOKIE_SECURE"] = False
 app.config["SESSION_COOKIE_HTTPONLY"] = False
 app.secret_key = "123"
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 STATIC_URL = 'static/'
 
@@ -49,9 +55,7 @@ def query_login(model, user, pw):
     query = query_data(model, filter_by={
         'username': user}, all=False)
     if query is not None:
-        if query.username == user and query.password == pw:
-            session['username'] = query.username
-            session['type'] = query.type
+        if query.username == user and query.check_password(pw):
             return True
 
 
@@ -60,10 +64,22 @@ def check_login():
     return
 
 
-
 @app.route("/admin")
 def admin():
     return "hi"
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return query_data(Customer, filter_by={'id': user_id}, all=False)
+
+
+@login_manager.request_loader
+def request_loader(request):
+    username = request.form.get('username')
+    customer = query_data(Customer, filter_by={
+                          'username': username}, all=False)
+    return customer
 
 
 @app.route('/favicon.ico')
@@ -74,12 +90,12 @@ def favicon():
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Home', selected="home", userType=session.get("type"), news=query_data(Post, limit=3))
+    return render_template('index.html', title='Home', selected="home", news=query_data(Post, limit=3))
 
 
 @app.route('/services')
 def services():
-    return render_template('services.html', title='Services', selected="services", userType=session.get('type'))
+    return render_template('services.html', title='Services', selected="services")
 
 
 @app.route('/news')
@@ -95,7 +111,7 @@ def news():
                                    selected='article',
                                    article=query, form=form, userType=session.get('type'))
 
-    return render_template('news.html', title='News', selected="news", data=query, userType=session.get('type'))
+    return render_template('news.html', title='News', selected="news", data=query)
     return "Under Maintenance"
 
 
@@ -110,19 +126,20 @@ def login():
         requestAdminLogin = True
 
     if form.validate_on_submit():
-        result = request.form
-
         try:
-            username = result.get("username")
-            password = result.get("password")
+            username = request.form.get("username")
+            password = request.form.get("password")
             if admin is not None:
                 if query_login(Admin, username, password):
-                    return render_template("account.html", password=password, username=session.get('username'))
+                    return render_template("account.html", password=password, username=username)
                 else:
                     error_message = "Invalid username or password"
             else:
                 if query_login(Customer, username, password):
-                    return render_template("account.html", password=password, username=username)
+                    customer = query_data(Customer, filter_by={
+                                          'username': username}, all=False)
+                    login_user(customer)
+                    return redirect(url_for('protected'))
                 else:
                     error_message = "Invalid username or password"
 
@@ -134,13 +151,23 @@ def login():
         if session.get("username") is not None:
             showLogout = True
 
-    return render_template("login.html", form=form, title='Login', userType=session.get('type'), selected="login", showLogout=showLogout, error_message=error_message, requestAdminLogin=requestAdminLogin)
+    return render_template("login.html", form=form, title='Login', selected="login", showLogout=showLogout, error_message=error_message, requestAdminLogin=requestAdminLogin)
+
+
+@app.route("/protected")
+@login_required
+def protected():
+    if current_user.is_authenticated:
+        username = current_user.username
+    else:
+        username = "Guest"
+    return f"Logged in as: { username}"
 
 
 @app.route('/logout')
 def logout():
-    session.clear()
-    return redirect(url_for('login'))
+    logout_user()
+    return "Logged out"
 
 
 @app.errorhandler(404)
