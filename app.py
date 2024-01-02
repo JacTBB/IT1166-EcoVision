@@ -1,5 +1,5 @@
 import os
-from flask import Flask, make_response, redirect, render_template, request, send_from_directory, session, url_for
+from flask import Flask, redirect, render_template, request, send_from_directory, session, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
 
@@ -11,8 +11,6 @@ from models import *
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1234567890"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SESSION_COOKIE_SECURE"] = False
-app.config["SESSION_COOKIE_HTTPONLY"] = False
 app.secret_key = "123"
 
 login_manager = LoginManager()
@@ -61,12 +59,12 @@ def query_login(model, user, pw):
 
 @app.before_request
 def check_login():
-    return
-
-
-@app.route("/admin")
-def admin():
-    return "hi"
+    global current_user_is_loggedin
+    if current_user.is_authenticated:
+        current_user_is_loggedin = True
+    else:
+        current_user_is_loggedin = False
+    print(current_user_is_loggedin)
 
 
 @login_manager.user_loader
@@ -88,14 +86,17 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
+current_user_is_loggedin = False
+
+
 @app.route('/')
 def index():
-    return render_template('index.html', title='Home', selected="home", news=query_data(Post, limit=3))
+    return render_template('index.html', title='Home', selected="home", current_user_is_loggedin=current_user_is_loggedin, news=query_data(Post, limit=3))
 
 
 @app.route('/services')
 def services():
-    return render_template('services.html', title='Services', selected="services")
+    return render_template('services.html', title='Services', selected="services", current_user_is_loggedin=current_user_is_loggedin)
 
 
 @app.route('/news')
@@ -109,9 +110,9 @@ def news():
             return render_template('article.html',
                                    title=query.title,
                                    selected='article',
-                                   article=query, form=form, userType=session.get('type'))
+                                   article=query, form=form, current_user_is_loggedin=False)
 
-    return render_template('news.html', title='News', selected="news", data=query)
+    return render_template('news.html', title='News', selected="news", data=query, current_user_is_loggedin=current_user_is_loggedin)
     return "Under Maintenance"
 
 
@@ -139,7 +140,7 @@ def login():
                     customer = query_data(Customer, filter_by={
                                           'username': username}, all=False)
                     login_user(customer)
-                    return redirect(url_for('protected'))
+                    return redirect(url_for('account'))
                 else:
                     error_message = "Invalid username or password"
 
@@ -151,23 +152,31 @@ def login():
         if session.get("username") is not None:
             showLogout = True
 
-    return render_template("login.html", form=form, title='Login', selected="login", showLogout=showLogout, error_message=error_message, requestAdminLogin=requestAdminLogin)
+    return render_template("login.html", form=form, title='Login', selected="login", current_user_is_loggedin=current_user_is_loggedin, showLogout=showLogout, error_message=error_message, requestAdminLogin=requestAdminLogin)
 
 
-@app.route("/protected")
+@app.route("/admin")
+def admin():
+    return "hi"
+    return render_template("admin.html", title="Admin", selected="admin", current_user_is_loggedin=current_user_is_loggedin)
+
+
+@app.route("/account")
 @login_required
-def protected():
+def account():
+    global current_user_is_loggedin
     if current_user.is_authenticated:
         username = current_user.username
-    else:
-        username = "Guest"
-    return f"Logged in as: { username}"
+        current_user_is_loggedin = True
+        return render_template("account.html", username=username, current_user_is_loggedin=current_user_is_loggedin)
+    return redirect(url_for('login'))
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
-    return "Logged out"
+    return redirect(url_for('login'))
 
 
 @app.errorhandler(404)
