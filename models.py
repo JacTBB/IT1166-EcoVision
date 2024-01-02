@@ -1,9 +1,9 @@
-from datetime import datetime
-import flask_login
+from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, DateTime, DATETIME
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 class Base(DeclarativeBase):
@@ -13,7 +13,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy()
 
 
-class User(db.Model, flask_login.UserMixin):
+class User(db.Model, UserMixin):
     __abstract__ = True
     id: Mapped[int] = mapped_column(
         Integer, primary_key=True, autoincrement=True)

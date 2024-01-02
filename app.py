@@ -24,12 +24,14 @@ db.init_app(app)
 with app.app_context():
     db.create_all()  # create database tables for our data models
 
+current_user_is_loggedin = False
+
 
 def query_data(model, limit=None, order_by=None, filter_by=None, all=True):
     query = db.session.query(model)
 
     if order_by is not None:
-        query = query.order_by(order_by)
+        query = query.order_by(**order_by)
 
     if limit is not None:
         query = query.limit(limit)
@@ -37,8 +39,11 @@ def query_data(model, limit=None, order_by=None, filter_by=None, all=True):
     if filter_by is not None:
         query = query.filter_by(**filter_by)
 
+    if order_by is not None and filter_by is not None:
+        query = query.order_by(**order_by).filter_by(**filter_by)
+
     if limit is not None and order_by is not None:
-        query = query.order_by(order_by).limit(limit)
+        query = query.order_by(**order_by).limit(limit)
 
     if limit is not None and filter_by is not None:
         query = query.filter_by(**filter_by).limit(limit)
@@ -64,7 +69,6 @@ def check_login():
         current_user_is_loggedin = True
     else:
         current_user_is_loggedin = False
-    print(current_user_is_loggedin)
 
 
 @login_manager.user_loader
@@ -86,9 +90,6 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-current_user_is_loggedin = False
-
-
 @app.route('/')
 def index():
     return render_template('index.html', title='Home', selected="home", current_user_is_loggedin=current_user_is_loggedin, news=query_data(Post, limit=3))
@@ -105,7 +106,8 @@ def news():
     postid = request.args.get('postid')
     if postid is not None:
         form = ArticleForm()
-        query = query_data(Post, filter_by={'postid': postid}, all=False)
+        query = query_data(
+            Post, filter_by={'postid': postid}, all=False)
         if query is not None:
             return render_template('article.html',
                                    title=query.title,
@@ -122,7 +124,6 @@ def login():
     error_message = None
     admin = request.args.get('admin')
     requestAdminLogin = False
-    showLogout = None
     if admin is not None:
         requestAdminLogin = True
 
@@ -132,7 +133,10 @@ def login():
             password = request.form.get("password")
             if admin is not None:
                 if query_login(Admin, username, password):
-                    return render_template("account.html", password=password, username=username)
+                    admin = query_data(Admin, filter_by={
+                        'username': username}, all=False)
+                    login_user(admin)
+                    return redirect(url_for('account'))
                 else:
                     error_message = "Invalid username or password"
             else:
@@ -149,10 +153,7 @@ def login():
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-        if session.get("username") is not None:
-            showLogout = True
-
-    return render_template("login.html", form=form, title='Login', selected="login", current_user_is_loggedin=current_user_is_loggedin, showLogout=showLogout, error_message=error_message, requestAdminLogin=requestAdminLogin)
+    return render_template("login.html", form=form, title='Login', selected="login", current_user_is_loggedin=current_user_is_loggedin, error_message=error_message, requestAdminLogin=requestAdminLogin)
 
 
 @app.route("/admin")

@@ -4,6 +4,7 @@ from flask_ckeditor import CKEditorField, CKEditor
 from wtforms.validators import InputRequired, DataRequired
 
 
+
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired()], render_kw={
                            "placeholder": "Username"})
