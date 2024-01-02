@@ -1,14 +1,19 @@
-from app import db, app
-from models import *
+from app import create_app
+from app.config import Config
+from app.database import db
+from app.models.User import Customer, Admin
+from app.models.News import Post
+
+app = create_app(Config)
 
 with app.app_context():
-    customer = Customer(username="test", email="email@gmail.com",
-                        password="123", type="user")
+    customer = Customer(username="test", type="user")
+    customer.set_password('123')
     db.session.add(customer)
     db.session.commit()
 
-    admin = Admin(username="admin",
-                  password="123", type="admin")
+    admin = Admin(username="admin", type="admin")
+    admin.set_password('123')
     db.session.add(admin)
     db.session.commit()
 

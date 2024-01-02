@@ -9,4 +9,4 @@ Initialising Database
 `python test_models.py`
 
 Running Flask App
-`python app.py`
+`python serve.py`
