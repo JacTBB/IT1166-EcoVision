@@ -4,6 +4,7 @@ from app.config import Config
 from app.database import db, query_data
 from app.models.User import Customer
 from flask_bcrypt import Bcrypt
+from flask_ckeditor import CKEditor
 
 
 
@@ -20,6 +21,9 @@ def create_app(config_class=Config):
         login_manager.init_app(app)
         
         bcrypt = Bcrypt(app)
+        
+        ckeditor = CKEditor()
+        ckeditor.init_app(app)
         
         
         

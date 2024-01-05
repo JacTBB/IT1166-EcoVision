@@ -1,4 +1,4 @@
-from flask import render_template, session
+from flask import render_template
 from app.auth import auth
 from app.database import db
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
