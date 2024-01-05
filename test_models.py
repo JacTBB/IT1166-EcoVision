@@ -1,14 +1,19 @@
-from app import db, app
-from models import *
+from app import create_app
+from app.config import Config
+from app.database import db
+from app.models.User import Customer, Admin
+from app.models.News import Post
+
+app = create_app(Config)
 
 with app.app_context():
-    customer = Customer(username="user")
-    customer.set_password('user')
+    customer = Customer(username="test")
+    customer.set_password('123')
     db.session.add(customer)
     db.session.commit()
 
     admin = Admin(username="admin")
-    admin.set_password('admin')
+    admin.set_password('123')
     db.session.add(admin)
     db.session.commit()
 
@@ -17,9 +22,3 @@ with app.app_context():
                     image_name="Cover-image-1-495x400.jpg", postid=i+5)
         db.session.add(post)
         db.session.commit()
-
-    # query = db.session.query(Customer).filter_by(
-    #     username="test").first()
-
-    # if query is not None:
-    #     print(query.username)

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block layouthead %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" />
+  
+  <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+{% endblock %}

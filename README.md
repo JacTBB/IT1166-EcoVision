@@ -10,4 +10,4 @@ Initialising Database
 For every new updated commits remove old database, and initialise again
 
 Running Flask App
-`python app.py`
+`python serve.py`
