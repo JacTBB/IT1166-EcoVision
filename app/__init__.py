@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from flask_login import LoginManager
 from app.config import Config
 from app.database import db, query_data
