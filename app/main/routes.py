@@ -33,3 +33,7 @@ def query_data(model, limit=None, order_by=None, filter_by=None, all=True):
 @main.route('/')
 def home():
     return render_template('index.html', news=query_data(Post, limit=3))
+
+@main.route('/services')
+def services():
+    return render_template('services.html')
