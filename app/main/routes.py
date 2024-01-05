@@ -3,7 +3,6 @@ from app.main import main
 from app.database import query_data
 from app.models.News import Post
 from app.main.forms import ArticleForm
-from flask_ckeditor import CKEditor
 
 
 
@@ -11,9 +10,13 @@ from flask_ckeditor import CKEditor
 def home():
     return render_template('index.html', news=query_data(Post, limit=3))
 
+
+
 @main.route('/services')
 def services():
     return render_template('services.html')
+
+
 
 @main.route('/news')
 def news():

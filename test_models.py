@@ -7,12 +7,12 @@ from app.models.News import Post
 app = create_app(Config)
 
 with app.app_context():
-    customer = Customer(username="test", type="user")
+    customer = Customer(username="test")
     customer.set_password('123')
     db.session.add(customer)
     db.session.commit()
 
-    admin = Admin(username="admin", type="admin")
+    admin = Admin(username="admin")
     admin.set_password('123')
     db.session.add(admin)
     db.session.commit()
@@ -22,9 +22,3 @@ with app.app_context():
                     image_name="Cover-image-1-495x400.jpg", postid=i+5)
         db.session.add(post)
         db.session.commit()
-
-    # query = db.session.query(Customer).filter_by(
-    #     username="test").first()
-
-    # if query is not None:
-    #     print(query.username)

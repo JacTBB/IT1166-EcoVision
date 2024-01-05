@@ -17,7 +17,7 @@
       <a class="{{ 'nav-selected' if request.endpoint == 'main.contactus' else '' }}" href="#">Contact Us</a>
     </li>
     <li>
-      {% if current_user_is_loggedin == true %}
+      {% if current_user.is_authenticated == true %}
         <a href="{{ url_for('auth.logout') }}">Logout</a>
       {% else %}
         <a class="{{ 'nav-selected' if request.endpoint == 'auth.login' else '' }}" href="{{ url_for('auth.login' )}}">Login</a>

@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}Login - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock %}
+
+{% block content %}
+  <div class="container login-page">
+    <img src="{{ url_for('static', filename='images/pexels-lumn-1410224.webp') }}">
+    <div class="image-overlay"></div>
+    <div class="login-container">
+      <p style="color: white; font-size: 22px">Login</p>
+      <form action="" method="POST">
+        <div>{{form.username}}</div>
+        <div>{{form.password}}</div>
+        <div>{{form.submit()}}</div>
+        {{ form.csrf_token }}
+      </form>
+
+      {{userType}}
+      
+      {% if requestAdminLogin %}
+        <p class="error-message"><i class="fa-regular fa-circle-info"></i>Admin Page</p>
+      {% endif %}
+
+      {% if error_message %}
+        <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
