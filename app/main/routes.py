@@ -32,4 +32,4 @@ def query_data(model, limit=None, order_by=None, filter_by=None, all=True):
 
 @main.route('/')
 def home():
-    return render_template('index.html', title='Home', selected="home", news=query_data(Post, limit=3))
+    return render_template('index.html', news=query_data(Post, limit=3))

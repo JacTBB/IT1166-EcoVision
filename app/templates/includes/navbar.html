@@ -1,0 +1,23 @@
+<nav>
+  <div class="nav-logo">
+    <a href="{{ url_for('main.home')}}">EcoVision</a>
+  </div>
+
+  <ul>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.home' else '' }}">Home</a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.services' else '' }}" href="{{ url_for('main.home') }}">Services</a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.home') }}">News</a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.contactus' else '' }}" href="#">Contact Us</a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.login' else '' }}" href="{{ url_for('auth.login' )}}">Login</a>
+    </li>
+  </ul>
+</nav>
