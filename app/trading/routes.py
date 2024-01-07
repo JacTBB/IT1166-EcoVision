@@ -14,7 +14,7 @@ def home():
 
 @trading.route('/project/<project>')
 def project(project):
-    return render_template('trading/Project.html', project = project)
+    return render_template('trading/ProjectF.html', project = project)
 
 @trading.route("/locations")
 @login_required
@@ -27,7 +27,7 @@ def locations():
             'type': location.type
         }
     
-    return render_template('client/locations.html', locations=locations)   
+    return render_template('trading/ProjectF.html', locations=locations)   
 
 @trading.route("/project/add", methods=['GET', 'POST'])
 def project_add():
@@ -42,12 +42,12 @@ def project_add():
             db.session.add(location)
             db.session.commit()
             
-            return redirect(url_for('client.locations'))
+            return redirect(url_for('trading.locations'))
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
     
-    return render_template("client/location_add.html", form=form)
+    return render_template('trading/ProjectA.html', form=form)
 
 @trading.route("/location/<location>/edit", methods=['GET', 'POST'])
 @login_required
@@ -68,12 +68,12 @@ def location_edit(location):
             
             db.session.commit()
             
-            return redirect(url_for('client.locations'))
+            return redirect(url_for('trading.locations'))
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
     
-    return render_template("project/forms.html", form=form)
+    return render_template('trading/ProjectE.html', form=form)
 
 @trading.route("/location/<location>/delete")
 @login_required
@@ -86,7 +86,7 @@ def location_delete(location):
         
         db.session.delete(locationData)
         db.session.commit()
-        return redirect(url_for('client.Projects'))
+        return redirect(url_for('trading.locations'))
     except Exception as e:
         print(f"Error occurred: {e}")
         db.session.rollback()
