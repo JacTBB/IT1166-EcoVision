@@ -43,9 +43,11 @@ def create_app(config_class=Config):
         from app.main import main
         from app.auth import auth
         from app.client import client
+        from app.trading import trading
         
         app.register_blueprint(main)
         app.register_blueprint(auth)
         app.register_blueprint(client, url_prefix='/client')
+        app.register_blueprint(trading, url_prefix='/trading')
 
     return app
