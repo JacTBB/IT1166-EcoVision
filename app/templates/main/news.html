@@ -14,6 +14,12 @@
     <div class="news-section">
       <div class="news-header">
         <h1 style="color: white">Latest News</h1>
+        {% if current_user.type == 'admin' or current_user.type == 'author' %}
+        <div style="position: relative; float: right;">
+          <a href="{{ url_for('main.news', addpost=true) }}" class="add-post-button">Add Post</a>
+
+        </div>
+        {% endif %}
       </div>
 
       <div class="news-column">

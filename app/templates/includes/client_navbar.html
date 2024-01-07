@@ -5,13 +5,16 @@
 
   <ul>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'client.dashboard' else '' }}" href="{{ url_for('client.dashboard') }}">Dashboard</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'client.dashboard' else '' }}"
+        href="{{ url_for('client.dashboard') }}">Dashboard</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'client.account' else '' }}" href="{{ url_for('client.account') }}">{{ current_user.username }}</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'trading.home' else '' }}"
+        href="{{ url_for('trading.home') }}">Carbon Trading</a>
     </li>
     <li>
-      <a href="{{ url_for('auth.logout') }}">Logout</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'client.account' else '' }}"
+        href="{{ url_for('client.account') }}">Account</a>
     </li>
   </ul>
 </nav>

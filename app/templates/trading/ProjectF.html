@@ -1,0 +1,34 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Locations - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/ProjectF.css') }}" />
+{% endblock %}
+
+{% block content %}
+  <section>
+    <h2>Projects</h2>
+    <div class="addlocation">
+      <a href="{{ url_for('trading.project_add') }}"><p>Add Location</p></a>
+    </div>
+    <table id="locations">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>type</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for id, location in locations.items() %}
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ location.name }}</td>
+          <td>{{ location.type }}</td>
+          <td><a href="{{ url_for('trading.location_edit', location=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('trading.location_delete', location=id) }}">Delete</a></td>
+        <tr>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

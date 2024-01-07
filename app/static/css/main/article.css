@@ -4,4 +4,13 @@
 
 .article {
   margin-top: 100px;
+  width: 80vw;
+  word-break: break-word;
+}
+
+@media screen and (min-width: 1024px) {
+  .article {
+    width: 1000px;
+  }
+
 }
