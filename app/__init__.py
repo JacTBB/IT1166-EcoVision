@@ -5,6 +5,7 @@ from app.database import db, query_data
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import *
 from app.models.Client import *
+from app.models.Trading import *
 from flask_bcrypt import Bcrypt
 from flask_ckeditor import CKEditor
 
@@ -44,10 +45,12 @@ def create_app(config_class=Config):
         from app.auth import auth
         from app.client import client
         from app.trading import trading
+        from app.staff import staff
         
         app.register_blueprint(main)
         app.register_blueprint(auth)
         app.register_blueprint(client, url_prefix='/client')
         app.register_blueprint(trading, url_prefix='/trading')
+        app.register_blueprint(staff, url_prefix='/staff')
 
     return app

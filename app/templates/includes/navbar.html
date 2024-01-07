@@ -5,22 +5,26 @@
 
   <ul>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.home' else '' }}" href="{{ url_for('main.home') }}">Home</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.home' else '' }}"
+        href="{{ url_for('main.home') }}">Home</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.services' else '' }}" href="{{ url_for('main.services') }}">Services</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.services' else '' }}"
+        href="{{ url_for('main.services') }}">Services</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}">News</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}"
+        href="{{ url_for('main.news') }}">News</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.contactus' else '' }}" href="#">Contact Us</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.contactus' else '' }}" href="{{ url_for('main.contact') }}">Contact Us</a>
     </li>
     <li>
       {% if current_user.is_authenticated == true %}
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
+      <a href="{{ url_for('auth.account') }}">Account</a>
       {% else %}
-        <a class="{{ 'nav-selected' if request.endpoint == 'auth.login' else '' }}" href="{{ url_for('auth.login' )}}">Login</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.login' else '' }}"
+        href="{{ url_for('auth.login' )}}">Login</a>
       {% endif %}
     </li>
   </ul>

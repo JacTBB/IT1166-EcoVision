@@ -1,0 +1,26 @@
+.Welcome-block {
+    padding-top: 55px;
+    border-color: black;
+    background-color: beige;
+    font-size: large;
+    font-weight: bold;
+}
+.Welcome-block
+
+#sign-infomation {
+    display: none;
+    background-color: white;
+    color: black;
+    margin-left: 50px;
+    width: 200px;
+    padding: 10px;
+}
+
+#Purchase-info {
+    display: none;
+    background-color: white;
+    color: black;
+    margin-left: 50px;
+    width: 200px;
+    padding: 10px;
+}

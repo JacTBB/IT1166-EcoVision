@@ -17,6 +17,7 @@
     background-color: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
     height: inherit;
     width: inherit;
+    object-fit: cover;
     z-index: -1;
 }
 
@@ -33,8 +34,8 @@ footer {
 }
 
 .login-container {
-    height: 500px;
-    width: 600px;
+    height: 410px;
+    width: 480px;
     display: flex;
     flex-direction: column;
     align-items: center;
