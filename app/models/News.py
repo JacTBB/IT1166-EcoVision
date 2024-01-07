@@ -4,7 +4,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
 
-
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(80))
@@ -14,6 +13,3 @@ class Post(db.Model):
         DateTime, default=datetime.utcnow)
     image_name = db.Column(db.String())
     postid: Mapped[int] = mapped_column(Integer, unique=True, nullable=False)
-
-    def __repr__(self) -> str:
-        return f"{self.title} {self.content} {self.author} {self.date} {self.image_name}"

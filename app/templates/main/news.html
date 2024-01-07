@@ -3,71 +3,54 @@
 {% block title %}News - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <div class="news">
-      <img src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}" />
+<div class="container">
+  <div class="news">
+    <img src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}" />
 
-      <div class="news-section">
-        <div class="news-header">
-          <h1 style="color: white">Latest News</h1>
-        </div>
-        <div class="news-column">
+    <div class="news-section">
+      <div class="news-header">
+        <h1 style="color: white">Latest News</h1>
+      </div>
+
+      <div class="news-column">
+        {% for post in data|reverse %}
+        {% if post.postid == 9 %}
+        <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="featured-news">
-            <img src="{{ url_for('static', filename='images/Australia to Singapore.jpg')}}" alt="" />
+            <img src="{{ url_for('static', filename='images/' + post.image_name) }}" alt="" />
             <div>
               <h2>
                 How Singapore plans to import solar power from the world’s largest
                 solar plant
               </h2>
               <p class="news-date">20 May 2023</p>
+
             </div>
           </div>
+        </a>
+        {% endif %}
+        {% endfor %}
 
-          {% for post in data|reverse %}
-            <a href="{{ url_for('main.news', postid=post.postid) }}">
-              <div class="catalog postid_{{ post.postid }}">
-                <div class="catalog-image-container">
-                  <img src="{{ url_for('static', filename='images/' + post.image_name) }}" loading="lazy" />
-                </div>
-                <div class="news-head">
-                  <h3>{{ post.title }}</h3>
-                  <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
-                </div>
-              </div>
-            </a>
-          {% endfor %}
-
-          <!-- <div class="catalog">
-            <img src="{{ url_for('static',filename='images/Cover-image-1-495x400.jpg') }}"/>
-            <div>
-              <div>
-                <h2>
-                  How Singapore plans to import solar power from the world’s
-                  largest solar plant
-                </h2>
-                <p class="news-date">20 May 2023</p>
-                <p class="news-description">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad
-                  quos mollitia dolorum dolor explicabo fugit earum aspernatur
-                  culpa ab modi illo impedit totam cum, dolores blanditiis error
-                  suscipit eveniet minima? Lorem ipsum dolor sit, amet
-                  consectetur adipisicing elit. Deleniti, laborum minus quod
-                  assumenda explicabo quidem at nisi! Sed, quia hic voluptatem
-                  ratione perspiciatis amet culpa animi id accusamus maiores
-                  quod.
-                </p>
-              </div>
-              <div>
-                <a href="#" class="readmore">Read more</a>
-              </div>
+        {% for post in data|reverse %}
+        <a href="{{ url_for('main.news', postid=post.postid) }}">
+          <div class="catalog postid_{{ post.postid }}">
+            <div class="catalog-image-container">
+              <img src="{{ url_for('static', filename='images/' + post.image_name) }}" loading="lazy" />
             </div>
-          </div> -->
-        </div>
+            <div class="news-head">
+              <h3>{{ post.title }}</h3>
+              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
