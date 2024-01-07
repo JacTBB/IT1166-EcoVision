@@ -17,17 +17,15 @@ with app.app_context():
         user.set_password('123')
         if UserType == 'client':
             user.set_company('SomeCompanyName')
-        
+
         db.session.add(user)
         db.session.commit()
 
-
-
-    for i in range(5):
+    for i in range(1, 10):
         post = Post(title="test",
                     content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur",
                     author="test",
                     image_name="Cover-image-1-495x400.jpg",
-                    postid=i+5)
+                    postid=i*2)
         db.session.add(post)
         db.session.commit()

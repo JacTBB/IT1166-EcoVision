@@ -17,8 +17,8 @@
       </div>
 
       <div class="news-column">
-        {% for post in data|reverse %}
-        {% if post.postid == 9 %}
+        {% for post in data %}
+        {% if post.postid == 18 %}
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="featured-news">
             <img src="{{ url_for('static', filename='images/' + post.image_name) }}" alt="" />
