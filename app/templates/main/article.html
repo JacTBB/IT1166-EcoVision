@@ -15,7 +15,7 @@
     <p>{{ article.date.strftime('%B %d, %Y') }}</p>
 
 
-    {% if current_user.username == "admin" or current_user.username == "author" %}
+    {% if current_user.type == "admin" or current_user.type == "author" %}
     <form method="POST">
       {{ form.hidden_tag() }}
       <p>
