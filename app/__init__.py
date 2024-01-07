@@ -44,10 +44,12 @@ def create_app(config_class=Config):
         from app.auth import auth
         from app.client import client
         from app.trading import trading
+        from app.staff import staff
         
         app.register_blueprint(main)
         app.register_blueprint(auth)
         app.register_blueprint(client, url_prefix='/client')
         app.register_blueprint(trading, url_prefix='/trading')
+        app.register_blueprint(staff, url_prefix='/staff')
 
     return app
