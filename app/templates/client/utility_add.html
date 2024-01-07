@@ -1,0 +1,20 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Add Utility - EcoVision{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block content %}
+  <div style="padding: 10px;">
+    <h1 style="padding-top: 50px;">Add Utility</h1>
+    <form action="" method="POST">
+      <div>{{form.name}}</div>
+      <div>{{form.date}}</div>
+      <div>{{form.carbonfootprint}}</div>
+      <div>{{form.energyusage}}</div>
+      <div>{{form.waterusage}}</div>
+      <div>{{form.submit()}}</div>
+      {{ form.csrf_token }}
+    </form>
+  </div>
+{% endblock %}
