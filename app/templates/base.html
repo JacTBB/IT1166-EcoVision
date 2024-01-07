@@ -25,11 +25,11 @@
 </head>
 
 <body>
-  {% include 'includes/navbar.html' %}
+  {% block navbar %}{% endblock %}
 
-  {% block content %} {% endblock content %}
+  {% block content %}{% endblock %}
 
-  {% include 'includes/footer.html' %}
+  {% block footer %}{% endblock %}
 </body>
 
 </html>

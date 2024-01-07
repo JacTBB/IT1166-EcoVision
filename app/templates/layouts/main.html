@@ -6,3 +6,11 @@
   
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
 {% endblock %}
+
+{% block navbar %}
+  {% include 'includes/navbar.html' %}
+{% endblock %}
+
+{% block footer %}
+  {% include 'includes/footer.html' %}
+{% endblock %}
