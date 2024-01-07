@@ -1,0 +1,18 @@
+.account {
+    padding: 15px;
+    margin: auto;
+    text-align: center;
+    color: white;
+}
+
+.button {
+    background-color: #578166;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
