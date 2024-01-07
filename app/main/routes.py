@@ -4,12 +4,14 @@ from sqlalchemy import desc, true
 from app.main import main
 from app.database import query_data, db
 from app.models.News import Post
-from app.main.forms import ArticleForm
+from app.main.forms import ArticleForm, ContactForm
+
 
 
 @main.route('/')
 def home():
     return render_template('main/home.html', news=query_data(Post, limit=3))
+
 
 
 @main.route('/services')
@@ -62,6 +64,7 @@ def news():
     return render_template('main/news.html', data=query)
 
 
+
 # @main.route('/news/add', methods=['GET', 'POST'])
 # @login_required
 # def add_news():
@@ -79,3 +82,11 @@ def news():
 #                     db.session.rollback()
 
 #     return render_template('main/add_news.html', form=form)
+
+
+
+@main.route('/contact')
+def contact():
+    form = ContactForm()
+    
+    return render_template('main/contact.html', form=form)
