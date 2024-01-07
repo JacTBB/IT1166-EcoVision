@@ -325,6 +325,7 @@
   .news-section .news-column {
     width: 100%;
     justify-content: center;
+    flex-flow: column;
   }
 
   .news-section .catalog {
