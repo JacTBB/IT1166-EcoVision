@@ -8,13 +8,13 @@ from app.main.forms import ArticleForm
 
 @main.route('/')
 def home():
-    return render_template('index.html', news=query_data(Post, limit=3))
+    return render_template('main/home.html', news=query_data(Post, limit=3))
 
 
 
 @main.route('/services')
 def services():
-    return render_template('services.html')
+    return render_template('main/services.html')
 
 
 
@@ -26,6 +26,6 @@ def news():
         form = ArticleForm()
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
-            return render_template('article.html', article=query, form=form)
+            return render_template('main/article.html', article=query, form=form)
 
-    return render_template('news.html', data=query)
+    return render_template('main/news.html', data=query)
