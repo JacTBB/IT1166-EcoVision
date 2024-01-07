@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from app.auth import auth
 from app.database import db, query_data
 from flask_login import current_user, login_required, login_user, logout_user
-from app.models.User import Customer, Admin
+from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.auth.forms import LoginForm
 
 
@@ -20,12 +20,18 @@ def login():
             username = request.form.get("username")
             password = request.form.get("password")
             
-            user = (query_data(Admin, filter_by={'username': username}, all=False) or
-                    query_data(Customer, filter_by={'username': username}, all=False))
+            user = (query_data(Client, filter_by={'username': username}, all=False) or
+                    query_data(Author, filter_by={'username': username}, all=False) or
+                    query_data(Technician, filter_by={'username': username}, all=False) or
+                    query_data(Consultant, filter_by={'username': username}, all=False) or
+                    query_data(Manager, filter_by={'username': username}, all=False) or
+                    query_data(Admin, filter_by={'username': username}, all=False))
                 
             if user:
                 if user.username == username and user.check_password(password):
                     login_user(user)
+                    if user.type == 'admin':
+                        return redirect(url_for('main.news'))
                     return redirect(url_for('auth.account'))
                 else:
                     error_message = "Invalid password"
@@ -45,8 +51,7 @@ def login():
 @login_required
 def account():
     username = current_user.username
-    print(current_user)
-    return render_template("auth/account.html", username=username)
+    return render_template("auth/account.html")
 
 
 

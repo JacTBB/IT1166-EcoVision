@@ -19,6 +19,11 @@ class User(db.Model, UserMixin):
     password_hash: Mapped[str] = mapped_column(String)
     type: Mapped[str] = mapped_column(String)
     
+    def __init__(self, username, type):
+        self.user_id = str(uuid.uuid4())
+        self.username = username
+        self.type = type
+    
     def get_id(self):
         return self.user_id
 
@@ -30,23 +35,32 @@ class User(db.Model, UserMixin):
 
 
 
-class Customer(User):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.type = 'customer'
-        self.user_id = str(uuid.uuid4())
+class Client(User):
+    company: Mapped[str] = mapped_column(String)
+    
+    def __init__(self, username):
+        super().__init__(username, 'client')
+        self.company = '[CompanyName]'
+    
+    def set_company(self, company):
+        self.company = company
 
 
 
 class Author(User):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.type = 'author'
-        self.user_id = str(uuid.uuid4())
+    def __init__(self, username):
+        super().__init__(username, 'author')
 
+class Technician(User):
+    def __init__(self, username):
+        super().__init__(username, 'technician')
+class Consultant(User):
+    def __init__(self, username):
+        super().__init__(username, 'consultant')
 
+class Manager(User):
+    def __init__(self, username):
+        super().__init__(username, 'manager')
 class Admin(User):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.type = 'admin'
-        self.user_id = str(uuid.uuid4())
+    def __init__(self, username):
+        super().__init__(username, 'admin')

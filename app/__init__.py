@@ -2,7 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 from app.config import Config
 from app.database import db, query_data
-from app.models.User import Customer, Admin
+from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from flask_bcrypt import Bcrypt
 from flask_ckeditor import CKEditor
 
@@ -29,7 +29,11 @@ def create_app(config_class=Config):
         
         @login_manager.user_loader
         def user_loader(user_id):
-            return (query_data(Customer, filter_by={'user_id': user_id}, all=False) or
+            return (query_data(Client, filter_by={'user_id': user_id}, all=False) or
+                    query_data(Author, filter_by={'user_id': user_id}, all=False) or
+                    query_data(Technician, filter_by={'user_id': user_id}, all=False) or
+                    query_data(Consultant, filter_by={'user_id': user_id}, all=False) or
+                    query_data(Manager, filter_by={'user_id': user_id}, all=False) or
                     query_data(Admin, filter_by={'user_id': user_id}, all=False))
 
 
