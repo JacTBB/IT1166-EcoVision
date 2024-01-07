@@ -6,12 +6,11 @@ from app.models.User import Client, Author, Technician, Consultant, Manager, Adm
 from app.auth.forms import LoginForm
 
 
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('auth.account'))
-    
+
     form = LoginForm()
     error_message = None
 
@@ -19,20 +18,23 @@ def login():
         try:
             username = request.form.get("username")
             password = request.form.get("password")
-            
+
             user = (query_data(Client, filter_by={'username': username}, all=False) or
                     query_data(Author, filter_by={'username': username}, all=False) or
                     query_data(Technician, filter_by={'username': username}, all=False) or
                     query_data(Consultant, filter_by={'username': username}, all=False) or
                     query_data(Manager, filter_by={'username': username}, all=False) or
                     query_data(Admin, filter_by={'username': username}, all=False))
-                
+
             if user:
                 if user.username == username and user.check_password(password):
                     login_user(user)
                     if user.type == 'client':
                         return redirect(url_for('client.dashboard'))
-                    return redirect(url_for('staff.dashboard'))
+                    elif user.type == 'admin':
+                        return redirect(url_for('staff.dashboard'))
+                    else:
+                        return redirect(url_for('auth.account'))
                 else:
                     error_message = "Invalid password"
             else:
@@ -46,12 +48,10 @@ def login():
     return render_template("auth/login.html", form=form, error_message=error_message)
 
 
-
 @auth.route("/account")
 @login_required
 def account():
     return render_template("auth/account.html")
-
 
 
 @auth.route('/logout')
