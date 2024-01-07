@@ -30,8 +30,8 @@ def login():
             if user:
                 if user.username == username and user.check_password(password):
                     login_user(user)
-                    if user.type == 'admin':
-                        return redirect(url_for('main.news'))
+                    if user.type == 'client':
+                        return redirect(url_for('client.dashboard'))
                     return redirect(url_for('auth.account'))
                 else:
                     error_message = "Invalid password"
@@ -50,7 +50,6 @@ def login():
 @auth.route("/account")
 @login_required
 def account():
-    username = current_user.username
     return render_template("auth/account.html")
 
 

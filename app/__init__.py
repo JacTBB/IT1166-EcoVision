@@ -40,8 +40,10 @@ def create_app(config_class=Config):
 
         from app.main import main
         from app.auth import auth
+        from app.client import client
         
         app.register_blueprint(main)
         app.register_blueprint(auth)
+        app.register_blueprint(client, url_prefix='/client')
 
     return app

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block layouthead %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" />
+{% endblock %}
+
+{% block navbar %}
+  {% include 'includes/client_navbar.html' %}
+{% endblock %}
