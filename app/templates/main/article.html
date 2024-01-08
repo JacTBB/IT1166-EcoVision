@@ -16,9 +16,20 @@
     <!-- <img src="{{ url_for('static', filename='images/' + article.image_name)}}" alt=""> -->
 
 
-    {% if current_user.type == "admin" or current_user.type == "author" %}
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    <div class="delete-button">
+      <a href="{{url_for('main.news', deletepost=article.postid)}}" style="color: red; text-decoration: underline;">Delete
+        Current Post</a>
+    </div>
     <form method="POST">
       {{ form.hidden_tag() }}
+      <br>
+      <p>
+        This will be the image on the news page
+        <br>
+        {{ form.image_view_onNews(value=article.image_name) }}
+      </p>
+
       <p>
         {{ form.title.label }}
         <br>
@@ -30,10 +41,14 @@
         {{ form.content() }}
       </p>
 
-      <input type="submit" value="Save" style="float: right; padding: 5px 20px; margin-top: 10px">
+      <div class="form-footer">
+
+        <div class="status-message" style="display: inline-block;">
+          {% if status_message != none %}{{status_message}}{% endif %}</div>
+        <input type="submit" value="Save">
+      </div>
     </form>
     {{ ckeditor.config(name='content') }}
-
     <script>
       CKEDITOR.instances['content'].setData(`{{ article.content | safe }}`);
 
