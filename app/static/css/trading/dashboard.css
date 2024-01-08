@@ -2,11 +2,26 @@
     padding-top: 55px;
     border-color: black;
     background-color: beige;
-    font-size: large;
+    font-size: larger;
     font-weight: bold;
+    padding: 50px;
 }
-.Welcome-block
+.Welcome-block p {
+    padding-top: 50px;
+}
 
+#ButtonsBox {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    width: 100vw;
+}
+#ButtonsBox .pur-info {
+    justify-self: start;
+    
+}
+#ButtonsBox .car-info {
+    justify-self: end;
+}
 #sign-infomation {
     display: none;
     background-color: white;
@@ -23,4 +38,19 @@
     margin-left: 50px;
     width: 200px;
     padding: 10px;
+}
+
+.Project {
+    width: 150px;
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: 20px;
+    border: solid black 1px;
+    background-color: beige;
+    margin: 10px;
+    
+}
+
+.user-info {
+    display: flex;
 }

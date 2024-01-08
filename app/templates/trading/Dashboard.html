@@ -9,12 +9,14 @@
 {% block content %}
     <div class="Welcome-block">
       <p>Company, <br>
-        your personal automated carbon offset </p>
+        your personal automated carbon offset</p>
     </div>
 
     <div class="Buttons">
-      <button onclick="togglepurchase()"> How do you purchase? </button>
-      <button> Go to Carbon Caluator</button>
+      <div id="ButtonsBox">
+        <button onclick="togglepurchase()" class="pur-info"> How do you purchase? </button>
+        <button class="car-info"> Go to Carbon Caluator</button>
+      </div>
 
       <div id="Purchase-info">
         <p>To purchase carbon credits 
@@ -41,7 +43,6 @@
         <p>Total offset <br> Electricity: 10 <br> Waste: 1</p>
         <p>4000 tons total</p>
       </div>
-    
 
     <script>
       function toggleData() {
@@ -58,8 +59,9 @@
     <div class="Projects">
       {% for id, project in projects.items() %}
         <div class="Project">
-          <p>{{project}}</p>
-          <a href="{{url_for('trading.project', project = id)}}">Press here for proj</a>
+          <p>{{project.name}}</p>
+          <p>{{project.type}}</p>
+          <a href="{{url_for('trading.project', project = id)}}">View More</a>
         </div>
       {% endfor %}
     </div>

@@ -1,6 +1,6 @@
 {% extends "layouts/client.html" %}
 
-{% block title %}Locations - EcoVision{% endblock %}
+{% block title %}Projects - EcoVision{% endblock %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/ProjectF.css') }}" />
@@ -10,7 +10,7 @@
   <section>
     <h2>Projects</h2>
     <div class="addlocation">
-      <a href="{{ url_for('trading.project_add') }}"><p>Add Location</p></a>
+      <a href="{{ url_for('trading.project_add') }}"><p>Add Project</p></a>
     </div>
     <table id="locations">
       <tr>
@@ -20,13 +20,13 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-      {% for id, location in locations.items() %}
+      {% for id, project in projects.items() %}
         <tr>
           <td>{{ id }}</td>
-          <td>{{ location.name }}</td>
-          <td>{{ location.type }}</td>
-          <td><a href="{{ url_for('trading.location_edit', location=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('trading.location_delete', location=id) }}">Delete</a></td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.type }}</td>
+          <td><a href="{{ url_for('trading.project_edit', project=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('trading.project_delete', project=id) }}">Delete</a></td>
         <tr>
       {% endfor %}
     </div>
