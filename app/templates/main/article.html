@@ -18,7 +18,8 @@
 
     {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
     <div class="delete-button">
-      <a href="{{url_for('main.news', deletepost=article.postid)}}" style="color: red; text-decoration: underline;">Delete
+      <a href="{{url_for('main.news', deletepost=article.postid)}}"
+        style="color: red; text-decoration: underline;">Delete
         Current Post</a>
     </div>
     <form method="POST">
