@@ -1,0 +1,19 @@
+{% extends "layouts/staff.html" %}
+
+{% block title %}Inventory Edit - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/inventory.css') }}" />
+{% endblock %}
+
+{% block content %}
+  <div style="padding: 10px;">
+    <h1 style="padding-top: 50px;">Edit Product</h1>
+    <form action="" method="POST">
+      <div>{{form.name}}</div>
+      <div>{{form.quantity}}</div>
+      <div>{{form.submit()}}</div>
+      {{ form.csrf_token }}
+    </form>
+  </div>
+{% endblock %}

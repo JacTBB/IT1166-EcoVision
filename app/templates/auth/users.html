@@ -1,0 +1,33 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Users - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
+{% endblock %}
+
+{% block content %}
+  <section>
+    <h2>Users</h2>
+    <div class="addlocation">
+      <a href="{{ url_for('auth.user_add', type=type) }}"><p>Add Users</p></a>
+    </div>
+    <table id="locations">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Address</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for id, user in users.items() %}
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ user.username }}</td>
+          <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
+        <tr>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

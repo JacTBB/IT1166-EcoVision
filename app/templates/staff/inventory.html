@@ -1,11 +1,34 @@
-{% extends "layouts/client.html" %}
+{% extends "layouts/staff.html" %}
 
 {% block title %}Inventory - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/inventory.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
 {% endblock %}
 
 {% block content %}
- 
+  <section>
+    <h2>Inventory</h2>
+    <div class="addlocation">
+      <a href="{{ url_for('staff.product_add') }}"><p>Add Product</p></a>
+    </div>
+    <table id="locations">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for id, product in products.items() %}
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
+        <tr>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock %}
