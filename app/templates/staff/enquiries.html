@@ -1,0 +1,41 @@
+{% extends 'layouts/staff.html' %}
+
+
+{% block content %}
+<div class="container" id="main">
+    <div class="view-companyinfo" style="padding-top: 100px;">
+        <h2>Contact Form Enquiries</h2>
+        <table border="1">
+            <tr>
+                <td>ID</td>
+                <td>Employee Name</td>
+                <td>Company Name</td>
+                <td>Company Email</td>
+                <td>Industry</td>
+                <td>Company Size</td>
+            </tr>
+            <tr>
+                {% for h in data %}
+                <td>h.ID</td>
+                <td>h.employee_name</td>
+                <td>h.company_name</td>
+                <td>h.company_email</td>
+                <td>h.industry</td>
+                <td>h.company_size</td>
+
+                {% endfor %}
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}
+
+<!-- id: Mapped[int] = mapped_column(
+    Integer, primary_key=True, autoincrement=True)
+    employee_name: Mapped[str] = mapped_column(String)
+    company_name: Mapped[str] = mapped_column(String)
+    company_email: Mapped[str] = mapped_column(String)
+    industry: Mapped[str] = mapped_column(String)
+    company_size: Mapped[int] = mapped_column(Integer) -->
