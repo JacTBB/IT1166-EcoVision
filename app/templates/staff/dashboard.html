@@ -17,17 +17,22 @@
       <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Enquiries</p></a>
       <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Carbon Trading Platform</p></a>
       <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Staff Chat Platform</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}"><p>News Platform</p></a>
       <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Advisors Management</p></a>
-      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Insights/News Platform Management</p></a>
       <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Editors Management</p></a>
     </div>
     <div>
   </aside>
-  <div class="search1">
 
-  </div>
-
-  <div class="logoname">
-    <a>Company</a>
-  </div>
+  <section>
+    <div class="announcements">
+      <h2>Announcements</h2>
+    </div>
+    <div class="tasks">
+      <h2>Tasks</h2>
+    </div>
+    <div class="messages">
+      <h2>Messages</h2>
+    </div>
+  </section>
 {% endblock %}
