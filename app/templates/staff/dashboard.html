@@ -9,18 +9,30 @@
 {% block content %}
   <aside>
     <div>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'staff.dashboard' else '' }}" href="{{ url_for('staff.dashboard') }}">Overview</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Business Management</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Business Dashboard</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Business chats</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Inventory</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Enquiries</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Carbon Trading Platform</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Staff Chat Platform</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Advisors Management</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Insights/News Platform Management</a>
-      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Editors Management</a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'staff.dashboard' else '' }}" href="{{ url_for('staff.dashboard') }}"><p>Overview</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Business Management</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Business Dashboard</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Business chats</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Inventory</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Enquiries</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Carbon Trading Platform</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Staff Chat Platform</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}"><p>News Platform</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Advisors Management</p></a>
+      <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#"><p>Editors Management</p></a>
     </div>
     <div>
   </aside>
+
+  <section>
+    <div class="announcements">
+      <h2>Announcements</h2>
+    </div>
+    <div class="tasks">
+      <h2>Tasks</h2>
+    </div>
+    <div class="messages">
+      <h2>Messages</h2>
+    </div>
+  </section>
 {% endblock %}

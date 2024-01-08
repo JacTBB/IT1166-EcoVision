@@ -23,7 +23,19 @@ def news():
     query = query_data(Post)
     postid = request.args.get('postid')
     addPost = request.args.get('addpost')
+    deletePost = request.args.get('deletepost')
+    status_message = None
     if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+        if deletePost is not None:
+            try:
+                post = Post.query.filter_by(postid=deletePost).first()
+                db.session.delete(post)
+                db.session.commit()
+                return redirect(url_for('main.news'))
+            except Exception as e:
+                print(f"Error occurred: {e}")
+                db.session.rollback()
+
         if addPost is not None:
             latestPostID = Post.query.order_by(desc(Post.date)).first().postid
             try:
@@ -47,18 +59,21 @@ def news():
                     if request.form.get('csrf_token'):
                         try:
                             post = Post.query.filter_by(postid=postid).first()
+                            post.image_name = form.image_view_onNews.data
                             post.title = form.title.data
                             post.content = form.content.data
 
                             db.session.add(post)
                             db.session.commit()
+                            status_message = "Article updated successfully!"
                         except Exception as e:
+                            status_message = "Failed to update article! Contact Administrator."
                             print(f"Error occurred: {e}")
                             db.session.rollback()
 
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
-            return render_template('main/article.html', article=query, form=form)
+            return render_template('main/article.html', article=query, form=form, status_message=status_message)
 
     return render_template('main/news.html', data=query)
 
@@ -85,3 +100,8 @@ def contact():
     # company_email: Mapped[str] = mapped_column(String)
     # industry: Mapped[str] = mapped_column(String)
     # company_size: Mapped[int] = mapped_column(Integer)
+
+
+@main.route('/contact/chat')
+def chat():
+    return "hi"

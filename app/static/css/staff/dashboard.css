@@ -2,17 +2,22 @@ aside {
     padding: 20px;
     padding-top: 70px;
     width: 200px;
-    height: 100vh;
+    height: max(100vh, 100%);
     background-color: rgb(200,200,200);
 }
 
 aside a {
-    color: rgb(30,30,30);
+    color: rgb(80,80,80);
     font-size: 20px;
     font-weight: bold;
     text-decoration: none;
 }
 
+aside a p{
+    padding: 10px 5px;
+}
+
 .side-nav-selected {
     color: black;
+    font-weight: bolder;
 }

@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 
 
 class ArticleForm(FlaskForm):
+    image_view_onNews = StringField('Image', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     content = CKEditorField('Content')
     submit = SubmitField('Submit')
