@@ -1,24 +1,30 @@
-{% extends "layouts/main.html" %}
-
-{% block title %}Login - EcoVision{% endblock %}
+{% extends "layouts/main.html" %} {% block title %}Contact Form - EcoVision{% endblock
+%}
 
 {% block head %}
-  <link rel="stylesheet" href="" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/main/contact.css')}}" />
 {% endblock %}
 
-{% block content %}
-  <div class="container login-page">
-    <div class="first-time-form">
-      <p style="color: white; font-size: 22px">Tell us about your company</p>
-      <form action="" method="POST">
-        <div>{{form.text}}</div>
-        <div>{{form.submit()}}</div>
-        {{ form.csrf_token }}
-      </form>
 
-      {% if error_message %}
-        <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
-      {% endif %}
-    </div>
+{% block content %}
+<div class="container">
+  <div class="contact-form">
+    <p style="color: white; font-size: 22px">Tell us about your company</p>
+    <form action="" method="POST">
+      <div>{{form.employee_name.label}} {{form.employee_name}}</div>
+      <div>{{form.company_name.label}} {{form.company_name}}</div>
+      <div>{{form.company_email.label}} {{form.company_email}}</div>
+      <div>{{form.industry.label}} {{form.industry}}</div>
+      <div>{{form.company_size.label}} {{form.company_size}}</div>
+      <div>{{form.submit()}}</div>
+      {{ form.csrf_token }}
+    </form>
+
+    {% if error_message %}
+    <p class="error-message">
+      <i class="fa-regular fa-circle-info"></i>{{ error_message }}
+    </p>
+    {% endif %}
   </div>
+</div>
 {% endblock %}

@@ -1,17 +1,16 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import current_user
-from sqlalchemy import desc, true
+from sqlalchemy import desc
 from app.main import main
 from app.database import query_data, db
 from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
-
+from app.models.Contact import CompanyInfo
 
 
 @main.route('/')
 def home():
     return render_template('main/home.html', news=query_data(Post, limit=3))
-
 
 
 @main.route('/services')
@@ -64,29 +63,25 @@ def news():
     return render_template('main/news.html', data=query)
 
 
-
-# @main.route('/news/add', methods=['GET', 'POST'])
-# @login_required
-# def add_news():
-#     form = ArticleForm()
-#     if request.method == 'POST':
-#         if form.validate_on_submit():
-#             if request.form.get('csrf_token'):
-#                 try:
-#                     post = Post(title=form.title.data,
-#                                 content=form.content.data)
-#                     db.session.add(post)
-#                     db.session.commit()
-#                 except Exception as e:
-#                     print(f"Error occurred: {e}")
-#                     db.session.rollback()
-
-#     return render_template('main/add_news.html', form=form)
-
-
-
-@main.route('/contact')
+@main.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
-    
+    if form.validate_on_submit():
+        try:
+            contact = CompanyInfo(employee_name=form.employee_name.data, company_name=form.company_name.data,
+                                  company_email=form.company_email.data, industry=form.industry.data, company_size=form.company_size.data)
+            db.session.add(contact)
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+        return redirect(url_for('main.home'))
+
     return render_template('main/contact.html', form=form)
+
+    # employee_name: Mapped[str] = mapped_column(String)
+    # company_name: Mapped[str] = mapped_column(String)
+    # company_email: Mapped[str] = mapped_column(String)
+    # industry: Mapped[str] = mapped_column(String)
+    # company_size: Mapped[int] = mapped_column(Integer)
