@@ -7,5 +7,20 @@
 {% endblock %}
 
 {% block content %}
- 
+  <aside>
+    <div>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'staff.dashboard' else '' }}" href="{{ url_for('staff.dashboard') }}">Overview</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Business Management</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Business Dashboard</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Business chats</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Inventory</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Enquiries</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Carbon Trading Platform</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Staff Chat Platform</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Advisors Management</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Insights/News Platform Management</a>
+      <a class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">Editors Management</a>
+    </div>
+    <div>
+  </aside>
 {% endblock %}
