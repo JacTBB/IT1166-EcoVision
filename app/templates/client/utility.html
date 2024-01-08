@@ -1,0 +1,40 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Utility - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/utility.css') }}" />
+{% endblock %}
+
+{% block content %}
+  <section>
+    <h2>Utility Bills</h2>
+    <div class="addutility">
+      <a href="{{ url_for('client.location_utility_add', location=location) }}"><p>Add Utility Bill</p></a>
+    </div>
+    <table id="utilities">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Carbon Footprint</th>
+        <th>Energy Usage</th>
+        <th>Water Usage</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for id, utility in utilities.items() %}
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ utility.name }}</td>
+          <td>{{ utility.date }}</td>
+          <td>{{ utility.carbonfootprint }}</td>
+          <td>{{ utility.energyusage }}</td>
+          <td>{{ utility.waterusage }}</td>
+          <td><a href="{{ url_for('client.location_utility_edit', location=utility.location, utility=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('client.location_utility_delete', location=utility.location, utility=id) }}">Delete</a></td>
+        <tr>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

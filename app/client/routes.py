@@ -2,8 +2,9 @@ from flask import render_template, request, redirect, url_for
 from app.client import client
 from app.database import db
 from flask_login import login_required
-from app.models.Client import Location
-from app.client.forms import AddLocationForm, EditLocationForm
+from app.models.Client import Location, Utility
+from app.client.forms import AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm
+from datetime import datetime
 
 
 
@@ -74,7 +75,7 @@ def location_add():
 def location_edit(location):
     form = EditLocationForm()
     
-    if form.validate_on_submit():
+    if request.method == 'POST':
         try:
             locationData = Location.query.get(location)
             
@@ -118,8 +119,102 @@ def location_delete(location):
 
 @client.route("/location/<location>/utility")
 @login_required
-def location_utility_manage(location):
-    return "Manage Utility Bills: " + location
+def location_utility(location):
+    utilities = {}
+    utilitiesData = db.session.query(Utility).all()
+    for utility in utilitiesData:
+        utilities[utility.id] = {
+            'location': utility.location,
+            'name': utility.name,
+            'date': utility.date,
+            'carbonfootprint': utility.carbonfootprint,
+            'energyusage': utility.energyusage,
+            'waterusage': utility.waterusage
+        }
+    
+    return render_template('client/utility.html', location=location, utilities=utilities)
+
+
+
+@client.route("/location/<location>/utility/add", methods=['GET', 'POST'])
+@login_required
+def location_utility_add(location):
+    form = AddUtilityForm()
+    
+    if form.validate_on_submit():
+        try:
+            name = request.form.get("name")
+            date = datetime.strptime(request.form.get("date"), "%Y-%m-%d").date()
+            carbonfootprint = request.form.get("carbonfootprint")
+            energyusage = request.form.get("energyusage")
+            waterusage = request.form.get("waterusage")
+            
+            utility = Utility(location=location, name=name, date=date, carbonfootprint=carbonfootprint, energyusage=energyusage, waterusage=waterusage)
+            db.session.add(utility)
+            db.session.commit()
+            
+            return redirect(url_for('client.location_utility', location=location))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    
+    return render_template("client/utility_add.html", form=form)
+
+
+
+@client.route("/location/<location>/utility/edit/<utility>", methods=['GET', 'POST'])
+@login_required
+def location_utility_edit(location, utility):
+    form = EditUtilityForm()
+    
+    if request.method == 'POST':
+        try:
+            utilityData = Utility.query.get(utility)
+            
+            name = request.form.get("name")
+            date = request.form.get("date")
+            carbonfootprint = request.form.get("carbonfootprint")
+            energyusage = request.form.get("energyusage")
+            waterusage = request.form.get("waterusage")
+           
+            if name:
+                utilityData.name = name
+            if date:
+                utilityData.date = datetime.strptime(date, "%Y-%m-%d").date()
+            if carbonfootprint:
+                utilityData.carbonfootprint = carbonfootprint
+            if energyusage:
+                utilityData.energyusage = energyusage
+            if waterusage:
+                utilityData.waterusage = waterusage
+            
+            db.session.commit()
+            
+            return redirect(url_for('client.location_utility', location=location))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    
+    return render_template("client/utility_edit.html", form=form)
+
+
+
+@client.route("/location/<location>/utility/delete/<utility>")
+@login_required
+def location_utility_delete(location, utility):
+    try:
+        utilityData = Utility.query.get(utility)
+        
+        if utilityData is None:
+            return "Utility Not Found!"
+        
+        db.session.delete(utilityData)
+        db.session.commit()
+        return redirect(url_for('client.location_utility', location=location))
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        db.session.rollback()
+        return "Error"
 
 
 

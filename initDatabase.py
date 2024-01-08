@@ -3,10 +3,12 @@ from app.config import Config
 from app.database import db
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import Post
+from app.models.Contact import CompanyInfo
 
 app = create_app(Config)
 
 with app.app_context():
+
     UserList = {'client': Client, 'author': Author,
                 'technician': Technician, 'consultant': Consultant,
                 'manager': Manager, 'admin': Admin}

@@ -5,6 +5,8 @@ from app.database import db, query_data
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import *
 from app.models.Client import *
+from app.models.Trading import *
+from app.models.Contact import *
 from flask_bcrypt import Bcrypt
 from flask_ckeditor import CKEditor
 

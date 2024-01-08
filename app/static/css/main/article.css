@@ -6,6 +6,37 @@
   margin-top: 100px;
   width: 80vw;
   word-break: break-word;
+  display: flex;
+  flex-flow: column;
+}
+
+.post-content p img {
+  width: 100% !important;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+form input {
+  font-family: "Nunito";
+}
+
+form input[type="text"] {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: auto;
+  margin-bottom: 10px;
+
+}
+
+form input[type="submit"] {
+  font-weight: bold;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 1024px) {

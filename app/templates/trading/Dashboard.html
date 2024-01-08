@@ -1,0 +1,68 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Carbon Trading - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/dashboard.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <div class="Welcome-block">
+      <p>Company, <br>
+        your personal automated carbon offset </p>
+    </div>
+
+    <div class="Buttons">
+      <button onclick="togglepurchase()"> How do you purchase? </button>
+      <button> Go to Carbon Caluator</button>
+
+      <div id="Purchase-info">
+        <p>To purchase carbon credits 
+          <br> 1. Click on any image 
+          <br> 2. Select price range and amt 
+          <br> 3. Make Payment</p>
+      </div>
+
+      <script>
+        function togglepurchase() {
+          var signinfomation = document.getElementById('Purchase-info');
+          if (signinfomation.style.display === 'none') {
+            signinfomation.style.display = 'block'; // Show the data container
+          } else {
+            signinfomation.style.display = 'none'; // Hide the data container
+          }
+        }
+      </script>
+    </div>
+<hr>
+    <div class="user-info">
+      <button onclick="toggleData()">Sign in</button>
+      <div id="sign-infomation">
+        <p>Total offset <br> Electricity: 10 <br> Waste: 1</p>
+        <p>4000 tons total</p>
+      </div>
+    
+
+    <script>
+      function toggleData() {
+        var signinfomation = document.getElementById('sign-infomation');
+        if (signinfomation.style.display === 'none') {
+          signinfomation.style.display = 'block'; // Show the data container
+        } else {
+          signinfomation.style.display = 'none'; // Hide the data container
+        }
+      }
+    </script>
+    </div>
+<hr>
+    <div class="Projects">
+      {% for id, project in projects.items() %}
+        <div class="Project">
+          <p>{{project}}</p>
+          <a href="{{url_for('trading.project', project = id)}}">Press here for proj</a>
+        </div>
+      {% endfor %}
+    </div>
+{% endblock %}
+
+

@@ -13,6 +13,7 @@
 <div class="container article-page">
   <div class="article">
     <p>{{ article.date.strftime('%B %d, %Y') }}</p>
+    <!-- <img src="{{ url_for('static', filename='images/' + article.image_name)}}" alt=""> -->
 
 
     {% if current_user.type == "admin" or current_user.type == "author" %}
@@ -29,7 +30,7 @@
         {{ form.content() }}
       </p>
 
-      <input type="submit" value="Submit">
+      <input type="submit" value="Save" style="float: right; padding: 5px 20px; margin-top: 10px">
     </form>
     {{ ckeditor.config(name='content') }}
 
@@ -40,8 +41,10 @@
     {% else %}
 
     <div>
-      <p>{{ article.title }}</p>
-      <p class='postid_{{ article.postid }} post-content'>{{ article.content | safe }}</p>
+      <h2>{{ article.title }}</h2>
+      <div class='postid_{{ article.postid }} post-content'>
+        {{ article.content | safe }}
+      </div>
     </div>
 
     {% endif %}
