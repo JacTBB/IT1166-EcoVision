@@ -11,6 +11,7 @@ from app.models.Inventory import *
 from flask_bcrypt import Bcrypt
 from flask_ckeditor import CKEditor
 
+from flask_socketio import SocketIO
 
 
 def create_app(config_class=Config):
@@ -20,18 +21,19 @@ def create_app(config_class=Config):
     with app.app_context():
         db.init_app(app)
         db.create_all()
-    
+
         login_manager = LoginManager()
         login_manager.login_view = 'auth.login'
         login_manager.init_app(app)
-        
+
+        socketio = SocketIO()
+        socketio.init_app(app)
+
         bcrypt = Bcrypt(app)
-        
+
         ckeditor = CKEditor()
         ckeditor.init_app(app)
-        
-        
-        
+
         @login_manager.user_loader
         def user_loader(user_id):
             return (query_data(Client, filter_by={'user_id': user_id}, all=False) or
@@ -41,14 +43,12 @@ def create_app(config_class=Config):
                     query_data(Manager, filter_by={'user_id': user_id}, all=False) or
                     query_data(Admin, filter_by={'user_id': user_id}, all=False))
 
-
-
         from app.main import main
         from app.auth import auth
         from app.client import client
         from app.trading import trading
         from app.staff import staff
-        
+
         app.register_blueprint(main)
         app.register_blueprint(auth)
         app.register_blueprint(client, url_prefix='/client')
