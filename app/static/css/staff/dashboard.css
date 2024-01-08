@@ -11,8 +11,22 @@ aside a {
     font-size: 20px;
     font-weight: bold;
     text-decoration: none;
+  
+}
+
+aside a p{
+    padding: 10px 5px;
+
 }
 
 .side-nav-selected {
     color: black;
+}
+
+.search1 {
+
+}
+
+.logoname {
+    
 }
