@@ -1,14 +1,14 @@
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
 from sqlalchemy import desc
+from app import socketio
 from app.main import main
 from app.database import query_data, db
 from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
 
-from flask_socketio import SocketIO, send, join_room, leave_room
-
+from flask_socketio import send, join_room, leave_room
 
 import random
 from string import ascii_uppercase
@@ -121,7 +121,7 @@ rooms = {}
 def room():
     session.clear()
     if request.method == "POST":
-        print("hello")
+        print("contact/room POST")
         name = request.form.get("name")
         code = request.form.get("code")
         join = request.form.get("join", False)
@@ -149,7 +149,7 @@ def room():
 
 @main.route('/contact/room/chat', methods=["GET", "POST"])
 def chat():
-    print("awdwad")
+    print("room/chat")
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("main.room"))
@@ -157,12 +157,10 @@ def chat():
     return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
 
 
-socketio = SocketIO()
-
 
 @socketio.on("message")
 def message(data):
-    print("hell")
+    print("message", data)
     room = session.get("room")
     if room not in rooms:
         return
@@ -178,6 +176,7 @@ def message(data):
 
 @socketio.on("connect")
 def connect(auth):
+    print("connect", auth)
     room = session.get("room")
     name = session.get("name")
     if not room or not name:

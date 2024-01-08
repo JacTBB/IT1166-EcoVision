@@ -10,8 +10,10 @@ from app.models.Contact import *
 from app.models.Inventory import *
 from flask_bcrypt import Bcrypt
 from flask_ckeditor import CKEditor
-
 from flask_socketio import SocketIO
+
+
+socketio = SocketIO()
 
 
 def create_app(config_class=Config):
@@ -26,7 +28,6 @@ def create_app(config_class=Config):
         login_manager.login_view = 'auth.login'
         login_manager.init_app(app)
 
-        socketio = SocketIO()
         socketio.init_app(app)
 
         bcrypt = Bcrypt(app)

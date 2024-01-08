@@ -39,11 +39,13 @@
     };
 
     socketio.on("message", (data) => {
+      console.log("receive", data)
       createMessage(data.name, data.message);
     });
 
     const sendMessage = () => {
       const message = document.getElementById("message");
+      console.log("send", message.value)
       if (message.value == "") return;
       socketio.emit("message", { data: message.value });
       message.value = "";
