@@ -28,7 +28,6 @@ form input[type="text"] {
   border-radius: 5px;
   width: auto;
   margin-bottom: 10px;
-
 }
 
 form input[type="submit"] {
@@ -37,11 +36,21 @@ form input[type="submit"] {
   outline: 0;
   border: 0;
   cursor: pointer;
+  font-size: 20px;
+  padding: 5px 20px;
+  margin-top: 10px;
+}
+
+.form-footer {
+  float: right;
+}
+
+.form-footer div {
+  margin-right: 10px;
 }
 
 @media screen and (min-width: 1024px) {
   .article {
     width: 1000px;
   }
-
 }
