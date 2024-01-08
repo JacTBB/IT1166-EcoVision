@@ -24,8 +24,8 @@
         <tr>
           <td>{{ id }}</td>
           <td>{{ user.username }}</td>
-          <td><a href="{{ url_for('auth.account', user=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('auth.account', user=id) }}">Delete</a></td>
+          <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
         <tr>
       {% endfor %}
     </div>

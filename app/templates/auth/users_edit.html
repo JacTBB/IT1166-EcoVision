@@ -1,15 +1,14 @@
 {% extends "layouts/client.html" %}
 
-{% block title %}Edit Location - EcoVision{% endblock %}
+{% block title %}Edit User - EcoVision{% endblock %}
 
 {% block head %}{% endblock %}
 
 {% block content %}
   <div style="padding: 10px;">
-    <h1 style="padding-top: 50px;">Edit Location</h1>
+    <h1 style="padding-top: 50px;">Edit User</h1>
     <form action="" method="POST">
-      <div>{{form.name}}</div>
-      <div>{{form.address}}</div>
+      <div>{{form.username}}</div>
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
     </form>

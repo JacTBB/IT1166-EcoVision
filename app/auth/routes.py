@@ -93,50 +93,47 @@ def user_add(type):
 
 
 
-# @auth.route("/users/<user>/edit", methods=['GET', 'POST'])
-# @login_required
-# def user_edit(user):
-#     form = EditUserForm()
+@auth.route("/users/<type>/edit/<user>", methods=['GET', 'POST'])
+@login_required
+def user_edit(type, user):
+    form = EditUserForm()
     
-#     if request.method == 'POST':
-#         try:
-#             locationData = Location.query.get(location)
+    if request.method == 'POST':
+        try:
+            userData = UserList[type].query.get(user)
             
-#             name = request.form.get("name")
-#             address = request.form.get("address")
+            username = request.form.get("username")
            
-#             if name:
-#                 locationData.name = name
-#             if address:
-#                 locationData.address = address
+            if username:
+                userData.username = username
             
-#             db.session.commit()
+            db.session.commit()
             
-#             return redirect(url_for('client.locations'))
-#         except Exception as e:
-#             print(f"Error occurred: {e}")
-#             db.session.rollback()
+            return redirect(url_for('auth.users', type=type))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
     
-#     return render_template("client/location_edit.html", form=form)
+    return render_template("auth/users_edit.html", form=form)
 
 
 
-# @auth.route("/users/<user>/delete")
-# @login_required
-# def user_delete(user):
-#     try:
-#         locationData = Location.query.get(location)
+@auth.route("/users/<type>/delete/<user>")
+@login_required
+def user_delete(type, user):
+    try:
+        userData = UserList[type].query.get(user)
         
-#         if locationData is None:
-#             return "Location Not Found!"
+        if userData is None:
+            return "User Not Found!"
         
-#         db.session.delete(locationData)
-#         db.session.commit()
-#         return redirect(url_for('client.locations'))
-#     except Exception as e:
-#         print(f"Error occurred: {e}")
-#         db.session.rollback()
-#         return "Error"
+        db.session.delete(userData)
+        db.session.commit()
+        return redirect(url_for('auth.users', type=type))
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        db.session.rollback()
+        return "Error"
 
 
 
