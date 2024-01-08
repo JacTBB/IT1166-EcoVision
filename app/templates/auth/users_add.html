@@ -1,0 +1,16 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Add User - EcoVision{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block content %}
+  <div style="padding: 10px;">
+    <h1 style="padding-top: 50px;">Add User</h1>
+    <form action="" method="POST">
+      <div>{{form.username}}</div>
+      <div>{{form.submit()}}</div>
+      {{ form.csrf_token }}
+    </form>
+  </div>
+{% endblock %}
