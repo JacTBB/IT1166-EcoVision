@@ -12,7 +12,8 @@ def home():
     for project in projectsData:
         projects[project.id] = {
             'name': project.name,
-            'type': project.type
+            'type': project.type,
+            'stock': project.stock,
         }
 
     return render_template('trading/Dashboard.html', projects = projects)
@@ -31,7 +32,8 @@ def projects():
     for project in projectsData:
         projects[project.id] = {
             'name': project.name,
-            'type': project.type
+            'type': project.type,
+            'stock': project.stock,
         }
     
     return render_template('trading/ProjectF.html', projects=projects)   
@@ -44,8 +46,9 @@ def project_add():
         try:
             name = request.form.get("name")
             type = request.form.get("type")
+            stock = request.form.get("stock")
             
-            project = Projects(name=name, type=type)
+            project = Projects(name=name, type=type, stock=stock)
             db.session.add(project)
             db.session.commit()
             
@@ -67,11 +70,14 @@ def project_edit(project):
             
             name = request.form.get("name")
             type = request.form.get("type")
+            stock = request.form.get("stock")
            
             if name:
                 projectData.name = name
             if type:
                 projectData.type = type
+            if stock:
+                projectData.stock = stock
             
             db.session.commit()
             

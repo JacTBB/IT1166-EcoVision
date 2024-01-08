@@ -8,6 +8,33 @@
 
 {% block content %}
 <div class="banner">
-    <p style="padding-top: 60px;">Hai this is project {{project.name}} - {{project.type}}</p>
+    <p style="padding-top: 60px;">Project {{project.name}} - {{project.type}}</p>
+</div>
+
+<div class="picture">
+    <img src="../../static/images/PictureGarden.jpeg" alt="">
+    <div class="overlap">
+      <p>Welcome to Project {{project.name}} </p>
+    </div>
+</div>
+
+<div class="Infomation">
+    <p>"Lorem ipsum dolor sit amet, 
+      consectetur adipiscing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua. 
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+      laboris nisi ut aliquip ex ea commodo consequat. 
+      Duis aute irure dolor in reprehenderit in voluptate 
+      velit esse cillum dolore eu fugiat nulla pariatur. 
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+      qui officia deserunt mollit anim id est laborum."
+    </p>
+</div>
+<div class="Bot-Bar">
+  <form id="textForm">
+    <label for="textInput">Stock Amount</label><br>
+    <input type="text" id="textInput" name="textInput"><br>
+    <input type="button" value="Submit" onclick="submitText()">
+  </form>
 </div>
 {% endblock %}

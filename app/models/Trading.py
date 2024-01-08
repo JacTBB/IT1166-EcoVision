@@ -8,3 +8,4 @@ class Projects(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String)
     type: Mapped[str] = mapped_column(String)
+    stock: Mapped[int] = mapped_column(Integer)

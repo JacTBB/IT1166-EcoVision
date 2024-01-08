@@ -17,6 +17,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>type</th>
+        <th>stock</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -25,6 +26,7 @@
           <td>{{ id }}</td>
           <td>{{ project.name }}</td>
           <td>{{ project.type }}</td>
+          <td>{{ project.stock }}</td>
           <td><a href="{{ url_for('trading.project_edit', project=id) }}">Edit</a></td>
           <td><a href="{{ url_for('trading.project_delete', project=id) }}">Delete</a></td>
         <tr>
