@@ -119,7 +119,8 @@ rooms = {}
 
 @main.route('/contact/room', methods=["GET", "POST"])
 def room():
-    session.clear()
+    session.pop("room", None)
+    session.pop("name", None)
     if request.method == "POST":
         print("contact/room POST")
         name = request.form.get("name")
@@ -155,7 +156,6 @@ def chat():
         return redirect(url_for("main.room"))
 
     return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
-
 
 
 @socketio.on("message")
