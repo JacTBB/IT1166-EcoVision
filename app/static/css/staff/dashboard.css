@@ -1,6 +1,10 @@
+#main {
+    display: flex;
+    padding-top: 50px;
+}
+
 aside {
     padding: 20px;
-    padding-top: 70px;
     width: 200px;
     height: max(100vh, 100%);
     background-color: rgb(200,200,200);
@@ -20,4 +24,33 @@ aside a p{
 .side-nav-selected {
     color: black;
     font-weight: bolder;
+}
+
+
+
+section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    padding: 50px;
+}
+
+.announcements {
+    grid-column: 1 / span 2;
+    padding: 20px;
+    width: 60vw;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.tasks {
+    padding: 20px;
+    background-color: lightgreen;
+    border-radius: 10px;
+}
+
+.messages {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
 }

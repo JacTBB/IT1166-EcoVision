@@ -1,0 +1,16 @@
+<nav>
+  <div class="nav-logo">
+    <a href="{{ url_for('staff.dashboard')}}">{{ current_user.company }}</a>
+  </div>
+
+  <ul>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.dashboard' else '' }}"
+        href="{{ url_for('staff.dashboard') }}">Dashboard</a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.account' else '' }}"
+        href="{{ url_for('auth.account') }}">Account</a>
+    </li>
+  </ul>
+</nav>
