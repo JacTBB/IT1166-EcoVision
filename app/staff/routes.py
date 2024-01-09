@@ -4,7 +4,7 @@ from app.staff import staff
 from app.database import db
 from flask_login import login_required
 from app.models.Inventory import Product
-from app.staff.forms import AddProductForm, EditProductForm
+from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo
 
 
 @staff.route("/")
@@ -124,29 +124,30 @@ def enquiry_delete(enquiry):
         return "Error"
 
 
-# @staff.route("/enquiries/<enquiry>/edit", methods=['GET', 'POST'])
-# @login_required
-# def enquiry_edit(enquiry):
-#     if request.method == 'POST':
-#         try:
-#             enquiryData = CompanyInfo.query.get(enquiry)
+@staff.route("/enquiries/<enquiry>/edit", methods=['GET', 'POST'])
+@login_required
+def enquiry_edit(enquiry):
+    enquiryData = CompanyInfo.query.get(enquiry)
+    form = EditCompanyInfo(obj=enquiryData)
+    if request.method == 'POST':
+        try:
 
-#             name = request.form.get("name")
-#             email = request.form.get("email")
-#             message = request.form.get("message")
+            name = request.form.get("name")
+            email = request.form.get("email")
+            message = request.form.get("message")
 
-#             if name:
-#                 enquiryData.name = name
-#             if email:
-#                 enquiryData.email = email
-#             if message:
-#                 enquiryData.message = message
+            if name:
+                enquiryData.name = name
+            if email:
+                enquiryData.email = email
+            if message:
+                enquiryData.message = message
 
-#             db.session.commit()
+            db.session.commit()
 
-#             return redirect(url_for('staff.enquiries'))
-#         except Exception as e:
-#             print(f"Error occurred: {e}")
-#             db.session.rollback()
+            return redirect(url_for('staff.enquiries'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
 
-#     return render_template("staff/enquiries_edit.html")
+    return render_template("staff/enquiries_edit.html", form=form)
