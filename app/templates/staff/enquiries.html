@@ -13,15 +13,19 @@
                 <td>Company Email</td>
                 <td>Industry</td>
                 <td>Company Size</td>
+                <td>Edit</td>
+                <td>Delete</td>
             </tr>
             <tr>
-                {% for h in data %}
-                <td>h.ID</td>
-                <td>h.employee_name</td>
-                <td>h.company_name</td>
-                <td>h.company_email</td>
-                <td>h.industry</td>
-                <td>h.company_size</td>
+                {% for detail in data %}
+                <td>{{detail.id}}</td>
+                <td>{{detail.employee_name}}</td>
+                <td>{{detail.company_name}}</td>
+                <td>{{detail.company_email}}</td>
+                <td>{{detail.industry}}</td>
+                <td>{{detail.company_size}}</td>
+                <td><a href="{{ url_for('staff.enquiry_edit', enquiry=detail.id) }}">Edit</a></td>
+                <td><a href="{{ url_for('staff.enquiry_delete', enquiry=detail.id) }}">Delete</a></td>
 
                 {% endfor %}
             </tr>
@@ -31,11 +35,3 @@
 
 </div>
 {% endblock %}
-
-<!-- id: Mapped[int] = mapped_column(
-    Integer, primary_key=True, autoincrement=True)
-    employee_name: Mapped[str] = mapped_column(String)
-    company_name: Mapped[str] = mapped_column(String)
-    company_email: Mapped[str] = mapped_column(String)
-    industry: Mapped[str] = mapped_column(String)
-    company_size: Mapped[int] = mapped_column(Integer) -->
