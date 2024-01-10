@@ -8,7 +8,7 @@ from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
 
-from flask_socketio import send, join_room, leave_room
+from flask_socketio import emit, send, join_room, leave_room
 
 import random
 from string import ascii_uppercase
@@ -156,6 +156,13 @@ def chat():
         return redirect(url_for("main.room"))
 
     return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
+
+
+# image upload function
+@socketio.on('upload_image')
+def upload_handler(data):
+    image = data['image']
+    emit('image_response', image, broadcast=True)
 
 
 @socketio.on("message")

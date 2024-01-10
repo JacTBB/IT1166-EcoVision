@@ -12,6 +12,7 @@
 {% block content %}
 <div class="container article-page">
   <div class="article">
+
     <p>{{ article.date.strftime('%B %d, %Y') }}</p>
     <!-- <img src="{{ url_for('static', filename='images/' + article.image_name)}}" alt=""> -->
 
@@ -29,6 +30,23 @@
         This will be the image on the news page
         <br>
         {{ form.image_view_onNews(value=article.image_name) }}
+        <script>
+          var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+          document.getElementById('imageInput').onchange = function (e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+              socket.emit('upload_image', { image: reader.result });
+            }
+            reader.readAsDataURL(file);
+          };
+
+          socket.on('image_response', function (msg) {
+            alert(msg.message);
+          });
+        </script>
+        <input type="file" id="imageInput">
       </p>
 
       <p>
