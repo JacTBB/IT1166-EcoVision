@@ -9,3 +9,4 @@ class Projects(db.Model):
     name: Mapped[str] = mapped_column(String)
     type: Mapped[str] = mapped_column(String)
     stock: Mapped[int] = mapped_column(Integer)
+    content = db.Column(db.String())

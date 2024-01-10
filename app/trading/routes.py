@@ -3,7 +3,8 @@ from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
 from app.models.Trading import Projects
-from app.trading.forms import AddProjectForm, EditProjectForm
+from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm
+from flask_login import current_user
 
 @trading.route('/')
 def home():
@@ -19,10 +20,28 @@ def home():
     return render_template('trading/Dashboard.html', projects = projects)
 
 
-@trading.route('/project/<project>')
+@trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):
+    form = ProjectDetailsForm()
     projectData = Projects.query.get(project)
-    return render_template('trading/Project.html', project=projectData)
+
+    if current_user.is_authenticated and (current_user.type == 'admin'):
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                if request.form.get('csrf_token'):
+                    try:
+                        post = projectData
+                        post.content = form.content.data
+
+                        db.session.add(post)
+                        db.session.commit()
+                        status_message = "Article updated successfully!"
+                    except Exception as e:
+                        status_message = "Failed to update article! Contact Administrator."
+                        print(f"Error occurred: {e}")
+                        db.session.rollback()
+                        
+    return render_template('trading/Project.html', form=form, project=projectData)
 
 @trading.route("/projects")
 @login_required

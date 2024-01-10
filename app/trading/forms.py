@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired
-
+from flask_ckeditor import CKEditorField
+from wtforms.validators import DataRequired
 
 
 class AddProjectForm(FlaskForm):
@@ -9,11 +10,15 @@ class AddProjectForm(FlaskForm):
     stock = StringField(validators=[InputRequired()], render_kw={"placeholder": "Stock Level"})
     options = [('Convservation'), ('Renewable'), ('Methane')]
     type = SelectField('Type of project', choices=options)
-    submit = SubmitField("Add Location")
+    submit = SubmitField("Add Project")
 
 class EditProjectForm(FlaskForm):
     name = StringField(render_kw={"placeholder": "Name"})
     stock = StringField(render_kw={"placeholder": "Stock level"})
     options = [('Convservation'), ('Renewable'), ('Methane')]
     type = SelectField('Type of project', choices=options)
-    submit = SubmitField('Update Location')
+    submit = SubmitField('Update Project')
+
+class ProjectDetailsForm(FlaskForm):
+    content = CKEditorField('Content')
+    submit = SubmitField('Submit')
