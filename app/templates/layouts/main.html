@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block layouthead %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" />
-  
-  <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" />
+<link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet"
+  type="text/css" />
+
+<script src="{{ url_for('static', filename='js/main.js')}}"></script>
 {% endblock %}
 
 {% block navbar %}
-  {% include 'includes/navbar.html' %}
+{% include 'includes/navbar.html' %}
 {% endblock %}
 
 {% block footer %}
-  {% include 'includes/footer.html' %}
+{% include 'includes/footer.html' %}
 {% endblock %}

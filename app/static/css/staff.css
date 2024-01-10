@@ -11,3 +11,45 @@ body {
   background-color: rgb(209, 217, 206);
   font-family: "Nunito";
 }
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: calc(250px + 2vw + 2%);
+  margin: 0 auto;
+}
+
+form div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* vertically aligns items in the center */
+  justify-content: center;
+  /* horizontally aligns items in the center */
+  width: 100%;
+  gap: 5px;
+}
+
+form div label {
+  text-align: right;
+  white-space: nowrap;
+}
+
+form div label,
+form div input {
+  flex: 1;
+  /* makes label and input take up equal space */
+}
+
+form div > #submit {
+  margin: 0 auto;
+  cursor: pointer;
+  padding: 5px 10px;
+}

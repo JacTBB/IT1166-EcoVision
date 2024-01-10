@@ -1,0 +1,37 @@
+{% extends 'layouts/staff.html' %}
+
+
+{% block content %}
+<div class="container" id="main">
+    <div class="view-companyinfo" style="padding-top: 100px;">
+        <h2>Contact Form Enquiries</h2>
+        <table border="1">
+            <tr>
+                <td>ID</td>
+                <td>Employee Name</td>
+                <td>Company Name</td>
+                <td>Company Email</td>
+                <td>Industry</td>
+                <td>Company Size</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+            <tr>
+                {% for detail in data %}
+                <td>{{detail.id}}</td>
+                <td>{{detail.employee_name}}</td>
+                <td>{{detail.company_name}}</td>
+                <td>{{detail.company_email}}</td>
+                <td>{{detail.industry}}</td>
+                <td>{{detail.company_size}}</td>
+                <td><a href="{{ url_for('staff.enquiry_edit', enquiry=detail.id) }}">Edit</a></td>
+                <td><a href="{{ url_for('staff.enquiry_delete', enquiry=detail.id) }}">Delete</a></td>
+
+                {% endfor %}
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}
