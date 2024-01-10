@@ -1,3 +1,4 @@
+from re import S
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
 from sqlalchemy import desc
@@ -8,7 +9,9 @@ from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
 
-from flask_socketio import send, join_room, leave_room
+import os
+import base64
+from flask_socketio import emit, send, join_room, leave_room
 
 import random
 from string import ascii_uppercase
@@ -156,6 +159,72 @@ def chat():
         return redirect(url_for("main.room"))
 
     return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
+
+
+# image upload function
+# @socketio.on('upload_image')
+# def upload_handler(data):
+#     image_data = data['image']
+#     prefix, base64_data = image_data.split(",", 1)
+#     binary_data = base64.b64decode(base64_data)
+
+#     # Generate a filename for the image
+#     filename = os.path.join(.config['UPLOAD_FOLDER'], 'image.jpg')
+
+#     # Write the binary data to a file
+#     with open(filename, 'wb') as f:
+#         f.write(binary_data)
+
+#     emit('image_response', image_data, broadcast=True)
+
+
+image_chunks = []
+
+
+@socketio.on("upload_image")
+def handle_upload(data):
+    global image_chunks
+
+    # Add the received chunk to the array
+    image_chunks.append((data['index'], data['image']))
+
+    # If this is the final chunk, concatenate all chunks to form the complete image
+    if data['final']:
+        image_chunks.sort(key=lambda x: x[0])  # Sort the chunks by index
+        complete_image = ''.join(chunk[1] for chunk in image_chunks)
+        image_chunks = []  # Clear the array for the next image
+
+        # Now you can process the complete image...
+        # For example, you can save it to a file:
+        prefix, base64_data = complete_image.split(",", 1)
+        binary_data = base64.b64decode(base64_data)
+
+        # generate string for filename
+        filename = ""
+        for i in range(10):
+            filename += random.choice(ascii_uppercase)
+
+        # check file extension
+        extention = ""
+        if prefix == "data:image/jpeg;base64":
+            extention = ".jpg"
+        elif prefix == "data:image/png;base64":
+            extention = ".png"
+        elif prefix == "data:image/webp;base64":
+            extention = ".webp"
+        else:
+            extention = ".jpg"
+
+        # save image to file
+        filename_path = os.path.join('./app/static/images', f'{filename}{extention}')
+
+        # write the binary data to a file
+        with open(filename_path, 'wb') as f:
+            f.write(binary_data)
+
+        # Emit a response to the client
+        emit('image_response', {
+             'message': 'Image received', 'image': complete_image, "image_name": filename+extention}, broadcast=True)
 
 
 @socketio.on("message")

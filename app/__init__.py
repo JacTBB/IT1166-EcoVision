@@ -28,7 +28,7 @@ def create_app(config_class=Config):
         login_manager.login_view = 'auth.login'
         login_manager.init_app(app)
 
-        socketio.init_app(app)
+        socketio.init_app(app, async_mode='threading')
 
         bcrypt = Bcrypt(app)
 
