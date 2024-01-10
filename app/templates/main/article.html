@@ -29,8 +29,10 @@
       <p>
         This will be the image on the news page
         <br>
+
         {{ form.image_view_onNews(value=article.image_name) }}
         <script>
+          $("#image_view_onNews").css("pointerEvents", "none").css("opacity", "0.5");
           $(document).ready(function () {
             var socket = io();
 
@@ -63,15 +65,16 @@
 
             socket.on('image_response', function (msg) {
               console.log("image_response", msg)
-              $('#imagePreview').attr('src', msg.image);
+              /* $('#imagePreview').attr('src', msg.image); */
+              $('#image_view_onNews').attr("value", msg.image_name)
             });
           });
         </script>
         <input type="file" id="imageInput">
+        <img src="" alt="" id="imagePreview">
       </p>
 
       <p>
-        <img src="" alt="" id="imagePreview">
         {{ form.title.label }}
         <br>
         {{ form.title(value=article.title) }}

@@ -204,16 +204,27 @@ def handle_upload(data):
         for i in range(10):
             filename += random.choice(ascii_uppercase)
 
+        # check file extension
+        extention = ""
+        if prefix == "data:image/jpeg;base64":
+            extention = ".jpg"
+        elif prefix == "data:image/png;base64":
+            extention = ".png"
+        elif prefix == "data:image/webp;base64":
+            extention = ".webp"
+        else:
+            extention = ".jpg"
+
         # save image to file
-        filename = os.path.join('./app/static/images', f'{filename}.jpg')
+        filename_path = os.path.join('./app/static/images', f'{filename}{extention}')
 
         # write the binary data to a file
-        with open(filename, 'wb') as f:
+        with open(filename_path, 'wb') as f:
             f.write(binary_data)
 
         # Emit a response to the client
         emit('image_response', {
-             'message': 'Image received', 'image': complete_image})
+             'message': 'Image received', 'image': complete_image, "image_name": filename+extention}, broadcast=True)
 
 
 @socketio.on("message")
