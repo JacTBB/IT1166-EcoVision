@@ -31,25 +31,47 @@
         <br>
         {{ form.image_view_onNews(value=article.image_name) }}
         <script>
-          var socket = io.connect('http://' + document.domain + ':' + location.port);
+          $(document).ready(function () {
+            var socket = io();
 
-          document.getElementById('imageInput').onchange = function (e) {
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            reader.onloadend = function () {
-              socket.emit('upload_image', { image: reader.result });
-            }
-            reader.readAsDataURL(file);
-          };
+            $('#imageInput').on('change', function () {
+              var file = $('#imageInput').get(0).files[0];
+              var reader = new FileReader();
 
-          socket.on('image_response', function (msg) {
-            alert(msg.message);
+              reader.onload = function () {
+                var dataURL = reader.result;
+                var chunkSize = 5000; // Size of each chunk
+                var start = 0;
+
+                var index = 0;  // Initialize an index counter
+
+                while (start < dataURL.length) {
+                  var end = start + chunkSize;
+                  var chunk = dataURL.slice(start, end);
+                  socket.emit('upload_image', { image: chunk, index: index, final: end >= dataURL.length });
+                  start = end;
+                  index++;  // Increment the index counter for each chunk
+                }
+              };
+
+              reader.onerror = function () {
+                console.log('Error occurred while reading the file');
+              };
+
+              reader.readAsDataURL(file);
+            });
+
+            socket.on('image_response', function (msg) {
+              console.log("image_response", msg)
+              $('#imagePreview').attr('src', msg.image);
+            });
           });
         </script>
         <input type="file" id="imageInput">
       </p>
 
       <p>
+        <img src="" alt="" id="imagePreview">
         {{ form.title.label }}
         <br>
         {{ form.title(value=article.title) }}
