@@ -40,6 +40,11 @@
     padding: 10px;
 }
 
+.Projects {
+    display: flex;
+    flex-flow: wrap;
+}
+
 .Project {
     width: 150px;
     border-radius: 20px;
@@ -53,4 +58,18 @@
 
 .user-info {
     display: flex;
+    margin-left: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+}
+
+.Admin a {
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    border: solid 1px black;
+    margin-left: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
 }

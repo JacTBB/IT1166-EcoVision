@@ -38,7 +38,7 @@
     </div>
 <hr>
     <div class="user-info">
-      <button onclick="toggleData()">Sign in</button>
+      <button id="signin" onclick="toggleData(); SwitchData()">Sign in</button>
       <div id="sign-infomation">
         <p>Total offset <br> Electricity: 10 <br> Waste: 1</p>
         <p>4000 tons total</p>
@@ -53,6 +53,10 @@
           signinfomation.style.display = 'none'; // Hide the data container
         }
       }
+      function SwitchData() {
+        var button = document.getElementById('signin');
+        button.innerHTML = 'Client';
+      }
     </script>
     </div>
 <hr>
@@ -65,6 +69,10 @@
           <a href="{{url_for('trading.project', project = id)}}">View More</a>
         </div>
       {% endfor %}
+    </div>
+<hr>
+    <div class="Admin">
+        <a href="http://127.0.0.1/trading/projects">ADMIN</a>
     </div>
 {% endblock %}
 
