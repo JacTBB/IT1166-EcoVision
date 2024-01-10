@@ -7,7 +7,7 @@ Install Requirements
 
 Activate Virtual Environment
 - Windows: `venv\Scripts\activate.bat`
-- Mac: `source venv\Scripts\activate`
+- Mac: `source venv/bin/activate`
 
 Initialising Database
 `python initDatabase.py`
