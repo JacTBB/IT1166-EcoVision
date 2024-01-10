@@ -12,11 +12,11 @@ class ArticleForm(FlaskForm):
 
 
 class ContactForm(FlaskForm):
-    employee_name = StringField('employee_name', validators=[DataRequired()])
-    company_name = StringField('company_name', validators=[DataRequired()])
-    company_email = StringField('company_email', validators=[DataRequired()])
-    industry = StringField('industry', validators=[DataRequired()])
-    company_size = IntegerField('company_size', validators=[DataRequired()])
+    employee_name = StringField('Employee Name', validators=[DataRequired()])
+    company_name = StringField('Company Name', validators=[DataRequired()])
+    company_email = StringField('Company Email', validators=[DataRequired()])
+    industry = StringField('Industry', validators=[DataRequired()])
+    company_size = IntegerField('Company Size', validators=[DataRequired()])
     submit = SubmitField("Submit")
 
     # employee_name: Mapped[str] = mapped_column(String)
