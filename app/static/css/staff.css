@@ -48,8 +48,8 @@ form div input {
   /* makes label and input take up equal space */
 }
 
-
-form div>#submit {
+form div > #submit {
   margin: 0 auto;
   cursor: pointer;
+  padding: 5px 10px;
 }
