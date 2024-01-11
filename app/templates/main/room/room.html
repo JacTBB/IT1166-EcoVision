@@ -1,5 +1,15 @@
 {% extends 'layouts/main.html' %}
 
+{% block title %}Chat Room - EcoVision{% endblock %}
+
+{% block head %}
+<script>
+  var socket = io();
+  socket.on('requestRoom', function () {
+    socket.emit('join', {});
+  });
+</script>
+{% endblock %}
 
 {% block content %}
 <div class="container">

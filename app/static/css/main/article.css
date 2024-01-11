@@ -20,8 +20,31 @@ form input {
   font-family: "Nunito";
 }
 
-form input[type="text"],
-form input[type="file"]::file-selector-button {
+form input[type="file"] {
+  color: white;
+}
+
+#imageInput::file-selector-button {
+  font-family: "Nunito";
+  font-weight: bold;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 20px;
+  background-color: rgb(199, 199, 199);
+  color: rgb(0, 0, 0);
+
+}
+
+#imageInput::file-selector-placeholder {
+  
+}
+
+
+
+form input[type="text"] {
   font-weight: bold;
   font-size: 1.2rem;
   padding: 5px;
@@ -31,33 +54,17 @@ form input[type="file"]::file-selector-button {
   margin-bottom: 10px;
 }
 
-form input[type="file"]::file-selector-placeholder {
-  visibility: hidden;
-}
-
 form input[type="submit"] {
   font-weight: bold;
   border-radius: 5px;
   outline: 0;
   border: 0;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   padding: 5px 20px;
   margin-top: 10px;
 }
 
-form input[type="file"]::file-selector-button {
-  content: "FILe";
-  color: black;
-  border: 0;
-  padding: 5px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-form input[type="file"]::-file-selector-button {
-  display: none;
-}
 
 .form-footer {
   float: right;

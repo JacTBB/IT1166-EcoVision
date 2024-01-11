@@ -31,6 +31,7 @@
         <br>
 
         {{ form.image_view_onNews(value=article.image_name) }}
+        <input type="file" id="imageInput" accept=".jpg,.jpeg,.png">
         <script>
           $("#image_view_onNews").css("pointerEvents", "none").css("opacity", "0.5");
           $(document).ready(function () {
@@ -70,7 +71,7 @@
             });
           });
         </script>
-        <input type="file" id="imageInput">
+
         <img src="" alt="" id="imagePreview">
       </p>
 
