@@ -161,23 +161,7 @@ def chat():
     return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
 
 
-# image upload function
-# @socketio.on('upload_image')
-# def upload_handler(data):
-#     image_data = data['image']
-#     prefix, base64_data = image_data.split(",", 1)
-#     binary_data = base64.b64decode(base64_data)
-
-#     # Generate a filename for the image
-#     filename = os.path.join(.config['UPLOAD_FOLDER'], 'image.jpg')
-
-#     # Write the binary data to a file
-#     with open(filename, 'wb') as f:
-#         f.write(binary_data)
-
-#     emit('image_response', image_data, broadcast=True)
-
-
+# for article image upload function
 image_chunks = []
 
 
@@ -216,7 +200,8 @@ def handle_upload(data):
             extention = ".jpg"
 
         # save image to file
-        filename_path = os.path.join('./app/static/images', f'{filename}{extention}')
+        filename_path = os.path.join(
+            './app/static/images', f'{filename}{extention}')
 
         # write the binary data to a file
         with open(filename_path, 'wb') as f:
@@ -226,6 +211,10 @@ def handle_upload(data):
         emit('image_response', {
              'message': 'Image received', 'image': complete_image, "image_name": filename+extention}, broadcast=True)
 
+# end of image upload function
+
+
+# chat room function
 
 @socketio.on("message")
 def message(data):
@@ -243,7 +232,7 @@ def message(data):
     print(f"{session.get('name')} said: {data['data']}")
 
 
-@socketio.on("connect")
+@socketio.on("requestRoom")
 def connect(auth):
     print("connect", auth)
     room = session.get("room")
@@ -260,7 +249,7 @@ def connect(auth):
     print(f"{name} joined room {room}")
 
 
-@socketio.on("disconnect")
+@socketio.on("userDisconnected")
 def disconnect():
     room = session.get("room")
     name = session.get("name")
@@ -273,3 +262,5 @@ def disconnect():
 
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
+
+# end of chat room function
