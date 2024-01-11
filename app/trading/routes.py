@@ -1,9 +1,9 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
 from app.models.Trading import Projects
-from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm
+from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
 
 @trading.route('/')
@@ -19,10 +19,46 @@ def home():
 
     return render_template('trading/Dashboard.html', projects = projects)
 
+@trading.route("/Checkout")
+@login_required
+def Checkout():
+    projects = {}
+    projectsData = db.session.query(Projects).all()
+    for project in projectsData:
+        projects[project.id] = {
+            'name': project.name,
+            'type': project.type,
+            'stock': project.stock,
+        }
+
+    cart = {}
+    for item in session['cart']:
+        ID = item["id"]
+        cart[ID] = {
+            "id": ID,
+            "name": projects[ID]['name'],
+            "type": projects[ID]['type'],
+            "stock": item['stock'],
+        }
+        
+    return render_template('trading/ProjectC.html', cart = cart)
+
+
+@trading.route("/add_to_cart/<project>", methods=['POST'])
+def add_to_cart(project):
+    if not 'cart' in session:
+        session['cart'] = []
+    
+    cart = session['cart']
+    cart.append({"id": int(project), "stock": request.form.get('stock')})
+    session['cart'] = cart
+
+    return redirect(url_for("trading.Checkout")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):
     form = ProjectDetailsForm()
+    formCart = AddToCart()
     projectData = Projects.query.get(project)
 
     if current_user.is_authenticated and (current_user.type == 'admin'):
@@ -41,7 +77,7 @@ def project(project):
                         print(f"Error occurred: {e}")
                         db.session.rollback()
                         
-    return render_template('trading/Project.html', form=form, project=projectData)
+    return render_template('trading/Project.html', form=form, formCart=formCart, project=projectData)
 
 @trading.route("/projects")
 @login_required

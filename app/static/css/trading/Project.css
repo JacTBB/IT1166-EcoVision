@@ -35,3 +35,11 @@
 .post-content {
     padding: 20px;
 }
+
+.Buy a {
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    border: solid 1px black;
+    padding-right: 10px;
+}
