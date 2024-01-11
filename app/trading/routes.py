@@ -19,6 +19,18 @@ def home():
 
     return render_template('trading/Dashboard.html', projects = projects)
 
+@trading.route("/Checkout")
+@login_required
+def Checkout():
+    projects = {}
+    projectsData = db.session.query(Projects).all()
+    for project in projectsData:
+        projects[project.id] = {
+            'name': project.name,
+            'type': project.type,
+            'stock': project.stock,
+        }
+    return render_template('trading/ProjectC.html', projects = projects) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):

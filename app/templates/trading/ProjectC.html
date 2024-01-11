@@ -1,0 +1,17 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Project - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/Checkout.css') }}" />
+{{ ckeditor.load() }}
+{% endblock %}
+
+{% block content %}
+<div class="Start">
+    <img src="../../static/images/LanceMoutain.webp" alt="image" class="topimg">
+    <div class="overlap">
+    <p>Checkout Page!</p>
+    </div>
+</div>
+{% endblock %}
