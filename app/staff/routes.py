@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from app.models.Contact import CompanyInfo
 from app.staff import staff
 from app.database import db
-from flask_login import login_required
+from flask_login import current_user, login_required
 from app.models.Inventory import Product
 from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo
 
@@ -10,12 +10,16 @@ from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, Edi
 @staff.route("/")
 @login_required
 def dashboard():
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     return render_template("staff/dashboard.html")
 
 
 @staff.route("/products")
 @login_required
 def products():
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     products = {}
     productsData = db.session.query(Product).all()
     for product in productsData:
@@ -30,6 +34,8 @@ def products():
 @staff.route("/product/add", methods=['GET', 'POST'])
 @login_required
 def product_add():
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     form = AddProductForm()
 
     if form.validate_on_submit():
@@ -52,6 +58,8 @@ def product_add():
 @staff.route("/product/<product>/edit", methods=['GET', 'POST'])
 @login_required
 def product_edit(product):
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     form = EditProductForm()
 
     if request.method == 'POST':
@@ -79,6 +87,8 @@ def product_edit(product):
 @staff.route("/product/<product>/delete")
 @login_required
 def product_delete(product):
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     try:
         productData = Product.query.get(product)
 
@@ -97,6 +107,8 @@ def product_delete(product):
 @staff.route("/enquiries")
 @login_required
 def enquiries():
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     try:
         data = CompanyInfo.query.all()
         return render_template("staff/enquiries.html", data=data)
@@ -109,6 +121,8 @@ def enquiries():
 @staff.route("/enquiries/<enquiry>/delete")
 @login_required
 def enquiry_delete(enquiry):
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     try:
         enquiryData = CompanyInfo.query.get(enquiry)
 
@@ -127,6 +141,8 @@ def enquiry_delete(enquiry):
 @staff.route("/enquiries/<enquiry>/edit", methods=['GET', 'POST'])
 @login_required
 def enquiry_edit(enquiry):
+    if current_user.type != "staff":
+        return redirect(url_for('main.home'))
     enquiryData = CompanyInfo.query.get(enquiry)
     form = EditCompanyInfo(obj=enquiryData)
     if request.method == 'POST':
