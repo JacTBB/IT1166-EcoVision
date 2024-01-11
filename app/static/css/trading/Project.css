@@ -27,8 +27,11 @@
     font-size: large;
     
 }
-#textForm {
+.Bot-Bar {
     padding: 35px;
     width: 100%;
     background-color: beige;
+}
+.post-content {
+    padding: 20px;
 }

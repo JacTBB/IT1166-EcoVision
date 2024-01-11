@@ -28,13 +28,13 @@
 </div>
 
 <div class="Bot-Bar">
-  <div id="stockBar"></div>
-
   <form id="textForm">
     <label for="textInput">Stock Amount</label><br>
     <input type="text" id="textInput" name="textInput"><br>
     <input type="button" value="Submit" onclick="submitText()">
   </form>
+
+  <div id="stockBar"> stock level : {{project.stock}}</div>
 </div>
 
 {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
@@ -65,5 +65,6 @@
     </script>
   </div>
 {% endif %}
+
 
 {% endblock %}
