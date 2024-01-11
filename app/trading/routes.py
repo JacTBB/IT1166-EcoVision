@@ -3,7 +3,7 @@ from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
 from app.models.Trading import Projects
-from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm
+from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
 
 @trading.route('/')
@@ -30,16 +30,15 @@ def Checkout():
             'type': project.type,
             'stock': project.stock,
         }
-    print(session['cart'])
 
     cart = {}
     for item in session['cart']:
-        print(item)
-        cart[item.id] = {
-            "id" : item.id,
-            "name" :projects[item.id].name,
-            "type" : projects[item.id].type,
-            "stock" : item.stock,
+        ID = item["id"]
+        cart[ID] = {
+            "id": ID,
+            "name": projects[ID]['name'],
+            "type": projects[ID]['type'],
+            "stock": item['stock'],
         }
         
     return render_template('trading/ProjectC.html', cart = cart)
@@ -49,12 +48,17 @@ def Checkout():
 def add_to_cart(project):
     if not 'cart' in session:
         session['cart'] = []
-    session['cart'].append({"id":project, "stock":request.form.get('stock')})
+    
+    cart = session['cart']
+    cart.append({"id": int(project), "stock": request.form.get('stock')})
+    session['cart'] = cart
+
     return redirect(url_for("trading.Checkout")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):
     form = ProjectDetailsForm()
+    formCart = AddToCart()
     projectData = Projects.query.get(project)
 
     if current_user.is_authenticated and (current_user.type == 'admin'):
@@ -73,7 +77,7 @@ def project(project):
                         print(f"Error occurred: {e}")
                         db.session.rollback()
                         
-    return render_template('trading/Project.html', form=form, project=projectData)
+    return render_template('trading/Project.html', form=form, formCart=formCart, project=projectData)
 
 @trading.route("/projects")
 @login_required

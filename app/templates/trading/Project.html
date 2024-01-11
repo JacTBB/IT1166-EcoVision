@@ -31,9 +31,9 @@
   <div style="padding: 10px;">
     <h1 style="padding-top: 50px;">Add to cart</h1>
     <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
-      <div>{{form.stock}}</div>
-      <div>{{form.submit()}}</div>
-      {{ form.csrf_token }}
+      <div>{{formCart.stock}}</div>
+      <div>{{formCart.submit()}}</div>
+      {{ formCart.csrf_token }}
     </form>
   </div>
 
