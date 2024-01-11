@@ -17,11 +17,13 @@
         href="{{ url_for('main.news') }}">News</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.contact' else '' }}" href="{{ url_for('main.contact') }}">Contact Us</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.contact' else '' }}"
+        href="{{ url_for('main.contact') }}">Contact Us</a>
     </li>
     <li>
       {% if current_user.is_authenticated == true %}
-      <a href="{{ url_for('auth.account') }}">Account</a>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.account' else '' }}"
+        href="{{ url_for('auth.account') }}">Account</a>
       {% else %}
       <a class="{{ 'nav-selected' if request.endpoint == 'auth.login' else '' }}"
         href="{{ url_for('auth.login' )}}">Login</a>
