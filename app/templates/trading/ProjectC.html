@@ -14,4 +14,11 @@
     <p>Checkout Page!</p>
     </div>
 </div>
+{% for id, item in cart.items() %}
+  <div class="Choosen">
+    <p>{{item.id}}</p>
+    <p>{{item.name}}</p>
+    <p>{{item.stock}}</p>
+    <p>{{item.type}}</p>
+  </div>
 {% endblock %}

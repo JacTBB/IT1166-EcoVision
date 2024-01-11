@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
@@ -30,7 +30,27 @@ def Checkout():
             'type': project.type,
             'stock': project.stock,
         }
-    return render_template('trading/ProjectC.html', projects = projects) 
+    print(session['cart'])
+
+    cart = {}
+    for item in session['cart']:
+        print(item)
+        cart[item.id] = {
+            "id" : item.id,
+            "name" :projects[item.id].name,
+            "type" : projects[item.id].type,
+            "stock" : item.stock,
+        }
+        
+    return render_template('trading/ProjectC.html', cart = cart)
+
+
+@trading.route("/add_to_cart/<project>", methods=['POST'])
+def add_to_cart(project):
+    if not 'cart' in session:
+        session['cart'] = []
+    session['cart'].append({"id":project, "stock":request.form.get('stock')})
+    return redirect(url_for("trading.Checkout")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):
