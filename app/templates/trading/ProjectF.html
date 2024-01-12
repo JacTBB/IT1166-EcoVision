@@ -8,13 +8,13 @@
 
 {% block content %}
   <section>
-    <h2>Projects</h2>
-    <div class="addlocation">
-      <a href="{{ url_for('trading.project_add') }}"><p>Add Project</p></a>
+    <div class="Header">
+      <h1>Projects</h1>
     </div>
-    <table id="locations">
+    <div class="form">
+    <table class="Project" border="0">
       <tr>
-        <th>ID</th>
+        <th>Project ID</th>
         <th>Name</th>
         <th>type</th>
         <th>stock</th>
@@ -30,7 +30,13 @@
           <td><a href="{{ url_for('trading.project_edit', project=id) }}">Edit</a></td>
           <td><a href="{{ url_for('trading.project_delete', project=id) }}">Delete</a></td>
         <tr>
+      </div>
       {% endfor %}
+    </table>
+    </div>
+
+    <div class="addlocation">
+      <a href="{{ url_for('trading.project_add') }}" id="Link"><p> + Project</p></a>
     </div>
   </section>
 {% endblock %}
