@@ -37,12 +37,15 @@ def Checkout():
     cart = {}
     for item in session['cart']:
         ID = item["id"]
-        cart[ID] = {
-            "id": ID,
-            "name": projects[ID]['name'],
-            "type": projects[ID]['type'],
-            "stock": item['stock'],
-        }
+        if ID in projects:
+            cart[ID] = {
+                "id": ID,
+                "name": projects[ID]['name'],
+                "type": projects[ID]['type'],
+                "stock": item['stock'],
+            }
+        else:
+            session['cart'].remove(item)
         
     return render_template('trading/ProjectC.html', cart = cart)
 

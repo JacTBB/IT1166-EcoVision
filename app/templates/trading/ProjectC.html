@@ -15,14 +15,15 @@
       <div class="overlap">
         <p>Checkout Page!</p>
       </div>
-      {% for id, item in cart.items() %}
-    </div>
-    <div class="checkout-details">
-      <p>{{item.id}}</p>
-      <p>{{item.name}}</p>
-      <p>{{item.stock}}</p>
-      <p>{{item.type}}</p>
-    </div>
+  
+    {% for id, item in cart.items() %}
+      </div>
+      <div class="checkout-details">
+        <p>{{item.id}}</p>
+        <p>{{item.name}}</p>
+        <p>{{item.stock}}</p>
+        <p>{{item.type}}</p>
+      </div>
     {% endfor %}
 
   </div>

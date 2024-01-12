@@ -1,35 +1,124 @@
+* {
+    font-family: monospace;
+}
+
 .Welcome-block {
-    padding-top: 55px;
-    border-color: black;
-    background-color: beige;
-    font-size: larger;
-    font-weight: bold;
-    padding: 50px;
+   padding-top: 50px;
+   width: 100%;
+   height: auto;
+   position: relative;
 }
 .Welcome-block p {
     padding-top: 50px;
+    position: absolute;
+    top: 300px;
+    left: 150px;
+    color: white;
+    font-size: 3vw;
+    font-family: monospace;
+
 }
 
-#ButtonsBox {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    width: 100vw;
+.Welcome-block img {
+    width: 100%;
+    height: auto;
 }
-#ButtonsBox .pur-info {
-    justify-self: start;
-    
+
+.Para1 {
+    font-size: x-large;
+    text-align: center;
+    padding: 120px;
+    width: 100%;
 }
-#ButtonsBox .car-info {
-    justify-self: end;
+.Para1 h2 {
+    padding-bottom: 40px;
+    font-weight: bolder;
+    color: green;
 }
-#sign-infomation {
-    display: none;
-    background-color: white;
+.Para1 h3{
+    padding-bottom: 20px;
+    font-weight: lighter;
+}
+.Scroll {
+    font-size: 2.5em;
     color: black;
-    margin-left: 50px;
-    width: 200px;
-    padding: 10px;
 }
+.Scroll:hover {
+    color: green;
+}
+
+#Para2 h2{
+    font-size: 2em;
+    text-align: center;
+    color: green;
+    padding-bottom: 40px;
+}
+
+.Steps {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.Steps h3{
+    padding-bottom: 40px;
+    font-size: xx-large;
+}
+
+.Step1 {
+    padding: 35px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.Step2 {
+    padding: 35px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.Step3 {
+    padding: 35px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.Step4 {
+    padding: 35px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.Project-Cells{
+    background-color: beige;
+    padding: 50px;
+}
+
+.Project-Cells h2{
+    padding-top: 20px;
+    text-align: center;
+}
+.Project-Cells h2 {
+    text-align: center;
+        font-size:50px; font-weight:300; color:#222; letter-spacing:1px;
+        text-transform: uppercase;
+    
+        display: grid;
+        grid-template-columns: 1fr max-content 1fr;
+        grid-template-rows: 27px 0;
+        grid-gap: 20px;
+        align-items: center;
+}
+    
+.Project-Cells h2:after,.Project-Cells h2:before {
+        content: " ";
+        display: block;
+        border-bottom: 1px solid green;
+        border-top: 1px solid green;
+        height: 5px;
+      background-color:beige;
+}
+
 
 #Purchase-info {
     display: none;
@@ -43,17 +132,19 @@
 .Projects {
     display: flex;
     flex-flow: wrap;
+    padding: 50px;
 }
 
 .Project {
-    width: 150px;
+    width: 300px;
     border-radius: 20px;
-    padding: 10px;
+    padding: 50px;
     margin-left: 20px;
     border: solid black 1px;
     background-color: beige;
     margin: 10px;
-    
+    text-align: center;
+    font-size: xx-large;
 }
 
 .user-info {
@@ -62,6 +153,11 @@
     padding-left: 10px;
     padding-right: 10px;
     text-decoration: none;
+}
+.Admin{
+    text-align: center;
+    justify-content: center;
+    font-size: 3vw;
 }
 
 .Admin a {
@@ -72,4 +168,117 @@
     margin-left: 30px;
     padding-left: 10px;
     padding-right: 10px;
+
 }
+.Footer {
+    padding: 100px;
+    justify-items: center;
+    text-align: center;
+    display: flex;
+    background-color: darkgreen;
+}
+.Footer li {
+    padding-right: 50px;
+}
+
+.Footer ul {
+    display: inline-grid;
+    grid-auto-flow: row;
+    grid-gap: 24px;
+    margin: auto;
+    font-size: xx-large;
+    text-align: center;
+    justify-items: center;
+    display: flex;
+  }
+  
+  @media (min-width: 500px) {
+    ul {
+      grid-auto-flow: column;
+    }
+  }
+  
+.Footer a {
+    color: white;
+    text-decoration: none;
+    box-shadow: inset 0 -1px 0 hsla(0, 0%, 100%, 0.4);
+  }
+  
+.Footer a:hover {
+    box-shadow: inset 0 -1.2em 0 hsla(0, 0%, 100%, 0.4);
+  }
+  
+.Footer li:last-child {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  
+.Footer li:hover ~ li p {
+    animation: wave-animation 0.3s infinite;
+  }
+
+  
+.Footer div {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    line-height: 1.3;
+    font-family: Menlo, monospace;
+    justify-items: center;
+    text-align: center;
+  }
+  
+  @keyframes wave-animation {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(20deg);
+    }
+    75% {
+      transform: rotate(-15deg);
+    }
+  }
+
+.Admin a{
+    color: green;
+    font-size: 1.3rem;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    padding: .5em;
+    margin-left: -.5em;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+
+    &:before, &:after {
+        position: absolute;
+        content: '';
+        border-bottom: 3px solid black;
+        border-radius: 1em;
+        bottom: .3em;
+        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:before {
+        width: 1em;
+        transform-origin: left;
+    }
+
+    &:after {
+        width: 82%;
+        left: 1em;
+        transform: translateX(110%);
+    }
+
+    &:hover:before {
+        transform: scaleX(0.3);
+    }
+
+    &:hover:after {
+        transform: translateX(0);
+    }
+
+}
+  
