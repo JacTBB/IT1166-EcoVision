@@ -1,13 +1,16 @@
-* {
-    font-family: monospace;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
+
+body {
+    font-family: "Nunito" !important;
 }
 
 .Welcome-block {
-   padding-top: 50px;
-   width: 100%;
-   height: auto;
-   position: relative;
+    padding-top: 50px;
+    width: 100%;
+    height: auto;
+    position: relative;
 }
+
 .Welcome-block p {
     padding-top: 50px;
     position: absolute;
@@ -15,7 +18,6 @@
     left: 150px;
     color: white;
     font-size: 3vw;
-    font-family: monospace;
 
 }
 
@@ -30,24 +32,28 @@
     padding: 120px;
     width: 100%;
 }
+
 .Para1 h2 {
     padding-bottom: 40px;
     font-weight: bolder;
     color: green;
 }
-.Para1 h3{
+
+.Para1 h3 {
     padding-bottom: 20px;
     font-weight: lighter;
 }
+
 .Scroll {
     font-size: 2.5em;
     color: black;
 }
+
 .Scroll:hover {
     color: green;
 }
 
-#Para2 h2{
+#Para2 h2 {
     font-size: 2em;
     text-align: center;
     color: green;
@@ -60,7 +66,7 @@
     justify-content: center;
 }
 
-.Steps h3{
+.Steps h3 {
     padding-bottom: 40px;
     font-size: xx-large;
 }
@@ -89,34 +95,39 @@
     font-weight: bold;
 }
 
-.Project-Cells{
+.Project-Cells {
     background-color: beige;
     padding: 50px;
 }
 
-.Project-Cells h2{
+.Project-Cells h2 {
     padding-top: 20px;
     text-align: center;
 }
+
 .Project-Cells h2 {
     text-align: center;
-        font-size:50px; font-weight:300; color:#222; letter-spacing:1px;
-        text-transform: uppercase;
-    
-        display: grid;
-        grid-template-columns: 1fr max-content 1fr;
-        grid-template-rows: 27px 0;
-        grid-gap: 20px;
-        align-items: center;
+    font-size: 50px;
+    font-weight: 300;
+    color: #222;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: 27px 0;
+    grid-gap: 20px;
+    align-items: center;
 }
-    
-.Project-Cells h2:after,.Project-Cells h2:before {
-        content: " ";
-        display: block;
-        border-bottom: 1px solid green;
-        border-top: 1px solid green;
-        height: 5px;
-      background-color:beige;
+
+.Project-Cells h2:after,
+.Project-Cells h2:before {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid green;
+    border-top: 1px solid green;
+    height: 5px;
+    background-color: beige;
 }
 
 
@@ -154,7 +165,8 @@
     padding-right: 10px;
     text-decoration: none;
 }
-.Admin{
+
+.Admin {
     text-align: center;
     justify-content: center;
     font-size: 3vw;
@@ -170,6 +182,7 @@
     padding-right: 10px;
 
 }
+
 .Footer {
     padding: 100px;
     justify-items: center;
@@ -177,6 +190,7 @@
     display: flex;
     background-color: darkgreen;
 }
+
 .Footer li {
     padding-right: 50px;
 }
@@ -190,34 +204,34 @@
     text-align: center;
     justify-items: center;
     display: flex;
-  }
-  
-  @media (min-width: 500px) {
+}
+
+@media (min-width: 500px) {
     ul {
-      grid-auto-flow: column;
+        grid-auto-flow: column;
     }
-  }
-  
+}
+
 .Footer a {
     color: white;
     text-decoration: none;
     box-shadow: inset 0 -1px 0 hsla(0, 0%, 100%, 0.4);
-  }
-  
+}
+
 .Footer a:hover {
     box-shadow: inset 0 -1.2em 0 hsla(0, 0%, 100%, 0.4);
-  }
-  
+}
+
 .Footer li:last-child {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
-  }
-  
-.Footer li:hover ~ li p {
-    animation: wave-animation 0.3s infinite;
-  }
+}
 
-  
+.Footer li:hover~li p {
+    animation: wave-animation 0.3s infinite;
+}
+
+
 .Footer div {
     display: flex;
     height: 100vh;
@@ -226,22 +240,25 @@
     font-family: Menlo, monospace;
     justify-items: center;
     text-align: center;
-  }
-  
-  @keyframes wave-animation {
+}
+
+@keyframes wave-animation {
+
     0%,
     100% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
-    25% {
-      transform: rotate(20deg);
-    }
-    75% {
-      transform: rotate(-15deg);
-    }
-  }
 
-.Admin a{
+    25% {
+        transform: rotate(20deg);
+    }
+
+    75% {
+        transform: rotate(-15deg);
+    }
+}
+
+.Admin a {
     color: green;
     font-size: 1.3rem;
     text-decoration: none;
@@ -252,7 +269,8 @@
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 
-    &:before, &:after {
+    &:before,
+    &:after {
         position: absolute;
         content: '';
         border-bottom: 3px solid black;
@@ -281,4 +299,3 @@
     }
 
 }
-  
