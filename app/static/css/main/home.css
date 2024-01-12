@@ -5,7 +5,7 @@
   color: white;
 }
 
-.container .home img {
+.home-page .home img {
   position: absolute;
   height: 100vh;
   width: 100%;
@@ -18,7 +18,7 @@
   object-position: top center;
 }
 
-.container .home {
+.home-page .home {
   position: relative;
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@
   width: 100%;
 }
 
-.container .home div p {
+.home-page .home div p {
   font-size: 5em;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
   background: -webkit-linear-gradient(rgb(230, 248, 223), #7aaa8a);
@@ -77,13 +77,18 @@
   flex-direction: column;
 }
 
-.home-news .row {
+.home-news .news-row {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
   gap: 20px;
+}
+
+.home-news .news-row>a {
+  color: white;
+  text-decoration: none;
 }
 
 .home-news .catalog {
@@ -104,6 +109,7 @@
   justify-content: space-between;
   height: 100%;
   font-size: 15px;
+
 }
 
 .home-news .catalog>div>div>* {
@@ -131,7 +137,7 @@
 
 /* News */
 
-.container .news>img {
+.news-page .news>img {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -143,7 +149,7 @@
   filter: opacity(0.5);
 }
 
-.container .news {
+.news-page .news {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -153,7 +159,7 @@
   padding-bottom: 50px;
 }
 
-.container .news .news-header {
+.news-page .news .news-header {
   margin-top: 50px;
   white-space: nowrap;
   width: 100%;
@@ -365,6 +371,7 @@ select {
   transition: 0.2s linear;
   cursor: pointer;
   margin-right: 5px;
+  width: 220px;
 }
 
 select:hover option,
@@ -429,9 +436,6 @@ select:active {
 }
 
 @media screen and (max-width: 768px) {
-  .news-header h1 {
-    padding-left: 20px;
-  }
 
   .featured-news {
     display: none;
@@ -441,6 +445,7 @@ select:active {
     width: 100%;
     justify-content: center;
     flex-flow: column;
+    align-items: center;
   }
 
   .news-section .catalog {
