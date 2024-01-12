@@ -2,49 +2,8 @@ section {
     padding: 10px;
 }
 
-hr {
-    margin: 0 25px;
-    width: calc(100% - 50px);
-    border: 0;
-    border-bottom: 1px;
-    border-style: solid;
-    border-color: rgba(10, 10, 10, 0.1);
-}
-
-
 
 h2 {
-    padding-top: 50px;
     font-size: 25px;
-    font-weight: bold;
-}
-
-.addlocation {
-    margin-left: auto;
-    padding: 10px;
-    width: 180px;
-    background-color: lightgoldenrodyellow;
-}
-
-.addlocation > a {
-    color: black;
-    text-align: center;
-    text-decoration: none;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 5px;
-    border: solid 1px rgb(120,120,120);
-}
-
-table a {
-    color: black;
-}
-
-table a:hover {
     font-weight: bold;
 }

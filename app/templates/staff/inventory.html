@@ -3,32 +3,36 @@
 {% block title %}Inventory - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staff/locations.css') }}" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/staff/main.css')}}">
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid">
   <section>
     <h2>Inventory</h2>
     <div class="addlocation">
-      <a href="{{ url_for('staff.product_add') }}"><p>Add Product</p></a>
+      <a href="{{ url_for('staff.product_add') }}">
+        <p>Add Product</p>
+      </a>
     </div>
-    <table id="locations">
+    <table id="locations" class="table">
       <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Quantity</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th colspan="2">Actions</th>
       </tr>
       {% for id, product in products.items() %}
-        <tr>
-          <td>{{ id }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.quantity }}</td>
-          <td><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
-        <tr>
-      {% endfor %}
-    </div>
-  </section>
+      <tr>
+        <td>{{ id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.quantity }}</td>
+        <td colspan="2"><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
+        <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
+      <tr>
+        {% endfor %}
+</div>
+</section>
+</div>
 {% endblock %}

@@ -1,0 +1,15 @@
+section {
+    padding: 10px;
+    position: relative;
+    top: 59px;
+    color: white;
+}
+
+hr {
+    margin: 0 25px;
+    width: calc(100% - 50px);
+    border: 0;
+    border-bottom: 1px;
+    border-style: solid;
+    border-color: rgba(10, 10, 10, 0.1);
+}

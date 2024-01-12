@@ -3,79 +3,82 @@
 {% block title %}Dashboard - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/dashboard_free.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/dashboard_free.css') }}" />
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 {% endblock %}
 
 {% block content %}
-  <section>
-    <h1>Welcome, {{ current_user.username }}</h1>
-    <div id="overview">
-      <div id="carbonfootprint">
-        <h3>Carbon Footprint</h3>
-        <p>{{ overview.carbonfootprint }} CO2e</p>
-      </div>
-      <div id="energyusage">
-        <h3>Energy Usage</h3>
-        <p>{{ overview.energyusage }} kWh</p>
-      </div>
-      <div id="waterusage">
-        <h3>Water Usage</h3>
-        <p>{{ overview.waterusage }} Gallons</p>
-      </div>
-      <div id="managelocations">
-        <a href="{{ url_for('client.locations') }}">
-          <h3>Manage Locations</h3>
-        </a>
-      </div>
+<section>
+  <h1>Welcome, {{ current_user.username }}</h1>
+  <div id="overview">
+    <div id="carbonfootprint">
+      <h3>Carbon Footprint</h3>
+      <p>{{ overview.carbonfootprint }} CO2e</p>
     </div>
-  </section>
+    <div id="energyusage">
+      <h3>Energy Usage</h3>
+      <p>{{ overview.energyusage }} kWh</p>
+    </div>
+    <div id="waterusage">
+      <h3>Water Usage</h3>
+      <p>{{ overview.waterusage }} Gallons</p>
+    </div>
+    <div id="managelocations">
+      <a href="{{ url_for('client.locations') }}">
+        <h3>Manage Locations</h3>
+      </a>
+    </div>
+  </div>
+</section>
 
-  {% for id, location in locations.items() %}
-    <hr>
-    <section class="location">
-      <h2>{{ location.name }}</h2>
-      <div class="manageutilities">
-        <a href="{{ url_for('client.location_utility', location=id) }}"><p>Manage Utility Bills</p></a>
-      </div>
+{% for id, location in locations.items() %}
+<hr>
+<section class="location">
+  <h2>{{ location.name }}</h2>
+  <div class="manageutilities">
+    <a href="{{ url_for('client.location_utility', location=id) }}">
+      <p>Manage Utility Bills</p>
+    </a>
+  </div>
 
-      <h3>Usage Graph</h3>
-      <canvas id="chart-{{ id }}"></canvas>
+  <h3>Usage Graph</h3>
+  <canvas id="chart-{{ id }}"></canvas>
 
-      <script>
-        const chart{{ id }} = new Chart("chart-{{ id }}", {
-          type: "line",
-          data: {
-            labels: {{ location.timerange }},
-            datasets: [
-              {
-                label: 'Carbon Footprint',
-                data: {{ location.carbonfootprint }},
-                borderColor: 'rgba(255, 0, 0, 0.8)',
-                backgroundColor: 'rgba(255, 0, 0, 0.05)'
+  <script>
+    const chart{{ id }} = new Chart("chart-{{ id }}", {
+      type: "line",
+      data: {
+        labels: {{ location.timerange }},
+      datasets: [
+      {
+        label: 'Carbon Footprint',
+        data: {{ location.carbonfootprint }},
+      borderColor: 'rgba(255, 0, 0, 0.8)',
+      backgroundColor: 'rgba(255, 0, 0, 0.05)'
               },
-              {
-                label: 'Energy Usage',
-                data: {{ location.energyusage }},
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                backgroundColor: 'rgba(0, 255, 0, 0.05)'
+      {
+        label: 'Energy Usage',
+        data: {{ location.energyusage }},
+      borderColor: 'rgba(0, 255, 0, 0.8)',
+      backgroundColor: 'rgba(0, 255, 0, 0.05)'
               },
-              {
-                label: 'Water Usage',
-                data: {{ location.waterusage }},
-                borderColor: 'rgba(0, 0, 255, 0.8)',
-                backgroundColor: 'rgba(0, 0, 255, 0.05)'
+      {
+        label: 'Water Usage',
+        data: {{ location.waterusage }},
+      borderColor: 'rgba(0, 0, 255, 0.8)',
+      backgroundColor: 'rgba(0, 0, 255, 0.05)'
               }
-            ]
+    ]
           },
-          options: {
-            legend: {
-              position: 'bottom'
-            }
-          }
+      options: {
+      legend: {
+        position: 'bottom'
+      }
+    }
         });
-      </script>
-    </section>
-  {% endfor %}
+  </script>
+</section>
+{% endfor %}
 {% endblock %}

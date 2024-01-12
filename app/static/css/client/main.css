@@ -1,0 +1,60 @@
+body {
+    background-color: #456c52;
+    color: white;
+
+}
+
+#main {
+    position: relative;
+    top: 59px;
+    color: white;
+}
+
+#main>div {
+    position: relative;
+    top: 20px;
+}
+
+section h2,
+div h2 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+.addlocation {
+    margin-right: 0;
+    padding: 8px 6px;
+    width: 180px;
+    background-color: lightgoldenrodyellow;
+    margin-bottom: 10px;
+}
+
+.addlocation>a {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+table th {
+    font-size: 20px;
+}
+
+table td,
+table th {
+    color: white;
+}
+
+table a {
+    color: #ff7f00;
+    /* orange */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #cc6600;
+    /* darker orange */
+}
