@@ -31,6 +31,9 @@ def Checkout():
             'stock': project.stock,
         }
 
+    print(projects)
+    print(session['cart'])
+
     cart = {}
     for item in session['cart']:
         ID = item["id"]
