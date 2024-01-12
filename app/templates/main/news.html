@@ -67,7 +67,7 @@
               <img src="{{ url_for('static', filename='images/' + post.image_name) }}" loading="lazy" />
             </div>
             <div class="news-head">
-              <h3>{{ post.title }}</h3>
+              <p>{{ post.title }}</p>
               <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
             </div>
           </div>
