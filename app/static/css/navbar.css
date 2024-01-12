@@ -56,7 +56,28 @@ nav ul li a:hover {
   transition: all 0.1s ease;
 }
 
+nav ul li::after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  content: "";
+  bottom: 0;
+  transition: all 0.2s ease-in-out
+}
+
 nav ul li:hover::after {
+  width: 100%;
+}
+
+
+.nav-selected {
+  color: white;
+  font-weight: bold;
+}
+
+.nav-selected::after {
   position: absolute;
   display: block;
   width: 100%;
@@ -65,12 +86,6 @@ nav ul li:hover::after {
   content: "";
   bottom: 0;
   transition: all 0.1s ease;
-}
-
-
-.nav-selected {
-  color: white;
-  font-weight: bold;
 }
 
 /* Footer */
