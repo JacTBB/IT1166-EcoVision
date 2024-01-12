@@ -5,26 +5,33 @@ body {
 }
 
 .Welcome-block {
-    padding-top: 50px;
     width: 100%;
-    height: auto;
+    height: 60vh;
     position: relative;
-}
-
-.Welcome-block p {
-    padding-top: 50px;
-    position: absolute;
-    top: 300px;
-    left: 150px;
-    color: white;
-    font-size: 3vw;
-
+    z-index: -1;
 }
 
 .Welcome-block img {
+    position: absolute;
     width: 100%;
-    height: auto;
+    height: 60vh;
+    object-fit: cover;
+    object-position: center center;
 }
+
+.Welcome-block p {
+    position: relative;
+    margin: 0 auto;
+    top: 60%;
+    left: 10%;
+    color: white;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    word-break:keep-all;
+
+}
+
 
 .Para1 {
     font-size: x-large;
