@@ -111,7 +111,13 @@ def news():
 
     first_exist_featured_post = Post.query.filter_by(
         featured_post=True).first()
-    return render_template('main/news.html', data=query, setFeaturedNews=first_exist_featured_post.postid)
+
+    if first_exist_featured_post is None:
+        featured_postid = 0
+    else:
+        featured_postid = first_exist_featured_post.postid
+
+    return render_template('main/news.html', data=query, setFeaturedNews=featured_postid)
 
 
 @main.route('/contact', methods=['GET', 'POST'])
