@@ -10,10 +10,13 @@
   flex-flow: column;
 }
 
-.post-content p img {
+.post-content p img:nth-child(1) {
   width: 100% !important;
-  max-height: 400px;
   object-fit: cover;
+}
+
+p {
+  margin-bottom: 1rem;
 }
 
 form input {
@@ -33,14 +36,16 @@ form input[type="file"] {
   cursor: pointer;
   font-size: 16px;
   padding: 5px 20px;
-  background-color: rgb(199, 199, 199);
+  background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
-
+  transition: background-color 0.1s ease-in;
 }
 
-#imageInput::file-selector-placeholder {
-  
+#imageInput::file-selector-button:hover {
+  background-color: rgb(223, 223, 223);
 }
+
+#imageInput::file-selector-placeholder {}
 
 
 
