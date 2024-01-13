@@ -14,7 +14,7 @@ import base64
 from flask_socketio import emit, send, join_room, leave_room
 
 import random
-from string import ascii_lowercase
+from string import ascii_lowercase, ascii_uppercase
 
 
 @main.route('/')
@@ -215,7 +215,7 @@ def handle_upload(data):
         binary_data = base64.b64decode(base64_data)
 
         # generate string for filename
-        filename = ""
+        filename = "upload-"
         for i in range(10):
             filename += random.choice(ascii_lowercase)
 
@@ -232,7 +232,7 @@ def handle_upload(data):
 
         # save image to file
         filename_path = os.path.join(
-            './app/static/images/', f'{filename}{extention}')
+            './app/static/images/uploads/', f'{filename}{extention}')
 
         # write the binary data to a file
         with open(filename_path, 'wb') as f:
