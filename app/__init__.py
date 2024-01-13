@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 from app.config import Config
 from app.database import db, query_data
@@ -55,5 +55,9 @@ def create_app(config_class=Config):
         app.register_blueprint(client, url_prefix='/client')
         app.register_blueprint(trading, url_prefix='/trading')
         app.register_blueprint(staff, url_prefix='/staff')
+    
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('404.html')
 
     return app
