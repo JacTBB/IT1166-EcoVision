@@ -3,23 +3,22 @@ from app.models.Contact import CompanyInfo
 from app.staff import staff
 from app.database import db
 from flask_login import current_user, login_required
+from app.auth import check_user_type
 from app.models.Inventory import Product
 from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo
 
 
 @staff.route("/")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'technician', 'author'])
 def dashboard():
-    if current_user.type != "admin":
-        return abort(403)
     return render_template("staff/dashboard.html")
 
 
 @staff.route("/products")
 @login_required
+@check_user_type(['admin', 'manager', 'technician'])
 def products():
-    if current_user.type != "admin":
-        return abort(403)
     products = {}
     productsData = db.session.query(Product).all()
     for product in productsData:
@@ -33,9 +32,8 @@ def products():
 
 @staff.route("/product/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def product_add():
-    if current_user.type != "admin":
-        return abort(403)
     form = AddProductForm()
 
     if form.validate_on_submit():
@@ -57,9 +55,8 @@ def product_add():
 
 @staff.route("/product/<product>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def product_edit(product):
-    if current_user.type != "admin":
-        return abort(403)
     form = EditProductForm()
 
     if request.method == 'POST':
@@ -86,9 +83,8 @@ def product_edit(product):
 
 @staff.route("/product/<product>/delete")
 @login_required
+@check_user_type(['admin', 'manager'])
 def product_delete(product):
-    if current_user.type != "admin":
-        return abort(403)
     try:
         productData = Product.query.get(product)
 
@@ -106,9 +102,8 @@ def product_delete(product):
 
 @staff.route("/enquiries")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def enquiries():
-    if current_user.type != "admin":
-        return abort(403)
     try:
         data = CompanyInfo.query.all()
         return render_template("staff/enquiries.html", data=data)
@@ -120,9 +115,8 @@ def enquiries():
 
 @staff.route("/enquiries/<enquiry>/delete")
 @login_required
+@check_user_type(['admin', 'manager'])
 def enquiry_delete(enquiry):
-    if current_user.type != "admin":
-        return abort(403)
     try:
         enquiryData = CompanyInfo.query.get(enquiry)
 
@@ -140,9 +134,8 @@ def enquiry_delete(enquiry):
 
 @staff.route("/enquiries/<enquiry>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def enquiry_edit(enquiry):
-    if current_user.type != "admin":
-        return abort(403)
     enquiryData = CompanyInfo.query.get(enquiry)
     form = EditCompanyInfo(obj=enquiryData)
     if request.method == 'POST':
