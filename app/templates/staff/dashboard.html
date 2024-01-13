@@ -15,7 +15,7 @@
           href="{{ url_for('staff.dashboard') }}">
           <p>Overview</p>
         </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">
+        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'client.companies' else '' }}" href="{{ url_for('client.companies') }}">
           <p>Business Management</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">

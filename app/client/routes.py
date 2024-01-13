@@ -3,8 +3,10 @@ from app.client import client
 from app.database import db
 from flask_login import login_required
 from app.models.Client import Location, Utility
-from app.client.forms import AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm
+from app.models.Company import Company
+from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm
 from datetime import datetime
+
 
 
 @client.route('/')
@@ -30,6 +32,108 @@ def dashboard():
     return render_template('client/dashboard_free.html', overview=overview, locations=locations)
 
 
+
+
+
+
+@client.route("/manage")
+@login_required
+def companies():
+    companies = {}
+    companiesData = db.session.query(Company).all()
+    for company in companiesData:
+        companies[company.id] = {
+            'name': company.name,
+            'industry': company.industry,
+            'address': company.address,
+            'email': company.email
+        }
+
+    return render_template('client/companies.html', companies=companies)
+
+
+
+@client.route("/manage/add", methods=['GET', 'POST'])
+@login_required
+def company_add():
+    form = AddCompanyForm()
+
+    if form.validate_on_submit():
+        try:
+            name = request.form.get("name")
+            industry = request.form.get("industry")
+            address = request.form.get("address")
+            email = request.form.get("email")
+
+            company = Company(name=name, industry=industry, address=address, email=email)
+            db.session.add(company)
+            db.session.commit()
+
+            return redirect(url_for('client.companies'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("client/company_add.html", form=form)
+
+
+
+@client.route("/manage/<company>/edit", methods=['GET', 'POST'])
+@login_required
+def company_edit(company):
+    form = EditCompanyForm()
+
+    if request.method == 'POST':
+        try:
+            companyData = Company.query.get(company)
+
+            name = request.form.get("name")
+            industry = request.form.get("industry")
+            address = request.form.get("address")
+            email = request.form.get("email")
+
+            if name:
+                companyData.name = name
+            if industry:
+                companyData.industry = industry
+            if address:
+                companyData.address = address
+            if email:
+                companyData.email = email
+
+            db.session.commit()
+
+            return redirect(url_for('client.companies'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("client/company_edit.html", form=form)
+
+
+
+@client.route("/manage/<company>/delete")
+@login_required
+def company_delete(company):
+    try:
+        companyData = Location.query.get(company)
+
+        if companyData is None:
+            return "Company Not Found!"
+
+        db.session.delete(companyData)
+        db.session.commit()
+        return redirect(url_for('client.companies'))
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        db.session.rollback()
+        return "Error"
+
+
+
+
+
+
 @client.route("/locations")
 @login_required
 def locations():
@@ -42,6 +146,7 @@ def locations():
         }
 
     return render_template('client/locations.html', locations=locations)
+
 
 
 @client.route("/location/add", methods=['GET', 'POST'])
@@ -64,6 +169,7 @@ def location_add():
             db.session.rollback()
 
     return render_template("client/location_add.html", form=form)
+
 
 
 @client.route("/location/<location>/edit", methods=['GET', 'POST'])
@@ -93,6 +199,7 @@ def location_edit(location):
     return render_template("client/location_edit.html", form=form)
 
 
+
 @client.route("/location/<location>/delete")
 @login_required
 def location_delete(location):
@@ -111,6 +218,10 @@ def location_delete(location):
         return "Error"
 
 
+
+
+
+
 @client.route("/location/<location>/utility")
 @login_required
 def location_utility(location):
@@ -127,6 +238,7 @@ def location_utility(location):
         }
 
     return render_template('client/utility.html', location=location, utilities=utilities)
+
 
 
 @client.route("/location/<location>/utility/add", methods=['GET', 'POST'])
@@ -154,6 +266,7 @@ def location_utility_add(location):
             db.session.rollback()
 
     return render_template("client/utility_add.html", form=form)
+
 
 
 @client.route("/location/<location>/utility/edit/<utility>", methods=['GET', 'POST'])
@@ -192,6 +305,7 @@ def location_utility_edit(location, utility):
     return render_template("client/utility_edit.html", form=form)
 
 
+
 @client.route("/location/<location>/utility/delete/<utility>")
 @login_required
 def location_utility_delete(location, utility):
@@ -208,6 +322,10 @@ def location_utility_delete(location, utility):
         print(f"Error occurred: {e}")
         db.session.rollback()
         return "Error"
+
+
+
+
 
 
 @client.route("/account")
