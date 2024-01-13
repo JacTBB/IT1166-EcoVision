@@ -38,10 +38,8 @@ def login():
                     login_user(user)
                     if user.type == 'client':
                         return redirect(url_for('client.dashboard'))
-                    elif user.type == 'admin':
-                        return redirect(url_for('staff.dashboard'))
                     else:
-                        return redirect(url_for('auth.account'))
+                        return redirect(url_for('staff.dashboard'))
                 else:
                     error_message = "Invalid password"
             else:
