@@ -56,8 +56,14 @@ def create_app(config_class=Config):
         app.register_blueprint(trading, url_prefix='/trading')
         app.register_blueprint(staff, url_prefix='/staff')
     
+    
+    
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template("403.html"), 403
+
     @app.errorhandler(404)
     def not_found(e):
-        return render_template('404.html')
+        return render_template('404.html'), 404
 
     return app

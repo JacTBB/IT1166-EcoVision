@@ -1,4 +1,3 @@
-from os import abort
 from flask import render_template, request, redirect, url_for, abort
 from app.models.Contact import CompanyInfo
 from app.staff import staff
@@ -12,7 +11,7 @@ from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, Edi
 @login_required
 def dashboard():
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     return render_template("staff/dashboard.html")
 
 
@@ -20,7 +19,7 @@ def dashboard():
 @login_required
 def products():
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     products = {}
     productsData = db.session.query(Product).all()
     for product in productsData:
@@ -36,7 +35,7 @@ def products():
 @login_required
 def product_add():
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     form = AddProductForm()
 
     if form.validate_on_submit():
@@ -60,7 +59,7 @@ def product_add():
 @login_required
 def product_edit(product):
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     form = EditProductForm()
 
     if request.method == 'POST':
@@ -89,7 +88,7 @@ def product_edit(product):
 @login_required
 def product_delete(product):
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     try:
         productData = Product.query.get(product)
 
@@ -109,7 +108,7 @@ def product_delete(product):
 @login_required
 def enquiries():
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     try:
         data = CompanyInfo.query.all()
         return render_template("staff/enquiries.html", data=data)
@@ -123,7 +122,7 @@ def enquiries():
 @login_required
 def enquiry_delete(enquiry):
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     try:
         enquiryData = CompanyInfo.query.get(enquiry)
 
@@ -143,7 +142,7 @@ def enquiry_delete(enquiry):
 @login_required
 def enquiry_edit(enquiry):
     if current_user.type != "admin":
-        return abort(401)
+        return abort(403)
     enquiryData = CompanyInfo.query.get(enquiry)
     form = EditCompanyInfo(obj=enquiryData)
     if request.method == 'POST':
@@ -168,8 +167,3 @@ def enquiry_edit(enquiry):
             db.session.rollback()
 
     return render_template("staff/enquiries_edit.html", form=form)
-
-
-@staff.errorhandler(401)
-def unauthorized(e):
-    return render_template("401.html"), 401
