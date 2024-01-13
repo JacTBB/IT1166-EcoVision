@@ -8,11 +8,7 @@
   word-break: break-word;
   display: flex;
   flex-flow: column;
-}
-
-.post-content p img:nth-child(1) {
-  width: 100% !important;
-  object-fit: cover;
+  overflow: hidden;
 }
 
 p {
