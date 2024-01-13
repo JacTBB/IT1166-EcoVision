@@ -28,7 +28,7 @@
         <td>{{ id }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.quantity }}</td>
-        <td colspan="2"><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
+        <td rowspan="2"><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
         <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
       <tr>
         {% endfor %}

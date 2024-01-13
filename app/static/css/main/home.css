@@ -253,6 +253,7 @@
   display: flex;
   flex-direction: column;
   padding-right: 30px;
+  word-break: break-word;
 }
 
 .featured-news .news-date {

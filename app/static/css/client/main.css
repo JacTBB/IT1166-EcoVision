@@ -1,13 +1,12 @@
 body {
-    background-color: #456c52;
-    color: white;
-
+    background-color: rgb(223, 223, 223);
+    color: black;
 }
 
 #main {
     position: relative;
     top: 59px;
-    color: white;
+    color: inherit;
 }
 
 #main>div {
@@ -38,23 +37,27 @@ div h2 {
     text-decoration: none;
 }
 
+.table {
+    border-color: rgb(182, 182, 182);
+}
+
 table th {
     font-size: 20px;
 }
 
 table td,
 table th {
-    color: white;
+    color: inherit;
 }
 
 table a {
-    color: #ff7f00;
-    /* orange */
+    color: #3399ff;
+    /* lighter blue */
     text-decoration: none;
     font-weight: bold;
 }
 
 table a:hover {
-    color: #cc6600;
-    /* darker orange */
+    color: #007acc;
+    /* slightly darker blue */
 }

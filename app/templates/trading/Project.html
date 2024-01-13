@@ -3,20 +3,20 @@
 {% block title %}Project - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
 {{ ckeditor.load() }}
 {% endblock %}
 
 {% block content %}
 <div class="banner">
-    <p style="padding-top: 60px;">Project {{project.name}} - {{project.type}}</p>
+  <p style="padding-top: 60px;">Project {{project.name}} - {{project.type}}</p>
 </div>
 
 <div class="picture">
-    <img src="../../static/images/PictureGarden.jpeg" alt="">
-    <div class="overlap">
-      <p>Welcome to Project {{project.name}} </p>
-    </div>
+  <img src="../../static/images/PictureGarden.jpeg" alt="">
+  <div class="overlap">
+    <p>Welcome to Project {{project.name}} </p>
+  </div>
 </div>
 
 <div>
@@ -43,32 +43,32 @@
 </div>
 
 {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
-  <br>
-  <hr>
-  <br>  
+<br>
+<hr>
+<br>
 
-  <div class="Editior">
-    <form method="POST">
-      {{ form.hidden_tag() }}
+<div class="Editior">
+  <form method="POST">
+    {{ form.hidden_tag() }}
 
-      <h2>
-        Edit Project Details
-      </h2>
-      <p>
-        {{ form.content() }}
-      </p>
+    <h2>
+      Edit Project Details
+    </h2>
+    <p>
+      {{ form.content() }}
+    </p>
 
-      <div class="form-footer">
-        <div class="status-message" style="display: inline-block;">
-          {% if status_message != none %}{{status_message}}{% endif %}</div>
-        <input type="submit" value="Save">
-      </div>
-    </form>
-    {{ ckeditor.config(name='content') }}
-    <script>
-      CKEDITOR.instances['content'].setData(`{{ project.content | safe }}`);
-    </script>
-  </div>
+    <div class="form-footer">
+      <div class="status-message" style="display: inline-block;">
+        {% if status_message != none %}{{status_message}}{% endif %}</div>
+      <input type="submit" value="Save">
+    </div>
+  </form>
+  {{ ckeditor.config(name='content') }}
+  <script>
+    CKEDITOR.instances['content'].setData(`{{ project.content | safe }}`);
+  </script>
+</div>
 {% endif %}
 
 
