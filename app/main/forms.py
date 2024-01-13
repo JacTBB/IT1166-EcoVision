@@ -1,13 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
-from flask_ckeditor import CKEditorField
+from wtforms import StringField, SubmitField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired
 
 
 class ArticleForm(FlaskForm):
     image_view_onNews = StringField('Image', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
-    content = CKEditorField('Content')
+    content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
