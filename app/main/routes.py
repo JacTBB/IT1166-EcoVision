@@ -14,7 +14,7 @@ import base64
 from flask_socketio import emit, send, join_room, leave_room
 
 import random
-from string import ascii_uppercase
+from string import ascii_lowercase
 
 
 @main.route('/')
@@ -201,7 +201,6 @@ image_chunks = []
 @socketio.on("upload_image")
 def handle_upload(data):
     global image_chunks
-
     # Add the received chunk to the array
     image_chunks.append((data['index'], data['image']))
 
@@ -211,15 +210,14 @@ def handle_upload(data):
         complete_image = ''.join(chunk[1] for chunk in image_chunks)
         image_chunks = []  # Clear the array for the next image
 
-        # Now you can process the complete image...
-        # For example, you can save it to a file:
+        # process the complete image
         prefix, base64_data = complete_image.split(",", 1)
         binary_data = base64.b64decode(base64_data)
 
         # generate string for filename
         filename = ""
         for i in range(10):
-            filename += random.choice(ascii_uppercase)
+            filename += random.choice(ascii_lowercase)
 
         # check file extension
         extention = ""
@@ -234,7 +232,7 @@ def handle_upload(data):
 
         # save image to file
         filename_path = os.path.join(
-            './app/static/images', f'{filename}{extention}')
+            './app/static/images/', f'{filename}{extention}')
 
         # write the binary data to a file
         with open(filename_path, 'wb') as f:
