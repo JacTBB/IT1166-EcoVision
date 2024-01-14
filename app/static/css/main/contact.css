@@ -6,7 +6,7 @@
 
 .contact-form-header {
   margin-bottom: 5px;
-  color: white;
+  color: inherit;
   font-size: 22px;
   font-weight: bold;
 }
@@ -19,7 +19,7 @@
   width: 500px;
   padding: 50px;
   border-radius: 10px;
-  background-color: #5f856f;
+  background-color: #2b3f33;
   /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
@@ -44,14 +44,14 @@ form input {
   border: 0;
   background-color: transparent;
   border-bottom: 1.2px solid white;
-  color: white;
+  color: inherit;
   padding: 10px 0;
   /* increased padding */
   transition: 0.2s linear;
 }
 
 form input::placeholder {
-  color: white;
+  color: inherit;
   opacity: 0.8;
   position: relative;
   top: 0;
@@ -72,7 +72,7 @@ form #submit {
   outline: 0;
   border: 0;
   background-color: #48a873;
-  color: white;
+  color: inherit;
   transition: background-color 0.2s linear;
   /* transition effect */
   margin-top: 15px;
