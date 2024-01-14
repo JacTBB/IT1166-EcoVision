@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, abort
 from app.models.Contact import CompanyInfo
+from app.models.Company import Company
 from app.staff import staff
 from app.database import db
 from flask_login import current_user, login_required
@@ -98,6 +99,26 @@ def product_delete(product):
         print(f"Error occurred: {e}")
         db.session.rollback()
         return "Error"
+    
+
+
+@staff.route("/companies")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant'])
+def companies():
+    companies = {}
+    companiesData = db.session.query(Company).all()
+    for company in companiesData:
+        companies[company.id] = {
+            'name': company.name,
+            'industry': company.industry,
+            'address': company.address,
+            'email': company.email,
+            'plan': company.plan
+        }
+
+    return render_template('staff/companies.html', companies=companies)
+
 
 
 @staff.route("/enquiries")

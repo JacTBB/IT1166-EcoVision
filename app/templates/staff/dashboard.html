@@ -19,7 +19,8 @@
           href="{{ url_for('client.companies') }}">
           <p>Business Management</p>
         </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">
+        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'staff.companies' else '' }}"
+          href="{{ url_for('staff.companies') }}">
           <p>Business Dashboard</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">

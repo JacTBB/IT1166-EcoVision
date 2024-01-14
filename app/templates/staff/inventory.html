@@ -3,8 +3,8 @@
 {% block title %}Inventory - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/staff/locations.css') }}" />
-<link rel="stylesheet" href="{{url_for('static', filename='css/staff/main.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/locations.css') }}" />
+  <link rel="stylesheet" href="{{url_for('static', filename='css/staff/main.css')}}">
 {% endblock %}
 
 {% block content %}
@@ -24,15 +24,15 @@
         <th colspan="2">Actions</th>
       </tr>
       {% for id, product in products.items() %}
-      <tr>
-        <td>{{ id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.quantity }}</td>
-        <td rowspan="2"><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
-        <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
-      <tr>
-        {% endfor %}
-</div>
-</section>
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td rowspan="2"><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
+        <tr>
+      {% endfor %}
+    </table>
+  </section>
 </div>
 {% endblock %}

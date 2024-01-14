@@ -19,8 +19,9 @@ def get_company():
         return
     
     if not 'company' in session:
-        # TODO: Redirect to select company dashboard for staff
-        session['company'] = 1
+        if request.endpoint == 'client.company_view':
+            return
+        return redirect(url_for('staff.companies'))
         
     company = Company.query.get(session['company'])
     g.company = company
@@ -69,6 +70,18 @@ def dashboard():
     overview['notifications'] = 10
     
     return render_template('client/dashboard_custom.html', overview=overview, locations=locations)
+
+
+
+@client.route("/company/<company>")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant'])
+def company_view(company):
+    print('CV', company)
+    session['company'] = company
+    print(session['company'])
+    
+    return redirect(url_for('client.dashboard'))
 
 
 

@@ -19,21 +19,8 @@
                 {% if current_user.type == 'client' %}
                 <li><a href="{{url_for('client.dashboard')}}">Client page</a></li>
                 {% endif %}
-                {% if current_user.type == 'author' %}
-                {#<li><a href="{{url_for('author.dashboard')}}">Author page</a></li> #}
-                {% endif %}
-                {% if current_user.type == 'technician' %}
-                {#<li><a href="{{url_for('technician.dashboard')}}">Technician page</a></li>#}
-                {% endif %}
-                {% if current_user.type == 'consultant' %}
-                {#<li><a href="{{url_for('consultant.dashboard')}}">Consultant page</a></li>#}
-                {% endif %}
-                {% if current_user.type == 'admin' %}
-                <li><a href="{{url_for('client.dashboard')}}">Client page</a></li>
-                {#<li><a href="{{url_for('author.dashboard')}}">Author page</a></li>
-                <li><a href="{{url_for('technician.dashboard')}}">Technician page</a></li>
-                <li><a href="{{url_for('consultant.dashboard')}}">Consultant page</a></li> #}
-                <li><a href="{{url_for('staff.dashboard')}}">Admin page</a></li>
+                {% if current_user.type != 'client' %}
+                <li><a href="{{url_for('staff.dashboard')}}">Staff page</a></li>
                 {% endif %}
             </ul>
         </div>

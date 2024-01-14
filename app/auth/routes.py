@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from app.auth import auth
 from app.database import db, query_data
 from flask_login import current_user, login_required, login_user, logout_user
@@ -152,5 +152,6 @@ def account():
 @auth.route('/logout')
 @login_required
 def logout():
+    session.clear()
     logout_user()
     return redirect(url_for('auth.login'))
