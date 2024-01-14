@@ -122,6 +122,7 @@ def news():
 
 @main.route('/contact', methods=['GET', 'POST'])
 def contact():
+    error_message = None
     form = ContactForm()
     if form.validate_on_submit():
         try:
@@ -133,9 +134,9 @@ def contact():
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-        return redirect(url_for('main.home'))
+        error_message = "Thank you for your enquiry. We will get back to you as soon as possible."
 
-    return render_template('main/contact.html', form=form)
+    return render_template('main/contact.html', form=form, error_message=error_message)
 
 
 def generate_unique_code(length):
@@ -232,7 +233,9 @@ def handle_upload(data):
 
         # save image to file
         filename_path = os.path.join(
-            './app/static/images/uploads/', f'{filename}{extention}')
+            './app/static/images/', f'{filename}{extention}')
+
+        print(filename)
 
         # write the binary data to a file
         with open(filename_path, 'wb') as f:

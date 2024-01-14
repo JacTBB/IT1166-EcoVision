@@ -35,10 +35,11 @@
     </form>
 
     {% if error_message %}
-    <p class="error-message">
-      <i class="fa-regular fa-circle-info"></i>{{ error_message }}
+    <p class="error-message" style="color: darkgreen;">
+      {{ error_message }}
     </p>
     {% endif %}
   </div>
 </div>
+<script src="{{ url_for('static', filename='js/contactus.js')}}"></script>
 {% endblock %}
