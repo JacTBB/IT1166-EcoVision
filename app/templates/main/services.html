@@ -3,39 +3,44 @@
 {% block title %}Services - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main/services.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main/services.css') }}" />
 {% endblock %}
 
 {% block content %}
-  <div class="container services-container">
-    <div class="header">
-      <h2>Consultation Plans</h2>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore vero quas molestiae cumque quisquam.
-        Ipsum delectus dicta possimus nemo molestias explicabo, ratione, corporis perspiciatis amet numquam magnam
-        soluta veniam eum!
-      </p>
-    </div>
+<div class="container services-container">
+  <div class="header">
+    <h2>Consultation Plans</h2>
+    <p>
+      Our consultation plans are designed to guide businesses through the complexities of carbon trading. With a focus
+      on sustainable practices and profitability, we provide comprehensive insights into the carbon market. Whether
+      you're new to carbon trading or looking to optimize your existing strategies, our consultation plans can be
+      tailored to meet your specific needs. Benefit from our expert analysis, learn about carbon credit acquisition, and
+      discover how to invest in carbon offset projects for a sustainable and profitable future. Join us in making a
+      positive impact on the environment while maximizing your business potential.
+    </p>
+  </div>
 
-    <div class="products-list">
-      <div class="product">
-        <h3>Product Name</h3>
-        <div class="product-info">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-        </div>
+  <div class="products-list">
+    <div class="product">
+      <p class="product-header">Carbon Trading Basics</p>
+      <div class="product-info">
+        <p>Get a comprehensive understanding of carbon trading, its principles, and its impact on the environment. Ideal
+          for beginners in the carbon market.</p>
       </div>
-      <div class="product">
-        <h3>Product Name</h3>
-        <div class="product-info">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-        </div>
+    </div>
+    <div class="product">
+      <p class="product-header">Carbon Market Analysis</p>
+      <div class="product-info">
+        <p>Deep dive into the carbon market with our expert analysis. Understand trends, predictions, and opportunities
+          in the carbon trading industry.</p>
       </div>
-      <div class="product">
-        <h3>Product Name</h3>
-        <div class="product-info">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-        </div>
+    </div>
+    <div class="product">
+      <p class="product-header">Carbon Credit Consultation</p>
+      <div class="product-info">
+        <p>Maximize your carbon credit potential with our consultation services. We help you navigate the complexities
+          of carbon credit acquisition and trading.</p>
       </div>
     </div>
   </div>
-{% endblock %}
+  {% endblock %}

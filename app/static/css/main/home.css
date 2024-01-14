@@ -1,8 +1,11 @@
 /* Home */
 
 .home-page {
+  position: relative;
   gap: 10px;
   color: white;
+  display: flex;
+  flex-flow: column;
 }
 
 .home-page .home img {

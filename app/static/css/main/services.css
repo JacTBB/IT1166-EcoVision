@@ -8,17 +8,23 @@
 .services-container .header {
   margin-top: 100px;
   text-align: center;
-  width: 942px;
   padding: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .services-container .products-list {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-flow: row wrap;
+  justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+.products-list .product-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+
 }
 
 .services-container .products-list .product {
@@ -29,9 +35,11 @@
   width: 300px;
   height: 300px;
   padding: 20px;
+  border-radius: 9px;
   background-color: #578166;
 }
 
 .services-container .products-list .product .product-info {
   text-align: center;
+
 }
