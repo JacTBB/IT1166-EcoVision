@@ -15,7 +15,8 @@
           href="{{ url_for('staff.dashboard') }}">
           <p>Overview</p>
         </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'client.companies' else '' }}" href="{{ url_for('client.companies') }}">
+        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'client.companies' else '' }}"
+          href="{{ url_for('client.companies') }}">
           <p>Business Management</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">
@@ -45,27 +46,27 @@
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
           href="{{ url_for('auth.users', type='client') }}">
-          <p>User Manage Client</p>
+          <p>Manage Clients</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
           href="{{ url_for('auth.users', type='author') }}">
-          <p>User Manage Author</p>
+          <p>Manage Authors</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
           href="{{ url_for('auth.users', type='technician') }}">
-          <p>User Manage Technician</p>
+          <p>Manage Technicians</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
           href="{{ url_for('auth.users', type='consultant') }}">
-          <p>User Manage Consultant</p>
+          <p>Manage Consultants</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
           href="{{ url_for('auth.users', type='manager') }}">
-          <p>User Manage Manager</p>
+          <p>Manage Managers</p>
         </a>
         <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
           href="{{ url_for('auth.users', type='admin') }}">
-          <p>User Manage Admin</p>
+          <p>Manage Admins</p>
         </a>
       </div>
       <div>
