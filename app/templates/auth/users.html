@@ -3,6 +3,7 @@
 {% block title %}Users - EcoVision{% endblock %}
 
 {% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
 {% endblock %}
 
@@ -22,8 +23,7 @@
         {% if type == "client" %}
           <th>CompanyID</th>
         {% endif %}
-        <th>Edit</th>
-        <th>Delete</th>
+        <th colspan="2">Actions</th>
       </tr>
       {% for id, user in users.items() %}
       <tr>
