@@ -1,46 +1,87 @@
-.contact-form {
-  margin-top: 100px;
+.container {
+  position: relative;
+  top: 100px;
+  bottom: 0;
+}
+
+.contact-form-header {
+  margin-bottom: 5px;
   color: white;
+  font-size: 22px;
+  font-weight: bold;
 }
 
-form label {
-  text-transform: capitalize;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  width: calc(250px + 2vw + 2%);
-  margin: 0 auto;
+.contact-form {
+  position: relative;
+  color: white;
+  font-family: "Nunito";
+  margin-bottom: 100px;
+  width: 500px;
+  padding: 50px;
+  border-radius: 10px;
+  background-color: #5f856f;
+  /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 form div {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  /* vertically aligns items in the center */
-  justify-content: center;
-  /* horizontally aligns items in the center */
-  width: 100%;
-  gap: 5px;
+  flex-direction: column;
+  gap: 20px;
+  /* increased gap */
 }
 
-form div label {
-  text-align: right;
-  white-space: nowrap;
+form div p {
+  display: flex;
+  flex-direction: column;
 }
 
-form div label,
-form div input {
-  flex: 1;
-  /* makes label and input take up equal space */
+
+form input {
+  font-family: "Nunito";
+  font-size: 16px;
+  outline: 0;
+  border: 0;
+  background-color: transparent;
+  border-bottom: 1.2px solid white;
+  color: white;
+  padding: 10px 0;
+  /* increased padding */
+  transition: 0.2s linear;
 }
 
-form div > #submit {
-  margin: 0 auto;
+form input::placeholder {
+  color: white;
+  opacity: 0.8;
+  position: relative;
+  top: 0;
+  transition: 0.2s linear;
+}
+
+form input:focus::placeholder {
+  opacity: 0.3;
+  right: -10px;
+
+}
+
+form #submit {
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 7px;
+  outline: 0;
+  border: 0;
+  background-color: #48a873;
+  color: white;
+  transition: background-color 0.2s linear;
+  /* transition effect */
+  margin-top: 15px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
+form #submit:hover {
+  background-color: #52ad7c;
+
+
 }

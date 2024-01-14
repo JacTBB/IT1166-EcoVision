@@ -40,6 +40,12 @@ p {
   padding-right: 0;
 }
 
+footer {
+  position: relative;
+  top: 0;
+  margin-top: 50px;
+}
+
 
 /* Minimalist Scrollbar */
 ::-webkit-scrollbar {

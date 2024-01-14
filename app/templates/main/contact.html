@@ -9,14 +9,26 @@
 {% block content %}
 <div class="container">
   <div class="contact-form">
-    <p style="color: white; font-size: 22px">Tell us about your company</p>
+    <p class="contact-form-header">Tell us about your company</p>
     <form action="" method="POST">
-      <div>{{form.employee_name.label}} {{form.employee_name}}</div>
-      <div>{{form.company_name.label}} {{form.company_name}}</div>
-      <div>{{form.company_email.label}} {{form.company_email}}</div>
-      <div>{{form.industry.label}} {{form.industry}}</div>
-      <div>{{form.company_size.label}} {{form.company_size}}</div>
-      <div>{{form.submit()}}</div>
+      <div>
+        <p>
+          {{form.employee_name}}
+        </p>
+        <p>
+          {{form.company_name}}
+        </p>
+        <p>
+          {{form.company_email}}
+        </p>
+        <p>
+          {{form.industry}}
+        </p>
+        <p>
+          {{form.company_size}}
+        </p>
+      </div>
+      {{form.submit()}}
       {{ form.csrf_token }}
     </form>
 
