@@ -47,37 +47,52 @@
       <canvas id="chart-{{ id }}"></canvas>
 
       <script>
+        const rawtimerange{{ id }} = {{ location.timerange }}
+        const timerange{{ id }} = []
+
+        rawtimerange{{ id }}.forEach((datetime) => {
+          timerange{{ id }}.push(new Date(datetime * 1000))
+        })
+
         const chart{{ id }} = new Chart("chart-{{ id }}", {
           type: "line",
           data: {
-            labels: {{ location.timerange }},
-          datasets: [
-          {
-            label: 'Carbon Footprint',
-            data: {{ location.carbonfootprint }},
-          borderColor: 'rgba(255, 0, 0, 0.8)',
-          backgroundColor: 'rgba(255, 0, 0, 0.05)'
-                  },
-          {
-            label: 'Energy Usage',
-            data: {{ location.energyusage }},
-          borderColor: 'rgba(0, 255, 0, 0.8)',
-          backgroundColor: 'rgba(0, 255, 0, 0.05)'
-                  },
-          {
-            label: 'Water Usage',
-            data: {{ location.waterusage }},
-          borderColor: 'rgba(0, 0, 255, 0.8)',
-          backgroundColor: 'rgba(0, 0, 255, 0.05)'
-                  }
-        ]
+            labels: timerange{{ id }},
+            datasets: [
+              {
+                label: 'Carbon Footprint',
+                data: {{ location.carbonfootprint }},
+                borderColor: 'rgba(255, 0, 0, 0.8)',
+                backgroundColor: 'rgba(255, 0, 0, 0.05)'
               },
+              {
+                label: 'Energy Usage',
+                data: {{ location.energyusage }},
+                borderColor: 'rgba(0, 255, 0, 0.8)',
+                backgroundColor: 'rgba(0, 255, 0, 0.05)'
+              },
+              {
+                label: 'Water Usage',
+                data: {{ location.waterusage }},
+                borderColor: 'rgba(0, 0, 255, 0.8)',
+                backgroundColor: 'rgba(0, 0, 255, 0.05)'
+              }
+            ]
+          },
           options: {
-          legend: {
-            position: 'bottom'
+            scales: {
+              xAxes: {
+                type: 'time',
+                time: {
+                  unit: 'month'
+                }
+              }
+            },
+            legend: {
+              position: 'bottom'
+            }
           }
-        }
-            });
+        });
       </script>
     </section>
   {% endfor %}

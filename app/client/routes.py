@@ -1,12 +1,28 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session, g
 from app.client import client
 from app.database import db
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.auth import check_user_type
 from app.models.Client import Location, Utility
 from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm
 from datetime import datetime
+
+
+
+@client.before_request
+@login_required
+def get_company():
+    if current_user.type == 'client':
+        company = Company.query.get(current_user.company)
+        g.company = company
+    
+    if not 'company' in session:
+        # TODO: Redirect to select company dashboard for staff
+        session['company'] = 1
+        
+    company = Company.query.get(session['company'])
+    g.company = company
 
 
 
@@ -20,14 +36,30 @@ def dashboard():
     }
 
     locations = {}
-    locationsData = db.session.query(Location).all()
+    locationsData = db.session.query(Location).filter_by(company=g.company.id)
     for location in locationsData:
+        utilities = {
+            'timerange': [],
+            'carbonfootprint': [],
+            'energyusage': [],
+            'waterusage': []
+        }
+        
+        utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=location.id)
+        for utility in utilitiesData:
+            utilities['timerange'].append(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp())
+            utilities['carbonfootprint'].append(int(utility.carbonfootprint))
+            utilities['energyusage'].append(int(utility.energyusage))
+            utilities['waterusage'].append(int(utility.waterusage))
+            
+        print(utilities)
+            
         locations[location.id] = {
             'name': location.name,
-            'timerange': [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
-            'carbonfootprint': [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15],
-            'energyusage': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-            'waterusage': [5, 4, 3, 2, 6, 5, 7, 4, 2, 3, 4]
+            'timerange': utilities["timerange"],
+            'carbonfootprint': utilities['carbonfootprint'],
+            'energyusage': utilities['energyusage'],
+            'waterusage': utilities['energyusage']
         }
 
     return render_template('client/dashboard_free.html', overview=overview, locations=locations)
@@ -143,7 +175,7 @@ def company_delete(company):
 @login_required
 def locations():
     locations = {}
-    locationsData = db.session.query(Location).all()
+    locationsData = db.session.query(Location).filter_by(company=g.company.id)
     for location in locationsData:
         locations[location.id] = {
             'name': location.name,
@@ -231,10 +263,9 @@ def location_delete(location):
 @login_required
 def location_utility(location):
     utilities = {}
-    utilitiesData = db.session.query(Utility).all()
+    utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=int(location))
     for utility in utilitiesData:
         utilities[utility.id] = {
-            'location': utility.location,
             'name': utility.name,
             'date': utility.date,
             'carbonfootprint': utility.carbonfootprint,
@@ -336,4 +367,6 @@ def location_utility_delete(location, utility):
 @client.route("/account")
 @login_required
 def account():
-    return render_template("auth/account.html")
+    if current_user.type != 'client':
+        return redirect(url_for('auth.account'))
+    return render_template("client/account.html")

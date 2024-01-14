@@ -1,6 +1,6 @@
 <nav>
   <div class="nav-logo">
-    <a href="{{ url_for('client.dashboard')}}">{{ current_user.company }}</a>
+    <a href="{{ url_for('client.dashboard')}}">{{ g.company.name }}</a>
   </div>
 
   <ul>

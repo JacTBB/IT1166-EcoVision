@@ -36,13 +36,12 @@ class User(db.Model, UserMixin):
 
 
 class Client(User):
-    company: Mapped[str] = mapped_column(String)
+    company: Mapped[int] = mapped_column(Integer)
     
     def __init__(self, username):
         super().__init__(username, 'client')
-        self.company = '[CompanyName]'
     
-    def set_company(self, company):
+    def set_company(self, company: int):
         self.company = company
 
 

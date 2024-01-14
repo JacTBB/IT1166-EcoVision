@@ -3,7 +3,7 @@
 {% block title %}Account - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/account.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/account.css') }}" />
 {% endblock %}
 
 {% block content %}
@@ -11,9 +11,13 @@
     <div class="account">
         <p style="padding-top: 50px; font-size: 30px;">User: {{ current_user.username }}</p>
         {% if current_user.company %}
-        <p>Company: {{ current_user.company }}</p>
+            <p>Company ID: {{ current_user.company }}</p>
+            <p>Company: {{ g.company.name }}</p>
+            <p>Industry: {{ g.company.industry }}</p>
+            <p>Address: {{ g.company.address }}</p>
+            <p>Email: {{ g.company.email }}</p>
         {% endif %}
-        <a href="{{ url_for('auth.logout') }}" class="button logout">Logout</a>
+        <a href="{{ url_for('auth.logout') }}" class="button logout"><p>Logout</p></a>
     </div>
 </div>
 {% endblock %}

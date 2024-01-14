@@ -1,10 +1,29 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, g
 from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
+from app.models.Company import Company
 from app.models.Trading import Projects
 from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
+
+
+
+@trading.before_request
+@login_required
+def get_company():
+    if current_user.type == 'client':
+        company = Company.query.get(current_user.company)
+        g.company = company
+    
+    if not 'company' in session:
+        # TODO: Redirect to select company dashboard for staff
+        session['company'] = 1
+        
+    company = Company.query.get(session['company'])
+    g.company = company
+
+
 
 @trading.route('/')
 def home():
