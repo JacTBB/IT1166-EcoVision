@@ -10,3 +10,4 @@ class Company(db.Model):
     industry: Mapped[str] = mapped_column(String)
     address: Mapped[str] = mapped_column(String)
     email: Mapped[str] = mapped_column(String)
+    plan: Mapped[str] = mapped_column(String)

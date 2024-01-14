@@ -17,6 +17,7 @@
                 <p>Industry:</p>
                 <p>Address:</p>
                 <p>Email:</p>
+                <p>Plan:</p>
             </div>
             <div>
                 {% if current_user.company %}
@@ -25,6 +26,7 @@
                 <p>{{ g.company.industry }}</p>
                 <p>{{ g.company.address }}</p>
                 <p>{{ g.company.email }}</p>
+                <p>{{ g.company.plan }}</p>
                 {% endif %}
             </div>
         </div>

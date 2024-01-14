@@ -19,12 +19,11 @@ with app.app_context():
     for UserType in UserList:
         UserClass = UserList[UserType]
 
-        user = UserClass(username=UserType)
-        user.set_password('123')
-        if UserType == 'client':
-            user.set_company(1)
+        if UserType != 'client':
+            user = UserClass(username=UserType)
+            user.set_password('123')
 
-        db.session.add(user)
+            db.session.add(user)
 
 
 
@@ -41,19 +40,54 @@ with app.app_context():
     
     # Client
     for i in range(1,3):
+        user = Client(username=f"client{i}")
+        user.set_password('123')
+        user.set_company(i)
+        db.session.add(user)
+
         company = Company(name=f"SomeCompanyName {i}",
                           industry="Industrial",
                           address="SG 1234",
-                          email="company@gmail.com")
+                          email="company@gmail.com",
+                          plan="free")
         db.session.add(company)
         
         for j in range(1, 3):
             location = Location(company=i, name=f"Office {j}", address="SG 1234")
             db.session.add(location)
             
-            for k in range(1, 11):
-                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2024, k, 1),
-                                carbonfootprint=randint(1,500), energyusage=randint(1,500), waterusage=randint(1,500))
+            for k in range(1, 13):
+                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2023, k, 1),
+                                carbonfootprint=randint(200,500), energyusage=randint(200,500), waterusage=randint(200,500))
+                db.session.add(utility)
+    
+    
+    
+    for i in range(3,5):
+        user = Client(username=f"client{i}")
+        user.set_password('123')
+        user.set_company(i)
+        db.session.add(user)
+
+        company = Company(name=f"SomeLargeCompanyName {i}",
+                          industry="Industrial",
+                          address="SG 1234",
+                          email="company@gmail.com",
+                          plan="custom")
+        db.session.add(company)
+        
+        for j in range(1, 4):
+            location = Location(company=i, name=f"Office {j}", address="SG 1234")
+            db.session.add(location)
+            
+            for k in range(1, 13):
+                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2022, k, 1),
+                                carbonfootprint=randint(200,500), energyusage=randint(200,500), waterusage=randint(200,500))
+                db.session.add(utility)
+            
+            for k in range(1, 13):
+                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2023, k, 1),
+                                carbonfootprint=randint(200,500), energyusage=randint(200,500), waterusage=randint(200,500))
                 db.session.add(utility)
     
     
