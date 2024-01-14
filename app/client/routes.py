@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for
 from app.client import client
 from app.database import db
 from flask_login import login_required
+from app.auth import check_user_type
 from app.models.Client import Location, Utility
 from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm
@@ -38,6 +39,7 @@ def dashboard():
 
 @client.route("/manage")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def companies():
     companies = {}
     companiesData = db.session.query(Company).all()
@@ -55,6 +57,7 @@ def companies():
 
 @client.route("/manage/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def company_add():
     form = AddCompanyForm()
 
@@ -80,6 +83,7 @@ def company_add():
 
 @client.route("/manage/<company>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def company_edit(company):
     form = EditCompanyForm()
 
@@ -114,6 +118,7 @@ def company_edit(company):
 
 @client.route("/manage/<company>/delete")
 @login_required
+@check_user_type(['admin', 'manager'])
 def company_delete(company):
     try:
         companyData = Location.query.get(company)

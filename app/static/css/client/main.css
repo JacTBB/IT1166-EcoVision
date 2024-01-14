@@ -9,7 +9,7 @@ body {
     color: inherit;
 }
 
-#main>div {
+#main > div {
     position: relative;
     top: 20px;
 }
@@ -30,7 +30,7 @@ div h2 {
     margin-bottom: 10px;
 }
 
-.addlocation>a {
+.addlocation > a {
     color: black;
     font-weight: bold;
     text-align: center;
@@ -38,7 +38,7 @@ div h2 {
 }
 
 .table {
-    border-color: rgb(182, 182, 182);
+    border-collapse: collapse;
 }
 
 table th {
@@ -47,17 +47,17 @@ table th {
 
 table td,
 table th {
+    padding: 5px;
     color: inherit;
+    border: solid 1px rgb(200, 200, 200);
 }
 
 table a {
     color: #3399ff;
-    /* lighter blue */
     text-decoration: none;
     font-weight: bold;
 }
 
 table a:hover {
     color: #007acc;
-    /* slightly darker blue */
 }
