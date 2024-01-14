@@ -1,13 +1,13 @@
-from re import S
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
-from sqlalchemy import desc
+from sqlalchemy import asc, desc
 from app import socketio
 from app.main import main
 from app.database import query_data, db
 from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
+from datetime import datetime
 
 import os
 import base64
@@ -46,10 +46,13 @@ def news():
                 db.session.rollback()
 
         if addPost is not None:
-            latestPostID = Post.query.order_by(desc(Post.date)).first().postid
             try:
+                latestPostID = max(
+                    Post.query.all(), key=lambda x: x.postid).postid
+
                 newPost = Post(title="Title",
-                               content="",
+                               content="Content",
+                               date=datetime.utcnow(),
                                author=current_user.username,
                                image_name="Upload an image",
                                postid=latestPostID+1)
@@ -90,20 +93,20 @@ def news():
         if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
             if request.method == 'POST':
                 if form.validate_on_submit():
-                    if request.form.get('csrf_token'):
-                        try:
-                            post = Post.query.filter_by(postid=postid).first()
-                            post.image_name = form.image_view_onNews.data
-                            post.title = form.title.data
-                            post.content = form.content.data
+                    print(form.content.data)
+                    try:
+                        post = Post.query.filter_by(postid=postid).first()
+                        post.image_name = form.image_view_onNews.data
+                        post.title = form.title.data
+                        post.content = form.content.data
 
-                            db.session.add(post)
-                            db.session.commit()
-                            status_message = "Article updated successfully!"
-                        except Exception as e:
-                            status_message = "Failed to update article! Contact Administrator."
-                            print(f"Error occurred: {e}")
-                            db.session.rollback()
+                        db.session.add(post)
+                        db.session.commit()
+                        status_message = "Article updated successfully!"
+                    except Exception as e:
+                        print(f"Error occurred: {e}")
+                        db.session.rollback()
+                        status_message = "Failed to update article! Contact Administrator."
 
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
@@ -233,7 +236,7 @@ def handle_upload(data):
 
         # save image to file
         filename_path = os.path.join(
-            './app/static/images/', f'{filename}{extention}')
+            './app/static/images/uploads', f'{filename}{extention}')
 
         print(filename)
 

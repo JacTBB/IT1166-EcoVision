@@ -47,7 +47,7 @@
         {% if post.postid == setFeaturedNews %}
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="featured-news">
-            <img src="{{ url_for('static', filename='images/' + post.image_name) }}" alt="" />
+            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" alt="" />
             <div>
               <h2>
                 {{ post.title }}
@@ -64,7 +64,7 @@
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="catalog postid_{{ post.postid }}">
             <div class="catalog-image-container">
-              <img src="{{ url_for('static', filename='images/' + post.image_name) }}" loading="lazy" />
+              <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" loading="lazy" />
             </div>
             <div class="news-head">
               <p>{{ post.title }}</p>
