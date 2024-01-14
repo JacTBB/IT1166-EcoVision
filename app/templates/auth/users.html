@@ -1,4 +1,4 @@
-{% extends "layouts/client.html" %}
+{% extends "layouts/staff.html" %}
 
 {% block title %}Users - EcoVision{% endblock %}
 
@@ -19,7 +19,9 @@
       <tr>
         <th>ID</th>
         <th>Username</th>
-        <th>Address</th>
+        {% if type == "client" %}
+          <th>CompanyID</th>
+        {% endif %}
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -27,6 +29,9 @@
       <tr>
         <td>{{ id }}</td>
         <td>{{ user.username }}</td>
+        {% if type == "client" %}
+          <th>{{ user.companyID }}</th>
+        {% endif %}
         <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
         <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
       <tr>

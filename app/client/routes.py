@@ -80,7 +80,8 @@ def companies():
             'name': company.name,
             'industry': company.industry,
             'address': company.address,
-            'email': company.email
+            'email': company.email,
+            'plan': company.plan
         }
 
     return render_template('client/companies.html', companies=companies)
@@ -99,8 +100,9 @@ def company_add():
             industry = request.form.get("industry")
             address = request.form.get("address")
             email = request.form.get("email")
+            plan = request.form.get("plan")
 
-            company = Company(name=name, industry=industry, address=address, email=email)
+            company = Company(name=name, industry=industry, address=address, email=email, plan=plan)
             db.session.add(company)
             db.session.commit()
 
@@ -127,6 +129,7 @@ def company_edit(company):
             industry = request.form.get("industry")
             address = request.form.get("address")
             email = request.form.get("email")
+            plan = request.form.get("plan")
 
             if name:
                 companyData.name = name
@@ -136,6 +139,8 @@ def company_edit(company):
                 companyData.address = address
             if email:
                 companyData.email = email
+            if plan:
+                companyData.plan = plan
 
             db.session.commit()
 

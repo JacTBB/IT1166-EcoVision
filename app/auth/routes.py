@@ -60,9 +60,12 @@ def users(type):
     users = {}
     usersData = db.session.query(UserList[type]).all()
     for user in usersData:
-        users[user.id] = {
+        userData = {
             'username': user.username
         }
+        if type == 'client':
+            userData['companyID'] = user.company
+        users[user.id] = userData
     
     return render_template('auth/users.html', type=type, users=users)
 
@@ -81,6 +84,8 @@ def user_add(type):
             user.set_password('123')
             db.session.add(user)
             db.session.commit()
+            
+            # TODO: Client Company Add, Edit Forms
             
             return redirect(url_for('auth.users', type=type))
         except Exception as e:
