@@ -138,6 +138,8 @@ def user_delete(type, user):
 @auth.route("/account")
 @login_required
 def account():
+    if current_user.type == "client":
+        return redirect(url_for('client.account'))
     return render_template("auth/account.html")
 
 
