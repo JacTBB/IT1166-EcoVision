@@ -35,8 +35,8 @@
           <td>{{ utility.energyusage }}</td>
           <td>{{ utility.waterusage }}</td>
           <td rowspan="2"><a
-              href="{{ url_for('client.location_utility_edit', location=utility.location, utility=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('client.location_utility_delete', location=utility.location, utility=id) }}">Delete</a>
+              href="{{ url_for('client.location_utility_edit', location=location, utility=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('client.location_utility_delete', location=location, utility=id) }}">Delete</a>
           </td>
         <tr>
           {% endfor %}

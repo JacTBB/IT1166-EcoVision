@@ -39,6 +39,7 @@ with app.app_context():
     
     
     # Client
+    countLocation = 0
     for i in range(1,3):
         user = Client(username=f"client{i}")
         user.set_password('123')
@@ -53,11 +54,12 @@ with app.app_context():
         db.session.add(company)
         
         for j in range(1, 3):
+            countLocation += 1
             location = Location(company=i, name=f"Office {j}", address="SG 1234")
             db.session.add(location)
             
             for k in range(1, 13):
-                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2023, k, 1),
+                utility = Utility(company=i, location=countLocation, name=f"Utility {k}", date=datetime(2023, k, 1),
                                 carbonfootprint=randint(200,500), energyusage=randint(200,500), waterusage=randint(200,500))
                 db.session.add(utility)
     
@@ -77,16 +79,17 @@ with app.app_context():
         db.session.add(company)
         
         for j in range(1, 4):
+            countLocation += 1
             location = Location(company=i, name=f"Office {j}", address="SG 1234")
             db.session.add(location)
             
             for k in range(1, 13):
-                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2022, k, 1),
+                utility = Utility(company=i, location=countLocation, name=f"Utility 2022 {k}", date=datetime(2022, k, 1),
                                 carbonfootprint=randint(200,500), energyusage=randint(200,500), waterusage=randint(200,500))
                 db.session.add(utility)
             
             for k in range(1, 13):
-                utility = Utility(company=i, location=j, name=f"Utility {k}", date=datetime(2023, k, 1),
+                utility = Utility(company=i, location=countLocation, name=f"Utility 2023 {k}", date=datetime(2023, k, 1),
                                 carbonfootprint=randint(200,500), energyusage=randint(200,500), waterusage=randint(200,500))
                 db.session.add(utility)
     

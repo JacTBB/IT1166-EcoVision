@@ -16,6 +16,7 @@ def get_company():
     if current_user.type == 'client':
         company = Company.query.get(current_user.company)
         g.company = company
+        return
     
     if not 'company' in session:
         # TODO: Redirect to select company dashboard for staff
@@ -51,8 +52,6 @@ def dashboard():
             utilities['carbonfootprint'].append(int(utility.carbonfootprint))
             utilities['energyusage'].append(int(utility.energyusage))
             utilities['waterusage'].append(int(utility.waterusage))
-            
-        print(utilities)
             
         locations[location.id] = {
             'name': location.name,
@@ -286,6 +285,8 @@ def location_utility(location):
 @login_required
 def location_utility_add(location):
     form = AddUtilityForm()
+    
+    # TODO: Improve perms checker, only clients can edit utilities in their company & location
 
     if form.validate_on_submit():
         try:
