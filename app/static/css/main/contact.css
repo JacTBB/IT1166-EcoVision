@@ -4,6 +4,30 @@
   bottom: 0;
 }
 
+.switch-color {
+  background-color: white !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+.toggle-darkmode {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+  font-size: 20px;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.2s linear;
+  /* transition effect */
+  z-index: 1;
+}
+
+.toggle-darkmode i {
+  font-family: "Font Awesome 5 Pro";
+
+}
+
 .contact-form-header {
   margin-bottom: 5px;
   color: inherit;
@@ -22,6 +46,7 @@
   background-color: #2b3f33;
   /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  ;
 }
 
 form div {
