@@ -33,7 +33,7 @@ def dashboard():
     overview = {
         'carbonfootprint': 100,
         'energyusage': 100,
-        'waterusage': 100
+        'waterusage': 100,
     }
 
     locations = {}
@@ -61,7 +61,14 @@ def dashboard():
             'waterusage': utilities['energyusage']
         }
 
-    return render_template('client/dashboard_free.html', overview=overview, locations=locations)
+    if g.company.plan == 'free':
+        return render_template('client/dashboard_free.html', overview=overview, locations=locations)
+    
+    
+    
+    overview['notifications'] = 10
+    
+    return render_template('client/dashboard_custom.html', overview=overview, locations=locations)
 
 
 
