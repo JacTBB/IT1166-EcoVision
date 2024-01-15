@@ -32,10 +32,10 @@
       <a href="{{ url_for('main.news', postid=post.postid) }}">
         <div class="catalog postid_{{ post.postid }}">
           <div class="catalog-image-container">
-            <img src="{{ url_for('static', filename='images/' + post.image_name) }}" />
+            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
           </div>
           <div class="news-head">
-            <h2>{{ post.title }}</h2>
+            <p class="post-header">{{ post.title }}</p>
             <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
           </div>
         </div>
@@ -46,6 +46,32 @@
 
   <div class="home-services">
     <h2>Services</h2>
+
+    <div class="products-list">
+      <div class="product">
+        <p class="product-header">Carbon Trading Basics</p>
+        <div class="product-info">
+          <p>Get a comprehensive understanding of carbon trading, its principles, and its impact on the environment.
+            Ideal
+            for beginners in the carbon market.</p>
+        </div>
+      </div>
+      <div class="product">
+        <p class="product-header">Carbon Market Analysis</p>
+        <div class="product-info">
+          <p>Deep dive into the carbon market with our expert analysis. Understand trends, predictions, and
+            opportunities
+            in the carbon trading industry.</p>
+        </div>
+      </div>
+      <div class="product">
+        <p class="product-header">Carbon Credit Consultation</p>
+        <div class="product-info">
+          <p>Maximize your carbon credit potential with our consultation services. We help you navigate the complexities
+            of carbon credit acquisition and trading.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
