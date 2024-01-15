@@ -63,32 +63,32 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
-            getRequest_for_featured_post = request.form.get(
-                'select-featured-post')
-            exist_featured_post = Post.query.filter_by(
-                featured_post=True).all()
-            if getRequest_for_featured_post is not None:
+        getRequest_for_featured_post = request.form.get(
+            'select-featured-post')
+        if getRequest_for_featured_post is not None:
+            try:
                 try:
-                    try:
-                        for post in exist_featured_post:
-                            post.featured_post = False
-                            db.session.add(post)
-                            db.session.commit()
-                            print(post.featured_post)
-                    except Exception as e:
-                        print(f"Error occurred: {e}")
-                        db.session.rollback()
-
-                    post = Post.query.filter_by(
-                        postid=getRequest_for_featured_post).first()
-                    post.featured_post = True
-                    db.session.add(post)
-                    db.session.commit()
-                    status_message = "Featured post updated successfully!"
+                    exist_featured_post = Post.query.filter_by(
+                        featured_post=True).all()
+                    for post in exist_featured_post:
+                        post.featured_post = False
+                        db.session.add(post)
+                        db.session.commit()
+                        print(post.featured_post)
                 except Exception as e:
-                    status_message = "Failed to update featured post! Contact Administrator."
                     print(f"Error occurred: {e}")
                     db.session.rollback()
+
+                post = Post.query.filter_by(
+                    postid=getRequest_for_featured_post).first()
+                post.featured_post = True
+                db.session.add(post)
+                db.session.commit()
+                status_message = "Featured post updated successfully!"
+            except Exception as e:
+                status_message = "Failed to update featured post! Contact Administrator."
+                print(f"Error occurred: {e}")
+                db.session.rollback()
 
     if postid is not None:
         form = ArticleForm()
