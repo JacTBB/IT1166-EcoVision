@@ -11,20 +11,24 @@
 <div class="container-fluid">
   <div class="Welcome-block">
     <img src="{{url_for('static', filename='images/Carbon Trading2.png')}}" alt="">
-    <p>Company, <br>
-      your personal automated carbon offset</p>
+    <h1>
+      your personal automated carbon offset</h1>
+    <h3>
+      We help change the carbon that you created into oxygen and green energy for everypone to use</h3>
   </div>
 
   <div class="How-To">
     <div class="Para1">
+      <div> <img src="../../static/images/RainForest.avif" alt="images"> </div>
       <h2>Carbon Trading is the first step to help make the world a better place!</h2>
       <br>
       <h3>EcoVision has been the #1 company to assist in helping green projects all around the
         world, we have worked with Apple Inc, Unilever, walmart IKEA and many more. we aim to
         reduce climate change as much as 50% by 2050.
       </h3>
-      <a href="#Para2" class="Scroll">⇓</a>
+      
     </div>
+  
 
     <div id="Para2">
       <h2>How does carbon trading work</h2>
@@ -49,6 +53,7 @@
           <p>Click send invoice, and we will send you an email!</p>
         </div>
       </div>
+      <hr>
     </div>
   </div>
 
@@ -61,17 +66,17 @@
     <div class="Projects">
       {% for id, project in projects.items() %}
       <div class="Project">
-        <p>{{project.name}}</p>
         <p>{{project.type}}</p>
+        <p>{{project.name}}</p>
         <p>{{project.stock}}</p>
-        <a href="{{url_for('trading.project', project = id)}}">View More</a>
+        <a href="{{url_for('trading.project', project = id)}}">View Project</a>
       </div>
       {% endfor %}
     </div>
     <hr>
     {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
     <div class="Admin">
-      <p><a href="http://127.0.0.1/trading/projects">Add Project</a></p>
+      <p><a href="http://127.0.0.1:80/trading/projects">Add Project</a></p>
     </div>
     {% endif %}
   </div>

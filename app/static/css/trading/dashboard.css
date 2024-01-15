@@ -6,7 +6,7 @@ body {
 
 .Welcome-block {
     width: 100%;
-    height: 60vh;
+    height: 100vh;
     position: relative;
     z-index: -1;
 }
@@ -14,57 +14,80 @@ body {
 .Welcome-block img {
     position: absolute;
     width: 100%;
-    height: 60vh;
+    height: 100vh;
     object-fit: cover;
     object-position: center center;
 }
 
-.Welcome-block p {
+.Welcome-block h1 {
     position: relative;
     margin: 0 auto;
-    top: 60%;
-    left: 10%;
+    top: 25%;
+    left: -20%;
     color: white;
-    font-size: 2.5em;
+    font-size: 5.5em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     z-index: 1;
     word-break: keep-all;
+    width: 50%;
 
 }
-
+.Welcome-block h3 {
+    position: relative;
+    margin: 0 auto;
+    top: 30%;
+    left: -25%;
+    color: white;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    word-break: keep-all;
+    width: 40%
+}
 
 .Para1 {
     font-size: x-large;
-    text-align: center;
-    padding: 120px;
+    text-align: left;
+    padding: 120px;     
     width: 100%;
+    margin-top: 100px;
+    margin-bottom: 10px;
 }
 
 .Para1 h2 {
     padding-bottom: 40px;
     font-weight: bolder;
     color: green;
+    width: 50%;
+    font-size: 3.5em;
+    float: left;
 }
 
 .Para1 h3 {
-    padding-bottom: 20px;
+    padding-bottom: 2em;
     font-weight: lighter;
+    width: 40%;
 }
-
-.Scroll {
-    font-size: 2.5em;
-    color: black;
+.Para1 img  {
+    width: 50%;
+    height: 55vh;
+    float: right;
+    border-radius: 20px;
 }
-
-.Scroll:hover {
-    color: green;
+#Para2 {
+    padding: 100px;
 }
 
 #Para2 h2 {
-    font-size: 2em;
+    font-size: 3.5em;
     text-align: center;
     color: green;
     padding-bottom: 40px;
+    font-weight: bolder;
+    justify-content: center;
+}
+#Para2 hr {
+    padding-bottom: 100px;
 }
 
 .Steps {
@@ -75,7 +98,7 @@ body {
 
 .Steps h3 {
     padding-bottom: 40px;
-    font-size: xx-large;
+    font-size: 2.5em;
 }
 
 .Step1 {
@@ -156,13 +179,60 @@ body {
 .Project {
     width: 300px;
     border-radius: 20px;
-    padding: 50px;
-    margin-left: 20px;
-    border: solid black 1px;
+    padding: 60px;
+    border: solid black 3px;
     background-color: beige;
     margin: 10px;
     text-align: center;
     font-size: xx-large;
+}
+.Project :nth-child(3){
+    border: groove 3px;
+}
+.Project :nth-child(2){
+    text-decoration: underline;
+}
+.Project :nth-child(1){
+    font-weight: bold;
+}
+.Project a {
+    color: green;
+    font-size: 1.3rem;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    padding: .5em;
+    margin-left: -.5em;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+
+    &:before, &:after {
+        position: absolute;
+        content: '';
+        border-bottom: 3px solid black;
+        border-radius: 1em;
+        bottom: .3em;
+        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:before {
+        width: 1em;
+        transform-origin: left;
+    }
+
+    &:after {
+        width: 82%;
+        left: 1em;
+        transform: translateX(110%);
+    }
+
+    &:hover:before {
+        transform: scaleX(0.3);
+    }
+
+    &:hover:after {
+        transform: translateX(0);
+    }
 }
 
 .user-info {
@@ -181,9 +251,9 @@ body {
 
 .Admin a {
     text-decoration: none;
-    background-color: white;
+    background-color: beige;
     color: black;
-    border: solid 1px black;
+    border: solid 4px white;
     margin-left: 30px;
     padding-left: 10px;
     padding-right: 10px;
@@ -271,37 +341,36 @@ body {
     text-decoration: none;
     display: inline-block;
     font-weight: bold;
-    padding: 0.5em;
-    margin-left: -0.5em;
+    padding: .5em;
+    margin-left: -.5em;
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-}
 
-.Admin a:before,
-.Admin a:after {
-    position: absolute;
-    content: '';
-    border-bottom: 3px solid black;
-    border-radius: 1em;
-    bottom: 0.3em;
-    transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
+    &:before, &:after {
+        position: absolute;
+        content: '';
+        border-bottom: 3px solid black;
+        border-radius: 1em;
+        bottom: .3em;
+        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
 
-.Admin a:before {
-    width: 1em;
-    transform-origin: left;
-}
+    &:before {
+        width: 1em;
+        transform-origin: left;
+    }
 
-.Admin a:after {
-    width: 82%;
-    left: 1em;
-    transform: translateX(110%);
-}
+    &:after {
+        width: 82%;
+        left: 1em;
+        transform: translateX(110%);
+    }
 
-.Admin a:hover:before {
-    transform: scaleX(0.3);
-}
+    &:hover:before {
+        transform: scaleX(0.3);
+    }
 
-.Admin a:hover:after {
-    transform: translateX(0);
+    &:hover:after {
+        transform: translateX(0);
+    }
 }
