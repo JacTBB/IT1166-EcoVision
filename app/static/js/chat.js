@@ -3,7 +3,7 @@ var socketio = io();
 const messages = document.getElementById("messages");
 
 const createMessage = (name, msg) => {
-    const content = `
+  const content = `
   <div class="text">
       <span>
           <strong>${name}</strong>: ${msg}
@@ -13,39 +13,45 @@ const createMessage = (name, msg) => {
       </span>
   </div>
   `;
-    messages.innerHTML += content;
+  messages.innerHTML += content;
 };
 
 socketio.on("message", (data) => {
-    console.log("receive", data)
-    createMessage(data.name, data.message);
+  console.log("receive", data);
+  createMessage(data.name, data.message);
 });
 
 const userDisconnected = () => {
-    socketio.emit("userDisconnected", {});
+  socketio.emit("userDisconnected", {});
 };
 
 const sendMessage = () => {
-    const message = document.getElementById("message");
-    console.log("send", message.value)
-    if (message.value == "") return;
-    socketio.emit("message", { data: message.value });
-    message.value = "";
+  const message = document.getElementById("message");
+  console.log("send", message.value);
+  if (message.value == "") return;
+  socketio.emit("message", { data: message.value });
+  message.value = "";
 };
 
 $(window).on("load", function () {
-    socketio.emit("requestRoom", {});
+  socketio.emit("requestRoom", {});
 });
 
 $(window).on("beforeunload", function () {
-    userDisconnected();
+  userDisconnected();
+});
+
+$("#message").keypress(function (e) {
+  if (e.which == 13) {
+    sendMessage();
+  }
 });
 
 $(document).ready(function () {
-    var popup = $(".chat-popup");
-    var chatBtn = $(".chat-btn");
+  var popup = $(".chat-popup");
+  var chatBtn = $(".chat-btn");
 
-    chatBtn.on('click', () => {
-        popup.toggleClass('show');
-    })
-}); 
+  chatBtn.on("click", () => {
+    popup.toggleClass("show");
+  });
+});
