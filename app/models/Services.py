@@ -3,7 +3,7 @@ from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 
-class Products(db.models):
+class Services(db.models):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     product_name: Mapped[str] = mapped_column(String)
     product_description: Mapped[str] = mapped_column(String)

@@ -63,11 +63,13 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
-        getRequest_for_featured_post = request.form.get('select-featured-post')
-        exist_featured_post = Post.query.filter_by(featured_post=True).all()
+        getRequest_for_featured_post = request.form.get(
+            'select-featured-post')
         if getRequest_for_featured_post is not None:
             try:
                 try:
+                    exist_featured_post = Post.query.filter_by(
+                        featured_post=True).all()
                     for post in exist_featured_post:
                         post.featured_post = False
                         db.session.add(post)
