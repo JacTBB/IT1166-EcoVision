@@ -29,3 +29,36 @@ h1 {
   text-align: center;
   color: #333;
 }
+
+p {
+  margin-bottom: 0;
+
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+footer {
+  position: relative;
+  top: 0;
+}
+
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e1e1e1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #858585;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}

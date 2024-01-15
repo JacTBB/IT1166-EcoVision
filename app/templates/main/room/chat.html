@@ -45,6 +45,10 @@
       createMessage(data.name, data.message);
     });
 
+    const userDisconnected = () => {
+      socketio.emit("userDisconnected", {});
+    };
+
     const sendMessage = () => {
       const message = document.getElementById("message");
       console.log("send", message.value)
@@ -52,6 +56,14 @@
       socketio.emit("message", { data: message.value });
       message.value = "";
     };
+
+    $(window).on("load", function () {
+      socketio.emit("requestRoom", {});
+    });
+
+    $(window).on("beforeunload", function () {
+      userDisconnected();
+    });
   </script>
   {% for msg in messages %}
   <script type="text/javascript">

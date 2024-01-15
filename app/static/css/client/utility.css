@@ -26,25 +26,8 @@ h2 {
     background-color: lightgoldenrodyellow;
 }
 
-.addutility > a {
+.addutility>a {
     color: black;
     text-align: center;
     text-decoration: none;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 5px;
-    border: solid 1px rgb(120,120,120);
-}
-
-table a {
-    color: black;
-}
-
-table a:hover {
-    font-weight: bold;
 }

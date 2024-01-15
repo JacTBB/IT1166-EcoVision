@@ -1,10 +1,29 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session, g
 from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
+from app.models.Company import Company
 from app.models.Trading import Projects
-from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm
+from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
+
+
+
+@trading.before_request
+@login_required
+def get_company():
+    if current_user.type == 'client':
+        company = Company.query.get(current_user.company)
+        g.company = company
+    
+    if not 'company' in session:
+        # TODO: Redirect to select company dashboard for staff
+        session['company'] = 1
+        
+    company = Company.query.get(session['company'])
+    g.company = company
+
+
 
 @trading.route('/')
 def home():
@@ -19,10 +38,52 @@ def home():
 
     return render_template('trading/Dashboard.html', projects = projects)
 
+@trading.route("/Checkout")
+@login_required
+def Checkout():
+    projects = {}
+    projectsData = db.session.query(Projects).all()
+    for project in projectsData:
+        projects[project.id] = {
+            'name': project.name,
+            'type': project.type,
+            'stock': project.stock,
+        }
+
+    print(projects)
+    print(session['cart'])
+
+    cart = {}
+    for item in session['cart']:
+        ID = item["id"]
+        if ID in projects:
+            cart[ID] = {
+                "id": ID,
+                "name": projects[ID]['name'],
+                "type": projects[ID]['type'],
+                "stock": item['stock'],
+            }
+        else:
+            session['cart'].remove(item)
+        
+    return render_template('trading/ProjectC.html', cart = cart)
+
+
+@trading.route("/add_to_cart/<project>", methods=['POST'])
+def add_to_cart(project):
+    if not 'cart' in session:
+        session['cart'] = []
+    
+    cart = session['cart']
+    cart.append({"id": int(project), "stock": request.form.get('stock')})
+    session['cart'] = cart
+
+    return redirect(url_for("trading.Checkout")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):
     form = ProjectDetailsForm()
+    formCart = AddToCart()
     projectData = Projects.query.get(project)
 
     if current_user.is_authenticated and (current_user.type == 'admin'):
@@ -41,7 +102,7 @@ def project(project):
                         print(f"Error occurred: {e}")
                         db.session.rollback()
                         
-    return render_template('trading/Project.html', form=form, project=projectData)
+    return render_template('trading/Project.html', form=form, formCart=formCart, project=projectData)
 
 @trading.route("/projects")
 @login_required

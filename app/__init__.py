@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 from app.config import Config
 from app.database import db, query_data
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import *
 from app.models.Client import *
+from app.models.Company import *
 from app.models.Trading import *
 from app.models.Contact import *
 from app.models.Inventory import *
@@ -55,5 +56,15 @@ def create_app(config_class=Config):
         app.register_blueprint(client, url_prefix='/client')
         app.register_blueprint(trading, url_prefix='/trading')
         app.register_blueprint(staff, url_prefix='/staff')
+    
+    
+    
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template("403.html"), 403
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('404.html'), 404
 
     return app

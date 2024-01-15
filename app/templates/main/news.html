@@ -3,19 +3,39 @@
 {% block title %}News - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main/news.css') }}" />
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid news-page">
   <div class="news">
     <img src="{{ url_for('static', filename='images/pexels-alyssa-polaris-1859622.jpg') }}" />
 
     <div class="news-section">
       <div class="news-header">
         <h1 style="color: white">Latest News</h1>
-        {% if current_user.type == 'admin' or current_user.type == 'author' %}
-        <div style="position: relative; float: right;">
+        {% if current_user.is_authenticated == true and (current_user.type == 'admin' or current_user.type == 'author')
+        %}
+        <div style="position: relative" class="administrator-editing-tools">
+          <form method="POST">
+            <label for="select-featured-post" class="select-featured-post-label">Featured Post:</label>
+            <select name="select-featured-post" id="select-featured-post">
+              {% for post in data %}
+              {% if post.postid == setFeaturedNews %}
+              <option value="{{post.postid}}" selected>{{post.postid}} - {{post.title}}
+              </option>
+              {% else %}
+              <option value="{{post.postid}}">{{post.postid}} - {{post.title}}
+              </option>
+
+              {% endif %}
+              {% endfor %}
+            </select>
+            <input type="submit" value="Save" class="save-featured-button" />
+          </form>
+
+        </div>
+        <div style="position: relative" class="add-post-container">
           <a href="{{ url_for('main.news', addpost=true) }}" class="add-post-button">Add Post</a>
 
         </div>
@@ -24,16 +44,15 @@
 
       <div class="news-column">
         {% for post in data %}
-        {% if post.postid == 18 %}
+        {% if post.postid == setFeaturedNews %}
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="featured-news">
-            <img src="{{ url_for('static', filename='images/' + post.image_name) }}" alt="" />
+            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" alt="" />
             <div>
               <h2>
-                How Singapore plans to import solar power from the world’s largest
-                solar plant
+                {{ post.title }}
               </h2>
-              <p class="news-date">20 May 2023</p>
+              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
 
             </div>
           </div>
@@ -45,10 +64,10 @@
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="catalog postid_{{ post.postid }}">
             <div class="catalog-image-container">
-              <img src="{{ url_for('static', filename='images/' + post.image_name) }}" loading="lazy" />
+              <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" loading="lazy" />
             </div>
             <div class="news-head">
-              <h3>{{ post.title }}</h3>
+              <p class="post-header">{{ post.title }}</p>
               <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
             </div>
           </div>

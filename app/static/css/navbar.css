@@ -21,6 +21,7 @@ nav ul {
   display: flex;
   list-style-type: none;
   text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.4);
+  margin-bottom: 0;
 }
 
 .nav-logo {
@@ -38,15 +39,53 @@ nav ul li,
 .nav-logo {
   display: inline-flex;
   margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.1s ease;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: #addaad;
+  color: rgb(236, 236, 236);
+  transition: color 0.1s ease;
 }
+
+nav ul li a:hover {
+  color: white;
+  transition: all 0.1s ease;
+}
+
+nav ul li::after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  content: "";
+  bottom: 0;
+  transition: all 0.2s ease-in-out
+}
+
+nav ul li:hover::after {
+  width: 100%;
+}
+
 
 .nav-selected {
   color: white;
+  font-weight: bold;
+}
+
+.nav-selected::after {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  content: "";
+  bottom: 0;
+  transition: all 0.1s ease;
 }
 
 /* Footer */

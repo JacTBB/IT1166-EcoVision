@@ -1,20 +1,24 @@
 {% extends 'layouts/staff.html' %}
 
+{% block title %}Enquiries - EcoVision{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staff/main.css') }}" />
+{% endblock %}
 
 {% block content %}
-<div class="container" id="main">
-    <div class="view-companyinfo" style="padding-top: 100px;">
+<div class="container-fluid" id="main">
+    <div class="view-companyinfo">
         <h2>Contact Form Enquiries</h2>
-        <table border="1">
+        <table>
             <tr>
-                <td>ID</td>
-                <td>Employee Name</td>
-                <td>Company Name</td>
-                <td>Company Email</td>
-                <td>Industry</td>
-                <td>Company Size</td>
-                <td>Edit</td>
-                <td>Delete</td>
+                <th>ID</th>
+                <th>Employee Name</th>
+                <th>Company Name</th>
+                <th>Company Email</th>
+                <th>Industry</th>
+                <th>Company Size</th>
+                <th colspan="2">Actions</th>
             </tr>
             <tr>
                 {% for detail in data %}
@@ -24,7 +28,7 @@
                 <td>{{detail.company_email}}</td>
                 <td>{{detail.industry}}</td>
                 <td>{{detail.company_size}}</td>
-                <td><a href="{{ url_for('staff.enquiry_edit', enquiry=detail.id) }}">Edit</a></td>
+                <td rowspan="2"><a href="{{ url_for('staff.enquiry_edit', enquiry=detail.id) }}">Edit</a></td>
                 <td><a href="{{ url_for('staff.enquiry_delete', enquiry=detail.id) }}">Delete</a></td>
 
                 {% endfor %}

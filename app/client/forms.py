@@ -1,9 +1,27 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField
+from wtforms import StringField, SubmitField, DateField, SelectField
 from wtforms.validators import InputRequired
 
 
 
+class AddCompanyForm(FlaskForm):
+    name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
+    industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Industry"})
+    address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
+    email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    plan = SelectField(validators=[InputRequired()], choices=['free', 'custom'])
+    submit = SubmitField("Add Company")
+
+class EditCompanyForm(FlaskForm):
+    name = StringField(render_kw={"placeholder": "Name"})
+    industry = StringField(render_kw={"placeholder": "Industry"})
+    address = StringField(render_kw={"placeholder": "Address"})
+    email = StringField(render_kw={"placeholder": "Email"})
+    plan = SelectField(choices=['free', 'custom'])
+    submit = SubmitField('Update Company')
+    
+    
+    
 class AddLocationForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
@@ -13,6 +31,8 @@ class EditLocationForm(FlaskForm):
     name = StringField(render_kw={"placeholder": "Name"})
     address = StringField(render_kw={"placeholder": "Address"})
     submit = SubmitField('Update Location')
+
+
 
 class AddUtilityForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})

@@ -1,0 +1,42 @@
+#main {
+    position: relative;
+    top: 59px;
+}
+
+#main>div {
+    position: relative;
+    top: 20px;
+}
+
+section h2,
+div h2 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: inherit;
+}
+
+table {
+    border-color: rgb(182, 182, 182);
+}
+
+table th {
+    font-size: 20px;
+}
+
+table td,
+table th {
+    color: inherit;
+}
+
+table a {
+    color: #3399ff;
+    /* lighter blue */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #007acc;
+    /* slightly darker blue */
+}

@@ -1,25 +1,25 @@
-from re import S
 from flask import render_template, request, redirect, url_for, session
 from flask_login import current_user
-from sqlalchemy import desc
+from sqlalchemy import asc, desc
 from app import socketio
 from app.main import main
 from app.database import query_data, db
 from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
+from datetime import datetime
 
 import os
 import base64
 from flask_socketio import emit, send, join_room, leave_room
 
 import random
-from string import ascii_uppercase
+from string import ascii_lowercase, ascii_uppercase
 
 
 @main.route('/')
 def home():
-    return render_template('main/home.html', news=query_data(Post, limit=3))
+    return render_template('main/home.html', news=Post.query.order_by(desc(Post.postid)).limit(3))
 
 
 @main.route('/services')
@@ -46,12 +46,15 @@ def news():
                 db.session.rollback()
 
         if addPost is not None:
-            latestPostID = Post.query.order_by(desc(Post.date)).first().postid
             try:
-                newPost = Post(title="blank",
-                               content="blank",
+                latestPostID = max(
+                    Post.query.all(), key=lambda x: x.postid).postid
+
+                newPost = Post(title="Title",
+                               content="Content",
+                               date=datetime.utcnow(),
                                author=current_user.username,
-                               image_name="idk",
+                               image_name="Upload an image",
                                postid=latestPostID+1)
                 db.session.add(newPost)
                 db.session.commit()
@@ -60,35 +63,71 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
+        getRequest_for_featured_post = request.form.get(
+            'select-featured-post')
+        if getRequest_for_featured_post is not None:
+            try:
+                try:
+                    exist_featured_post = Post.query.filter_by(
+                        featured_post=True).all()
+                    for post in exist_featured_post:
+                        post.featured_post = False
+                        db.session.add(post)
+                        db.session.commit()
+                        print(post.featured_post)
+                except Exception as e:
+                    print(f"Error occurred: {e}")
+                    db.session.rollback()
+
+                post = Post.query.filter_by(
+                    postid=getRequest_for_featured_post).first()
+                post.featured_post = True
+                db.session.add(post)
+                db.session.commit()
+                status_message = "Featured post updated successfully!"
+            except Exception as e:
+                status_message = "Failed to update featured post! Contact Administrator."
+                print(f"Error occurred: {e}")
+                db.session.rollback()
+
     if postid is not None:
         form = ArticleForm()
         if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
             if request.method == 'POST':
                 if form.validate_on_submit():
-                    if request.form.get('csrf_token'):
-                        try:
-                            post = Post.query.filter_by(postid=postid).first()
-                            post.image_name = form.image_view_onNews.data
-                            post.title = form.title.data
-                            post.content = form.content.data
+                    print(form.content.data)
+                    try:
+                        post = Post.query.filter_by(postid=postid).first()
+                        post.image_name = form.image_view_onNews.data
+                        post.title = form.title.data
+                        post.content = form.content.data
 
-                            db.session.add(post)
-                            db.session.commit()
-                            status_message = "Article updated successfully!"
-                        except Exception as e:
-                            status_message = "Failed to update article! Contact Administrator."
-                            print(f"Error occurred: {e}")
-                            db.session.rollback()
+                        db.session.add(post)
+                        db.session.commit()
+                        status_message = "Article updated successfully!"
+                    except Exception as e:
+                        print(f"Error occurred: {e}")
+                        db.session.rollback()
+                        status_message = "Failed to update article! Contact Administrator."
 
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
             return render_template('main/article.html', article=query, form=form, status_message=status_message)
 
-    return render_template('main/news.html', data=query)
+    first_exist_featured_post = Post.query.filter_by(
+        featured_post=True).first()
+
+    if first_exist_featured_post is None:
+        featured_postid = 0
+    else:
+        featured_postid = first_exist_featured_post.postid
+
+    return render_template('main/news.html', data=query, setFeaturedNews=featured_postid)
 
 
 @main.route('/contact', methods=['GET', 'POST'])
 def contact():
+    error_message = None
     form = ContactForm()
     if form.validate_on_submit():
         try:
@@ -100,9 +139,9 @@ def contact():
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-        return redirect(url_for('main.home'))
+        error_message = "Thank you for your enquiry. We will get back to you as soon as possible."
 
-    return render_template('main/contact.html', form=form)
+    return render_template('main/contact.html', form=form, error_message=error_message)
 
 
 def generate_unique_code(length):
@@ -161,30 +200,13 @@ def chat():
     return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
 
 
-# image upload function
-# @socketio.on('upload_image')
-# def upload_handler(data):
-#     image_data = data['image']
-#     prefix, base64_data = image_data.split(",", 1)
-#     binary_data = base64.b64decode(base64_data)
-
-#     # Generate a filename for the image
-#     filename = os.path.join(.config['UPLOAD_FOLDER'], 'image.jpg')
-
-#     # Write the binary data to a file
-#     with open(filename, 'wb') as f:
-#         f.write(binary_data)
-
-#     emit('image_response', image_data, broadcast=True)
-
-
+# for article image upload function
 image_chunks = []
 
 
 @socketio.on("upload_image")
 def handle_upload(data):
     global image_chunks
-
     # Add the received chunk to the array
     image_chunks.append((data['index'], data['image']))
 
@@ -194,15 +216,14 @@ def handle_upload(data):
         complete_image = ''.join(chunk[1] for chunk in image_chunks)
         image_chunks = []  # Clear the array for the next image
 
-        # Now you can process the complete image...
-        # For example, you can save it to a file:
+        # process the complete image
         prefix, base64_data = complete_image.split(",", 1)
         binary_data = base64.b64decode(base64_data)
 
         # generate string for filename
-        filename = ""
+        filename = "upload-"
         for i in range(10):
-            filename += random.choice(ascii_uppercase)
+            filename += random.choice(ascii_lowercase)
 
         # check file extension
         extention = ""
@@ -216,7 +237,10 @@ def handle_upload(data):
             extention = ".jpg"
 
         # save image to file
-        filename_path = os.path.join('./app/static/images', f'{filename}{extention}')
+        filename_path = os.path.join(
+            './app/static/images/uploads', f'{filename}{extention}')
+
+        print(filename)
 
         # write the binary data to a file
         with open(filename_path, 'wb') as f:
@@ -226,6 +250,10 @@ def handle_upload(data):
         emit('image_response', {
              'message': 'Image received', 'image': complete_image, "image_name": filename+extention}, broadcast=True)
 
+# end of image upload function
+
+
+# chat room function
 
 @socketio.on("message")
 def message(data):
@@ -243,7 +271,7 @@ def message(data):
     print(f"{session.get('name')} said: {data['data']}")
 
 
-@socketio.on("connect")
+@socketio.on("requestRoom")
 def connect(auth):
     print("connect", auth)
     room = session.get("room")
@@ -260,7 +288,7 @@ def connect(auth):
     print(f"{name} joined room {room}")
 
 
-@socketio.on("disconnect")
+@socketio.on("userDisconnected")
 def disconnect():
     room = session.get("room")
     name = session.get("name")
@@ -273,3 +301,5 @@ def disconnect():
 
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
+
+# end of chat room function

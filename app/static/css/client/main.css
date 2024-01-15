@@ -1,0 +1,63 @@
+body {
+    background-color: rgb(223, 223, 223);
+    color: black;
+}
+
+#main {
+    position: relative;
+    top: 59px;
+    color: inherit;
+}
+
+#main > div {
+    position: relative;
+    top: 20px;
+}
+
+section h2,
+div h2 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+.addlocation {
+    margin-right: 0;
+    padding: 8px 6px;
+    width: 180px;
+    background-color: lightgoldenrodyellow;
+    margin-bottom: 10px;
+}
+
+.addlocation > a {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table th {
+    font-size: 20px;
+}
+
+table td,
+table th {
+    padding: 5px;
+    color: inherit;
+    border: solid 1px rgb(200, 200, 200);
+}
+
+table a {
+    color: #3399ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #007acc;
+}

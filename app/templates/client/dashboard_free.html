@@ -3,6 +3,7 @@
 {% block title %}Dashboard - EcoVision{% endblock %}
 
 {% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/dashboard_free.css') }}" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -37,17 +38,26 @@
     <section class="location">
       <h2>{{ location.name }}</h2>
       <div class="manageutilities">
-        <a href="{{ url_for('client.location_utility', location=id) }}"><p>Manage Utility Bills</p></a>
+        <a href="{{ url_for('client.location_utility', location=id) }}">
+          <p>Manage Utility Bills</p>
+        </a>
       </div>
 
       <h3>Usage Graph</h3>
       <canvas id="chart-{{ id }}"></canvas>
 
       <script>
+        const rawtimerange{{ id }} = {{ location.timerange }}
+        const timerange{{ id }} = []
+
+        rawtimerange{{ id }}.forEach((datetime) => {
+          timerange{{ id }}.push(new Date(datetime * 1000))
+        })
+
         const chart{{ id }} = new Chart("chart-{{ id }}", {
           type: "line",
           data: {
-            labels: {{ location.timerange }},
+            labels: timerange{{ id }},
             datasets: [
               {
                 label: 'Carbon Footprint',
@@ -70,6 +80,14 @@
             ]
           },
           options: {
+            scales: {
+              xAxes: {
+                type: 'time',
+                time: {
+                  unit: 'month'
+                }
+              }
+            },
             legend: {
               position: 'bottom'
             }

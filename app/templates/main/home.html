@@ -3,49 +3,75 @@
 {% block title %}Home - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
 {% endblock %}
 
 {% block content %}
-  <div class="container home-page">
-    <div class="home">
-      <img src="{{ url_for('static', filename='images/pexels-mikhail-nilov-8299700.jpg') }}" />
-      <div>
-        <p>Welcome</p>
-      </div>
-    </div>
-
-    <div class="home-aboutus">
-      <div>
-        <h3>About Us</h3>
-        <p>
-          We as a company are dedicated to providing the best service to our customers. We are a small company that is
-          growing and we are looking to expand our services to the entire country. (This is a test paragraph)
-        </p>
-      </div>
-    </div>
-
-    <div class="home-news">
-      <h2>News</h2>
-      <div class="row">
-        {% for post in news|sort(attribute="postid", reverse=true) %}
-          <a href="{{ url_for('main.news', postid=post.postid) }}">
-            <div class="catalog postid_{{ post.postid }}">
-              <div class="catalog-image-container">
-                <img src="{{ url_for('static', filename='images/' + post.image_name) }}" />
-              </div>
-              <div class="news-head">
-                <h2>{{ post.title }}</h2>
-                <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
-              </div>
-            </div>
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-
-    <div class="home-services">
-      <h2>Services</h2>
+<div class="container-fluid home-page">
+  <div class="home">
+    <img src="{{ url_for('static', filename='images/pexels-mikhail-nilov-8299700.jpg') }}" />
+    <div>
+      <p>Welcome</p>
     </div>
   </div>
+
+  <div class="home-aboutus">
+    <div>
+      <h3>About Us</h3>
+      <p>
+        We as a company are dedicated to providing the best service to our customers. We are a small company that is
+        growing and we are looking to expand our services to the entire country. (This is a test paragraph)
+      </p>
+    </div>
+  </div>
+
+  <div class="home-news">
+    <h2>News</h2>
+    <div class="news-row">
+      {% for post in news|sort(attribute="postid", reverse=true) %}
+      <a href="{{ url_for('main.news', postid=post.postid) }}">
+        <div class="catalog postid_{{ post.postid }}">
+          <div class="catalog-image-container">
+            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
+          </div>
+          <div class="news-head">
+            <p class="post-header">{{ post.title }}</p>
+            <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="home-services">
+    <h2>Services</h2>
+
+    <div class="products-list">
+      <div class="product">
+        <p class="product-header">Carbon Trading Basics</p>
+        <div class="product-info">
+          <p>Get a comprehensive understanding of carbon trading, its principles, and its impact on the environment.
+            Ideal
+            for beginners in the carbon market.</p>
+        </div>
+      </div>
+      <div class="product">
+        <p class="product-header">Carbon Market Analysis</p>
+        <div class="product-info">
+          <p>Deep dive into the carbon market with our expert analysis. Understand trends, predictions, and
+            opportunities
+            in the carbon trading industry.</p>
+        </div>
+      </div>
+      <div class="product">
+        <p class="product-header">Carbon Credit Consultation</p>
+        <div class="product-info">
+          <p>Maximize your carbon credit potential with our consultation services. We help you navigate the complexities
+            of carbon credit acquisition and trading.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

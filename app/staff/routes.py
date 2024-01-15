@@ -1,20 +1,24 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 from app.models.Contact import CompanyInfo
+from app.models.Company import Company
 from app.staff import staff
 from app.database import db
-from flask_login import login_required
+from flask_login import current_user, login_required
+from app.auth import check_user_type
 from app.models.Inventory import Product
 from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo
 
 
 @staff.route("/")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'technician', 'author'])
 def dashboard():
     return render_template("staff/dashboard.html")
 
 
 @staff.route("/products")
 @login_required
+@check_user_type(['admin', 'manager', 'technician'])
 def products():
     products = {}
     productsData = db.session.query(Product).all()
@@ -29,6 +33,7 @@ def products():
 
 @staff.route("/product/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def product_add():
     form = AddProductForm()
 
@@ -51,6 +56,7 @@ def product_add():
 
 @staff.route("/product/<product>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def product_edit(product):
     form = EditProductForm()
 
@@ -78,6 +84,7 @@ def product_edit(product):
 
 @staff.route("/product/<product>/delete")
 @login_required
+@check_user_type(['admin', 'manager'])
 def product_delete(product):
     try:
         productData = Product.query.get(product)
@@ -92,10 +99,31 @@ def product_delete(product):
         print(f"Error occurred: {e}")
         db.session.rollback()
         return "Error"
+    
+
+
+@staff.route("/companies")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant'])
+def companies():
+    companies = {}
+    companiesData = db.session.query(Company).all()
+    for company in companiesData:
+        companies[company.id] = {
+            'name': company.name,
+            'industry': company.industry,
+            'address': company.address,
+            'email': company.email,
+            'plan': company.plan
+        }
+
+    return render_template('staff/companies.html', companies=companies)
+
 
 
 @staff.route("/enquiries")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def enquiries():
     try:
         data = CompanyInfo.query.all()
@@ -108,6 +136,7 @@ def enquiries():
 
 @staff.route("/enquiries/<enquiry>/delete")
 @login_required
+@check_user_type(['admin', 'manager'])
 def enquiry_delete(enquiry):
     try:
         enquiryData = CompanyInfo.query.get(enquiry)
@@ -126,6 +155,7 @@ def enquiry_delete(enquiry):
 
 @staff.route("/enquiries/<enquiry>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def enquiry_edit(enquiry):
     enquiryData = CompanyInfo.query.get(enquiry)
     form = EditCompanyInfo(obj=enquiryData)

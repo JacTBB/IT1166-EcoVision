@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from app.auth import auth
 from app.database import db, query_data
 from flask_login import current_user, login_required, login_user, logout_user
@@ -38,10 +38,8 @@ def login():
                     login_user(user)
                     if user.type == 'client':
                         return redirect(url_for('client.dashboard'))
-                    elif user.type == 'admin':
-                        return redirect(url_for('staff.dashboard'))
                     else:
-                        return redirect(url_for('auth.account'))
+                        return redirect(url_for('staff.dashboard'))
                 else:
                     error_message = "Invalid password"
             else:
@@ -62,9 +60,12 @@ def users(type):
     users = {}
     usersData = db.session.query(UserList[type]).all()
     for user in usersData:
-        users[user.id] = {
+        userData = {
             'username': user.username
         }
+        if type == 'client':
+            userData['companyID'] = user.company
+        users[user.id] = userData
     
     return render_template('auth/users.html', type=type, users=users)
 
@@ -83,6 +84,8 @@ def user_add(type):
             user.set_password('123')
             db.session.add(user)
             db.session.commit()
+            
+            # TODO: Client Company Add, Edit Forms
             
             return redirect(url_for('auth.users', type=type))
         except Exception as e:
@@ -140,6 +143,8 @@ def user_delete(type, user):
 @auth.route("/account")
 @login_required
 def account():
+    if current_user.type == "client":
+        return redirect(url_for('client.account'))
     return render_template("auth/account.html")
 
 
@@ -147,5 +152,6 @@ def account():
 @auth.route('/logout')
 @login_required
 def logout():
+    session.clear()
     logout_user()
     return redirect(url_for('auth.login'))

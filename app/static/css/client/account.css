@@ -1,0 +1,54 @@
+.account {
+    padding: 15px;
+    margin: 0 auto;
+    text-align: center;
+    color: black;
+}
+
+.account .details-row {
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    gap: 15px;
+    transform: translateX(3%);
+}
+
+.account .details-row div {
+    width: auto;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.account .details-row div:nth-child(1) p {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.account .details-row div:nth-child(2) p {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button {
+    border: none;
+    text-decoration: none;
+}
+
+.button>p {
+    padding: 5px 10px;
+    background-color: #779682;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.1s;
+}
+
+.logout>p {
+    margin: auto;
+    margin-top: 20px;
+    width: 100px;
+}

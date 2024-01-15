@@ -3,77 +3,95 @@
 {% block title %}Carbon Trading - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/dashboard.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/main.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/dashboard.css') }}" />
 {% endblock %}
 
 {% block content %}
-    <div class="Welcome-block">
-      <p>Company, <br>
-        your personal automated carbon offset</p>
+<div class="container-fluid">
+  <div class="Welcome-block">
+    <img src="{{url_for('static', filename='images/Carbon Trading2.png')}}" alt="">
+    <h1>
+      your personal automated carbon offset</h1>
+    <h3>
+      We help change the carbon that you created into oxygen and green energy for everypone to use</h3>
+  </div>
+
+  <div class="How-To">
+    <div class="Para1">
+      <div> <img src="../../static/images/RainForest.avif" alt="images"> </div>
+      <h2>Carbon Trading is the first step to help make the world a better place!</h2>
+      <br>
+      <h3>EcoVision has been the #1 company to assist in helping green projects all around the
+        world, we have worked with Apple Inc, Unilever, walmart IKEA and many more. we aim to
+        reduce climate change as much as 50% by 2050.
+      </h3>
+      
     </div>
+  
 
-    <div class="Buttons">
-      <div id="ButtonsBox">
-        <button onclick="togglepurchase()" class="pur-info"> How do you purchase? </button>
-        <button class="car-info"> Go to Carbon Caluator</button>
+    <div id="Para2">
+      <h2>How does carbon trading work</h2>
+      <div class="Steps">
+        <div class="Step1">
+          <h3>1</h3>
+          <p>Locate Project that you wish to purchase</p>
+        </div>
+
+        <div class="Step2">
+          <h3>2</h3>
+          <p>Click on View more on any project</p>
+        </div>
+
+        <div class="Step3">
+          <h3>3</h3>
+          <p>Add to cart, the amount of stock you would like to purchase</p>
+        </div>
+
+        <div class="Step4">
+          <h3>4</h3>
+          <p>Click send invoice, and we will send you an email!</p>
+        </div>
       </div>
-
-      <div id="Purchase-info">
-        <p>To purchase carbon credits 
-          <br> 1. Click on any image 
-          <br> 2. Select price range and amt 
-          <br> 3. Make Payment</p>
-      </div>
-
-      <script>
-        function togglepurchase() {
-          var signinfomation = document.getElementById('Purchase-info');
-          if (signinfomation.style.display === 'none') {
-            signinfomation.style.display = 'block'; // Show the data container
-          } else {
-            signinfomation.style.display = 'none'; // Hide the data container
-          }
-        }
-      </script>
+      <hr>
     </div>
-<hr>
-    <div class="user-info">
-      <button id="signin" onclick="toggleData(); SwitchData()">Sign in</button>
-      <div id="sign-infomation">
-        <p>Total offset <br> Electricity: 10 <br> Waste: 1</p>
-        <p>4000 tons total</p>
-      </div>
+  </div>
 
-    <script>
-      function toggleData() {
-        var signinfomation = document.getElementById('sign-infomation');
-        if (signinfomation.style.display === 'none') {
-          signinfomation.style.display = 'block'; // Show the data container
-        } else {
-          signinfomation.style.display = 'none'; // Hide the data container
-        }
-      }
-      function SwitchData() {
-        var button = document.getElementById('signin');
-        button.innerHTML = 'Client';
-      }
-    </script>
-    </div>
-<hr>
+  <div class="Project-Cells">
+    {% if current_user.is_authenticated == true and (current_user.type == "client" or current_user.type == "client") %}
+    <p>HELLO WORLD</p>
+    {% endif %}
+    <hr>
+    <h2> Projects </h2>
     <div class="Projects">
       {% for id, project in projects.items() %}
-        <div class="Project">
-          <p>{{project.name}}</p>
-          <p>{{project.type}}</p>
-          <p>{{project.stock}}</p>
-          <a href="{{url_for('trading.project', project = id)}}">View More</a>
-        </div>
+      <div class="Project">
+        <p>{{project.type}}</p>
+        <p>{{project.name}}</p>
+        <p>{{project.stock}}</p>
+        <a href="{{url_for('trading.project', project = id)}}">View Project</a>
+      </div>
       {% endfor %}
     </div>
-<hr>
+    <hr>
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
     <div class="Admin">
-        <a href="http://127.0.0.1/trading/projects">ADMIN</a>
+      <p><a href="http://127.0.0.1:80/trading/projects">Add Project</a></p>
     </div>
+    {% endif %}
+  </div>
+
+</div>
+
+<!-- <div class="Footer">
+  <ul>
+    <li><a href="http://127.0.0.1/">Home</a></li>
+    <li><a href="http://127.0.0.1/trading/Checkout">Checkout</a></li>
+    <li><a href="http://127.0.0.1/contact">Email</a></li>
+    <li><a href="http://127.0.0.1/client/account">Account</a></li>
+    <li>
+      <p>🍀</p>
+    </li>
+  </ul>
+</div> -->
 {% endblock %}
-
-
