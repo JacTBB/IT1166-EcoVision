@@ -7,37 +7,39 @@
 {% endblock %}
 
 {% block content %}
-<section>
-  <div class="Header">
-    <h1>Projects</h1>
-  </div>
-  <div class="form">
-    <table class="Project" border="0">
-      <tr>
-        <th>Project ID</th>
-        <th>Name</th>
-        <th>type</th>
-        <th>stock</th>
-        <th colspan="2">Actions</th>
-      </tr>
-      {% for id, project in projects.items() %}
-      <tr>
-        <td>{{ id }}</td>
-        <td>{{ project.name }}</td>
-        <td>{{ project.type }}</td>
-        <td>{{ project.stock }}</td>
-        <td rowspan="2"><a href="{{ url_for('trading.project_edit', project=id) }}">Edit</a></td>
-        <td><a href="{{ url_for('trading.project_delete', project=id) }}">Delete</a></td>
-      <tr>
-  </div>
-  {% endfor %}
-  </table>
-  </div>
+<div id="content">
+  <section>
+    <div class="Header">
+      <h1>Projects</h1>
+    </div>
+    <div class="form">
+      <table class="Project" border="0">
+        <tr>
+          <th>Project ID</th>
+          <th>Name</th>
+          <th>type</th>
+          <th>stock</th>
+          <th colspan="2">Actions</th>
+        </tr>
+        {% for id, project in projects.items() %}
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.type }}</td>
+          <td>{{ project.stock }}</td>
+          <td rowspan="2"><a href="{{ url_for('trading.project_edit', project=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('trading.project_delete', project=id) }}">Delete</a></td>
+        <tr>
+    </div>
+    {% endfor %}
+    </table>
+    </div>
 
-  <div class="addlocation">
-    <a href="{{ url_for('trading.project_add') }}" id="Link">
-      <p> + Project</p>
-    </a>
-  </div>
-</section>
+    <div class="addlocation">
+      <a href="{{ url_for('trading.project_add') }}" id="Link">
+        <p> + Project</p>
+      </a>
+    </div>
+  </section>
+</div>
 {% endblock %}

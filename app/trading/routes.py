@@ -66,7 +66,7 @@ def Checkout():
         else:
             session['cart'].remove(item)
         
-    return render_template('trading/ProjectC.html', cart = cart)
+    return render_template('trading/ProjectCheckout.html', cart = cart)
 
 
 @trading.route("/add_to_cart/<project>", methods=['POST'])
@@ -137,7 +137,7 @@ def project_add():
             print(f"Error occurred: {e}")
             db.session.rollback()
     
-    return render_template('trading/ProjectA.html', form=form)
+    return render_template('trading/ProjectAdd.html', form=form)
 
 @trading.route("/project/<project>/edit", methods=['GET', 'POST'])
 @login_required
@@ -166,7 +166,7 @@ def project_edit(project):
             print(f"Error occurred: {e}")
             db.session.rollback()
     
-    return render_template('trading/ProjectE.html', form=form)
+    return render_template('trading/ProjectEdit.html', form=form)
 
 @trading.route("/project/<project>/delete")
 @login_required
