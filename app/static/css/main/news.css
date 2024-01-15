@@ -198,6 +198,13 @@
     font-weight: 600;
 }
 
+.news-head .post-header {
+    overflow: hidden;
+    text-overflow: "...";
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .news-section .news-column>a:hover .news-head {
     background-color: #6b9478;
     transition: 0.2s linear;
