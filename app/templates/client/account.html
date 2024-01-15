@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div id="content">
     <div class="account">
-        <p style="padding-top: 50px; font-size: 30px;">User: {{ current_user.username }}</p>
+        <div>
+            <p style="padding-top: 50px; font-size: 30px;">User: {{ current_user.username }}</p>
+        </div>
         <div class="details-row">
             <div>
                 <p>Company ID:</p>

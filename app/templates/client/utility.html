@@ -3,20 +3,19 @@
 {% block title %}Utility - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/utility.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
 {% endblock %}
 
 {% block content %}
-  <div class="container-fluid">
+  <div id="content">
     <section>
       <h2>Utility Bills</h2>
-      <div class="addutility">
+      <div class="addrow">
         <a href="{{ url_for('client.location_utility_add', location=location) }}">
           <p>Add Utility Bill</p>
         </a>
       </div>
-      <table id="utilities">
+      <table>
         <tr>
           <th>ID</th>
           <th>Name</th>
