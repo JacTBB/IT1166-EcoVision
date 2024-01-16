@@ -1,0 +1,14 @@
+.room-container {
+    display: flex;
+    flex-flow: row;
+    padding: 50px;
+    background-color: #1a1a1a;
+    gap: 30px;
+    color: white;
+}
+
+.room-container div {
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+}

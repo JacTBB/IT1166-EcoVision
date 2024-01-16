@@ -3,6 +3,7 @@
 {% block title %}Chat Room - EcoVision{% endblock %}
 
 {% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/main/room/room.css')}}">
 <script>
   var socket = io();
   socket.on('requestRoom', function () {
@@ -13,19 +14,31 @@
 
 {% block content %}
 <div class="container">
-  <div style="margin-top: 100px;">
+  <div style="margin-top: 100px;"></div>
 
-    <form method="post" class="buttons">
-      <h3>Enter The Chat Room</h3>
+  <div class="room-container">
+    <form method="POST" class="createRoom">
+      <h3>Create Room</h3>
+
       <div>
-        <label>Name:</label>
-        <input type="text" placeholder="Pick a name!" name="name" value="{{name}}" />
+        <input type="text" placeholder="Enter your name" name="name" value="{{name}}" />
+        <button type="submit" name="create" class="create-btn">Create a Room</button>
       </div>
+      {% if error %}
+      <ul>
+        <li>{{error}}</li>
+      </ul>
+      {% endif %}
+    </form>
+
+    <form method="POST" class="joinRoom">
+      <h3>Join Room</h3>
+
       <div class="join">
-        <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
+        <input type="text" placeholder="Enter your name" name="name" value="{{name}}" />
+        <input type="text" placeholder="Room Code" name="code" />
         <button type="submit" name="join">Join a Room</button>
       </div>
-      <button type="submit" name="create" class="create-btn">Create a Room</button>
       {% if error %}
       <ul>
         <li>{{error}}</li>
@@ -33,6 +46,20 @@
       {% endif %}
     </form>
   </div>
+
+  <div class="list-rooms">
+    <h3>Rooms</h3>
+    <ul>
+      {% if rooms != 0 %}
+      {% for room in rooms %}
+      <li>
+        <a href="{{url_for('main.chat', code=room.room_code)}}">{{room.room_code}}</a>
+      </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+
 
 </div>
 {% endblock %}

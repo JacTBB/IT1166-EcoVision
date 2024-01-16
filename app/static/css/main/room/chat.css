@@ -1,61 +1,62 @@
-button{
-  border:none;
+button {
+  border: none;
   outline: none;
   cursor: pointer;
 }
 
-.container{
+.container {
   max-width: 1100px;
   margin: auto;
   text-align: center;
   padding: 0 1rem;
 }
 
-.chat-btn{
+.chat-btn {
   position: fixed;
-  right:50px;
+  right: 50px;
   bottom: 50px;
+  width: 100px;
+  height: 100px;
   background: dodgerblue;
   color: white;
-  width:100px;
-  height: 100px;
   border-radius: 50%;
   opacity: 0.8;
   transition: opacity 0.3s;
-  box-shadow: 0 5px 5px rgba(0,0,0,0.4);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
 }
 
-.chat-btn:hover, .submit:hover, #emoji-btn:hover{
+.chat-btn:hover,
+.submit:hover,
+#emoji-btn:hover {
   opacity: 1;
 }
 
-.chat-popup{
+.chat-popup {
   display: none;
-  position: fixed;
-  bottom:80px;
-  right:120px;
+  position: absolute;
+  bottom: 135px;
+  right: 141px;
   height: 600px;
-  width: 1000px;
+  width: calc(2vw + 600px);
   background-color: white;
-  /* display: flex; */
   flex-direction: column;
   justify-content: space-between;
   padding: 0.75rem;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
 }
 
-.show{
+.show {
   display: flex;
 }
 
-.message-box{
+.message-box {
   height: 80%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.incoming-msg{
+.incoming-msg {
   display: flex;
   align-items: center;
 }
@@ -67,23 +68,23 @@ button{
   object-fit: cover;
 } */
 
-.incoming-msg .message{
+.incoming-msg .message {
   background-color: dodgerblue;
   color: white;
-  padding:0.5rem;
+  padding: 0.5rem;
   border-radius: 25px;
   margin-left: 1rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-.inputs{
+.inputs {
   position: relative;
   display: flex;
   justify-content: center;
 }
 
-input[type="text"]{
-  width:100%;
+input[type="text"] {
+  width: 100%;
   border: 1px solid #ccc;
   font-size: 1rem;
   border-radius: 5px;
@@ -99,11 +100,11 @@ input[type="text"]{
   opacity:0.5;
 } */
 
-#send-btn{
+#send-btn {
   padding: 0.25rem 0.5rem;
   margin-left: 0.5rem;
   background-color: green;
-  color:white;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,11 +130,11 @@ input[type="text"]{
 } */
 
 
-@media (max-width:500px){
+@media (max-width:500px) {
 
-  .message-box{
-      bottom: 120px;
-      right:10%;
-      width: 80vw;
+  .message-box {
+    bottom: 120px;
+    right: 10%;
+    width: 80vw;
   }
 }
