@@ -3,149 +3,176 @@
 {% block title %}Dashboard - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/dashboard_custom.css') }}" />
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
 {% endblock %}
 
 {% block content %}
-  <section>
-    <h1>Welcome, {{ current_user.username }}</h1>
-    <div id="overview">
-      <div id="carbonfootprint">
-        <h3>Carbon Footprint</h3>
-        <p>{{ overview.carbonfootprint }} CO2e</p>
-      </div>
-      <div id="energyusage">
-        <h3>Energy Usage</h3>
-        <p>{{ overview.energyusage }} kWh</p>
-      </div>
-      <div id="waterusage">
-        <h3>Water Usage</h3>
-        <p>{{ overview.waterusage }} Gallons</p>
-      </div>
-      <div id="managelocations">
-        <a href="{{ url_for('client.locations') }}">
-          <h3>Manage Locations</h3>
-        </a>
-      </div>
+  <div id="content">
+    <div class="cards-left">
+      <section class="dash-card">
+        <h2>Overview (Last Month)</h2>
+        <div class="statsbox">
+          <div id="carbonfootprint">
+            <h3>Carbon Footprint</h3>
+            <p>{{ overview.carbonfootprint }} CO2e</p>
+          </div>
+          <div id="energyusage">
+            <h3>Energy Usage</h3>
+            <p>{{ overview.energyusage }} kWh</p>
+          </div>
+          <div id="waterusage">
+            <h3>Water Usage</h3>
+            <p>{{ overview.waterusage }} Gallons</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-card">
+        <h2>Carbon Trading</h2>
+        <div class="statsbox">
+          <div id="carbonfootprintexceeded">
+            <h3>Exceeded Carbon Footprint</h3>
+            <p>{{ overview.carbonfootprintexceeded }} CO2e</p>
+          </div>
+          <div id="carbonfootprintoffsetted">
+            <h3>Total Carbon Footprint Offset</h3>
+            <p>{{ overview.carbonfootprintoffsetted }} CO2e</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-card">
+        <h2>Assessments</h2>
+        <div class="statsbox">
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Location</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Progress</th>
+            </tr>
+            {% for id, assessment in assessments.items() %}
+              <tr>
+                <td>{{ id }}</td>
+                <td>{{ assessment.location }}</td>
+                <td>{{ assessment.name }}</td>
+                <td>{{ assessment.type }}</td>
+                <td>{{ assessment.progress }}</td>
+              <tr>
+            {% endfor %}
+          </table>
+        </div>
+      </section>
     </div>
-  </section>
 
-  <hr>
-
-  <section>
-    <h2>Chats</h2>
-    <div id="overview">
-      <div id="notifications">
-        <h3>Notifications</h3>
-        <p>{{ overview.notifications }}</p>
-      </div>
-      <div id="consultants">
-        <a href="{{ url_for('main.room') }}">
+    <div class="cards-right">
+      <section class="dash-card">
+        <h2>Notifications</h2>
+        <div class="notifications">
+          <div class="notif-bell">
+            <i class="fa fa-bell" aria-hidden="true"></i>
+          </div>
+          <p>
+            You have {{ overview.notifications }} unread messages
+          </p>
+        </div>
+        <a class="notif-button" href="{{ url_for('main.room') }}">
           <h3>Consultants</h3>
         </a>
-      </div>
-      <div id="enquiries">
-        <a href="{{ url_for('main.room') }}">
+        <a class="notif-button" href="{{ url_for('main.room') }}">
           <h3>Enquiries</h3>
         </a>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <hr>
-
-  <section>
-    <h2>Projects</h2>
-    <div style="margin: auto; width: max-content;">
-      <i>(Insert Projects Table)</i>
-    </div>
-  </section>
-
-  <hr>
-
-  <section>
-    <h2>Carbon Trading</h2>
-    <div id="overview">
-      <div id="carbonfootprintexceeded">
-        <h3>Exceeded Carbon Footprint</h3>
-        <p>{{ overview.carbonfootprint }}</p>
-      </div>
-      <div id="carbonfootprintoffsetted">
-        <h3>Total Carbon Footprint Offset</h3>
-        <p>{{ overview.carbonfootprint }}</p>
-      </div>
-      <div id="carbontradingplatform">
-        <a href="{{ url_for('trading.home') }}">
-          <h3>Carbon Trading Platform</h3>
+      <section class="dash-card">
+        <h2>Locations</h2>
+        <p id="locations-stat">{{ overview.locations }}</p>
+        <a id="managelocations" href="{{ url_for('client.locations') }}">
+          <h3>Manage Locations</h3>
         </a>
-      </div>
+      </section>
     </div>
-  </section>
 
-  {% for id, location in locations.items() %}
-    <hr>
-    <section class="location">
-      <h2>{{ location.name }}</h2>
-      <div class="manageutilities">
-        <a href="{{ url_for('client.location_utility', location=id) }}">
-          <p>Manage Utility Bills</p>
-        </a>
-      </div>
+    {% for id, location in locations.items() %}
+      <hr>
+      <section class="location">
+        <h2>{{ location.name }}</h2>
+        <div class="manageutilities">
+          <a href="{{ url_for('client.location_utility', location=id) }}">
+            <p>Manage Utility Bills</p>
+          </a>
+        </div>
 
-      <h3>Usage Graph</h3>
-      <canvas id="chart-{{ id }}"></canvas>
+        <h3>Usage Graph</h3>
+        <canvas id="chart-{{ id }}"></canvas>
 
-      <script>
-        const rawtimerange{{ id }} = {{ location.timerange }}
-        const timerange{{ id }} = []
+        <script>
+          const rawtimerange{{ id }} = {{ location.timerange }}
+          const timerange{{ id }} = []
 
-        rawtimerange{{ id }}.forEach((datetime) => {
-          timerange{{ id }}.push(new Date(datetime * 1000))
-        })
+          rawtimerange{{ id }}.forEach((datetime) => {
+            timerange{{ id }}.push(new Date(datetime * 1000))
+          })
 
-        const chart{{ id }} = new Chart("chart-{{ id }}", {
-          type: "line",
-          data: {
-            labels: timerange{{ id }},
-            datasets: [
-              {
-                label: 'Carbon Footprint',
-                data: {{ location.carbonfootprint }},
-                borderColor: 'rgba(255, 0, 0, 0.8)',
-                backgroundColor: 'rgba(255, 0, 0, 0.05)'
+          const chart{{ id }} = new Chart(document.getElementById("chart-{{ id }}"), {
+            type: "line",
+            data: {
+              labels: timerange{{ id }},
+              datasets: [
+                {
+                  label: 'Carbon Footprint',
+                  data: {{ location.carbonfootprint }},
+                  borderColor: 'rgba(255, 0, 0, 0.8)',
+                  backgroundColor: 'rgba(255, 0, 0, 0.05)'
+                },
+                {
+                  label: 'Energy Usage',
+                  data: {{ location.energyusage }},
+                  borderColor: 'rgba(0, 255, 0, 0.8)',
+                  backgroundColor: 'rgba(0, 255, 0, 0.05)'
+                },
+                {
+                  label: 'Water Usage',
+                  data: {{ location.waterusage }},
+                  borderColor: 'rgba(0, 0, 255, 0.8)',
+                  backgroundColor: 'rgba(0, 0, 255, 0.05)'
+                }
+              ]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                }
               },
-              {
-                label: 'Energy Usage',
-                data: {{ location.energyusage }},
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                backgroundColor: 'rgba(0, 255, 0, 0.05)'
-              },
-              {
-                label: 'Water Usage',
-                data: {{ location.waterusage }},
-                borderColor: 'rgba(0, 0, 255, 0.8)',
-                backgroundColor: 'rgba(0, 0, 255, 0.05)'
-              }
-            ]
-          },
-          options: {
-            scales: {
-              xAxes: {
-                type: 'time',
-                time: {
-                  unit: 'month'
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Month'
+                  },
+                  type: 'time',
+                  time: {
+                    tooltipFormat: 'DD MMM YYYY'
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Usage'
+                  },
+                  min: 0,
                 }
               }
-            },
-            legend: {
-              position: 'bottom'
             }
-          }
-        });
-      </script>
-    </section>
-  {% endfor %}
+          });
+        </script>
+      </section>
+    {% endfor %}
+  </div>
 {% endblock %}

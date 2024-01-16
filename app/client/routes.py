@@ -3,9 +3,9 @@ from app.client import client
 from app.database import db
 from flask_login import login_required, current_user
 from app.auth import check_user_type
-from app.models.Client import Location, Utility
+from app.models.Client import Location, Utility, Assessment
 from app.models.Company import Company
-from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm
+from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm
 from datetime import datetime
 
 
@@ -49,7 +49,7 @@ def dashboard():
         
         utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=location.id)
         for utility in utilitiesData:
-            utilities['timerange'].append(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp())
+            utilities['timerange'].append(int(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp()))
             utilities['carbonfootprint'].append(int(utility.carbonfootprint))
             utilities['energyusage'].append(int(utility.energyusage))
             utilities['waterusage'].append(int(utility.waterusage))
@@ -67,9 +67,22 @@ def dashboard():
     
     
     
+    overview['carbonfootprintexceeded'] = 50
+    overview['carbonfootprintoffsetted'] = 200
     overview['notifications'] = 10
+    overview['locations'] = 10
     
-    return render_template('client/dashboard_custom.html', overview=overview, locations=locations)
+    assessments = {}
+    assessmentsData = db.session.query(Assessment).filter_by(company=g.company.id)
+    for assessment in assessmentsData:
+        assessments[assessment.id] = {
+            'location': assessment.location,
+            'name': assessment.name,
+            'type': assessment.type,
+            'progress': assessment.progress
+        }
+    
+    return render_template('client/dashboard_custom.html', overview=overview, assessments=assessments, locations=locations)
 
 
 
@@ -380,6 +393,104 @@ def location_utility_delete(location, utility):
         db.session.delete(utilityData)
         db.session.commit()
         return redirect(url_for('client.location_utility', location=location))
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        db.session.rollback()
+        return "Error"
+
+
+
+
+
+
+@client.route("/assessments")
+@login_required
+def assessments():
+    assessments = {}
+    assessmentsData = db.session.query(Assessment).filter_by(company=g.company.id)
+    for assessment in assessmentsData:
+        assessments[assessment.id] = {
+            'location': assessment.location,
+            'name': assessment.name,
+            'type': assessment.type,
+            'progress': assessment.progress
+        }
+
+    return render_template('client/assessments.html', assessments=assessments)
+
+
+
+@client.route("/assessment/add", methods=['GET', 'POST'])
+@login_required
+def assessment_add():
+    form = AddAssessmentForm()
+
+    if form.validate_on_submit():
+        try:
+            location = request.form.get("location")
+            name = request.form.get("name")
+            type = request.form.get("type")
+            progress = request.form.get("progress")
+
+            assessment = Assessment(company=g.company.id, location=location, name=name, type=type, progress=progress)
+            db.session.add(assessment)
+            db.session.commit()
+
+            return redirect(url_for('client.assessments'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("client/assessment_add.html", form=form)
+
+
+
+@client.route("/assessment/<assessment>/edit", methods=['GET', 'POST'])
+@login_required
+def assessment_edit(assessment):
+    form = EditAssessmentForm()
+
+    if request.method == 'POST':
+        try:
+            assessmentData = Assessment.query.get(assessment)
+
+            location = request.form.get("location")
+            name = request.form.get("name")
+            type = request.form.get("type")
+            progress = request.form.get("progress")
+
+            if location:
+                assessmentData.location = location
+            if name:
+                assessmentData.name = name
+            if type:
+                assessmentData.type = type
+            if progress:
+                assessmentData.progress = progress
+
+            db.session.commit()
+
+            return redirect(url_for('client.assessments'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("client/assessment_edit.html", form=form)
+
+
+
+@client.route("/assessment/<assessment>/delete")
+@login_required
+def assessment_delete(assessment):
+    try:
+        assessmentData = Assessment.query.get(assessment)
+
+        if assessmentData is None:
+            return "Assessment Not Found!"
+
+        db.session.delete(assessmentData)
+        db.session.commit()
+        return redirect(url_for('client.assessments'))
     except Exception as e:
         print(f"Error occurred: {e}")
         db.session.rollback()

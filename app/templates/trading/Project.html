@@ -3,73 +3,73 @@
 {% block title %}Project - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
-{{ ckeditor.load() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
+  {{ ckeditor.load() }}
 {% endblock %}
 
 {% block content %}
-<div class="banner">
-  <p style="padding-top: 60px;">Project {{project.name}} - {{project.type}}</p>
-</div>
-
-<div class="picture">
-  <img src="../../static/images/PictureGarden.jpeg" alt="">
-  <div class="overlap">
-    <p>Welcome to Project {{project.name}} </p>
-  </div>
-</div>
-
-<div>
-  <div>
-    <div class='post-content'>
-      {{ project.content | safe }}
+  <div id="content">
+    <div class="banner">
+      <p style="padding-top: 60px;">Project {{project.name}} - {{project.type}}</p>
     </div>
-  </div>
-</div>
 
-<div class="Bot-Bar">
-  <div style="padding: 10px;">
-    <h1 style="padding-top: 50px;">Add to cart</h1>
-    <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
-      <div>{{formCart.stock}}</div>
-      <div>{{formCart.submit()}}</div>
-      {{ formCart.csrf_token }}
-    </form>
-  </div>
-
-  <div id="stockBar"> stock level : {{project.stock}}</div>
-
-
-</div>
-
-{% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
-<br>
-<hr>
-<br>
-
-<div class="Editior">
-  <form method="POST">
-    {{ form.hidden_tag() }}
-
-    <h2>
-      Edit Project Details
-    </h2>
-    <p>
-      {{ form.content() }}
-    </p>
-
-    <div class="form-footer">
-      <div class="status-message" style="display: inline-block;">
-        {% if status_message != none %}{{status_message}}{% endif %}</div>
-      <input type="submit" value="Save">
+    <div class="picture">
+      <img src="../../static/images/PictureGarden.jpeg" alt="">
+      <div class="overlap">
+        <p>Welcome to Project {{project.name}} </p>
+      </div>
     </div>
-  </form>
-  {{ ckeditor.config(name='content') }}
-  <script>
-    CKEDITOR.instances['content'].setData(`{{ project.content | safe }}`);
-  </script>
-</div>
-{% endif %}
+
+    <div>
+      <div>
+        <div class='post-content'>
+          {{ project.content | safe }}
+        </div>
+      </div>
+    </div>
+
+    <div class="Bot-Bar">
+      <div style="padding: 10px;">
+        <h1 style="padding-top: 50px;">Add to cart</h1>
+        <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
+          <div>{{formCart.stock}}</div>
+          <div>{{formCart.submit()}}</div>
+          {{ formCart.csrf_token }}
+        </form>
+      </div>
+
+      <div id="stockBar"> stock level : {{project.stock}}</div>
 
 
+    </div>
+
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    <br>
+    <hr>
+    <br>
+
+    <div class="Editior">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <h2>
+          Edit Project Details
+        </h2>
+        <p>
+          {{ form.content() }}
+        </p>
+
+        <div class="form-footer">
+          <div class="status-message" style="display: inline-block;">
+            {% if status_message != none %}{{status_message}}{% endif %}</div>
+          <input type="submit" value="Save">
+        </div>
+      </form>
+      {{ ckeditor.config(name='project-content') }}
+      <script>
+        CKEDITOR.instances['project-content'].setData(`{{ project.content | safe }}`);
+      </script>
+    </div>
+    {% endif %}
+  </div>
 {% endblock %}

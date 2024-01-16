@@ -1,17 +1,5 @@
-body {
-    background-color: rgb(223, 223, 223);
-    color: black;
-}
-
-#main {
-    position: relative;
-    top: 59px;
-    color: inherit;
-}
-
-#main > div {
-    position: relative;
-    top: 20px;
+#content {
+    padding: 20px;
 }
 
 section h2,
@@ -22,7 +10,7 @@ div h2 {
 }
 
 
-.addlocation {
+.addrow {
     margin-right: 0;
     padding: 8px 6px;
     width: 180px;
@@ -30,7 +18,7 @@ div h2 {
     margin-bottom: 10px;
 }
 
-.addlocation > a {
+.addrow > a {
     color: black;
     font-weight: bold;
     text-align: center;

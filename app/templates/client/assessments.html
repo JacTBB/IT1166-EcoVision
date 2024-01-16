@@ -1,0 +1,41 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Assessments - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <section>
+      <h2>Assessments</h2>
+      <div class="addrow">
+        <a href="{{ url_for('client.assessment_add') }}">
+          <p>Add Assessment</p>
+        </a>
+      </div>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Location</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Progress</th>
+          <th colspan="2">Actions</th>
+        </tr>
+        {% for id, assessment in assessments.items() %}
+          <tr>
+            <td>{{ id }}</td>
+            <td>{{ assessment.location }}</td>
+            <td>{{ assessment.name }}</td>
+            <td>{{ assessment.type }}</td>
+            <td>{{ assessment.progress }}</td>
+            <td rowspan="2"><a href="{{ url_for('client.assessment_edit', assessment=id) }}">Edit</a></td>
+            <td><a href="{{ url_for('client.assessment_delete', assessment=id) }}">Delete</a></td>
+          <tr>
+        {% endfor %}
+      </table>
+    </section>
+  </div>
+{% endblock %}

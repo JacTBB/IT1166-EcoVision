@@ -1,6 +1,9 @@
-<nav>
-  <div class="nav-logo">
-    <a href="{{ url_for('client.dashboard')}}">{{ g.company.name }}</a>
+<nav id="topnav">
+  <div class="nav-title">
+    <div class="nav-logo">
+      <img src="{{ url_for('static', filename='images/icon.jpg') }}" />
+    </div>
+    <a href="{{ url_for('client.dashboard')}}">EcoVision - {{ g.company.name }}</a>
   </div>
 
   <ul>
@@ -14,7 +17,31 @@
     </li>
     <li>
       <a class="{{ 'nav-selected' if request.endpoint == 'client.account' else '' }}"
-        href="{{ url_for('client.account') }}">Account</a>
+        href="{{ url_for('client.account') }}">
+        <p class="username">{{ current_user.username }}</p>
+        <div class="profilepicture">
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav id="sidenav">
+  <ul>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'client.dashboard' else '' }}"
+        href="{{ url_for('client.dashboard') }}">
+        <i class="fa fa-home" aria-hidden="true"></i>
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'trading.home' else '' }}"
+        href="{{ url_for('trading.home') }}">
+        <i class="fa fa-leaf" aria-hidden="true"></i>
+        Carbon Trading
+      </a>
     </li>
   </ul>
 </nav>
