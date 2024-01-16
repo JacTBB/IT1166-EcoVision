@@ -6,23 +6,60 @@ hr {
     margin: 0 25px;
     width: calc(100% - 50px);
     border: 0;
-    border-bottom: 1px;
+    border-bottom: 2px;
     border-style: solid;
-    border-color: rgba(10, 10, 10, 0.1);
+    border-color: rgba(10, 10, 10, 0.5);
 }
 
 
 
-#overview {
+#content {
     display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.cards-left,
+.cards-right {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cards-left {
+    width: 70%;
+}
+.cards-right {
+    width: 30%;
+}
+
+.dash-card {
+    margin: 5px;
+    width: 100%;
+    background-color: rgb(210,220,210);
+    border-radius: 10px;
+}
+
+.statsbox {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
-#overview > div {
-    margin: 10px 20px;
+.statsbox > div {
+    margin: 5px;
     padding: 10px 15px;
     border-radius: 10px;
 }
+
+.statsbox h3 {
+    font-size: 15px;
+}
+
+.statsbox p {
+    font-size: 12px;
+}
+
+
 
 #carbonfootprint {
     background-color: lightsalmon;
@@ -36,11 +73,6 @@ hr {
     background-color: lightblue;
 }
 
-#overview > div > p {
-    color: rgb(80, 80, 80);
-    font-weight: bold;
-}
-
 #managelocations {
     background-color: lightpink;
 }
@@ -52,13 +84,6 @@ hr {
 
 #managelocations > a > h3 {
     border-bottom: solid 1px black;
-}
-
-
-
-h2 {
-    font-size: 25px;
-    font-weight: bold;
 }
 
 
@@ -105,11 +130,15 @@ h2 {
     text-decoration: none;
 }
 
-
 #carbontradingplatform > a > h3 {
     border-bottom: solid 1px black;
 }
 
+
+
+.location {
+    width: 100%;
+}
 
 .manageutilities {
     margin-left: auto;

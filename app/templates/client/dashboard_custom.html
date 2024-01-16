@@ -10,80 +10,78 @@
 
 {% block content %}
   <div id="content">
-    <section>
-      <h1>Welcome, {{ current_user.username }}</h1>
-      <div id="overview">
-        <div id="carbonfootprint">
-          <h3>Carbon Footprint</h3>
-          <p>{{ overview.carbonfootprint }} CO2e</p>
+    <div class="cards-left">
+      <section class="dash-card">
+        <h2>Overview (Last Month)</h2>
+        <div class="statsbox">
+          <div id="carbonfootprint">
+            <h3>Carbon Footprint</h3>
+            <p>{{ overview.carbonfootprint }} CO2e</p>
+          </div>
+          <div id="energyusage">
+            <h3>Energy Usage</h3>
+            <p>{{ overview.energyusage }} kWh</p>
+          </div>
+          <div id="waterusage">
+            <h3>Water Usage</h3>
+            <p>{{ overview.waterusage }} Gallons</p>
+          </div>
+          <div id="managelocations">
+            <a href="{{ url_for('client.locations') }}">
+              <h3>Manage Locations</h3>
+            </a>
+          </div>
         </div>
-        <div id="energyusage">
-          <h3>Energy Usage</h3>
-          <p>{{ overview.energyusage }} kWh</p>
-        </div>
-        <div id="waterusage">
-          <h3>Water Usage</h3>
-          <p>{{ overview.waterusage }} Gallons</p>
-        </div>
-        <div id="managelocations">
-          <a href="{{ url_for('client.locations') }}">
-            <h3>Manage Locations</h3>
-          </a>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <hr>
+      <section class="dash-card">
+        <h2>Carbon Trading</h2>
+        <div class="statsbox">
+          <div id="carbonfootprintexceeded">
+            <h3>Exceeded Carbon Footprint</h3>
+            <p>{{ overview.carbonfootprint }}</p>
+          </div>
+          <div id="carbonfootprintoffsetted">
+            <h3>Total Carbon Footprint Offset</h3>
+            <p>{{ overview.carbonfootprint }}</p>
+          </div>
+          <div id="carbontradingplatform">
+            <a href="{{ url_for('trading.home') }}">
+              <h3>Carbon Trading Platform</h3>
+            </a>
+          </div>
+        </div>
+      </section>
 
-    <section>
-      <h2>Chats</h2>
-      <div id="overview">
-        <div id="notifications">
-          <h3>Notifications</h3>
-          <p>{{ overview.notifications }}</p>
+      <section class="dash-card">
+        <h2>Projects</h2>
+        <div class="statsbox">
+          (Insert Projects Table)
         </div>
-        <div id="consultants">
-          <a href="{{ url_for('main.room') }}">
-            <h3>Consultants</h3>
-          </a>
-        </div>
-        <div id="enquiries">
-          <a href="{{ url_for('main.room') }}">
-            <h3>Enquiries</h3>
-          </a>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <hr>
-
-    <section>
-      <h2>Projects</h2>
-      <div style="margin: auto; width: max-content;">
-        <i>(Insert Projects Table)</i>
-      </div>
-    </section>
-
-    <hr>
-
-    <section>
-      <h2>Carbon Trading</h2>
-      <div id="overview">
-        <div id="carbonfootprintexceeded">
-          <h3>Exceeded Carbon Footprint</h3>
-          <p>{{ overview.carbonfootprint }}</p>
+    <div class="cards-right">
+      <section class="dash-card">
+        <h2>Chats</h2>
+        <div class="statsbox">
+          <div id="notifications">
+            <h3>Notifications</h3>
+            <p>{{ overview.notifications }}</p>
+          </div>
+          <div id="consultants">
+            <a href="{{ url_for('main.room') }}">
+              <h3>Consultants</h3>
+            </a>
+          </div>
+          <div id="enquiries">
+            <a href="{{ url_for('main.room') }}">
+              <h3>Enquiries</h3>
+            </a>
+          </div>
         </div>
-        <div id="carbonfootprintoffsetted">
-          <h3>Total Carbon Footprint Offset</h3>
-          <p>{{ overview.carbonfootprint }}</p>
-        </div>
-        <div id="carbontradingplatform">
-          <a href="{{ url_for('trading.home') }}">
-            <h3>Carbon Trading Platform</h3>
-          </a>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     {% for id, location in locations.items() %}
       <hr>
