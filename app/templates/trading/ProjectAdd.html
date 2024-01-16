@@ -4,17 +4,22 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/ProjectA.css') }}" />
 {% endblock %}
 
 {% block content %}
-  <div id="content">
-    <h1>Add Project</h1>
+<div id="content" class="FormHead">
+  <div style="padding: 10px;">
+    <div class="FormOptions">
+    <h1 style="padding-top: 50px;">Add Project</h1>
     <form action="" method="POST">
-      <div>{{form.name}}</div>
-      <div>{{form.type}}</div>
-      <div>{{form.stock}}</div>
+      <div>Project name: {{form.name}}</div>
+      <div>Project type: {{form.type}}</div>
+      <div>Project stock: {{form.stock}}</div>
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
     </form>
+    </div>
   </div>
+</div>
 {% endblock %}
