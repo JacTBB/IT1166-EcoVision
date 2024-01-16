@@ -72,7 +72,20 @@ def dashboard():
     overview['notifications'] = 10
     overview['locations'] = 10
     
-    return render_template('client/dashboard_custom.html', overview=overview, locations=locations)
+    projects = {
+        1: {
+            'name': 'Office 1',
+            'type': 'Environmental Impact Assessment',
+            'progress': '60%'
+        },
+        2: {
+            'name': 'Office 2',
+            'type': 'Environmental Impact Assessment',
+            'progress': '20%'
+        }
+    }
+    
+    return render_template('client/dashboard_custom.html', overview=overview, projects=projects, locations=locations)
 
 
 

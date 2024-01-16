@@ -26,20 +26,22 @@
           <th colspan="2">Actions</th>
         </tr>
         {% for id, utility in utilities.items() %}
-        <tr>
-          <td>{{ id }}</td>
-          <td>{{ utility.name }}</td>
-          <td>{{ utility.date }}</td>
-          <td>{{ utility.carbonfootprint }}</td>
-          <td>{{ utility.energyusage }}</td>
-          <td>{{ utility.waterusage }}</td>
-          <td rowspan="2"><a
-              href="{{ url_for('client.location_utility_edit', location=location, utility=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('client.location_utility_delete', location=location, utility=id) }}">Delete</a>
-          </td>
-        <tr>
-          {% endfor %}
-  </div>
-  </section>
+          <tr>
+            <td>{{ id }}</td>
+            <td>{{ utility.name }}</td>
+            <td>{{ utility.date }}</td>
+            <td>{{ utility.carbonfootprint }}</td>
+            <td>{{ utility.energyusage }}</td>
+            <td>{{ utility.waterusage }}</td>
+            <td rowspan="2">
+              <a href="{{ url_for('client.location_utility_edit', location=location, utility=id) }}">Edit</a>
+            </td>
+            <td>
+              <a href="{{ url_for('client.location_utility_delete', location=location, utility=id) }}">Delete</a>
+            </td>
+          <tr>
+        {% endfor %}
+      </table>
+    </section>
   </div>
 {% endblock %}
