@@ -49,7 +49,7 @@ def dashboard():
         
         utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=location.id)
         for utility in utilitiesData:
-            utilities['timerange'].append(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp())
+            utilities['timerange'].append(int(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp()))
             utilities['carbonfootprint'].append(int(utility.carbonfootprint))
             utilities['energyusage'].append(int(utility.energyusage))
             utilities['waterusage'].append(int(utility.waterusage))

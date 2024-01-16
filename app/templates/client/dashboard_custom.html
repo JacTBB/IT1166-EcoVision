@@ -5,7 +5,9 @@
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/dashboard_custom.css') }}" />
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment"></script>
 {% endblock %}
 
 {% block content %}
@@ -104,7 +106,7 @@
             timerange{{ id }}.push(new Date(datetime * 1000))
           })
 
-          const chart{{ id }} = new Chart("chart-{{ id }}", {
+          const chart{{ id }} = new Chart(document.getElementById("chart-{{ id }}"), {
             type: "line",
             data: {
               labels: timerange{{ id }},
@@ -130,16 +132,29 @@
               ]
             },
             options: {
-              scales: {
-                xAxes: {
-                  type: 'time',
-                  time: {
-                    unit: 'month'
-                  }
+              plugins: {
+                legend: {
+                  position: 'bottom'
                 }
               },
-              legend: {
-                position: 'bottom'
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Month'
+                  },
+                  type: 'time',
+                  time: {
+                    tooltipFormat: 'DD MMM YYYY'
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Usage'
+                  },
+                  min: 0,
+                }
               }
             }
           });
