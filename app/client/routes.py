@@ -67,6 +67,8 @@ def dashboard():
     
     
     
+    overview['carbonfootprintexceeded'] = 50
+    overview['carbonfootprintoffsetted'] = 200
     overview['notifications'] = 10
     overview['locations'] = 10
     

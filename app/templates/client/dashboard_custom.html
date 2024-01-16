@@ -36,16 +36,11 @@
         <div class="statsbox">
           <div id="carbonfootprintexceeded">
             <h3>Exceeded Carbon Footprint</h3>
-            <p>{{ overview.carbonfootprint }}</p>
+            <p>{{ overview.carbonfootprintexceeded }} CO2e</p>
           </div>
           <div id="carbonfootprintoffsetted">
             <h3>Total Carbon Footprint Offset</h3>
-            <p>{{ overview.carbonfootprint }}</p>
-          </div>
-          <div id="carbontradingplatform">
-            <a href="{{ url_for('trading.home') }}">
-              <h3>Carbon Trading Platform</h3>
-            </a>
+            <p>{{ overview.carbonfootprintoffsetted }} CO2e</p>
           </div>
         </div>
       </section>
