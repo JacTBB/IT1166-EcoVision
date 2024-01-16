@@ -1,7 +1,7 @@
 $(document).ready(function () {
-  if (localStorage.getItem("darkmode") === "true") {
-    $(".contact-form").addClass("switch-color");
-  }
+  // if (localStorage.getItem("darkmode") === "true") {
+  //   $(".contact-form").addClass("switch-color");
+  // }
 
   $(".toggle-darkmode").click(function () {
     $(".contact-form").toggleClass("switch-color");
