@@ -11,6 +11,10 @@ hr {
     border-color: rgba(10, 10, 10, 0.5);
 }
 
+h2 {
+    font-size: 15px;
+}
+
 
 
 #content {
@@ -23,11 +27,13 @@ hr {
 .cards-right {
     display: flex;
     flex-wrap: wrap;
+    align-content: start;
 }
 
 .cards-left {
     width: 70%;
 }
+
 .cards-right {
     width: 30%;
 }
@@ -35,7 +41,8 @@ hr {
 .dash-card {
     margin: 5px;
     width: 100%;
-    background-color: rgb(210,220,210);
+    height: max-content;
+    background-color: rgb(210, 220, 210);
     border-radius: 10px;
 }
 
@@ -45,7 +52,7 @@ hr {
     justify-content: center;
 }
 
-.statsbox > div {
+.statsbox>div {
     margin: 5px;
     padding: 10px 15px;
     border-radius: 10px;
@@ -57,6 +64,8 @@ hr {
 
 .statsbox p {
     font-size: 12px;
+    color: black;
+    font-weight: 600;
 }
 
 
@@ -73,44 +82,6 @@ hr {
     background-color: lightblue;
 }
 
-#managelocations {
-    background-color: lightpink;
-}
-
-#managelocations > a {
-    color: black;
-    text-decoration: none;
-}
-
-#managelocations > a > h3 {
-    border-bottom: solid 1px black;
-}
-
-
-
-#notifications {
-    background-color: lightpink;
-}
-
-#consultants {
-    background-color: lightgoldenrodyellow;
-}
-
-#enquiries {
-    background-color: aquamarine;
-}
-
-#consultants > a,
-#enquiries > a {
-    color: black;
-    text-decoration: none;
-}
-
-#consultants > a > h3,
-#enquiries > a > h3 {
-    border-bottom: solid 1px black;
-}
-
 
 
 #carbonfootprintexceeded {
@@ -125,13 +96,95 @@ hr {
     background-color: aquamarine;
 }
 
-#carbontradingplatform > a {
+#carbontradingplatform>a {
     color: black;
     text-decoration: none;
 }
 
-#carbontradingplatform > a > h3 {
+#carbontradingplatform>a>h3 {
     border-bottom: solid 1px black;
+}
+
+
+
+.notifications {
+    display: flex;
+    padding: 10px;
+}
+
+.notif-bell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    margin-right: 8px;
+    min-width: 30px;
+    height: 30px;
+    background-color: rgb(240, 245, 240);
+    border-radius: 100%;
+}
+
+.notifications p {
+    padding-top: 3px;
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.notif-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px;
+    width: calc(50% - 15px);
+    color: black;
+    background-color: rgb(240, 245, 240);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.notif-button:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.notif-button h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+@media (max-width: 1100px) {
+    .notif-button {
+        display: block;
+        margin: 5px 0;
+        width: 100%;
+    }
+}
+
+
+
+#locations-stat {
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#managelocations {
+    display: block;
+    margin: 5px;
+    padding: 8px;
+    color: black;
+    background-color: rgb(240, 245, 240);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+#managelocations:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#managelocations h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
 }
 
 
@@ -147,12 +200,12 @@ hr {
     background-color: lightgoldenrodyellow;
 }
 
-.manageutilities > a {
+.manageutilities>a {
     color: black;
     text-align: center;
     text-decoration: none;
 }
 
-.location > h3 {
+.location>h3 {
     text-align: center;
 }

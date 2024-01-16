@@ -68,6 +68,7 @@ def dashboard():
     
     
     overview['notifications'] = 10
+    overview['locations'] = 10
     
     return render_template('client/dashboard_custom.html', overview=overview, locations=locations)
 

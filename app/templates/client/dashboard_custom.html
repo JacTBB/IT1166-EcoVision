@@ -28,11 +28,6 @@
             <h3>Water Usage</h3>
             <p>{{ overview.waterusage }} Gallons</p>
           </div>
-          <div id="managelocations">
-            <a href="{{ url_for('client.locations') }}">
-              <h3>Manage Locations</h3>
-            </a>
-          </div>
         </div>
       </section>
 
@@ -65,23 +60,29 @@
 
     <div class="cards-right">
       <section class="dash-card">
-        <h2>Chats</h2>
-        <div class="statsbox">
-          <div id="notifications">
-            <h3>Notifications</h3>
-            <p>{{ overview.notifications }}</p>
+        <h2>Notifications</h2>
+        <div class="notifications">
+          <div class="notif-bell">
+            <i class="fa fa-bell" aria-hidden="true"></i>
           </div>
-          <div id="consultants">
-            <a href="{{ url_for('main.room') }}">
-              <h3>Consultants</h3>
-            </a>
-          </div>
-          <div id="enquiries">
-            <a href="{{ url_for('main.room') }}">
-              <h3>Enquiries</h3>
-            </a>
-          </div>
+          <p>
+            You have {{ overview.notifications }} unread messages
+          </p>
         </div>
+        <a class="notif-button" href="{{ url_for('main.room') }}">
+          <h3>Consultants</h3>
+        </a>
+        <a class="notif-button" href="{{ url_for('main.room') }}">
+          <h3>Enquiries</h3>
+        </a>
+      </section>
+
+      <section class="dash-card">
+        <h2>Locations</h2>
+        <p id="locations-stat">{{ overview.locations }}</p>
+        <a id="managelocations" href="{{ url_for('client.locations') }}">
+          <h3>Manage Locations</h3>
+        </a>
       </section>
     </div>
 
