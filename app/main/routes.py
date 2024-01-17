@@ -173,6 +173,7 @@ rooms = {}
 
 @main.route('/contact/room', methods=["GET", "POST"])
 def room():
+    session.pop('staffName', None)
     if request.method == "POST":
         name = request.form.get("name")
         code = request.form.get("code")
@@ -228,11 +229,13 @@ def room():
 
 @main.route('/contact/room/chat', methods=["GET", "POST"])
 def chat():
-    name = session.get("customerName")
+    session.pop('customerName', None)
     getRoomCode = request.args.get("code")
 
     session['roomCode'] = getRoomCode
     session['customerName'] = "Customer"
+
+    name = session.get("customerName")
 
     if getRoomCode is None or name is None:
         return redirect(url_for("main.room"))
