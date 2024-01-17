@@ -174,10 +174,12 @@ body {
     display: flex;
     flex-flow: wrap;
     padding: 50px;
+    justify-content: center;
+    text-align: center;
 }
 
 .Project {
-    width: 300px;
+    width:  500px;
     border-radius: 20px;
     padding: 60px;
     border: solid black 3px;
@@ -186,7 +188,7 @@ body {
     text-align: center;
     font-size: xx-large;
 }
-.Project :nth-child(3){
+.Project :nth-child(2){
     border: groove 3px;
 }
 .Project :nth-child(2){

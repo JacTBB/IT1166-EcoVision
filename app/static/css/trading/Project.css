@@ -1,30 +1,79 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
 
 body {
-    font-family: "Nunito" !important;
+    font-family: "monospace" !important;
+}
+h2 {
+    padding-top: 20px;
+    text-align: center;
 }
 
-.banner {
-    background-color: beige;
-    padding: 25px;
-    font-weight: bolder;
-    font-size: large;
-}
-
-.picture img {
-    width: 100%;
-    height: 400px;
-    position: relative;
-}
-
-.overlap {
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    color: white;
+h2 {
+    font-family: monospace;
+    text-align: center;
     font-size: 50px;
-    font-weight: bold;
+    font-weight: 400;
+    color: green;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: 27px 0;
+    grid-gap: 20px;
+    align-items: center;
+}
+
+h2:after,
+h2:before {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid green;
+    border-top: 1px solid green;
+    height: 5px;
+    background-color: beige;
+}
+.ProjectHead {
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    z-index: -1;
+}
+
+.ProjectHead img {
+    position: absolute;
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.ProjectHead h1 {
+    position: relative;
+    margin: 0 auto;
+    top: 55%;
+    left: 0%;
+    color: white;
+    font-size: 4.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    word-break: keep-all;
+    padding: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    font-family: monospace;
+
+}
+.ProjectHead h3 {
+    position: relative;
+    margin: 0 auto;
+    top: 30%;
+    left: -25%;
+    color: white;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    word-break: keep-all;
+    width: 40%
 }
 
 .Infomation {
@@ -32,22 +81,164 @@ body {
     font-weight: 600;
     font-size: large;
 
-}
+}   
 
-.Bot-Bar {
-    padding: 35px;
+.Bot-Bar {  
+    padding-bottom: 100px;
+    text-align: center;
+    justify-content: center;
     width: 100%;
+    padding-right: 50px;
+    padding-left: 50px;
+    height: 60vh;
+}
+#title{
+    font-size: 1.5em;
+    font-weight: 300;
+}
+.cart { 
     background-color: beige;
+    width: 100%;
+    padding: 150px;
+    font-size: 1.5em;
+    font-family: monospace;
+    padding: 20px;
+    border: green solid 3px;
+    height: 60vh;
+}
+.cart :nth-child(1){
+    padding: 10px;
+    color: green;
+}
+.quanitiy {
+    border: groove;
+}
+.submit{
+    text-align: right;
+    padding-right: 55px;
+}
+#cart-des{
+    text-align: left;
+    padding-left: 55px;
+}
+#stockBar{
+    padding: 20px;
+    color: green;
+    font-size: 1em;
+    border: groove;
 }
 
 .post-content {
-    padding: 20px;
+    font-size: x-large;
+    font-family: monospace;
+    padding: 5%;
+    background-color: beige;
+    width: 100%;
+    height: 60vh;
+    padding-top: 100px;
+}
+.S1 {
+    padding-left: 50px;
+    height: 60vh;
+}
+.Editior {
+    padding-top: 50px;
 }
 
-.Buy a {
+.section {
+    display: flex;
+    padding-top: 50px;
+}
+
+.S1, .S2 {
+    width: 50%;
+}
+
+.S2 {
+    text-align: center;
+    justify-content: center
+}
+
+.findmore {
+    display: flex;
+    padding: 100px;
+    padding-top: 370px;
+    font-size: 1.3em;
+    font-family: monospace;
+    text-align: center;
+    justify-content: center;
+}
+.findmore h1 {
+    font-weight: bold;
+    font-size: 2.5em;
+    color: green;
+}
+.findmore p {
+    text-align: center;
+    justify-content: center;
+    padding: 40px;
+}
+.findimg img {
+    width: 100%;
+    height: 60vh;
+    border-radius: 50px;
+}
+.findimg {
+    padding: 50px;
+}
+
+.findtext, .findimg {
+    width: 50%;
+}
+.moreproject {
+    background-color: beige;
+    width: 100%;
+    padding: 50px;
+    display: flex;
+
+}
+.discover {
+    padding-left: 60px;
+    text-align: left;
+    justify-content: left;    
+    font-size: larger;
+}
+.discover a {
+    color: green;
+    font-size: 1.3rem;
     text-decoration: none;
-    background-color: white;
-    color: black;
-    border: solid 1px black;
-    padding-right: 10px;
+    display: inline-block;
+    font-weight: bold;
+    padding: .5em;
+    margin-left: -.5em;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+
+    &:before, &:after {
+        position: absolute;
+        content: '';
+        border-bottom: 3px solid black;
+        border-radius: 1em;
+        bottom: .3em;
+        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:before {
+        width: 1em;
+        transform-origin: left;
+    }
+
+    &:after {
+        width: 82%;
+        left: 1em;
+        transform: translateX(110%);
+    }
+
+    &:hover:before {
+        transform: scaleX(0.3);
+    }
+
+    &:hover:after {
+        transform: translateX(0);
+    }
 }

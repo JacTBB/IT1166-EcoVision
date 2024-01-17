@@ -30,10 +30,21 @@ def home():
     projects = {}
     projectsData = db.session.query(Projects).all()
     for project in projectsData:
+        # typeID, if type = conservetion, id = 1
+        # Add typeID to dictionary below
+        # use css order for typeID
+        # if project.type == "Conservation":
+        #     project.typeID = 1
+        # elif project.type == "Renewable":
+        #     project.typeID = 2
+        # else:
+        #     project.typeID = 3
         projects[project.id] = {
             'name': project.name,
             'type': project.type,
             'stock': project.stock,
+            'price': project.price,
+            # 'typeID': project.typeID
         }
 
     return render_template('trading/Dashboard.html', projects = projects)
@@ -48,6 +59,7 @@ def Checkout():
             'name': project.name,
             'type': project.type,
             'stock': project.stock,
+            'price': project.price,
         }
 
     print(projects)
@@ -62,6 +74,7 @@ def Checkout():
                 "name": projects[ID]['name'],
                 "type": projects[ID]['type'],
                 "stock": item['stock'],
+                "price": projects[ID]['price']
             }
         else:
             session['cart'].remove(item)
@@ -114,6 +127,7 @@ def projects():
             'name': project.name,
             'type': project.type,
             'stock': project.stock,
+            'price': project.price,
         }
     
     return render_template('trading/ProjectF.html', projects=projects)   
@@ -127,8 +141,9 @@ def project_add():
             name = request.form.get("name")
             type = request.form.get("type")
             stock = request.form.get("stock")
+            price = request.form.get('price')
             
-            project = Projects(name=name, type=type, stock=stock)
+            project = Projects(name=name, type=type, stock=stock, price=price)
             db.session.add(project)
             db.session.commit()
             
@@ -151,6 +166,7 @@ def project_edit(project):
             name = request.form.get("name")
             type = request.form.get("type")
             stock = request.form.get("stock")
+            price = request.form.get("price")
            
             if name:
                 projectData.name = name
@@ -158,6 +174,8 @@ def project_edit(project):
                 projectData.type = type
             if stock:
                 projectData.stock = stock
+            if price:
+                projectData.price = price
             
             db.session.commit()
             

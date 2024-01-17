@@ -26,9 +26,9 @@
         world, we have worked with Apple Inc, Unilever, walmart IKEA and many more. we aim to
         reduce climate change as much as 50% by 2050.
       </h3>
-      
+
     </div>
-  
+
 
     <div id="Para2">
       <h2>How does carbon trading work</h2>
@@ -64,14 +64,52 @@
     <hr>
     <h2> Projects </h2>
     <div class="Projects">
-      {% for id, project in projects.items() %}
-      <div class="Project">
-        <p>{{project.type}}</p>
-        <p>{{project.name}}</p>
-        <p>{{project.stock}}</p>
-        <a href="{{url_for('trading.project', project = id)}}">View Project</a>
+      <div class="renewable">
+        {% for id, project in projects.items() %}
+        {% if project.type == "Renewable" %}
+        <h2>Renewable</h2>
+        <div class="Project">
+          <p>{{project.type}}</p>
+          <p>{{project.name}}</p>
+          <p>Stock : {{project.stock}}</p>
+          <p>Stock price ($SGD) </p>
+          <p>${{project.price}}</p>
+          <a href="{{url_for('trading.project', project = id)}}">View Project</a>
+        </div>
+        {% endif%}
+        {% endfor %}
       </div>
-      {% endfor %}
+      <div class="conservation">
+        {% for id, project in projects.items() %}
+        {% if project.type == "Convservation" %}
+        <h2>Convservation</h2>
+        <div class="Project">
+          <p>{{project.type}}</p>
+          <p>{{project.name}}</p>
+          <p>Stock : {{project.stock}}</p>
+          <p>Stock price ($SGD) </p>
+          <p>${{project.price}}</p>
+          <a href="{{url_for('trading.project', project = id)}}">View Project</a>
+        </div>
+        {% endif%}
+        {% endfor %}
+      </div>
+      <div class="methane">
+        {% for id, project in projects.items() %}
+        {% if project.type == "Methane" %}
+        <h2>Methane</h2>
+        <div class="Project">
+          <p>{{project.type}}</p>
+          <p>{{project.name}}</p>
+          <p>Stock : {{project.stock}}</p>
+          <p>Stock price ($SGD) </p>
+          <p>${{project.price}}</p>
+          <a href="{{url_for('trading.project', project = id)}}">View Project</a>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      
     </div>
     <hr>
     {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
