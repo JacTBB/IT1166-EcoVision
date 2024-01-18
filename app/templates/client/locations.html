@@ -3,20 +3,19 @@
 {% block title %}Locations - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
 {% endblock %}
 
 {% block content %}
-  <div class="container-fluid" id="main">
+  <div id="content">
     <section>
       <h2>Locations</h2>
-      <div class="addlocation">
+      <div class="addrow">
         <a href="{{ url_for('client.location_add') }}">
           <p>Add Location</p>
         </a>
       </div>
-      <table id="locations">
+      <table>
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -24,14 +23,15 @@
           <th colspan="2">Actions</th>
         </tr>
         {% for id, location in locations.items() %}
-        <tr>
-          <td>{{ id }}</td>
-          <td>{{ location.name }}</td>
-          <td>{{ location.address }}</td>
-          <td rowspan="2"><a href="{{ url_for('client.location_edit', location=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('client.location_delete', location=id) }}">Delete</a></td>
-        <tr>
-          {% endfor %}
+          <tr>
+            <td>{{ id }}</td>
+            <td>{{ location.name }}</td>
+            <td>{{ location.address }}</td>
+            <td rowspan="2"><a href="{{ url_for('client.location_edit', location=id) }}">Edit</a></td>
+            <td><a href="{{ url_for('client.location_delete', location=id) }}">Delete</a></td>
+          <tr>
+        {% endfor %}
+      </table>
     </section>
   </div>
 {% endblock %}

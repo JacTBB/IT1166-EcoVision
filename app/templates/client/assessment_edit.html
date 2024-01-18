@@ -1,6 +1,6 @@
 {% extends "layouts/client.html" %}
 
-{% block title %}Edit Location - EcoVision{% endblock %}
+{% block title %}Edit Assessment - EcoVision{% endblock %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
@@ -8,10 +8,12 @@
 
 {% block content %}
   <div id="content">
-    <h1>Edit Location</h1>
+    <h1>Edit Assessment</h1>
     <form action="" method="POST">
+      <div>{{form.location}}</div>
       <div>{{form.name}}</div>
-      <div>{{form.address}}</div>
+      <div>{{form.type}}</div>
+      <div>{{form.progress}}</div>
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
     </form>

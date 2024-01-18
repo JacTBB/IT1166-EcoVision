@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField, SelectField
+from wtforms import StringField, SubmitField, DateField, SelectField, IntegerField
 from wtforms.validators import InputRequired
 
 
@@ -49,3 +49,19 @@ class EditUtilityForm(FlaskForm):
     energyusage = StringField(render_kw={"placeholder": "Energy Usage"})
     waterusage = StringField(render_kw={"placeholder": "Water Usage"})
     submit = SubmitField('Update Utility')
+    
+
+
+class AddAssessmentForm(FlaskForm):
+    location = StringField(validators=[InputRequired()], render_kw={"placeholder": "Location"})
+    name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
+    type = StringField(validators=[InputRequired()], render_kw={"placeholder": "Type"})
+    progress = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Progress"})
+    submit = SubmitField("Add Assessment")
+
+class EditAssessmentForm(FlaskForm):
+    location = StringField(render_kw={"placeholder": "Location"})
+    name = StringField(render_kw={"placeholder": "Name"})
+    type = StringField(render_kw={"placeholder": "Type"})
+    progress = IntegerField(render_kw={"placeholder": "Progress"})
+    submit = SubmitField('Update Assessment')

@@ -1,13 +1,18 @@
+from turtle import st
 from flask import render_template, request, redirect, url_for, session
-from flask_login import current_user
 from sqlalchemy import asc, desc
 from app import socketio
+from app.auth import check_user_type
+from app.auth.routes import login_required, current_user
 from app.main import main
 from app.database import query_data, db
+from app.models.Rooms import Rooms
 from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
 from datetime import datetime
+from uuid import uuid4
+import json
 
 import os
 import base64
@@ -19,6 +24,7 @@ from string import ascii_lowercase, ascii_uppercase
 
 @main.route('/')
 def home():
+
     return render_template('main/home.html', news=Post.query.order_by(desc(Post.postid)).limit(3))
 
 
@@ -35,6 +41,7 @@ def news():
     deletePost = request.args.get('deletepost')
     status_message = None
     if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+        # Delete article
         if deletePost is not None:
             try:
                 post = Post.query.filter_by(postid=deletePost).first()
@@ -45,6 +52,7 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
+        # Add article
         if addPost is not None:
             try:
                 latestPostID = max(
@@ -63,6 +71,7 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
+        # Set Featured News
         getRequest_for_featured_post = request.form.get(
             'select-featured-post')
         if getRequest_for_featured_post is not None:
@@ -90,35 +99,38 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
-    if postid is not None:
-        form = ArticleForm()
-        if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
-            if request.method == 'POST':
-                if form.validate_on_submit():
-                    print(form.content.data)
-                    try:
-                        post = Post.query.filter_by(postid=postid).first()
-                        post.image_name = form.image_view_onNews.data
-                        post.title = form.title.data
-                        post.content = form.content.data
+        # Edit article
+        if postid is not None:
+            form = ArticleForm()
+            if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+                if request.method == 'POST':
+                    if form.validate_on_submit():
+                        print(form.content.data)
+                        try:
+                            post = Post.query.filter_by(postid=postid).first()
+                            post.image_name = form.image_view_onNews.data
+                            post.title = form.title.data
+                            post.content = form.content.data
 
-                        db.session.add(post)
-                        db.session.commit()
-                        status_message = "Article updated successfully!"
-                    except Exception as e:
-                        print(f"Error occurred: {e}")
-                        db.session.rollback()
-                        status_message = "Failed to update article! Contact Administrator."
+                            db.session.add(post)
+                            db.session.commit()
+                            status_message = "Article updated successfully!"
+                        except Exception as e:
+                            print(f"Error occurred: {e}")
+                            db.session.rollback()
+                            status_message = "Failed to update article! Contact Administrator."
 
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
             return render_template('main/article.html', article=query, form=form, status_message=status_message)
 
+    query = query_data(Post, all=True)
+
     first_exist_featured_post = Post.query.filter_by(
         featured_post=True).first()
 
     if first_exist_featured_post is None:
-        featured_postid = 0
+        featured_postid = 2
     else:
         featured_postid = first_exist_featured_post.postid
 
@@ -161,14 +173,14 @@ rooms = {}
 
 @main.route('/contact/room', methods=["GET", "POST"])
 def room():
-    session.pop("room", None)
-    session.pop("name", None)
+    session.pop('staffName', None)
     if request.method == "POST":
-        print("contact/room POST")
         name = request.form.get("name")
         code = request.form.get("code")
         join = request.form.get("join", False)
         create = request.form.get("create", False)
+
+        randomRoomCode = generate_unique_code(4)
 
         if not name:
             return render_template("main/room/room.html", error="Please enter a name.", code=code, name=name)
@@ -176,28 +188,62 @@ def room():
         if join != False and not code:
             return render_template("main/room/room.html", error="Please enter a room code.", code=code, name=name)
 
-        room = code
+        roomCode = query_data(Rooms, filter_by={"room_code": code}, all=False)
+        if roomCode is not None:
+            room_code = roomCode.room_code
+        else:
+            room_code = None
+
         if create != False:
-            room = generate_unique_code(4)
-            rooms[room] = {"members": 0, "messages": []}
-        elif code not in rooms:
+
+            # query = Rooms.query.filter(
+            #     Rooms.userids.contains(current_user.user_id)).first()
+            # if query is not None:
+            #     try:
+            #         db.session.delete(query)
+            #         db.session.commit()
+            #     except Exception as e:
+            #         print(f"Error occurred: {e}")
+            #         db.session.rollback()
+
+            try:
+                createRoom = Rooms(host_userid=json.dumps(
+                    [str(uuid4())]), room_code=randomRoomCode)
+                db.session.add(createRoom)
+                db.session.commit()
+            except Exception as e:
+                print(f"Error occurred: {e}")
+                db.session.rollback()
+
+        elif code not in room_code.room_code:
             return render_template("main/room/room.html", error="Room does not exist.", code=code, name=name)
 
-        session["room"] = room
-        session["name"] = name
-        return redirect(url_for("main.chat"))
+        session['staffName'] = name
 
-    return render_template("main/room/room.html")
+        return redirect(url_for("main.chat", code=randomRoomCode))
+
+    query = Rooms.query.all()
+
+    return render_template("main/room/room.html", rooms=query)
 
 
 @main.route('/contact/room/chat', methods=["GET", "POST"])
 def chat():
-    print("room/chat")
-    room = session.get("room")
-    if room is None or session.get("name") is None or room not in rooms:
+    session.pop('customerName', None)
+    getRoomCode = request.args.get("code")
+
+    session['roomCode'] = getRoomCode
+    session['customerName'] = "Customer"
+
+    name = session.get("customerName")
+
+    if getRoomCode is None or name is None:
         return redirect(url_for("main.room"))
 
-    return render_template("main/room/chat.html", code=room, messages=rooms[room]["messages"])
+    query = Rooms.query.filter_by(room_code=getRoomCode).first()
+    print(query.messages)
+
+    return render_template("main/room/chat.html", code=getRoomCode, messages=query.messages or "")
 
 
 # for article image upload function
@@ -257,49 +303,73 @@ def handle_upload(data):
 
 @socketio.on("message")
 def message(data):
-    print("message", data)
-    room = session.get("room")
-    if room not in rooms:
-        return
-
+    roomCode = str(data['code'])
     content = {
-        "name": session.get("name"),
+        "staffName": session.get("staffName"),
+        "customerName": session.get("customerName"),
         "message": data["data"]
     }
-    send(content, to=room)
-    rooms[room]["messages"].append(content)
-    print(f"{session.get('name')} said: {data['data']}")
+
+    session['roomCode'] = roomCode
+    send(content, to=roomCode)
+    try:
+        query = Rooms.query.filter_by(room_code=roomCode).first()
+
+        if query.messages is None:
+            query.messages = []
+
+        query.messages = json.dumps(json.loads(str(query.messages)) +
+                                    [content["message"]])
+        db.session.commit()
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        db.session.rollback()
+    # print(f"{session.get('name')} said: {data['data']}")
 
 
 @socketio.on("requestRoom")
 def connect(auth):
-    print("connect", auth)
-    room = session.get("room")
-    name = session.get("name")
+    room = session.get("roomCode")
+    name = session.get("customerName")
+    print(room, name)
     if not room or not name:
         return
-    if room not in rooms:
+
+    if room not in room:
         leave_room(room)
         return
 
+    content = {
+        'staffName': session.get("staffName"),
+        "customerName": name,
+        "message": "has entered the room"
+    }
+
     join_room(room)
-    send({"name": name, "message": "has entered the room"}, to=room)
-    rooms[room]["members"] += 1
-    print(f"{name} joined room {room}")
+    send(content, to=room)
+
+    # rooms[room]["members"] += 1
+    # print(f"{name} joined room {room}")
 
 
 @socketio.on("userDisconnected")
 def disconnect():
-    room = session.get("room")
-    name = session.get("name")
+    room = session.get("roomCode")
+    name = session.get("customerName")
     leave_room(room)
 
-    if room in rooms:
-        rooms[room]["members"] -= 1
-        if rooms[room]["members"] <= 0:
-            del rooms[room]
+    # if room in rooms:
+    #     rooms[room]["members"] -= 1
+    #     if rooms[room]["members"] <= 0:
+    #         del rooms[room]
 
-    send({"name": name, "message": "has left the room"}, to=room)
-    print(f"{name} has left the room {room}")
+    content = {
+        'staffName': session.get("staffName"),
+        "customerName": name,
+        "message": "has left the room"
+    }
+
+    send(content, to=room)
+    # print(f"{name} has left the room {room}")
 
 # end of chat room function

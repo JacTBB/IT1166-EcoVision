@@ -19,3 +19,11 @@ class Utility(db.Model):
     carbonfootprint: Mapped[str] = mapped_column(String)
     energyusage: Mapped[str] = mapped_column(String)
     waterusage: Mapped[str] = mapped_column(String)
+
+class Assessment(db.Model):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    company: Mapped[int] = mapped_column(Integer)
+    location: Mapped[str] = mapped_column(String)
+    name: Mapped[str] = mapped_column(String)
+    type: Mapped[str] = mapped_column(String)
+    progress: Mapped[int] = mapped_column(Integer)

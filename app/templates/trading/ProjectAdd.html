@@ -2,10 +2,13 @@
 
 {% block title %}Add Project - EcoVision{% endblock %}
 
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/ProjectA.css') }}" />{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/ProjectA.css') }}" />
+{% endblock %}
 
 {% block content %}
-<div class="FormHead">
+<div id="content" class="FormHead">
   <div style="padding: 10px;">
     <div class="FormOptions">
     <h1 style="padding-top: 50px;">Add Project</h1>
