@@ -23,7 +23,6 @@
 
   <div class="home-aboutus">
     <div>
-      <h3>About Us</h3>
       <p>
         We as a company are dedicated to providing the best service to our customers. We are a small company that is
         growing and we are looking to expand our services to the entire country. (This is a test paragraph)
@@ -32,21 +31,23 @@
   </div>
 
   <div class="home-news">
-    <div class="news-row">
-      <h2>Latest News</h2>
-      {% for post in news|sort(attribute="postid", reverse=true) %}
-      <a href="{{ url_for('main.news', postid=post.postid) }}">
-        <div class="catalog postid_{{ post.postid }}">
-          <div class="catalog-image-container">
-            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
+    <div class="news-hzslider">
+      <h2 class="section-header">Latest News</h2>
+      <div class="news-row">
+        {% for post in news|sort(attribute="postid", reverse=true) %}
+        <a href="{{ url_for('main.news', postid=post.postid) }}">
+          <div class="catalog postid_{{ post.postid }}">
+            <div class="catalog-image-container">
+              <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
+            </div>
+            <div class="news-head">
+              <p class="post-header">{{ post.title }}</p>
+              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
+            </div>
           </div>
-          <div class="news-head">
-            <p class="post-header">{{ post.title }}</p>
-            <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
-          </div>
-        </div>
-      </a>
-      {% endfor %}
+        </a>
+        {% endfor %}
+      </div>
     </div>
   </div>
 
@@ -80,8 +81,8 @@
     </div>
   </div>
 
-  <div>
-
+  <div class="home-clients">
+    <!-- <div>hi</div> -->
   </div>
 </div>
 {% endblock %}
