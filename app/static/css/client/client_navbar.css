@@ -91,6 +91,7 @@
 #topnav .username {
   display: inline-block;
   font-weight: normal;
+  text-transform: capitalize;
 }
 
 #topnav .profilepicture {
