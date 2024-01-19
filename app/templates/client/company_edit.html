@@ -1,0 +1,22 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Edit Company - EcoVision{% endblock %}
+
+{% block head %}{% endblock %}{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <h1>Edit Company</h1>
+    <form action="" method="POST">
+      <div>{{form.name}}</div>
+      <div>{{form.industry}}</div>
+      <div>{{form.address}}</div>
+      <div>{{form.email}}</div>
+      <div>Plan: {{form.plan}}</div>
+      <div>{{form.submit()}}</div>
+      {{ form.csrf_token }}
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layouts/staff.html" %}
+
+{% block title %}Enquiries Edit - EcoVision{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staff/enquiry.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div style="padding: 10px;">
+  <h1 style="padding-top: 50px;">Edit Product</h1>
+  <form action="" method="POST">
+    <div>{{form.id.label }} {{form.id}}</div>
+    <div>{{form.employee_name.label }} {{form.employee_name}}</div>
+    <div>{{form.company_name.label }} {{form.company_name}}</div>
+    <div>{{form.company_email.label }} {{form.company_email}}</div>
+    <div>{{form.industry.label }} {{form.industry}}</div>
+    <div>{{form.company_size.label }} {{form.company_size}}</div>
+    <div>{{form.submit()}}</div>
+    {{ form.csrf_token }}
+  </form>
+</div>
+{% endblock %}

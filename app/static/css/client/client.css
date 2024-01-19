@@ -8,6 +8,25 @@ html {
 }
 
 body {
-  background-color: rgb(209, 217, 206);
+  background-color: rgb(232, 238, 232);
   font-family: "Nunito";
+}
+
+p {
+  margin-bottom: 0;
+}
+
+#content {
+  margin-top: 60px;
+  margin-left: 180px;
+  width: calc(100% - 180px)
+}
+
+section {
+  padding: 10px;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: bold;
 }

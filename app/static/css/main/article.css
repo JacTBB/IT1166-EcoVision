@@ -8,17 +8,42 @@
   word-break: break-word;
   display: flex;
   flex-flow: column;
+  overflow: hidden;
 }
 
-.post-content p img {
-  width: 100% !important;
-  max-height: 400px;
-  object-fit: cover;
+p {
+  margin-bottom: 1rem;
 }
 
 form input {
   font-family: "Nunito";
 }
+
+form input[type="file"] {
+  color: white;
+}
+
+#imageInput::file-selector-button {
+  font-family: "Nunito";
+  font-weight: bold;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 20px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  transition: background-color 0.1s ease-in;
+}
+
+#imageInput::file-selector-button:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+#imageInput::file-selector-placeholder {}
+
+
 
 form input[type="text"] {
   font-weight: bold;
@@ -36,10 +61,11 @@ form input[type="submit"] {
   outline: 0;
   border: 0;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   padding: 5px 20px;
   margin-top: 10px;
 }
+
 
 .form-footer {
   float: right;

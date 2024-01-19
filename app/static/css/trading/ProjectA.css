@@ -1,0 +1,13 @@
+.FormHead {
+    text-align: center;
+    justify-content: center;
+    padding: 150px;
+    font-size: 3em;
+}
+.FormOptions {
+    text-align: left;
+}
+
+.FormOptions :nth-child(1) {
+    font-size: large;
+}

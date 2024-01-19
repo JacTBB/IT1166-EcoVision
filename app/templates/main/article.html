@@ -5,7 +5,23 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main/article.css') }}" />
 
-{{ ckeditor.load() }}
+<script>
+  tinymce.init({
+    selector: 'textarea#content',
+    plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+  });
+</script>
+
+
+
 {% endblock %}
 
 
@@ -13,8 +29,6 @@
 <div class="container article-page">
   <div class="article">
     <p>{{ article.date.strftime('%B %d, %Y') }}</p>
-    <!-- <img src="{{ url_for('static', filename='images/' + article.image_name)}}" alt=""> -->
-
 
     {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
     <div class="delete-button">
@@ -26,20 +40,19 @@
       {{ form.hidden_tag() }}
       <br>
       <p>
-        This will be the image on the news page
+        Cover image on the news page
         <br>
         {{ form.image_view_onNews(value=article.image_name) }}
+        <input type="file" id="imageInput" accept=".jpg,.jpeg,.png">
+        <img src="" alt="" id="imagePreview">
       </p>
 
       <p>
-        {{ form.title.label }}
-        <br>
         {{ form.title(value=article.title) }}
       </p>
 
       <p>
-        {{ form.content.label() }}
-        {{ form.content() }}
+        <textarea name="content" id="content" cols="30" rows="30" placeholder="Content">{{article.content}}</textarea>
       </p>
 
       <div class="form-footer">
@@ -49,11 +62,6 @@
         <input type="submit" value="Save">
       </div>
     </form>
-    {{ ckeditor.config(name='content') }}
-    <script>
-      CKEDITOR.instances['content'].setData(`{{ article.content | safe }}`);
-
-    </script>
     {% else %}
 
     <div>
@@ -66,4 +74,44 @@
     {% endif %}
   </div>
 </div>
+
+<script>
+  $("#image_view_onNews").css("pointerEvents", "none").css("opacity", "0.5");
+  $(document).ready(function () {
+    var socket = io();
+
+    $('#imageInput').on('change', function () {
+      var file = $('#imageInput').get(0).files[0];
+      var reader = new FileReader();
+
+      reader.onload = function () {
+        var dataURL = reader.result;
+        var chunkSize = 5000; // Size of each chunk
+        var start = 0;
+
+        var index = 0;  // Initialize an index counter
+
+        while (start < dataURL.length) {
+          var end = start + chunkSize;
+          var chunk = dataURL.slice(start, end);
+          socket.emit('upload_image', { image: chunk, index: index, final: end >= dataURL.length });
+          start = end;
+          index++;  // Increment the index counter for each chunk
+        }
+      };
+
+      reader.onerror = function () {
+        console.log('Error occurred while reading the file');
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    socket.on('image_response', function (msg) {
+      console.log("image_response", msg)
+      /* $('#imagePreview').attr('src', msg.image); */
+      $('#image_view_onNews').attr("value", msg.image_name)
+    });
+  });
+</script>
 {% endblock %}

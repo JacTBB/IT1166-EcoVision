@@ -3,13 +3,34 @@ from wtforms import StringField, IntegerField, SubmitField
 from wtforms.validators import InputRequired
 
 
-
 class AddProductForm(FlaskForm):
-    name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
-    quantity = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Quantity"})
+    name = StringField(validators=[InputRequired()], render_kw={
+                       "placeholder": "Name"})
+    quantity = IntegerField(validators=[InputRequired()], render_kw={
+                            "placeholder": "Quantity"})
     submit = SubmitField("Add Product")
+
 
 class EditProductForm(FlaskForm):
     name = StringField(render_kw={"placeholder": "Name"})
     quantity = IntegerField(render_kw={"placeholder": "Quantity"})
     submit = SubmitField('Update Product')
+
+
+class AddCompanyInfo(FlaskForm):
+    employee_name = StringField(render_kw={"placeholder": "Employee Name"})
+    company_name = StringField(render_kw={"placeholder": "Company Name"})
+    company_email = StringField(render_kw={"placeholder": "Company Email"})
+    industry = StringField(render_kw={"placeholder": "Industry"})
+    company_size = StringField(render_kw={"placeholder": "Company Size"})
+    submit = SubmitField('Add Company Info')
+
+
+class EditCompanyInfo(FlaskForm):
+    id = IntegerField(render_kw={"placeholder": "ID"})
+    employee_name = StringField(render_kw={"placeholder": "Employee Name"})
+    company_name = StringField(render_kw={"placeholder": "Company Name"})
+    company_email = StringField(render_kw={"placeholder": "Company Email"})
+    industry = StringField(render_kw={"placeholder": "Industry"})
+    company_size = StringField(render_kw={"placeholder": "Company Size"})
+    submit = SubmitField('Update Company Info')

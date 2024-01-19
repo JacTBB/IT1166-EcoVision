@@ -4,37 +4,146 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
+  {{ ckeditor.load() }}
 {% endblock %}
 
 {% block content %}
-<div class="banner">
-    <p style="padding-top: 60px;">Project {{project.name}} - {{project.type}}</p>
+<div class="ProjectHead">
+  <img src="../../static/images/Replant2.png" alt="">
+  <h1>Welcome to Project {{project.name}} </h1>
 </div>
 
-<div class="picture">
-    <img src="../../static/images/PictureGarden.jpeg" alt="">
-    <div class="overlap">
-      <p>Welcome to Project {{project.name}} </p>
+<div class="projectname">
+  <h2 style="padding-top: 100px;">Project {{project.name}} - {{project.type}}</h2>
+</div>
+<div class="section">
+  <div class="S1">
+      <div>
+        <div class='post-content'>
+          {{ project.content | safe }}
+        </div>
+      </div>
+  </div>
+
+  <div class="S2">
+    <div class="Bot-Bar">
+      <div class="cart">
+        <div id="title">Project Stock</div>
+        <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
+          <br>
+          <div id="cart-des">
+            Project ({{project.name}}) - {{project.type}} stock. <br>
+            Current stock price : ${{project.price}} (SGD) <br>
+            Carbon offset per stock : 0.005Tons
+          </div>
+          <br>
+          <div class="quanitiy">Quanitiy │ {{formCart.stock}} │ {{project.stock}} available</div>
+          <br> 
+          <div class="submit">{{formCart.submit()}}</div>
+          <br>
+          <div>{{ formCart.csrf_token }}</div>
+        </form>
+          
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="Infomation">
-    <p>"Lorem ipsum dolor sit amet, 
-      consectetur adipiscing elit, sed do eiusmod tempor 
-      incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-      laboris nisi ut aliquip ex ea commodo consequat. 
-      Duis aute irure dolor in reprehenderit in voluptate 
-      velit esse cillum dolore eu fugiat nulla pariatur. 
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-      qui officia deserunt mollit anim id est laborum."
+</div>
+<div class="findmore">
+  <br>
+  <div class="findtext">
+    <h1>Where does your money go?</h1>
+    <p>After purchasing carbon stock(credits), your money directly funds the party's management 
+      team will allocate it to the different sectors. funding can also help boost the crediablity of the project
+    causing other parties to donate. In that sense your donation can make all the difference!</p>
+  </div>
+  <div class="findimg">
+    <img src="../../static/images/Replant1.png" alt="">
+  </div>
+</div>
+<div class="moreproject">
+  <div class="discover">
+    <p>Find out / Discover more projects below!</p>
+    <a href="http://127.0.0.1/trading/">Help earth!</a>
+  </div>
+
+  <div class="view cart">
+    <p>View your cart</p>
+    <a href="http://127.0.0.1/trading/Checkout">Cart</a>
+  </div>
+</div>
+{% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+<br>
+<hr>
+<br>
+
+<div class="Editior">
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <h2>
+      Edit Project Details
+    </h2>
+    <p>
+      {{ form.content() }}
     </p>
-</div>
-<div class="Bot-Bar">
-  <form id="textForm">
-    <label for="textInput">Stock Amount</label><br>
-    <input type="text" id="textInput" name="textInput"><br>
-    <input type="button" value="Submit" onclick="submitText()">
-  </form>
-</div>
+
+    <div class="form-footer">
+      <div class="status-message" style="display: inline-block;">
+        {% if status_message != none %}{{status_message}}{% endif %}</div>
+      <input type="submit" value="Save">
+    </div>
+
+    <div>
+      <div>
+        <div class='post-content'>
+          {{ project.content | safe }}
+        </div>
+      </div>
+    </div>
+
+    <div class="Bot-Bar">
+      <div style="padding: 10px;">
+        <h1 style="padding-top: 50px;">Add to cart</h1>
+        <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
+          <div>{{formCart.stock}}</div>
+          <div>{{formCart.submit()}}</div>
+          {{ formCart.csrf_token }}
+        </form>
+      </div>
+
+      <div id="stockBar"> stock level : {{project.stock}}</div>
+
+
+    </div>
+
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    <br>
+    <hr>
+    <br>
+
+    <div class="Editior">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <h2>
+          Edit Project Details
+        </h2>
+        <p>
+          {{ form.content() }}
+        </p>
+
+        <div class="form-footer">
+          <div class="status-message" style="display: inline-block;">
+            {% if status_message != none %}{{status_message}}{% endif %}</div>
+          <input type="submit" value="Save">
+        </div>
+      </form>
+      {{ ckeditor.config(name='project-content') }}
+      <script>
+        CKEDITOR.instances['project-content'].setData(`{{ project.content | safe }}`);
+      </script>
+    </div>
+    {% endif %}
+  </div>
 {% endblock %}

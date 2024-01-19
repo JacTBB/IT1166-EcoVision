@@ -1,6 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/main/room/chat.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
   integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
   crossorigin="anonymous"></script>
@@ -9,9 +10,12 @@
 {% block content %}
 <div class="container">
   <div style="margin-top: 100px"></div>
-  <div class="message-box">
-    <h2>Chat Room: {{code}}</h2>
-    <div class="messages" id="messages"></div>
+  <button class="chat-btn">Chat</button>
+  <div class="chat-popup">
+    <h4>Chat Room: {{code}}</h4>
+    <div class="message-box">
+      <div class="messages" id="messages" class="incoming-msg"></div>
+    </div>
     <div class="inputs">
       <input type="text" rows="3" placeholder="Message" name="message" id="message" />
       <button type="button" name="send" id="send-btn" onClick="sendMessage()">
@@ -19,43 +23,68 @@
       </button>
     </div>
   </div>
+
   <script type="text/javascript">
     var socketio = io();
 
     const messages = document.getElementById("messages");
 
-    const createMessage = (name, msg) => {
+    const createMessage = (staffName, customerName, msg) => {
+      console.log("hi")
+      const className = staffName ? "staff-message" : "customer-message";
+      console.log(className)
       const content = `
-      <div class="text">
-          <span>
-              <strong>${name}</strong>: ${msg}
-          </span>
-          <span class="muted">
-              ${new Date().toLocaleString()}
-          </span>
-      </div>
-      `;
+        <div class="message-sent ${className}">
+            <span>
+                <strong>${staffName || customerName}</strong>: ${msg}
+            </span>
+            <span class="muted">
+                ${new Date().toLocaleTimeString()}
+            </span>
+        </div>
+        `;
       messages.innerHTML += content;
+      $('.message-box').scrollTop($('.messages')[0].scrollHeight);
     };
 
     socketio.on("message", (data) => {
-      console.log("receive", data)
-      createMessage(data.name, data.message);
+      console.log("receive", data);
+      createMessage(data.staffName, data.customerName, data.message);
+
     });
+
+    const userDisconnected = () => {
+      socketio.emit("userDisconnected", {});
+    };
 
     const sendMessage = () => {
       const message = document.getElementById("message");
-      console.log("send", message.value)
+      console.log("send", message.value);
       if (message.value == "") return;
-      socketio.emit("message", { data: message.value });
+      socketio.emit("message", { data: message.value, code: "{{code}}" });
       message.value = "";
     };
+
+    $(window).on("load", function () {
+      socketio.emit("requestRoom", {});
+    });
+
+    $(window).on("beforeunload", function () {
+      userDisconnected();
+    });
+
+    $("#message").keypress(function (e) {
+      if (e.which == 13) {
+        sendMessage();
+      }
+    });
   </script>
-  {% for msg in messages %}
+  <script src="{{url_for('static', filename='js/chat.js')}}"></script>
+  <!-- {% for msg in messages %}
   <script type="text/javascript">
     createMessage("{{msg.name}}", "{{msg.message}}");
   </script>
-  {% endfor %}
+  {% endfor %} -->
 </div>
 
 {% endblock %}

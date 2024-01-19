@@ -1,33 +1,43 @@
-{% extends "layouts/client.html" %}
+{% extends "layouts/staff.html" %}
 
 {% block title %}Users - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
 {% endblock %}
 
 {% block content %}
+<div class="container" id="main">
   <section>
     <h2>Users</h2>
     <div class="addlocation">
-      <a href="{{ url_for('auth.user_add', type=type) }}"><p>Add Users</p></a>
+      <a href="{{ url_for('auth.user_add', type=type) }}">
+        <p>Add Users</p>
+      </a>
     </div>
     <table id="locations">
       <tr>
         <th>ID</th>
         <th>Username</th>
-        <th>Company Name</th>
+        {% if type == "client" %}
+          <th>CompanyID</th>
+        {% endif %}
         <th colspan="2">Actions</th>
       </tr>
       {% for id, user in users.items() %}
-        <tr>
-          <td>{{ id }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.company }}</td>
-          <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
-        <tr>
-      {% endfor %}
-    </div>
-  </section>
+      <tr>
+        <td>{{ id }}</td>
+        <td>{{ user.username }}</td>
+        {% if type == "client" %}
+          <th>{{ user.companyID }}</th>
+        {% endif %}
+        <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
+        <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
+      <tr>
+        {% endfor %}
+</div>
+</section>
+
+</div>
 {% endblock %}

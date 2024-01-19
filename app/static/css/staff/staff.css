@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
+
+*,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Nunito";
+  background-color: rgb(223, 223, 223);
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: calc(250px + 2vw + 2%);
+  margin: 0 auto;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+form div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* vertically aligns items in the center */
+  justify-content: center;
+  /* horizontally aligns items in the center */
+  width: 100%;
+  gap: 5px;
+}
+
+form div label {
+  text-align: right;
+  white-space: nowrap;
+}
+
+form div label,
+form div input {
+  flex: 1;
+  /* makes label and input take up equal space */
+}
+
+form div>#submit {
+  margin: 0 auto;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e1e1e1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}

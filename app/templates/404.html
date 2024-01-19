@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>404</h1>
+            <h2>Not Found</h2>
+            <p>Sorry, this page does not exist.</p>
+        </div>
+        <div>
+            <a href="{{ url_for('main.home') }}">Go back to home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layouts/staff.html" %}
+
+{% block title %}Companies - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/main.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/companies.css') }}" />
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid" id="main">
+    <section>
+      <h2>Companies</h2>
+      <div id="companies">
+        {% for id, company in companies.items() %}
+          <a href="{{ url_for('client.company_view', company=id) }}">
+            <div class="company">
+              <img src="{{ url_for('static', filename='images/Carbon Trading.png') }}" />
+              <h3>{{ id }} - {{ company.name }}</h3>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+{% endblock %}

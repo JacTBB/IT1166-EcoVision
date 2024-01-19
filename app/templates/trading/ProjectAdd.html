@@ -1,0 +1,26 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Add Project - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/ProjectA.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div id="content" class="FormHead">
+  <div style="padding: 10px;">
+    <div class="FormOptions">
+    <h1 style="padding-top: 50px;">Add Project</h1>
+    <form action="" method="POST">
+      <div>Project name: {{form.name}}</div>
+      <div>Project type: {{form.type}}</div>
+      <div>Project stock: {{form.stock}}</div>
+      <div>Project Price: {{form.price}}</div>
+      <div>{{form.submit()}}</div>
+      {{ form.csrf_token }}
+    </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
