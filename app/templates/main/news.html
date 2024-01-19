@@ -45,14 +45,15 @@
       <div class="news-column">
         {% for post in data %}
         {% if post.postid == setFeaturedNews %}
-        <a href="{{ url_for('main.news', postid=post.postid) }}">
+        <a href="{{ url_for('main.news', postid=post.postid) }}" style="width: 100%;">
           <div class="featured-news">
             <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" alt="" />
             <div>
+              <div class="featured-tag">Featured</div>
+              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
               <h2>
                 {{ post.title }}
               </h2>
-              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
 
             </div>
           </div>
