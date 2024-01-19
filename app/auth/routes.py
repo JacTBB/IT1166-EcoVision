@@ -64,8 +64,8 @@ def users(type):
             'username': user.username
         }
         if type == 'client':
-            userData['companyID'] = user.company
-        users[user.id] = userData
+            usersData['companyID'] = user.company
+        users[user.id] = usersData
     
     return render_template('auth/users.html', type=type, users=users)
 
