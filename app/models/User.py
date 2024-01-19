@@ -38,13 +38,15 @@ class User(db.Model, UserMixin):
 class Client(User):
     company: Mapped[str] = mapped_column(String)
     
-    def __init__(self, username):
+    def __init__(self, username, company):
         super().__init__(username, 'client')
         self.company = '[CompanyName]'
-    
+
     def set_company(self, company):
         self.company = company
 
+    def get_company(self):
+        return self.company
 
 
 class Author(User):
