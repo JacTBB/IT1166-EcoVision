@@ -40,7 +40,7 @@ class Client(User):
     
     def __init__(self, username, company):
         super().__init__(username, 'client')
-        self.company = '[CompanyName]'
+        self.company = company
 
     def set_company(self, company):
         self.company = company
