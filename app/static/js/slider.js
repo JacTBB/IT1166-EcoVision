@@ -15,6 +15,8 @@ $(document).ready(function () {
     }
 
     slides.css("transform", `translateX(-${slideIndex * 100}%)`); // Move all slides to the left
+
+    sliderbtns.eq(index).addClass("btn-selected").siblings().removeClass("btn-selected");
   }
 
   sliderbtns.on("click", function () {
