@@ -14,7 +14,12 @@
   text-align: center;
 }
 
+
 .sections {
+  background-color: #30583e;
+}
+
+.sections:nth-child(odd) {
   background-color: transparent;
 }
 
@@ -109,7 +114,6 @@
   width: 100%;
   padding: 20px;
   color: white;
-  height: 700px;
   top: 0;
 }
 
@@ -234,24 +238,27 @@
 
 /* Clients */
 
+.home-clients {
+  padding: 40px 0;
+}
 
 .clients-logo {
   display: flex;
   position: relative;
-  gap: 10px;
-  width: 600px;
+  width: 800px;
   justify-content: flex-end;
   margin: 0 auto;
   overflow: hidden;
-  height: 120px;
+  height: 200px;
+  object-fit: contain;
+  padding: 40px 0;
+  background-color: #ffffff;
+  border-radius: 17px;
 }
 
 .clients-logo img {
   position: absolute;
-  max-width: 120px;
-  height: inherit;
-  aspect-ratio: 1;
-  object-fit: cover;
+  width: 120px;
+  height: 120px;
   border-radius: 7px;
-  z-index: 2;
 }
