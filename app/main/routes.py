@@ -41,6 +41,14 @@ def news():
     deletePost = request.args.get('deletepost')
     status_message = None
 
+    # TODO: Pagination
+    # POSTS_PER_PAGE = 5
+    # page = request.args.get('page', 1, type=int)
+    # posts = Post.query.order_by(Post.date_posted.desc()).paginate(page, POSTS_PER_PAGE, False)
+    # next_url = url_for('main.news', page=posts.next_num) if posts.has_next else None
+    # prev_url = url_for('main.news', page=posts.prev_num) if posts.has_prev else None
+    # return render_template('main/news.html', posts=posts.items, next_url=next_url, prev_url=prev_url)
+
     # View article
     if postid is not None and not current_user.is_authenticated:
         form = ArticleForm()

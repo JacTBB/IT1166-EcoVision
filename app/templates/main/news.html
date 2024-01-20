@@ -13,7 +13,7 @@
 
     <div class="news-section">
       <div class="news-header">
-        <h1 style="color: white">Latest News</h1>
+        <h1 style="color: white">News</h1>
         {% if current_user.is_authenticated == true and (current_user.type == 'admin' or current_user.type == 'author')
         %}
         <div style="position: relative" class="administrator-editing-tools">
@@ -47,9 +47,9 @@
         {% if post.postid == setFeaturedNews %}
         <a href="{{ url_for('main.news', postid=post.postid) }}" style="width: 100%;">
           <div class="featured-news">
+            <div class="featured-tag">Featured</div>
             <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" alt="" />
-            <div>
-              <div class="featured-tag">Featured</div>
+            <div class="featured-head">
               <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
               <h2>
                 {{ post.title }}
