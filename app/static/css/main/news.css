@@ -77,6 +77,8 @@
     margin: 0 auto;
 }
 
+/* Featured News */
+
 .featured-news {
     display: flex;
     flex-direction: column;
@@ -84,7 +86,7 @@
     align-items: flex-start;
     background-color: #c5e7d1;
     color: inherit;
-    border-radius: 12px;
+    border-radius: 6px;
     transition: 0.2s ease;
     position: relative;
 }

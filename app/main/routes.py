@@ -40,7 +40,42 @@ def news():
     addPost = request.args.get('addpost')
     deletePost = request.args.get('deletepost')
     status_message = None
+
+    # View article
+    if postid is not None and not current_user.is_authenticated:
+        form = ArticleForm()
+        query = query_data(Post, filter_by={'postid': postid}, all=False)
+        if query is not None:
+            return render_template('main/article.html', article=query, form=form, status_message=status_message)
+
+    # Admin and Author only
     if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+
+        # Edit article
+        if postid is not None and current_user.is_authenticated:
+            form = ArticleForm()
+            if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+                if request.method == 'POST':
+                    if form.validate_on_submit():
+                        print(form.content.data)
+                        try:
+                            post = Post.query.filter_by(postid=postid).first()
+                            post.image_name = form.image_view_onNews.data
+                            post.title = form.title.data
+                            post.content = form.content.data
+
+                            db.session.add(post)
+                            db.session.commit()
+                            status_message = "Article updated successfully!"
+                        except Exception as e:
+                            print(f"Error occurred: {e}")
+                            db.session.rollback()
+                            status_message = "Failed to update article! Contact Administrator."
+
+        query = query_data(Post, filter_by={'postid': postid}, all=False)
+        if query is not None:
+            return render_template('main/article.html', article=query, form=form, status_message=status_message)
+
         # Delete article
         if deletePost is not None:
             try:
@@ -99,33 +134,7 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
-        # Edit article
-        if postid is not None:
-            form = ArticleForm()
-            if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
-                if request.method == 'POST':
-                    if form.validate_on_submit():
-                        print(form.content.data)
-                        try:
-                            post = Post.query.filter_by(postid=postid).first()
-                            post.image_name = form.image_view_onNews.data
-                            post.title = form.title.data
-                            post.content = form.content.data
-
-                            db.session.add(post)
-                            db.session.commit()
-                            status_message = "Article updated successfully!"
-                        except Exception as e:
-                            print(f"Error occurred: {e}")
-                            db.session.rollback()
-                            status_message = "Failed to update article! Contact Administrator."
-
-        query = query_data(Post, filter_by={'postid': postid}, all=False)
-        if query is not None:
-            return render_template('main/article.html', article=query, form=form, status_message=status_message)
-
     query = query_data(Post, all=True)
-
     first_exist_featured_post = Post.query.filter_by(
         featured_post=True).first()
 
