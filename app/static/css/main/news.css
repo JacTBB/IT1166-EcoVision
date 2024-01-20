@@ -9,7 +9,7 @@
     background-position: center center;
     object-fit: fill;
     z-index: -1;
-    filter: opacity(0.5);
+    filter: brightness(0.7) contrast(0.9);
 }
 
 .news-page .news {
@@ -36,6 +36,7 @@
 }
 
 .news-header h1 {
+    color: white;
     text-align: left;
     font-size: 2.5rem;
 }
@@ -72,7 +73,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: inherit;
+    color: var(--main-color);
     width: auto;
     margin: 0 auto;
 }
@@ -183,10 +184,11 @@
     display: flex;
     flex-direction: column;
     width: 462px;
-    background: #c5e7d1;
+    background: white;
     border-radius: 6px;
     word-break: break-word;
     overflow: hidden;
+    transition: 0.2s ease;
 }
 
 .news-section .catalog-image-container {

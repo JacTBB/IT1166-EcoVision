@@ -8,13 +8,17 @@ html {
 }
 
 ::selection {
-  background-color: rgba(49, 143, 37, 0.4);
+  background-color: rgba(36, 109, 26, 0.315);
   filter: invert(100%);
 }
 
 body {
   background-color: #456c52;
+  /* Main Theme color */
+  background-color: #436f4e;
   font-family: "Nunito";
+
+  --main-color: white;
 }
 
 .container {

@@ -8,31 +8,33 @@ nav {
   justify-content: space-evenly;
   position: fixed;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.05);
-  transition: 0.3s ease-out;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: brightness(.6) blur(12px) opacity(0.5);
+  transition: 0.3s ease;
+  --nav-color: rgb(240, 240, 240);
 }
 
 .nav-background {
-  transition: 0.3s ease-in;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: brightness(.6) blur(12px) opacity(1);
+  transition: 0.3s ease;
 }
 
 nav ul {
   display: flex;
   list-style-type: none;
-  text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.4);
+  /* text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.4); */
   margin-bottom: 0;
 }
 
 .nav-logo {
   display: flex;
   float: left;
-  color: white;
 }
 
 .nav-logo a {
   text-decoration: none;
-  color: white;
+  color: var(--nav-color);
 }
 
 nav ul li,
@@ -47,12 +49,12 @@ nav ul li,
 
 nav ul li a {
   text-decoration: none;
-  color: rgb(236, 236, 236);
+  color: var(--nav-color);
   transition: color 0.1s ease;
 }
 
 nav ul li a:hover {
-  color: white;
+  color: var(--nav-color);
   transition: all 0.1s ease;
 }
 
@@ -61,7 +63,7 @@ nav ul li::after {
   display: block;
   width: 0;
   height: 2px;
-  background-color: white;
+  background-color: var(--nav-color);
   content: "";
   bottom: 0;
   transition: all 0.2s ease-in-out

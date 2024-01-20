@@ -10,6 +10,9 @@
   text-align: center;
   padding: 20px;
   margin-bottom: 50px;
+  width: calc(800px + 10vw);
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .services-container .products-list {
