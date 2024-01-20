@@ -91,6 +91,7 @@
 #topnav .username {
   display: inline-block;
   font-weight: normal;
+  text-transform: capitalize;
 }
 
 #topnav .profilepicture {
@@ -132,6 +133,10 @@
   text-decoration: none;
   color: rgb(80, 80, 80);
   transition: color 0.1s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
 }
 
 #sidenav ul li a:hover {

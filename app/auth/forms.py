@@ -13,8 +13,10 @@ class LoginForm(FlaskForm):
 
 class AddUserForm(FlaskForm):
     username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
+    company = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Name"})
     submit = SubmitField("Add User")
 
 class EditUserForm(FlaskForm):
     username = StringField(render_kw={"placeholder": "Username"})
+    company = StringField(render_kw={"placeholder": "Company Name"})
     submit = SubmitField('Update User')

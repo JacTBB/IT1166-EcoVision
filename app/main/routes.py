@@ -25,7 +25,7 @@ from string import ascii_lowercase, ascii_uppercase
 @main.route('/')
 def home():
 
-    return render_template('main/home.html', news=Post.query.order_by(desc(Post.postid)).limit(3))
+    return render_template('main/home.html', news=Post.query.order_by(desc(Post.postid)).all())
 
 
 @main.route('/services')

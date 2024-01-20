@@ -4,12 +4,24 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
+
+<script src="{{ url_for('static', filename='js/slider.js')}}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid home-page">
   <div class="home">
-    <img src="{{ url_for('static', filename='images/pexels-mikhail-nilov-8299700.jpg') }}" />
+    <div class="home-slider">
+      <img src="{{ url_for('static', filename='images/pexels-mikhail-nilov-8299700.jpg') }}" />
+      <img src="{{ url_for('static', filename='images/RainForest.avif') }}" />
+      <img src="{{ url_for('static', filename='images/leaves.jpg') }}" />
+    </div>
+
+    <div class="slider-buttons">
+      <span class="slider-btn btn-selected"></span>
+      <span class="slider-btn"></span>
+      <span class="slider-btn"></span>
+    </div>
     <div>
       <p>Welcome</p>
     </div>
@@ -17,7 +29,6 @@
 
   <div class="home-aboutus">
     <div>
-      <h3>About Us</h3>
       <p>
         We as a company are dedicated to providing the best service to our customers. We are a small company that is
         growing and we are looking to expand our services to the entire country. (This is a test paragraph)
@@ -26,21 +37,23 @@
   </div>
 
   <div class="home-news">
-    <h2>News</h2>
-    <div class="news-row">
-      {% for post in news|sort(attribute="postid", reverse=true) %}
-      <a href="{{ url_for('main.news', postid=post.postid) }}">
-        <div class="catalog postid_{{ post.postid }}">
-          <div class="catalog-image-container">
-            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
+    <div class="news-hzslider">
+      <h2 class="section-header">Latest News</h2>
+      <div class="news-row">
+        {% for post in news|sort(attribute="postid", reverse=true) %}
+        <a href="{{ url_for('main.news', postid=post.postid) }}">
+          <div class="catalog postid_{{ post.postid }}">
+            <div class="catalog-image-container">
+              <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
+            </div>
+            <div class="news-head">
+              <p class="post-header">{{ post.title }}</p>
+              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
+            </div>
           </div>
-          <div class="news-head">
-            <p class="post-header">{{ post.title }}</p>
-            <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
-          </div>
-        </div>
-      </a>
-      {% endfor %}
+        </a>
+        {% endfor %}
+      </div>
     </div>
   </div>
 
@@ -74,8 +87,8 @@
     </div>
   </div>
 
-  <div>
-
+  <div class="home-clients">
+    <!-- <div>hi</div> -->
   </div>
 </div>
 {% endblock %}
