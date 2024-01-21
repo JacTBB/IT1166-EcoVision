@@ -44,7 +44,7 @@ with app.app_context():
     for i in range(1, 3):
         user = Client(username=f"client{i}")
         user.set_password('123')
-        user.set_company("??")
+        user.set_company(i)
         db.session.add(user)
 
         company = Company(name=f"SomeCompanyName {i}",
@@ -68,7 +68,7 @@ with app.app_context():
     for i in range(3, 5):
         user = Client(username=f"client{i}")
         user.set_password('123')
-        user.set_company("??")
+        user.set_company(i)
         db.session.add(user)
 
         company = Company(name=f"SomeLargeCompanyName {i}",
