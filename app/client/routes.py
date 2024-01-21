@@ -36,6 +36,7 @@ def dashboard():
         'carbonfootprint': 0,
         'energyusage': 0,
         'waterusage': 0,
+        'totalcarbonfootprint': 0
     }
 
     locations = {}
@@ -54,6 +55,8 @@ def dashboard():
             utilities['carbonfootprint'].append(int(utility.carbonfootprint))
             utilities['energyusage'].append(int(utility.energyusage))
             utilities['waterusage'].append(int(utility.waterusage))
+            
+            overview['totalcarbonfootprint'] += int(utility.carbonfootprint)
         
         latestUtilityData = utilitiesData.order_by(Utility.date.desc()).first()
         timerange = int(datetime(latestUtilityData.date.year, latestUtilityData.date.month, 1).timestamp()) * 1000
@@ -80,8 +83,9 @@ def dashboard():
     
     
     
-    overview['carbonfootprintexceeded'] = 50
+    # TODO:
     overview['carbonfootprintoffsetted'] = 200
+    overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
     overview['notifications'] = 10
     overview['locations'] = len(locations)
     

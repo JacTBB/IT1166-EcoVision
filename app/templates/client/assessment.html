@@ -11,14 +11,15 @@
     <section>
       <h2>Assessments</h2>
 
-      <p>ID: {{ id }}</p>
+      <p>ID: {{ assessment.id }}</p>
       <p>Location: {{ assessment.location }}</p>
       <p>Name: {{ assessment.name }}</p>
       <p>Type: {{ assessment.type }}</p>
-      <p>Progress: {{ assessment.progress }}</p>
-      <p><a href="{{ url_for('client.assessment_edit', assessment=id) }}">Edit</a></p>
-      <p><a href="{{ url_for('client.assessment_delete', assessment=id) }}">Delete</a></p>
+      <p>Start Date: {{ assessment.start_date }}</p>
+      <p>Completed Date: {{ assessment.completed_date }}</p>
+      <p>Progress: {{ assessment.progress }}%</p>
 
+      <h3>Documents</h3>
     </section>
   </div>
 {% endblock %}

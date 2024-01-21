@@ -4,7 +4,7 @@ from app.database import db
 from app.models.Rooms import Rooms
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import Post
-from app.models.Client import Location, Utility
+from app.models.Client import Location, Utility, Assessment
 from app.models.Company import Company
 from datetime import datetime
 from random import randint
@@ -93,5 +93,10 @@ with app.app_context():
                 utility = Utility(company=i, location=countLocation, name=f"Utility 2023 {k}", date=datetime(2023, k, 1),
                                   carbonfootprint=randint(200, 500), energyusage=randint(200, 500), waterusage=randint(200, 500))
                 db.session.add(utility)
+        
+        for j in range(1,3):
+            assessment = Assessment(company=i, location=f"SG {j}", name=f"Office {j}", type="Environmental Impact Assessment",
+                                    start_date=datetime(2023, j, 1), progress=20)
+            db.session.add(assessment)
 
     db.session.commit()
