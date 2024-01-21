@@ -30,12 +30,12 @@
               {% endif %}
               {% endfor %}
             </select>
-            <input type="submit" value="Save" class="save-featured-button" />
+            <input type="submit" value="Save" class="btn btn-dark" />
           </form>
 
         </div>
         <div style="position: relative" class="add-post-container">
-          <a href="{{ url_for('main.news', addpost=true) }}" class="add-post-button">Add Post</a>
+          <a href="{{ url_for('main.news', addpost=true) }}" class="btn btn-dark">Add Post</a>
 
         </div>
         {% endif %}

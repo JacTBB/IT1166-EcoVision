@@ -5,6 +5,7 @@
   color: var(--main-color);
   display: flex;
   flex-flow: column;
+  gap: 5px;
 }
 
 .section-header {
