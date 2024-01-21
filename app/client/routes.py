@@ -32,9 +32,10 @@ def get_company():
 @login_required
 def dashboard():
     overview = {
-        'carbonfootprint': 100,
-        'energyusage': 100,
-        'waterusage': 100,
+        'timerange': 0,
+        'carbonfootprint': 0,
+        'energyusage': 0,
+        'waterusage': 0,
     }
 
     locations = {}
@@ -53,13 +54,25 @@ def dashboard():
             utilities['carbonfootprint'].append(int(utility.carbonfootprint))
             utilities['energyusage'].append(int(utility.energyusage))
             utilities['waterusage'].append(int(utility.waterusage))
+        
+        latestUtilityData = utilitiesData.order_by(Utility.date.desc()).first()
+        timerange = int(datetime(latestUtilityData.date.year, latestUtilityData.date.month, 1).timestamp()) * 1000
+        if timerange > overview['timerange']:
+            overview['timerange'] = timerange
+            overview['carbonfootprint'] = 0
+            overview['energyusage'] = 0
+            overview['waterusage'] = 0
+        if timerange == overview['timerange']:
+            overview['carbonfootprint'] += int(latestUtilityData.carbonfootprint)
+            overview['energyusage'] += int(latestUtilityData.energyusage)
+            overview['waterusage'] += int(latestUtilityData.waterusage)
             
         locations[location.id] = {
             'name': location.name,
             'timerange': utilities["timerange"],
             'carbonfootprint': utilities['carbonfootprint'],
             'energyusage': utilities['energyusage'],
-            'waterusage': utilities['energyusage']
+            'waterusage': utilities['waterusage']
         }
 
     if g.company.plan == 'free':
@@ -70,7 +83,7 @@ def dashboard():
     overview['carbonfootprintexceeded'] = 50
     overview['carbonfootprintoffsetted'] = 200
     overview['notifications'] = 10
-    overview['locations'] = 10
+    overview['locations'] = len(locations)
     
     assessments = {}
     assessmentsData = db.session.query(Assessment).filter_by(company=g.company.id)
@@ -330,7 +343,7 @@ def location_utility_add(location):
             energyusage = request.form.get("energyusage")
             waterusage = request.form.get("waterusage")
 
-            utility = Utility(location=location, name=name, date=date,
+            utility = Utility(company=g.company.id, location=location, name=name, date=date,
                               carbonfootprint=carbonfootprint, energyusage=energyusage, waterusage=waterusage)
             db.session.add(utility)
             db.session.commit()
@@ -417,6 +430,15 @@ def assessments():
         }
 
     return render_template('client/assessments.html', assessments=assessments)
+
+
+
+@client.route("/assessment/<assessment>")
+@login_required
+def assessment(assessment):
+    assessmentData = db.session.query(Assessment).filter_by(company=g.company.id,id=assessment).first()
+
+    return render_template('client/assessment.html', assessment=assessmentData)
 
 
 
