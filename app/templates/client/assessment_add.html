@@ -9,13 +9,58 @@
 {% block content %}
   <div id="content">
     <h1>Add Assessment</h1>
-    <form action="" method="POST">
-      <div>{{form.location}}</div>
-      <div>{{form.name}}</div>
-      <div>{{form.type}}</div>
-      <div>{{form.progress}}</div>
-      <div>{{form.submit()}}</div>
-      {{ form.csrf_token }}
+    <form action="" method="POST" class="row g-3 needs-validation" novalidate>
+      <div class="col-md-4">
+        <label for="location" class="form-label">Location</label>
+        {{ form.location(id_="location", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid location.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="name" class="form-label">Name</label>
+        {{ form.name(id_="name", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid name.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="type" class="form-label">Type</label>
+        {{ form.type(id_="type", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid type.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="progress" class="form-label">Progress</label>
+        {{ form.progress(id_="progress", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid progress.
+        </div>
+      </div>
+
+      <div class="col-12">
+        {{ form.csrf_token }}
+        <button class="btn button" type="submit">Add Assessment</button>
+      </div>
     </form>
+
+    <script>
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    </script>
   </div>
 {% endblock %}

@@ -23,7 +23,7 @@
 
       {% if current_user.type != "client" %}
         <div class="addrow">
-          <a href="{{ url_for('client.assessment_add') }}">
+          <a href="#">
             <p>Add Document</p>
           </a>
         </div>
@@ -47,7 +47,7 @@
             <td>{{ document.created }}</td>
             <td>{{ document.updated }}</td>
             {% if current_user.type != "client" %}
-              <td><a href="{{ url_for('client.assessment_delete', assessment=id) }}">Delete</a></td>
+              <td><a href="#">Delete</a></td>
             {% endif %}
             <td><a href="{{ url_for('client.document', document=id) }}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></td>
           <tr>

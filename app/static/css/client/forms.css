@@ -10,6 +10,7 @@ div h2 {
 }
 
 
+
 .addrow {
     margin-right: 0;
     padding: 8px 6px;
@@ -48,4 +49,14 @@ table a {
 
 table a:hover {
     color: #007acc;
+}
+
+
+
+.button {
+    background-color: lightgoldenrodyellow;
+}
+
+.button:hover {
+    background-color: rgb(225, 225, 188);
 }

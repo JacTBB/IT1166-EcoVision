@@ -172,12 +172,17 @@ def company_add():
 @login_required
 @check_user_type(['admin', 'manager'])
 def company_edit(company):
+    companyData = Company.query.get(company)
+    
     form = EditCompanyForm()
+    form.name.data = companyData.name
+    form.industry.data = companyData.industry
+    form.address.data = companyData.address
+    form.email.data = companyData.email
+    form.plan.data = companyData.plan
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
         try:
-            companyData = Company.query.get(company)
-
             name = request.form.get("name")
             industry = request.form.get("industry")
             address = request.form.get("address")
@@ -273,12 +278,14 @@ def location_add():
 @login_required
 @check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_edit(location):
+    locationData = Location.query.get(location)
+    
     form = EditLocationForm()
+    form.name.data = locationData.name
+    form.address.data = locationData.address
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
         try:
-            locationData = Location.query.get(location)
-
             name = request.form.get("name")
             address = request.form.get("address")
 
@@ -373,12 +380,17 @@ def location_utility_add(location):
 @login_required
 @check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_edit(location, utility):
+    utilityData = Utility.query.get(utility)
+    
     form = EditUtilityForm()
+    form.name.data = utilityData.name
+    form.date.data = utilityData.date
+    form.carbonfootprint.data = utilityData.carbonfootprint
+    form.energyusage.data = utilityData.energyusage
+    form.waterusage.data = utilityData.waterusage
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
         try:
-            utilityData = Utility.query.get(utility)
-
             name = request.form.get("name")
             date = request.form.get("date")
             carbonfootprint = request.form.get("carbonfootprint")
@@ -493,12 +505,16 @@ def assessment_add():
 @login_required
 @check_user_type(['admin', 'manager', 'consultant'])
 def assessment_edit(assessment):
+    assessmentData = Assessment.query.get(assessment)
+    
     form = EditAssessmentForm()
+    form.location.data = assessmentData.location
+    form.name.data = assessmentData.name
+    form.type.data = assessmentData.type
+    form.progress.data = assessmentData.progress
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
         try:
-            assessmentData = Assessment.query.get(assessment)
-
             location = request.form.get("location")
             name = request.form.get("name")
             type = request.form.get("type")

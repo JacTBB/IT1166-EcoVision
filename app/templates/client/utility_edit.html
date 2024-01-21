@@ -9,14 +9,66 @@
 {% block content %}
   <div id="content">
     <h1>Edit Utility</h1>
-    <form action="" method="POST">
-      <div>{{form.name}}</div>
-      <div>{{form.date}}</div>
-      <div>{{form.carbonfootprint}}</div>
-      <div>{{form.energyusage}}</div>
-      <div>{{form.waterusage}}</div>
-      <div>{{form.submit()}}</div>
-      {{ form.csrf_token }}
+    <form action="" method="POST" class="row g-3 needs-validation" novalidate>
+      <div class="col-md-4">
+        <label for="name" class="form-label">Name</label>
+        {{ form.name(id_="name", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid name.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="date" class="form-label">Date</label>
+        {{ form.date(id_="date", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid date.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="carbonfootprint" class="form-label">Carbon Footprint</label>
+        {{ form.carbonfootprint(id_="carbonfootprint", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid carbon footprint.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="energyusage" class="form-label">Energy Usage</label>
+        {{ form.energyusage(id_="energyusage", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid energy usage.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="waterusage" class="form-label">Water Usage</label>
+        {{ form.waterusage(id_="waterusage", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid water usage.
+        </div>
+      </div>
+
+      <div class="col-12">
+        {{ form.csrf_token }}
+        <button class="btn button" type="submit">Edit Utility</button>
+      </div>
     </form>
+
+    <script>
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    </script>
   </div>
 {% endblock %}

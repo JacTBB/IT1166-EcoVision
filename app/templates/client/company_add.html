@@ -9,14 +9,66 @@
 {% block content %}
   <div id="content">
     <h1>Add Company</h1>
-    <form action="" method="POST">
-      <div>{{form.name}}</div>
-      <div>{{form.industry}}</div>
-      <div>{{form.address}}</div>
-      <div>{{form.email}}</div>
-      <div>Plan: {{form.plan}}</div>
-      <div>{{form.submit()}}</div>
-      {{ form.csrf_token }}
+    <form action="" method="POST" class="row g-3 needs-validation" novalidate>
+      <div class="col-md-4">
+        <label for="name" class="form-label">Name</label>
+        {{ form.name(id_="name", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid name.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="industry" class="form-label">Industry</label>
+        {{ form.industry(id_="industry", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid industry.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="address" class="form-label">Address</label>
+        {{ form.address(id_="address", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid address.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="email" class="form-label">Email</label>
+        {{ form.email(id_="email", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid email.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="plan" class="form-label">Plan</label>
+        {{ form.plan(id_="plan", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid plan.
+        </div>
+      </div>
+
+      <div class="col-12">
+        {{ form.csrf_token }}
+        <button class="btn button" type="submit">Add Company</button>
+      </div>
     </form>
+
+    <script>
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    </script>
   </div>
 {% endblock %}

@@ -57,6 +57,10 @@ hr {
     background-color: lightgoldenrodyellow;
 }
 
+.button:hover {
+    background-color: rgb(225, 225, 188);
+}
+
 
 
 #personal-profile #section-p1 {
