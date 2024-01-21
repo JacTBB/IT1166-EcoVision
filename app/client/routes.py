@@ -30,6 +30,7 @@ def get_company():
 
 @client.route('/')
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def dashboard():
     overview = {
         'timerange': 0,
@@ -227,6 +228,7 @@ def company_delete(company):
 
 @client.route("/locations")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def locations():
     locations = {}
     locationsData = db.session.query(Location).filter_by(company=g.company.id)
@@ -242,6 +244,7 @@ def locations():
 
 @client.route("/location/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_add():
     form = AddLocationForm()
 
@@ -265,6 +268,7 @@ def location_add():
 
 @client.route("/location/<location>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_edit(location):
     form = EditLocationForm()
 
@@ -293,6 +297,7 @@ def location_edit(location):
 
 @client.route("/location/<location>/delete")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_delete(location):
     try:
         locationData = Location.query.get(location)
@@ -315,6 +320,7 @@ def location_delete(location):
 
 @client.route("/location/<location>/utility")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility(location):
     utilities = {}
     utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=int(location))
@@ -333,10 +339,9 @@ def location_utility(location):
 
 @client.route("/location/<location>/utility/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_add(location):
     form = AddUtilityForm()
-    
-    # TODO: Improve perms checker, only clients can edit utilities in their company & location
 
     if form.validate_on_submit():
         try:
@@ -363,6 +368,7 @@ def location_utility_add(location):
 
 @client.route("/location/<location>/utility/edit/<utility>", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_edit(location, utility):
     form = EditUtilityForm()
 
@@ -400,6 +406,7 @@ def location_utility_edit(location, utility):
 
 @client.route("/location/<location>/utility/delete/<utility>")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_delete(location, utility):
     try:
         utilityData = Utility.query.get(utility)
@@ -422,6 +429,7 @@ def location_utility_delete(location, utility):
 
 @client.route("/assessments")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def assessments():
     assessments = {}
     assessmentsData = db.session.query(Assessment).filter_by(company=g.company.id)
@@ -439,6 +447,7 @@ def assessments():
 
 @client.route("/assessment/<assessment>")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def assessment(assessment):
     assessmentData = db.session.query(Assessment).filter_by(company=g.company.id,id=assessment).first()
     
@@ -453,6 +462,7 @@ def assessment(assessment):
 
 @client.route("/assessment/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def assessment_add():
     form = AddAssessmentForm()
 
@@ -478,6 +488,7 @@ def assessment_add():
 
 @client.route("/assessment/<assessment>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def assessment_edit(assessment):
     form = EditAssessmentForm()
 
@@ -512,6 +523,7 @@ def assessment_edit(assessment):
 
 @client.route("/assessment/<assessment>/delete")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def assessment_delete(assessment):
     try:
         assessmentData = Assessment.query.get(assessment)
@@ -534,6 +546,7 @@ def assessment_delete(assessment):
 
 @client.route("/document/<document>", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def document(document):
     document = db.session.query(Document).filter_by(company=g.company.id, id=document).first()
     
