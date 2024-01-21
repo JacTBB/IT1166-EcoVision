@@ -35,4 +35,6 @@ class Document(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     company: Mapped[int] = mapped_column(Integer)
     name: Mapped[str] = mapped_column(String)
+    created: Mapped[Date] = mapped_column(Date)
+    updated: Mapped[Date] = mapped_column(Date)
     content = db.Column(db.String())
