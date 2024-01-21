@@ -67,7 +67,7 @@
         {% for post in data|reverse %}
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="catalog postid_{{ post.postid }}">
-            <div class="featured-tag">Featured</div>
+            <div class="featured-tag">{{post.post_type}}</div>
             <div class="catalog-image-container">
               <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" loading="lazy" />
             </div>

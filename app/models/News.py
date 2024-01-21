@@ -13,5 +13,6 @@ class Post(db.Model):
         DateTime, default=datetime.utcnow)
     image_name: Mapped[str] = mapped_column(String)
     postid: Mapped[int] = mapped_column(Integer, unique=True, nullable=False)
+    post_type: Mapped[str] = mapped_column(String, nullable=True)
     featured_post: Mapped[bool] = mapped_column(
         Boolean, default=False, nullable=False)
