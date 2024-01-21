@@ -23,6 +23,7 @@
   background-color: transparent;
 } */
 
+
 .home-slider {
   height: inherit;
   width: 100%;
@@ -32,6 +33,7 @@
   overflow-x: hidden;
   z-index: -1;
   background-color: black;
+  pointer-events: none;
 }
 
 .home-page .home .home-slider img {
@@ -44,6 +46,16 @@
   filter: brightness(0.7) contrast(0.8) saturate(1.2);
   object-position: center center;
   transition: transform 0.3s ease;
+}
+
+.home-slider::after {
+  content: "";
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, #FFFFFF1A 50%);
+  height: 100%;
+  width: 100%;
 }
 
 .home-page .home {
@@ -74,12 +86,23 @@
   background-color: #adadad;
 }
 
-.home-page .home div p {
-  font-size: 7rem;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-  background: -webkit-linear-gradient(rgb(230, 248, 223), #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.slider-header {
+  position: absolute;
+  color: white;
+  left: 80px;
+  top: 180px;
+}
+
+.slider-header h1 {
+  color: white;
+  font-size: 2rem;
+  text-align: left;
+}
+
+.slider-header p {
+  font-size: 1.4rem;
+  color: rgb(218, 218, 218);
+  line-height: 1;
 }
 
 .home-aboutus {

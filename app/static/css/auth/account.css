@@ -1,6 +1,6 @@
 #account-page {
     position: relative;
-    top: 59px;
+    height: 50vh;
 }
 
 
@@ -9,7 +9,8 @@
     margin: auto;
     text-align: center;
     color: white;
-    width: 300px;
+    width: 400px;
+    border-radius: 8px;
 }
 
 .list-pages {
@@ -20,21 +21,32 @@
 }
 
 .list-pages ul {
-    list-style-type: disc;
+    list-style-type: none;
     padding: 0;
     margin: 0;
 
 }
 
-.list-pages ul li a {
-    text-decoration: none;
-    color: #ffffff; /* white */
+.list-pages ul li span {
     font-size: 20px;
     font-weight: bold;
 }
 
+.list-pages ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    /* white */
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.list-pages ul li a::before {
+    content: "\00bb";
+}
+
 .list-pages ul li a:hover {
-    color: #dddddd; /* darker white */
+    color: #dddddd;
+    /* darker white */
 }
 
 
@@ -43,13 +55,14 @@
     position: relative;
     background-color: #578166;
     border: none;
-    color: white;
+    color: rgb(255, 255, 255);
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px;
     transition: 0.1s;
+    font-weight: bold;
 }
 
 
