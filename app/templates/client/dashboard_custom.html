@@ -14,7 +14,7 @@
   <div id="content">
     <div class="cards-left">
       <section class="dash-card">
-        <h2>Overview (Last Month)</h2>
+        <h2 id="overview-title">Overview (Last Month)</h2>
         <div class="statsbox">
           <div id="carbonfootprint">
             <h3>Carbon Footprint</h3>
@@ -29,6 +29,12 @@
             <p>{{ overview.waterusage }} Gallons</p>
           </div>
         </div>
+
+        <script>
+          title = document.getElementById("overview-title")
+          month = new Date({{ overview.timerange }}).toLocaleString('default', { month: 'long', year: 'numeric' })
+          title.textContent = `Overview (${month})`
+        </script>
       </section>
 
       <section class="dash-card">
@@ -49,20 +55,20 @@
         <h2>Assessments</h2>
         <div class="statsbox">
           <table>
-            <tr>
-              <th>ID</th>
+            <tr class="table-header">
               <th>Location</th>
               <th>Name</th>
               <th>Type</th>
               <th>Progress</th>
+              <th>View</th>
             </tr>
             {% for id, assessment in assessments.items() %}
               <tr>
-                <td>{{ id }}</td>
                 <td>{{ assessment.location }}</td>
                 <td>{{ assessment.name }}</td>
                 <td>{{ assessment.type }}</td>
-                <td>{{ assessment.progress }}</td>
+                <td>{{ assessment.progress }}%</td>
+                <td><a href="{{ url_for('client.assessment', assessment=id) }}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></td>
               <tr>
             {% endfor %}
           </table>

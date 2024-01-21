@@ -7,11 +7,12 @@ nav {
   width: 100%;
   justify-content: space-evenly;
   position: fixed;
-  z-index: 1;
+
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: brightness(.6) blur(12px) opacity(0.5);
   transition: 0.3s ease;
   --nav-color: rgb(240, 240, 240);
+  z-index: 99;
 }
 
 .nav-background {

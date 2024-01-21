@@ -3,7 +3,7 @@ from app.client import client
 from app.database import db
 from flask_login import login_required, current_user
 from app.auth import check_user_type
-from app.models.Client import Location, Utility, Assessment
+from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm
 from datetime import datetime
@@ -30,11 +30,14 @@ def get_company():
 
 @client.route('/')
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def dashboard():
     overview = {
-        'carbonfootprint': 100,
-        'energyusage': 100,
-        'waterusage': 100,
+        'timerange': 0,
+        'carbonfootprint': 0,
+        'energyusage': 0,
+        'waterusage': 0,
+        'totalcarbonfootprint': 0
     }
 
     locations = {}
@@ -54,12 +57,26 @@ def dashboard():
             utilities['energyusage'].append(int(utility.energyusage))
             utilities['waterusage'].append(int(utility.waterusage))
             
+            overview['totalcarbonfootprint'] += int(utility.carbonfootprint)
+        
+        latestUtilityData = utilitiesData.order_by(Utility.date.desc()).first()
+        timerange = int(datetime(latestUtilityData.date.year, latestUtilityData.date.month, 1).timestamp()) * 1000
+        if timerange > overview['timerange']:
+            overview['timerange'] = timerange
+            overview['carbonfootprint'] = 0
+            overview['energyusage'] = 0
+            overview['waterusage'] = 0
+        if timerange == overview['timerange']:
+            overview['carbonfootprint'] += int(latestUtilityData.carbonfootprint)
+            overview['energyusage'] += int(latestUtilityData.energyusage)
+            overview['waterusage'] += int(latestUtilityData.waterusage)
+            
         locations[location.id] = {
             'name': location.name,
             'timerange': utilities["timerange"],
             'carbonfootprint': utilities['carbonfootprint'],
             'energyusage': utilities['energyusage'],
-            'waterusage': utilities['energyusage']
+            'waterusage': utilities['waterusage']
         }
 
     if g.company.plan == 'free':
@@ -67,10 +84,11 @@ def dashboard():
     
     
     
-    overview['carbonfootprintexceeded'] = 50
+    # TODO:
     overview['carbonfootprintoffsetted'] = 200
+    overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
     overview['notifications'] = 10
-    overview['locations'] = 10
+    overview['locations'] = len(locations)
     
     assessments = {}
     assessmentsData = db.session.query(Assessment).filter_by(company=g.company.id)
@@ -210,6 +228,7 @@ def company_delete(company):
 
 @client.route("/locations")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def locations():
     locations = {}
     locationsData = db.session.query(Location).filter_by(company=g.company.id)
@@ -225,6 +244,7 @@ def locations():
 
 @client.route("/location/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_add():
     form = AddLocationForm()
 
@@ -248,6 +268,7 @@ def location_add():
 
 @client.route("/location/<location>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_edit(location):
     form = EditLocationForm()
 
@@ -276,6 +297,7 @@ def location_edit(location):
 
 @client.route("/location/<location>/delete")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_delete(location):
     try:
         locationData = Location.query.get(location)
@@ -298,6 +320,7 @@ def location_delete(location):
 
 @client.route("/location/<location>/utility")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility(location):
     utilities = {}
     utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=int(location))
@@ -316,10 +339,9 @@ def location_utility(location):
 
 @client.route("/location/<location>/utility/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_add(location):
     form = AddUtilityForm()
-    
-    # TODO: Improve perms checker, only clients can edit utilities in their company & location
 
     if form.validate_on_submit():
         try:
@@ -330,7 +352,7 @@ def location_utility_add(location):
             energyusage = request.form.get("energyusage")
             waterusage = request.form.get("waterusage")
 
-            utility = Utility(location=location, name=name, date=date,
+            utility = Utility(company=g.company.id, location=location, name=name, date=date,
                               carbonfootprint=carbonfootprint, energyusage=energyusage, waterusage=waterusage)
             db.session.add(utility)
             db.session.commit()
@@ -346,6 +368,7 @@ def location_utility_add(location):
 
 @client.route("/location/<location>/utility/edit/<utility>", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_edit(location, utility):
     form = EditUtilityForm()
 
@@ -383,6 +406,7 @@ def location_utility_edit(location, utility):
 
 @client.route("/location/<location>/utility/delete/<utility>")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def location_utility_delete(location, utility):
     try:
         utilityData = Utility.query.get(utility)
@@ -405,6 +429,7 @@ def location_utility_delete(location, utility):
 
 @client.route("/assessments")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
 def assessments():
     assessments = {}
     assessmentsData = db.session.query(Assessment).filter_by(company=g.company.id)
@@ -413,15 +438,31 @@ def assessments():
             'location': assessment.location,
             'name': assessment.name,
             'type': assessment.type,
-            'progress': assessment.progress
+            'progress': assessment.progress,
         }
 
     return render_template('client/assessments.html', assessments=assessments)
 
 
 
+@client.route("/assessment/<assessment>")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
+def assessment(assessment):
+    assessmentData = db.session.query(Assessment).filter_by(company=g.company.id,id=assessment).first()
+    
+    documents = {}
+    for documentID in assessmentData.documents:
+        document = db.session.query(Document).filter_by(company=g.company.id, id=documentID).first()
+        documents[documentID] = document
+
+    return render_template('client/assessment.html', assessment=assessmentData, documents=documents)
+
+
+
 @client.route("/assessment/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def assessment_add():
     form = AddAssessmentForm()
 
@@ -447,6 +488,7 @@ def assessment_add():
 
 @client.route("/assessment/<assessment>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def assessment_edit(assessment):
     form = EditAssessmentForm()
 
@@ -481,6 +523,7 @@ def assessment_edit(assessment):
 
 @client.route("/assessment/<assessment>/delete")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def assessment_delete(assessment):
     try:
         assessmentData = Assessment.query.get(assessment)
@@ -495,6 +538,29 @@ def assessment_delete(assessment):
         print(f"Error occurred: {e}")
         db.session.rollback()
         return "Error"
+
+
+
+
+
+
+@client.route("/document/<document>", methods=['GET', 'POST'])
+@login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
+def document(document):
+    document = db.session.query(Document).filter_by(company=g.company.id, id=document).first()
+    
+    if request.method == 'POST':
+        try:
+            content = request.form.get("content")
+            document.content = content
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template('client/document.html', document=document)
 
 
 
