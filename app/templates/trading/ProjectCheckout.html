@@ -8,52 +8,83 @@
 {% endblock %}
 
 {% block content %}
-<!-- JAVA CODE -->
-
+<!-- CSS CODE -->
+<style>
+  .boot{
+    margin-top: 200px;
+  }
+</style>
 <!-- TEST CODE -->
-<div class="card">
-  <div class="row">
-      <div class="col-md-8 cart">
-          <div class="title">
-              <div class="row">
-                  <div class="col"><h4><b>Cart</b></h4></div>
+<div class="boot">
+  <section class="h-100" style="background-color: #eee;">
+      <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-10">
+    
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+              <div>
+                <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
+                      class="fas fa-angle-down mt-1"></i></a></p>
               </div>
-              </div>    
-            {% for id, item in cart.items() %}
-              <div class="row border-top border-bottom">
-                  <div class="row main align-items-center">
-                      <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                      <div class="col">
-                          <div class="row text-muted">{{item.id}}</div>
-                          <div class="row">{{item.name}}</div>
-                      </div>
-                      <div class="col">
-                          <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                      </div>
-                      <div class="col"><span class="close">&#10005;</span>{{iten.price}}</div>
+            </div>
+          {% for id, item in cart.items() %}
+            <div class="card rounded-3 mb-4">
+              <div class="card-body p-4">
+                <div class="row d-flex justify-content-between align-items-center">
+                  <div class="col-md-2 col-lg-2 col-xl-2">
+                    <img
+                      src="../../static/images/co2.png"
+                      class="img-fluid rounded-3" alt="Cotton T-shirt">
                   </div>
+                  <div class="col-md-3 col-lg-3 col-xl-3">
+                    <p class="lead fw-normal mb-2">{{item.name}}</p>
+                    <p><span class="text-muted">Type: </span>{{item.type}} <br> <span class="text-muted">Color: </span>Grey</p>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                    <button class="btn btn-link px-2"
+                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                      <i class="fas fa-minus"></i>
+                    </button>
+    
+                    <input id="form1" min="0" name="quantity" value="{{item.stock}}" type="number"
+                      class="form-control form-control-sm" />
+    
+                    <button class="btn btn-link px-2"
+                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <h5 class="mb-0">${{item.total_price}}</h5>
+                  </div>
+                  <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                    <a href="{{url_for('trading.remove_cart', cart_id = item.id )}}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                  </div>
+                </div>
               </div>
-            {% endfor %}
-
+            </div>
+          {% endfor %} 
+            <!-- <div class="card mb-4">
+              <div class="card-body p-4 d-flex flex-row">
+                <div class="form-outline flex-fill">
+                  <input type="text" id="form1" class="form-control form-control-lg" />
+                  <label class="form-label" for="form1">Discound code</label>
+                </div>
+                <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+              </div>
+            </div> -->
+    
+            <div class="card">
+              <div class="card-body">
+                <button type="button" class="btn btn-warning btn-block btn-lg">Send invoice</button>
+              </div>
+            </div>
+    
           </div>
-          <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+        </div>
       </div>
-      <div class="col-md-4 summary">
-          <div><h5><b>Summary</b></h5></div>
-          <hr>
-          <form>
-              <p>EMAIL</p>
-              <input id="code" placeholder="Enter your email">
-              <p>GIVE CODE</p>
-              <input id="code" placeholder="Enter your code">
-          </form>
-          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-          </div>
-          <button class="btn">SEND INVOICE</button>
-      </div>
-  </div>
-  
+    </section>    
 </div>
 <!-- END TEST CODE -->
-<!-- MAIN CODE -->
 {% endblock %}
