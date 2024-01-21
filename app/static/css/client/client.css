@@ -19,7 +19,13 @@ p {
 #content {
   margin-top: 60px;
   margin-left: 180px;
-  width: calc(100% - 180px)
+  width: calc(100% - 180px);
+  transition: 0.3s ease-out;
+}
+
+.contentanimation {
+  margin-left: 0 !important;
+  width: 100% !important;
 }
 
 section {

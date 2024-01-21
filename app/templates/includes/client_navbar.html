@@ -36,19 +36,51 @@
         Dashboard
       </a>
     </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'client.assessments' else '' }}"
-        href="{{ url_for('client.assessments') }}">
-        <i class="fa fa-pencil-square" aria-hidden="true"></i>
-        <span>Assessments</span>
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'trading.home' else '' }}"
-      href="{{ url_for('trading.home') }}">
-        <i class="fa fa-leaf" aria-hidden="true"></i>
-        <span>Carbon Trading</span>
-      </a>
-    </li>
+    {% if g.company.plan != "free" %}
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'client.assessments' else '' }}"
+          href="{{ url_for('client.assessments') }}">
+          <i class="fa fa-pencil-square" aria-hidden="true"></i>
+          <span>Assessments</span>
+        </a>
+      </li>
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'trading.home' else '' }}"
+        href="{{ url_for('trading.home') }}">
+          <i class="fa fa-leaf" aria-hidden="true"></i>
+          <span>Carbon Trading</span>
+        </a>
+      </li>
+    {% endif %}
   </ul>
+
+  <div class="nav-collapse-div">
+    <hr>
+    <button onclick="sidenav()">
+      <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+      <span>Collapse</span>
+    </button>
+  </div>
 </nav>
+
+<button id="nav-collapsed" class="d-none" onclick="sidenav()">
+  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+</button>
+
+<script>
+  var sidenavopen = true
+  function sidenav() {
+    if (sidenavopen == true) {
+      sidenavopen = false
+      document.getElementById('sidenav').classList.toggle('sidenavanimation')
+      document.getElementById('content').classList.toggle('contentanimation')
+      document.getElementById('nav-collapsed').classList.toggle('d-none')
+    }
+    else {
+      sidenavopen = true
+      document.getElementById('sidenav').classList.toggle('sidenavanimation')
+      document.getElementById('content').classList.toggle('contentanimation')
+      document.getElementById('nav-collapsed').classList.toggle('d-none')
+    }
+  }
+</script>
