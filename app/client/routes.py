@@ -62,16 +62,17 @@ def dashboard():
             overview['totalcarbonfootprint'] += int(utility.carbonfootprint)
         
         latestUtilityData = utilitiesData.order_by(Utility.date.desc()).first()
-        timerange = int(datetime(latestUtilityData.date.year, latestUtilityData.date.month, 1).timestamp()) * 1000
-        if timerange > overview['timerange']:
-            overview['timerange'] = timerange
-            overview['carbonfootprint'] = 0
-            overview['energyusage'] = 0
-            overview['waterusage'] = 0
-        if timerange == overview['timerange']:
-            overview['carbonfootprint'] += int(latestUtilityData.carbonfootprint)
-            overview['energyusage'] += int(latestUtilityData.energyusage)
-            overview['waterusage'] += int(latestUtilityData.waterusage)
+        if latestUtilityData:
+            timerange = int(datetime(latestUtilityData.date.year, latestUtilityData.date.month, 1).timestamp()) * 1000
+            if timerange > overview['timerange']:
+                overview['timerange'] = timerange
+                overview['carbonfootprint'] = 0
+                overview['energyusage'] = 0
+                overview['waterusage'] = 0
+            if timerange == overview['timerange']:
+                overview['carbonfootprint'] += int(latestUtilityData.carbonfootprint)
+                overview['energyusage'] += int(latestUtilityData.energyusage)
+                overview['waterusage'] += int(latestUtilityData.waterusage)
             
         locations[location.id] = {
             'name': location.name,
@@ -255,7 +256,7 @@ def location_add():
             name = request.form.get("name")
             address = request.form.get("address")
 
-            location = Location(name=name, address=address)
+            location = Location(company=g.company.id, name=name, address=address)
             db.session.add(location)
             db.session.commit()
 
