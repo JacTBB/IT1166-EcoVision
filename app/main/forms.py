@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, TextAreaField
+from wtforms import StringField, SubmitField, IntegerField, TextAreaField, EmailField
 from wtforms.validators import DataRequired
 
 
@@ -18,8 +18,8 @@ class ContactForm(FlaskForm):
                                 DataRequired()], render_kw={"placeholder": "Employee Name"})
     company_name = StringField('Company Name', validators=[
                                DataRequired()], render_kw={"placeholder": "Company Name"})
-    company_email = StringField('Company Email', validators=[
-                                DataRequired()], render_kw={"placeholder": "Company Email"})
+    company_email = EmailField('Company Email', validators=[
+        DataRequired()], render_kw={"placeholder": "Company Email"})
     industry = StringField('Industry', validators=[DataRequired()], render_kw={
                            "placeholder": "Industry"})
     company_size = IntegerField('Company Size', validators=[
