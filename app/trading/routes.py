@@ -76,13 +76,22 @@ def Checkout():
                 "name": projects[ID]['name'],
                 "type": projects[ID]['type'],
                 "stock": item['stock'],
-                "price": projects[ID]['price']
+                "price": projects[ID]['price'],
+                "total_price" : int(item['stock']) * projects[ID]['price'],
             }
         else:
             session['cart'].remove(item)
         
     return render_template('trading/ProjectCheckout.html', cart = cart)
 
+@trading.route("/delete_cart/<cart_id>")
+def remove_cart(cart_id):
+    cart = session['cart']
+    for item in cart:
+        if item['id'] == int(cart_id):  
+            cart.remove(item)
+    session['cart'] = cart
+    return redirect(url_for('trading.Checkout'))
 
 @trading.route("/add_to_cart/<project>", methods=['POST'])
 def add_to_cart(project):
