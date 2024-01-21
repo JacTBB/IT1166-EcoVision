@@ -445,10 +445,7 @@ def assessment(assessment):
     documents = {}
     for documentID in assessmentData.documents:
         document = db.session.query(Document).filter_by(company=g.company.id, id=documentID).first()
-        documents[documentID] = {
-            'name': document.name,
-            'content': document.content
-        }
+        documents[documentID] = document
 
     return render_template('client/assessment.html', assessment=assessmentData, documents=documents)
 
@@ -529,6 +526,28 @@ def assessment_delete(assessment):
         print(f"Error occurred: {e}")
         db.session.rollback()
         return "Error"
+
+
+
+
+
+
+@client.route("/document/<document>", methods=['GET', 'POST'])
+@login_required
+def document(document):
+    document = db.session.query(Document).filter_by(company=g.company.id, id=document).first()
+    
+    if request.method == 'POST':
+        try:
+            content = request.form.get("content")
+            document.content = content
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template('client/document.html', document=document)
 
 
 

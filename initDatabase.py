@@ -13,6 +13,9 @@ import json
 app = create_app(Config)
 
 with app.app_context():
+    
+    db.drop_all()
+    db.create_all()
 
     rooms = Rooms(host_userid=json.dumps([1]), room_code=1234)
     db.session.add(rooms)
@@ -98,7 +101,7 @@ with app.app_context():
             documents = []
             for k in range(1,4):
                 documents.append(k)
-                document = Document(company=i, name=f"Document {k}",
+                document = Document(company=i, name=f"Document {k}", created=datetime(2023, j, 1), updated=datetime(2023, j, 2),
                                     content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur")
                 db.session.add(document)
                 

@@ -1,6 +1,6 @@
 {% extends "layouts/client.html" %}
 
-{% block title %}Assessments - EcoVision{% endblock %}
+{% block title %}Assessment - EcoVision{% endblock %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
@@ -9,7 +9,7 @@
 {% block content %}
   <div id="content">
     <section>
-      <h2>Assessments</h2>
+      <h2>Assessment</h2>
 
       <p>ID: {{ assessment.id }}</p>
       <p>Location: {{ assessment.location }}</p>
@@ -19,14 +19,40 @@
       <p>Completed Date: {{ assessment.completed_date }}</p>
       <p>Progress: {{ assessment.progress }}%</p>
 
-      <h3>Documents</h3>
-      {% for id, document in documents.items() %}
-        <div>
-          <p>ID: {{ id }}</p>
-          <p>Name: {{ document.name }}</p>
-          <p>Content: {{ document.content }}</p>
+      <h2>Documents</h2>
+
+      {% if current_user.type != "client" %}
+        <div class="addrow">
+          <a href="{{ url_for('client.assessment_add') }}">
+            <p>Add Document</p>
+          </a>
         </div>
-      {% endfor %}
+      {% endif %}
+
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Created</th>
+          <th>Updated</th>
+          {% if current_user.type != "client" %}
+            <th>Actions</th>
+          {% endif %}
+          <th>View</th>
+        </tr>
+        {% for id, document in documents.items() %}
+          <tr>
+            <td>{{ id }}</td>
+            <td>{{ document.name }}</td>
+            <td>{{ document.created }}</td>
+            <td>{{ document.updated }}</td>
+            {% if current_user.type != "client" %}
+              <td><a href="{{ url_for('client.assessment_delete', assessment=id) }}">Delete</a></td>
+            {% endif %}
+            <td><a href="{{ url_for('client.document', document=id) }}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></td>
+          <tr>
+        {% endfor %}
+      </table>
     </section>
   </div>
 {% endblock %}

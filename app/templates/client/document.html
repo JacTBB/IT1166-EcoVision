@@ -1,0 +1,36 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}{{ document.name }} - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+
+  <script>
+    tinymce.init({
+      selector: 'textarea#content',
+      plugins: 'anchor autolink image link lists media searchreplace table wordcount checklist mediaembed export tableofcontents powerpaste tinymcespellchecker autocorrect typography',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat'
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <section>
+      <h2>{{ document.name }}</h2>
+
+      <p>Created Date: {{ document.created }}</p>
+      <p>Updated Date: {{ document.updated }}</p>
+
+      {% if current_user.type == "client" %}
+        <hr>
+        <div>{{ document.content | safe }}</div>
+      {% else %}
+        <form method="POST">
+          <textarea name="content" id="content" cols="30" rows="30" placeholder="Content">{{ document.content }}</textarea>
+          <input type="submit" value="Save">
+        </form>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}
