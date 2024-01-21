@@ -1,11 +1,13 @@
-from flask import render_template, request, redirect, url_for, session, g
+from flask import render_template, request, redirect, url_for, session, g, flash
 from app.client import client
 from app.database import db
 from flask_login import login_required, current_user
 from app.auth import check_user_type
+from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm
+from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm
 from datetime import datetime
 
 
@@ -572,4 +574,105 @@ def document(document):
 def account():
     if current_user.type != 'client':
         return redirect(url_for('auth.account'))
-    return render_template("client/account.html")
+    
+    form1 = UpdatePersonalForm()
+    form1.first_name.data = current_user.first_name
+    form1.last_name.data = current_user.last_name
+    form1.username.data = current_user.username
+    form1.email.data = current_user.email
+    form1.phone_number.data = current_user.phone_number
+    form1.profile_picture.data = current_user.profile_picture
+    
+    form2 = ChangePasswordForm()
+    
+    form3 = UpdateCompanyForm()
+    form3.email.data = g.company.email
+    form3.phone_number.data = g.company.phone_number
+    form3.address.data = g.company.address
+    form3.logo.data = g.company.logo
+    
+    return render_template("client/account.html", form1=form1, form2=form2, form3=form3)
+
+
+
+@client.route("/account/update/personal", methods=["POST"])
+@login_required
+@check_user_type(['client'])
+def account_update_personal():
+    form1 = UpdatePersonalForm()
+    
+    if form1.validate_on_submit():
+        try:
+            userData = Client.query.get(current_user.id)
+            
+            first_name = request.form.get("first_name")
+            last_name = request.form.get("last_name")
+            username = request.form.get("username")
+            email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            profile_pictue = request.form.get("profile_pictue")
+            
+            userData.first_name = first_name
+            userData.last_name = last_name
+            userData.username = username
+            userData.email = email
+            userData.phone_number = phone_number
+            userData.profile_pictue = profile_pictue
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return redirect(url_for('client.account'))
+
+
+
+@client.route("/account/update/password", methods=["POST"])
+@login_required
+@check_user_type(['client'])
+def account_update_password():
+    form2 = ChangePasswordForm()
+    
+    if form2.validate_on_submit():
+        try:
+            userData = Client.query.get(current_user.id)
+            
+            password = request.form.get("password")
+            userData.set_password(password)
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return redirect(url_for('client.account'))
+
+
+
+@client.route("/account/update/company", methods=["POST"])
+@login_required
+@check_user_type(['client'])
+def account_update_company():
+    form3 = UpdateCompanyForm()
+    
+    if form3.validate_on_submit():
+        try:
+            companyData = Company.query.get(g.company.id)
+
+            email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            address = request.form.get("address")
+            logo = request.form.get("logo")
+
+            companyData.email = email
+            companyData.phone_number = phone_number
+            companyData.address = address
+            companyData.logo = logo
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return redirect(url_for('client.account'))

@@ -9,30 +9,357 @@
 {% block content %}
   <div id="content">
     <div class="account">
-      <div>
-        <p style="padding-top: 50px; font-size: 30px;">User: {{ current_user.username }}</p>
+
+      <div id="left-pane">
+        <button id="personal-profile-btn" onclick="page('personal-profile')">
+          Personal Profile
+        </button>
+        <button id="company-profile-btn" onclick="page('company-profile')">
+          Company Profile
+        </button>
+        <button id="billing-btn" onclick="page('billing')">
+          Billing
+        </button>
+        <button class="logout" onclick="logout()">
+          Logout
+        </button>
       </div>
-      <div class="details-row">
-        <div>
-          <p>Company ID:</p>
-          <p>Company:</p>
-          <p>Industry:</p>
-          <p>Address:</p>
-          <p>Email:</p>
-          <p>Plan:</p>
+
+      <div id="right-pane">
+
+        <div id="personal-profile">
+
+          <h2>Personal Profile</h2>
+
+          <section id="section-p1">
+            <div class="profilepicture">
+              <img src="{{ current_user.profile_picture }}" />
+            </div>
+            <h3>{{ current_user.username }}</h3>
+          </section>
+
+          <hr>
+
+          <section id="section-p2">
+            <form action="{{ url_for('client.account_update_personal') }}" method="post" class="row g-3 needs-validation" novalidate>
+              
+              <div class="col-md-4">
+                <label for="input-p2-1" class="form-label">First name</label>
+                {{ form1.first_name(id_="input-p2-1", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please enter your first name.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="input-p2-2" class="form-label">Last name</label>
+                {{ form1.last_name(id_="input-p2-2", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please enter your last name.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="input-p2-3" class="form-label">Username</label>
+                {{ form1.username(id_="input-p2-3", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please choose a username.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="input-p2-4" class="form-label">Email</label>
+                {{ form1.email(id_="input-p2-4", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid email.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="input-p2-5" class="form-label">Phone Number</label>
+                {{ form1.phone_number(id_="input-p2-5", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid phone number.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="input-p2-6" class="form-label">Profile Picture</label>
+                {{ form1.profile_picture(id_="input-p2-6", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid profile picture URL.
+                </div>
+              </div>
+
+              <div class="col-12">
+                {{ form1.csrf_token }}
+                <button class="btn button" type="submit">Update Personal Details</button>
+              </div>
+
+            </form>
+          </section>
+
+          <hr>
+
+          <section id="section-p3">
+            <form action="{{ url_for('client.account_update_password') }}" method="post" id="change-password-form" class="row g-3 needs-validation custom-validation" novalidate>
+
+              <div class="col-12">
+                <label for="input-u3-1" class="form-label">New Password</label>
+                {{ form2.password(id_="input-u3-1", class_="form-control") }}
+                <div class="row">
+                  <div class="col-sm-6 requirements leng">
+                    <i class="fa fa-check" style="color:#18ff84;"></i>
+                    <i class="fa fa-times" style="color:#FF0004;"></i>
+                    Minimum 8 Characters Long
+                  </div>
+                  <div class="col-sm-6 requirements big-letter">
+                    <i class="fa fa-check" style="color:#18ff84;"></i>
+                    <i class="fa fa-times" style="color:#FF0004;"></i>
+                    One Uppercase Letter
+                  </div>
+                  <div class="col-sm-6 requirements special-char">
+                    <i class="fa fa-check" style="color:#18ff84;"></i>
+                    <i class="fa fa-times" style="color:#FF0004;"></i>
+                    One Special Character
+                  </div>
+                  <div class="col-sm-6 requirements num">
+                    <i class="fa fa-check" style="color:#18ff84;"></i>
+                    <i class="fa fa-times" style="color:#FF0004;"></i>
+                    One Number
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="input-u3-2" class="form-label">Repeat Password</label>
+                <input type="password" class="form-control" id="input-u3-2" aria-describedby="inputGroupPrepend" placeholder="Repeat Password" required autocomplete="off">
+                <div class="row">
+                  <div class="col-sm-12 requirements2 match">
+                    <i class="fa fa-check" style="color:#18ff84;"></i>
+                    <i class="fa fa-times" style="color:#FF0004;"></i>
+                    Passwords Match
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                {{ form2.csrf_token }}
+                <button class="btn button" type="submit">Change Password</button>
+              </div>
+              
+            </form>
+          </section>
+
         </div>
-        <div>
-          <p>{{ current_user.company }}</p>
-          <p>{{ g.company.name }}</p>
-          <p>{{ g.company.industry }}</p>
-          <p>{{ g.company.address }}</p>
-          <p>{{ g.company.email }}</p>
-          <p>{{ g.company.plan }}</p>
+
+        <div id="company-profile">
+
+          <h2>Company Profile</h2>
+
+          <section id="section-c1">
+            <div class="profilepicture">
+              <img src="{{ g.company.logo }}" />
+            </div>
+            <h3>{{ g.company.name }}</h3>
+          </section>
+
+          <hr>
+
+          <section id="section-c2">
+            <form action="{{ url_for('client.account_update_company') }}" method="post" class="row g-3 needs-validation" novalidate>
+
+              <div class="col-md-6">
+                <label for="input-c2-1" class="form-label">Primary Email</label>
+                {{ form3.email(id_="input-c2-1", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid email.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="input-c2-2" class="form-label">Primary Phone Number</label>
+                {{ form3.phone_number(id_="input-c2-2", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid phone number.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="input-c2-3" class="form-label">Mailing Address</label>
+                {{ form3.address(id_="input-c2-3", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid address.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="input-c2-4" class="form-label">Logo Image</label>
+                {{ form3.logo(id_="input-c2-4", class_="form-control") }}
+                <div class="invalid-feedback">
+                  Please provide a valid company logo URL.
+                </div>
+              </div>
+
+              <div class="col-12">
+                {{ form3.csrf_token }}
+                <button class="btn button" type="submit">Update Company Details</button>
+              </div>
+
+            </form>
+          </section>
+
         </div>
+
+        <div id="billing">
+
+          <h2>Billing</h2>
+
+        </div>
+
       </div>
-      <a href="{{ url_for('auth.logout') }}" class="button logout">
-        <p>Logout</p>
-      </a>
     </div>
+
+    <script>
+      function page(page) {
+        const personalprofile_btn = document.getElementById('personal-profile-btn')
+        const companyprofile_btn = document.getElementById('company-profile-btn')
+        const billing_btn = document.getElementById('billing-btn')
+        
+        const personalprofile = document.getElementById('personal-profile')
+        const companyprofile = document.getElementById('company-profile')
+        const billing = document.getElementById('billing')
+
+        personalprofile.classList.add('d-none')
+        companyprofile.classList.add('d-none')
+        billing.classList.add('d-none')
+
+        const targetElement = document.getElementById(page)
+        targetElement.classList.remove('d-none')
+      }
+
+      function logout() {
+        window.location.href="{{ url_for('auth.logout') }}";
+      }
+
+      page('personal-profile');
+    </script>
+
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+          form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            if (form.classList.contains('custom-validation')) {
+              if (!form.classList.contains('c-validated')) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+              else {
+                form.classList.add('was-validated')
+              }
+            }
+            else {
+              form.classList.add('was-validated')
+            }
+          }, false)
+        })
+      })()
+
+
+
+      addEventListener("DOMContentLoaded", (event) => {
+        const form = document.getElementById("change-password-form")
+        const password = document.getElementById("input-u3-1");
+        const repeatPassword = document.getElementById("input-u3-2")
+        const requirements = document.querySelectorAll(".requirements");
+        const requirements2 = document.querySelectorAll(".requirements2");
+        const leng = document.querySelector(".leng");
+        const bigLetter = document.querySelector(".big-letter");
+        const num = document.querySelector(".num");
+        const specialChar = document.querySelector(".special-char");
+        const match = document.querySelector(".match");
+
+        requirements.forEach((element) => element.classList.add("wrong"));
+        requirements2.forEach((element) => element.classList.add("wrong"));
+
+        password.addEventListener("input", () => {
+          const value = password.value;
+          const isLengthValid = value.length >= 8;
+          const hasUpperCase = /[A-Z]/.test(value);
+          const hasNumber = /\d/.test(value);
+          const hasSpecialChar = /[!@#$%^&*()\[\]{}\\|;:'",<.>/?`~]/.test(value);
+
+          leng.classList.toggle("good", isLengthValid);
+          leng.classList.toggle("wrong", !isLengthValid);
+          bigLetter.classList.toggle("good", hasUpperCase);
+          bigLetter.classList.toggle("wrong", !hasUpperCase);
+          num.classList.toggle("good", hasNumber);
+          num.classList.toggle("wrong", !hasNumber);
+          specialChar.classList.toggle("good", hasSpecialChar);
+          specialChar.classList.toggle("wrong", !hasSpecialChar);
+
+          const isPasswordValid = isLengthValid && hasUpperCase && hasNumber && hasSpecialChar;
+
+          password.classList.remove("is-valid");
+          password.classList.add("is-invalid");
+
+          if (isPasswordValid) {
+            password.classList.remove("is-invalid");
+            password.classList.add("is-valid");
+
+            requirements.forEach((element) => {
+              element.classList.remove("wrong");
+              element.classList.add("good");
+            });
+          }
+
+          form.classList.remove("c-validated")
+          if (password.classList.contains("is-valid") && password2.classList.contains("is-valid")) {
+            form.classList.add("c-validated")
+          }
+        });
+
+        repeatPassword.addEventListener("input", () => {
+          const value1 = password.value;
+          const value2 = repeatPassword.value;
+          const matched = value1 == value2
+
+          match.classList.toggle("good", matched);
+          match.classList.toggle("wrong", !matched);
+
+          const isPasswordValid = matched;
+
+          repeatPassword.classList.remove("is-valid");
+          repeatPassword.classList.add("is-invalid");
+
+          if (isPasswordValid) {
+            repeatPassword.classList.remove("is-invalid");
+            repeatPassword.classList.add("is-valid");
+
+            requirements2.forEach((element) => {
+              element.classList.remove("wrong");
+              element.classList.add("good");
+            });
+          }
+
+          form.classList.remove("c-validated")
+          if (password.classList.contains("is-valid") && repeatPassword.classList.contains("is-valid")) {
+            form.classList.add("c-validated")
+          }
+        });
+      });
+    </script>
   </div>
 {% endblock %}

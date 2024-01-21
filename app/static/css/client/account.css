@@ -1,53 +1,116 @@
+#content {
+    padding: 50px;
+}
+
 .account {
-    padding: 15px;
-    margin: 0 auto;
+    display: flex;
+    padding: 20px;
+    background-color: rgb(210, 220, 210);
+    border-radius: 20px;
+}
+
+
+
+#left-pane {
+    width: 180px;
+    margin-right: 20px;
+}
+
+#left-pane button {
+    margin: 5px 1px;
+    padding: 5px;
+    width: 100%;
+    background-color: rgb(240, 245, 240);
+    border: none;
+    border-radius: 10px;
+    color: rgb(80,80,80);
+    font-weight: bold;
     text-align: center;
+}
+
+#left-pane button:hover {
     color: black;
+    font-weight: bold;
 }
 
-.account .details-row {
-    display: inline-flex;
-    flex-flow: row;
-    justify-content: center;
-    gap: 15px;
-    position: relative;
-    margin: 0 auto;
+#left-pane .logout {
+    background-color: rgb(210,240,210);
 }
 
-.account .details-row div {
-    width: auto;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
+
+
+#right-pane h2 {
+    margin-bottom: 5px;
+    font-size: 30px;
 }
 
-.account .details-row div:nth-child(1) p {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.account .details-row div:nth-child(2) p {
-    display: flex;
-    justify-content: flex-start;
+hr {
+    margin: 10px 10px;
+    width: calc(100% - 20px);
+    border: 0;
+    border-bottom: 2px;
+    border-style: solid;
+    border-color: rgba(10, 10, 10, 0.5);
 }
 
 .button {
-    border: none;
-    text-decoration: none;
+    background-color: lightgoldenrodyellow;
 }
 
-.button>p {
-    padding: 5px 10px;
-    background-color: #779682;
-    color: white;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: 0.1s;
+
+
+#personal-profile #section-p1 {
+    display: flex;
+    align-items: center;
 }
 
-.logout>p {
-    margin: auto;
-    margin-top: 20px;
-    width: 100px;
+#personal-profile #section-p1 .profilepicture {
+    margin-right: 20px;
+}
+
+#personal-profile #section-p1 .profilepicture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#personal-profile #section-p2 {
+    max-width: 800px;
+}
+
+#personal-profile #section-p3 {
+    max-width: 800px;
+}
+
+#personal-profile #section-p3 .wrong .fa-check {
+    display: none;
+}
+
+#personal-profile #section-p3 .good .fa-times {
+    display: none;
+}
+
+
+
+#company-profile #section-c1 {
+    display: flex;
+    align-items: center;
+}
+
+#company-profile #section-c1 .profilepicture {
+    margin-right: 20px;
+}
+
+#company-profile #section-c1 .profilepicture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#company-profile #section-c2 {
+    max-width: 800px;
+}
+
+#company-profile #section-c3 {
+    max-width: 800px;
 }

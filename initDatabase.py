@@ -28,7 +28,7 @@ with app.app_context():
         UserClass = UserList[UserType]
 
         if UserType != 'client':
-            user = UserClass(username=UserType)
+            user = UserClass(username=UserType, email=f"{UserType}@ecovision.com")
             user.set_password('123')
 
             db.session.add(user)
@@ -47,15 +47,17 @@ with app.app_context():
     # Client
     countLocation = 0
     for i in range(1, 3):
-        user = Client(username=f"client{i}")
+        user = Client(username=f"client{i}", email=f"client{i}@email.com")
         user.set_password('123')
         user.set_company(i)
         db.session.add(user)
 
         company = Company(name=f"SomeCompanyName {i}",
                           industry="Industrial",
+                          email="company@company.com",
+                          phone_number="65501234",
                           address="SG 1234",
-                          email="company@gmail.com",
+                          logo="https://cdn-icons-png.flaticon.com/512/1643/1643650.png",
                           plan="free")
         db.session.add(company)
 
@@ -71,15 +73,17 @@ with app.app_context():
                 db.session.add(utility)
 
     for i in range(3, 5):
-        user = Client(username=f"client{i}")
+        user = Client(username=f"client{i}", email=f"client{i}@email.com")
         user.set_password('123')
         user.set_company(i)
         db.session.add(user)
 
         company = Company(name=f"SomeLargeCompanyName {i}",
                           industry="Industrial",
+                          email="company@company.com",
+                          phone_number="65501234",
                           address="SG 1234",
-                          email="company@gmail.com",
+                          logo="https://cdn-icons-png.flaticon.com/512/1643/1643650.png",
                           plan="custom")
         db.session.add(company)
 

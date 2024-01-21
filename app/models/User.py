@@ -14,13 +14,23 @@ class User(db.Model, UserMixin):
     id: Mapped[int] = mapped_column(
         Integer, primary_key=True, autoincrement=True)
     user_id: Mapped[str] = mapped_column(String, unique=True)
+    first_name: Mapped[str] = mapped_column(String)
+    last_name: Mapped[str] = mapped_column(String)
     username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    phone_number: Mapped[str] = mapped_column(String)
+    profile_picture: Mapped[str] = db.Column(db.String())
     password_hash: Mapped[str] = mapped_column(String)
     type: Mapped[str] = mapped_column(String)
 
-    def __init__(self, username, type):
+    def __init__(self, username, email, type):
         self.user_id = str(uuid.uuid4())
+        self.first_name = "John"
+        self.last_name = "Doe"
         self.username = username
+        self.email = email
+        self.phone_number = "00000000"
+        self.profile_picture = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
         self.type = type
 
     def get_id(self):
@@ -37,36 +47,33 @@ class User(db.Model, UserMixin):
 class Client(User):
     company: Mapped[str] = mapped_column(String)
 
-    def __init__(self, username):
-        super().__init__(username, 'client')
+    def __init__(self, username, email):
+        super().__init__(username, email, 'client')
 
     def set_company(self, company: str):
         self.company = company
 
-    def get_company(self):
-        return self.company
-
 
 class Author(User):
-    def __init__(self, username):
-        super().__init__(username, 'author')
+    def __init__(self, username, email):
+        super().__init__(username, email, 'author')
 
 
 class Technician(User):
-    def __init__(self, username):
-        super().__init__(username, 'technician')
+    def __init__(self, username, email):
+        super().__init__(username, email, 'technician')
 
 
 class Consultant(User):
-    def __init__(self, username):
-        super().__init__(username, 'consultant')
+    def __init__(self, username, email):
+        super().__init__(username, email, 'consultant')
 
 
 class Manager(User):
-    def __init__(self, username):
-        super().__init__(username, 'manager')
+    def __init__(self, username, email):
+        super().__init__(username, email, 'manager')
 
 
 class Admin(User):
-    def __init__(self, username):
-        super().__init__(username, 'admin')
+    def __init__(self, username, email):
+        super().__init__(username, email, 'admin')
