@@ -6,11 +6,9 @@ from app.models.User import Client, Author, Technician, Consultant, Manager, Adm
 from app.auth.forms import LoginForm, AddUserForm, EditUserForm
 
 
-
 UserList = {'client': Client, 'author': Author,
             'technician': Technician, 'consultant': Consultant,
             'manager': Manager, 'admin': Admin}
-
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -53,7 +51,6 @@ def login():
     return render_template("auth/login.html", form=form, error_message=error_message)
 
 
-
 @auth.route("/users/<type>")
 @login_required
 def users(type):
@@ -66,59 +63,56 @@ def users(type):
         if type == 'client':
             userData['companyID'] = user.company
         users[user.id] = userData
-    
-    return render_template('auth/users.html', type=type, users=users)
 
+    return render_template('auth/users.html', type=type, users=users)
 
 
 @auth.route("/users/<type>/add", methods=['GET', 'POST'])
 @login_required
 def user_add(type):
     form = AddUserForm()
-    
+
     if form.validate_on_submit():
         try:
             username = request.form.get("username")
-            
+
             user = UserList[type](username=username)
             user.set_password('123')
             db.session.add(user)
             db.session.commit()
-            
+
             # TODO: Client Company Add, Edit Forms
-            
+
             return redirect(url_for('auth.users', type=type))
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
-    
-    return render_template("auth/users_add.html", form=form)
 
+    return render_template("auth/users_add.html", form=form)
 
 
 @auth.route("/users/<type>/edit/<user>", methods=['GET', 'POST'])
 @login_required
 def user_edit(type, user):
     form = EditUserForm()
-    
+
     if request.method == 'POST':
         try:
             userData = UserList[type].query.get(user)
-            
+
             username = request.form.get("username")
-           
+
             if username:
                 userData.username = username
-            
+
             db.session.commit()
-            
+
             return redirect(url_for('auth.users', type=type))
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
-    
-    return render_template("auth/users_edit.html", form=form)
 
+    return render_template("auth/users_edit.html", form=form)
 
 
 @auth.route("/users/<type>/delete/<user>")
@@ -126,10 +120,10 @@ def user_edit(type, user):
 def user_delete(type, user):
     try:
         userData = UserList[type].query.get(user)
-        
+
         if userData is None:
             return "User Not Found!"
-        
+
         db.session.delete(userData)
         db.session.commit()
         return redirect(url_for('auth.users', type=type))
@@ -139,14 +133,14 @@ def user_delete(type, user):
         return "Error"
 
 
-
 @auth.route("/account")
 @login_required
 def account():
-    if current_user.type == "client":
-        return redirect(url_for('client.account'))
+    # if current_user.type == "client":
+    #     return redirect(url_for('client.account'))
+    # if current_user.type == 'admin':
+    #     return redirect(url_for('staff.dashboard'))
     return render_template("auth/account.html")
-
 
 
 @auth.route('/logout')

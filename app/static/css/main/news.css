@@ -277,6 +277,11 @@
     color: white;
 }
 
+.form-select {
+
+    transition: 0.1s ease;
+}
+
 select {
     font-family: "Nunito";
     font-size: 16px;
@@ -291,16 +296,17 @@ select {
     width: 220px;
 }
 
-select:hover option,
+/* select:hover option,
 select:focus option,
 select:active option {
     background-color: #47474780;
 }
-
+*/
 select:hover,
 select:focus,
 select:active {
-    background-color: #47474780;
+    background-color: #eeeeee;
+    transition: 0.1s ease;
 }
 
 .save-featured-button {
@@ -325,12 +331,26 @@ select:active {
 
 .administrator-editing-tools {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.administrator-editing-tools form {
+    display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    align-items: flex-end;
+}
 
+.administrator-editing-tools form>div {
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    white-space: nowrap;
 }
 
 .add-post-container {

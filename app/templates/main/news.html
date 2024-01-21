@@ -15,27 +15,31 @@
       <div class="news-header">
         {% if current_user.is_authenticated == true and (current_user.type == 'admin' or current_user.type == 'author')
         %}
-        <div style="position: relative" class="administrator-editing-tools">
-          <form method="POST">
-            <label for="select-featured-post" class="select-featured-post-label">Featured Post:</label>
-            <select name="select-featured-post" id="select-featured-post">
-              {% for post in data %}
-              {% if post.postid == setFeaturedNews %}
-              <option value="{{post.postid}}" selected>{{post.postid}} - {{post.title}}
-              </option>
-              {% else %}
-              <option value="{{post.postid}}">{{post.postid}} - {{post.title}}
-              </option>
+        <div class="administrator-editing-tools">
 
-              {% endif %}
-              {% endfor %}
-            </select>
+          <div style="position: relative" class="add-post-container">
+            <a href="{{ url_for('main.news', addpost=true) }}" class="btn btn-dark">Add Post</a>
+          </div>
+
+          <form method="POST">
+            <div>
+              <label for="select-featured-post" class="select-featured-post-label">Featured Post:</label>
+              <select name="select-featured-post" id="select-featured-post" class="form-select">
+                {% for post in data %}
+                {% if post.postid == setFeaturedNews %}
+                <option value="{{post.postid}}" selected>{{post.postid}} - {{post.title}}
+                </option>
+                {% else %}
+                <option value="{{post.postid}}">{{post.postid}} - {{post.title}}
+                </option>
+
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
             <input type="submit" value="Save" class="btn btn-dark" />
           </form>
 
-        </div>
-        <div style="position: relative" class="add-post-container">
-          <a href="{{ url_for('main.news', addpost=true) }}" class="btn btn-dark">Add Post</a>
 
         </div>
         {% endif %}
