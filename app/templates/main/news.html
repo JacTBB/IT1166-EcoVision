@@ -13,9 +13,6 @@
 
     <div class="news-section">
       <div class="news-header">
-        <h1>News</h1>
-        <p>Read about the insights and happenings on sustainability in companies all over the world
-        </p>
         {% if current_user.is_authenticated == true and (current_user.type == 'admin' or current_user.type == 'author')
         %}
         <div style="position: relative" class="administrator-editing-tools">
@@ -42,6 +39,10 @@
 
         </div>
         {% endif %}
+
+        <h1>News</h1>
+        <p>Read about the insights and happenings on sustainability in companies all over the world
+        </p>
       </div>
 
       <div class="news-column">

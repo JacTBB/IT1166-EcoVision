@@ -35,14 +35,20 @@
 .list-pages ul li a {
     text-decoration: none;
     color: #ffffff;
-    /* white */
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .list-pages ul li a::before {
-    content: "\00bb";
+    font-family: "Font Awesome 5 Pro";
+    content: "\f061";
+    margin-right: 5px;
+    color: #ffffff;
+    font-size: 11px;
+    vertical-align: middle;
+    font-weight: 500;
 }
+
 
 .list-pages ul li a:hover {
     color: #dddddd;
