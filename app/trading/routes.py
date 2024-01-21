@@ -15,10 +15,12 @@ def get_company():
     if current_user.type == 'client':
         company = Company.query.get(current_user.company)
         g.company = company
+        return
     
     if not 'company' in session:
-        # TODO: Redirect to select company dashboard for staff
-        session['company'] = 1
+        if request.endpoint == 'client.company_view':
+            return
+        return redirect(url_for('staff.companies'))
         
     company = Company.query.get(session['company'])
     g.company = company

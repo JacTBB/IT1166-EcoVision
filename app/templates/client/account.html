@@ -3,38 +3,36 @@
 {% block title %}Account - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/client/account.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/account.css') }}" />
 {% endblock %}
 
 {% block content %}
-<div id="content">
+  <div id="content">
     <div class="account">
+      <div>
+        <p style="padding-top: 50px; font-size: 30px;">User: {{ current_user.username }}</p>
+      </div>
+      <div class="details-row">
         <div>
-            <p style="padding-top: 50px; font-size: 30px;">User: {{ current_user.username }}</p>
+          <p>Company ID:</p>
+          <p>Company:</p>
+          <p>Industry:</p>
+          <p>Address:</p>
+          <p>Email:</p>
+          <p>Plan:</p>
         </div>
-        <div class="details-row">
-            <div>
-                <p>Company ID:</p>
-                <p>Company:</p>
-                <p>Industry:</p>
-                <p>Address:</p>
-                <p>Email:</p>
-                <p>Plan:</p>
-            </div>
-            <div>
-                {% if current_user.company %}
-                <p>{{ current_user.company }}</p>
-                <p>{{ g.company.name }}</p>
-                <p>{{ g.company.industry }}</p>
-                <p>{{ g.company.address }}</p>
-                <p>{{ g.company.email }}</p>
-                <p>{{ g.company.plan }}</p>
-                {% endif %}
-            </div>
+        <div>
+          <p>{{ current_user.company }}</p>
+          <p>{{ g.company.name }}</p>
+          <p>{{ g.company.industry }}</p>
+          <p>{{ g.company.address }}</p>
+          <p>{{ g.company.email }}</p>
+          <p>{{ g.company.plan }}</p>
         </div>
-        <a href="{{ url_for('auth.logout') }}" class="button logout">
-            <p>Logout</p>
-        </a>
+      </div>
+      <a href="{{ url_for('auth.logout') }}" class="button logout">
+        <p>Logout</p>
+      </a>
     </div>
-</div>
+  </div>
 {% endblock %}
