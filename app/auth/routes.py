@@ -60,12 +60,12 @@ def users(type):
     users = {}
     usersData = db.session.query(UserList[type]).all()
     for user in usersData:
-        users[user.id] = {
+        userData = {
             'username': user.username
         }
         if type == 'client':
-            usersData['companyID'] = user.company
-        users[user.id] = usersData
+            userData['companyID'] = user.company
+        users[user.id] = userData
     
     return render_template('auth/users.html', type=type, users=users)
 
@@ -79,7 +79,6 @@ def user_add(type):
     if form.validate_on_submit():
         try:
             username = request.form.get("username")
-            company = request.form.get("company")
             
             user = UserList[type](username=username)
             user.set_password('123')
@@ -107,7 +106,6 @@ def user_edit(type, user):
             userData = UserList[type].query.get(user)
             
             username = request.form.get("username")
-            company = request.form.get("company")
            
             if username:
                 userData.username = username

@@ -1,0 +1,32 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Assessments - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <section>
+      <h2>Assessments</h2>
+
+      <p>ID: {{ assessment.id }}</p>
+      <p>Location: {{ assessment.location }}</p>
+      <p>Name: {{ assessment.name }}</p>
+      <p>Type: {{ assessment.type }}</p>
+      <p>Start Date: {{ assessment.start_date }}</p>
+      <p>Completed Date: {{ assessment.completed_date }}</p>
+      <p>Progress: {{ assessment.progress }}%</p>
+
+      <h3>Documents</h3>
+      {% for id, document in documents.items() %}
+        <div>
+          <p>ID: {{ id }}</p>
+          <p>Name: {{ document.name }}</p>
+          <p>Content: {{ document.content }}</p>
+        </div>
+      {% endfor %}
+    </section>
+  </div>
+{% endblock %}

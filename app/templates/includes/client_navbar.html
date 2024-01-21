@@ -37,8 +37,15 @@
       </a>
     </li>
     <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'client.assessments' else '' }}"
+        href="{{ url_for('client.assessments') }}">
+        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+        <span>Assessments</span>
+      </a>
+    </li>
+    <li>
       <a class="{{ 'nav-selected' if request.endpoint == 'trading.home' else '' }}"
-        href="{{ url_for('trading.home') }}">
+      href="{{ url_for('trading.home') }}">
         <i class="fa fa-leaf" aria-hidden="true"></i>
         <span>Carbon Trading</span>
       </a>

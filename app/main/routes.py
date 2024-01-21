@@ -1,4 +1,3 @@
-from turtle import st
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import asc, desc
 from app import socketio
