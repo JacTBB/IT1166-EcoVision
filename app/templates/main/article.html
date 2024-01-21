@@ -32,8 +32,7 @@
 
     {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
     <div class="delete-button">
-      <a href="{{url_for('main.news', deletepost=article.postid)}}"
-        style="color: red; text-decoration: underline;">Delete
+      <a href="{{url_for('main.news', deletepost=article.postid)}}" class="btn btn-danger">Delete
         Current Post</a>
     </div>
     <form method="POST">
@@ -43,7 +42,7 @@
         Cover image on the news page
         <br>
         {{ form.image_view_onNews(value=article.image_name) }}
-        <input type="file" id="imageInput" accept=".jpg,.jpeg,.png">
+        <input type="file" id="imageInput" accept=".jpg,.jpeg,.png,.webp">
         <img src="" alt="" id="imagePreview">
       </p>
 
@@ -52,7 +51,8 @@
       </p>
 
       <p>
-        <textarea name="content" id="content" cols="30" rows="30" placeholder="Content">{{article.content}}</textarea>
+        <textarea name="content" id="content" cols="30" rows="30" required
+          placeholder="Content">{{article.content}}</textarea>
       </p>
 
       <div class="form-footer">
