@@ -31,7 +31,7 @@ class Assessment(db.Model):
     progress: Mapped[int] = mapped_column(Integer)
     documents = db.Column(PickleType)
 
-class Documents(db.Model):
+class Document(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     company: Mapped[int] = mapped_column(Integer)
     name: Mapped[str] = mapped_column(String)

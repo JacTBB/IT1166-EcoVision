@@ -3,7 +3,7 @@ from app.client import client
 from app.database import db
 from flask_login import login_required, current_user
 from app.auth import check_user_type
-from app.models.Client import Location, Utility, Assessment
+from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm
 from datetime import datetime
@@ -430,7 +430,7 @@ def assessments():
             'location': assessment.location,
             'name': assessment.name,
             'type': assessment.type,
-            'progress': assessment.progress
+            'progress': assessment.progress,
         }
 
     return render_template('client/assessments.html', assessments=assessments)
@@ -441,8 +441,16 @@ def assessments():
 @login_required
 def assessment(assessment):
     assessmentData = db.session.query(Assessment).filter_by(company=g.company.id,id=assessment).first()
+    
+    documents = {}
+    for documentID in assessmentData.documents:
+        document = db.session.query(Document).filter_by(company=g.company.id, id=documentID).first()
+        documents[documentID] = {
+            'name': document.name,
+            'content': document.content
+        }
 
-    return render_template('client/assessment.html', assessment=assessmentData)
+    return render_template('client/assessment.html', assessment=assessmentData, documents=documents)
 
 
 

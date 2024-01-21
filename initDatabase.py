@@ -4,7 +4,7 @@ from app.database import db
 from app.models.Rooms import Rooms
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import Post
-from app.models.Client import Location, Utility, Assessment
+from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
 from datetime import datetime
 from random import randint
@@ -95,8 +95,16 @@ with app.app_context():
                 db.session.add(utility)
         
         for j in range(1,3):
+            documents = []
+            for k in range(1,4):
+                documents.append(k)
+                document = Document(company=i, name=f"Document {k}",
+                                    content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur")
+                db.session.add(document)
+                
             assessment = Assessment(company=i, location=f"SG {j}", name=f"Office {j}", type="Environmental Impact Assessment",
-                                    start_date=datetime(2023, j, 1), progress=20)
+                                    start_date=datetime(2023, j, 1), progress=20, documents=documents)
             db.session.add(assessment)
+            
 
     db.session.commit()

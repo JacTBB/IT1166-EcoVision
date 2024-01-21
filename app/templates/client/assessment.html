@@ -20,6 +20,13 @@
       <p>Progress: {{ assessment.progress }}%</p>
 
       <h3>Documents</h3>
+      {% for id, document in documents.items() %}
+        <div>
+          <p>ID: {{ id }}</p>
+          <p>Name: {{ document.name }}</p>
+          <p>Content: {{ document.content }}</p>
+        </div>
+      {% endfor %}
     </section>
   </div>
 {% endblock %}
