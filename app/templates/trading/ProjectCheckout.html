@@ -8,24 +8,52 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="subcontainer">
-    <div class="start">
-      <img src="../../static/images/LanceMoutain.webp" alt="image" class="topimg">
-      <div class="overlap">
-        <p>Checkout Page!</p>
-      </div>
-  
-    {% for id, item in cart.items() %}
-      </div>
-      <div class="checkout-details">
-        <p>{{item.id}}</p>
-        <p>{{item.name}}</p>
-        <p>{{item.stock}}</p>
-        <p>{{item.type}}</p>
-      </div>
-    {% endfor %}
+<!-- JAVA CODE -->
 
+<!-- TEST CODE -->
+<div class="card">
+  <div class="row">
+      <div class="col-md-8 cart">
+          <div class="title">
+              <div class="row">
+                  <div class="col"><h4><b>Cart</b></h4></div>
+              </div>
+              </div>    
+            {% for id, item in cart.items() %}
+              <div class="row border-top border-bottom">
+                  <div class="row main align-items-center">
+                      <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+                      <div class="col">
+                          <div class="row text-muted">{{item.id}}</div>
+                          <div class="row">{{item.name}}</div>
+                      </div>
+                      <div class="col">
+                          <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                      </div>
+                      <div class="col"><span class="close">&#10005;</span>{{iten.price}}</div>
+                  </div>
+              </div>
+            {% endfor %}
+
+          </div>
+          <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+      </div>
+      <div class="col-md-4 summary">
+          <div><h5><b>Summary</b></h5></div>
+          <hr>
+          <form>
+              <p>EMAIL</p>
+              <input id="code" placeholder="Enter your email">
+              <p>GIVE CODE</p>
+              <input id="code" placeholder="Enter your code">
+          </form>
+          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+          </div>
+          <button class="btn">SEND INVOICE</button>
+      </div>
   </div>
+  
 </div>
+<!-- END TEST CODE -->
+<!-- MAIN CODE -->
 {% endblock %}
