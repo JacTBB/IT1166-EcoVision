@@ -99,15 +99,24 @@ table {
     border-collapse: collapse;
 }
 
+.table-header {
+    background-color: rgba(240, 245, 240,0.8);
+}
+
+table tr {
+    background-color: rgba(240, 245, 240,0.3);
+    border-bottom: solid 1px rgb(200,200,200);
+}
+
 table th {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 table td,
 table th {
     padding: 5px;
+    padding-right: 15px;
     color: inherit;
-    border: solid 1px rgb(200, 200, 200);
 }
 
 table a {

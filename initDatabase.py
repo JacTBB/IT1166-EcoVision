@@ -4,7 +4,7 @@ from app.database import db
 from app.models.Rooms import Rooms
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import Post
-from app.models.Client import Location, Utility
+from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
 from datetime import datetime
 from random import randint
@@ -13,6 +13,9 @@ import json
 app = create_app(Config)
 
 with app.app_context():
+
+    db.drop_all()
+    db.create_all()
 
     rooms = Rooms(host_userid=json.dumps([1]), room_code=1234)
     db.session.add(rooms)
@@ -31,12 +34,14 @@ with app.app_context():
             db.session.add(user)
 
     # Main
+    rand = randint(1, 2)
     for i in range(1, 10):
         post = Post(title="test",
                     content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur",
                     author="test",
                     image_name="Cover-image-1-495x400.jpg",
                     postid=i*2)
+        post.post_type = "News" if i % rand == 0 else "Insights"
         db.session.add(post)
 
     # Client
@@ -93,5 +98,17 @@ with app.app_context():
                 utility = Utility(company=i, location=countLocation, name=f"Utility 2023 {k}", date=datetime(2023, k, 1),
                                   carbonfootprint=randint(200, 500), energyusage=randint(200, 500), waterusage=randint(200, 500))
                 db.session.add(utility)
+
+        for j in range(1, 3):
+            documents = []
+            for k in range(1, 4):
+                documents.append(k)
+                document = Document(company=i, name=f"Document {k}", created=datetime(2023, j, 1), updated=datetime(2023, j, 2),
+                                    content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur")
+                db.session.add(document)
+
+            assessment = Assessment(company=i, location=f"SG {j}", name=f"Office {j}", type="Environmental Impact Assessment",
+                                    start_date=datetime(2023, j, 1), progress=20, documents=documents)
+            db.session.add(assessment)
 
     db.session.commit()

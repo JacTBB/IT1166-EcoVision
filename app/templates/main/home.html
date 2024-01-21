@@ -6,15 +6,16 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main/home.css') }}" />
 
 <script src="{{ url_for('static', filename='js/slider.js')}}"></script>
+<script src="{{ url_for('static', filename='js/marquee.js')}}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid home-page">
   <div class="home">
     <div class="home-slider">
-      <img src="{{ url_for('static', filename='images/pexels-mikhail-nilov-8299700.jpg') }}" />
-      <img src="{{ url_for('static', filename='images/RainForest.avif') }}" />
-      <img src="{{ url_for('static', filename='images/leaves.jpg') }}" />
+      <img src="{{ url_for('static', filename='images/carousel_renewables.webp') }}" />
+      <img src="{{ url_for('static', filename='images/decarbonisation.webp') }}" />
+      <img src="{{ url_for('static', filename='images/carousel_product_stewardship-min.jpeg') }}" />
     </div>
 
     <div class="slider-buttons">
@@ -22,42 +23,43 @@
       <span class="slider-btn"></span>
       <span class="slider-btn"></span>
     </div>
-    <div>
-      <p>Welcome</p>
+
+    <div class="slider-header">
+      <h1>Empowering a Sustainable Future</h1>
+      <p>Join us in our mission to protect our planet. <br> Your contribution matters!</p>
     </div>
   </div>
 
-  <div class="home-aboutus">
-    <div>
+  <div class="home-aboutus sections">
+    <div style="position: relative;" class="aboutus">
+      <img src="{{url_for('static', filename='images/pexels-lumn-1410224.webp')}}" alt="">
       <p>
         We as a company are dedicated to providing the best service to our customers. We are a small company that is
-        growing and we are looking to expand our services to the entire country. (This is a test paragraph)
+        growing and we are looking to expand our services to the entire country.
       </p>
     </div>
   </div>
 
-  <div class="home-news">
-    <div class="news-hzslider">
-      <h2 class="section-header">Latest News</h2>
-      <div class="news-row">
-        {% for post in news|sort(attribute="postid", reverse=true) %}
-        <a href="{{ url_for('main.news', postid=post.postid) }}">
-          <div class="catalog postid_{{ post.postid }}">
-            <div class="catalog-image-container">
-              <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
-            </div>
-            <div class="news-head">
-              <p class="post-header">{{ post.title }}</p>
-              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
-            </div>
+  <div class="home-news sections">
+    <h2 class="section-header">News & Insights</h2>
+    <div class="news-row">
+      {% for post in news|sort(attribute="postid", reverse=true) %}
+      <a href="{{ url_for('main.news', postid=post.postid) }}">
+        <div class="catalog postid_{{ post.postid }}">
+          <div class="catalog-image-container">
+            <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" />
           </div>
-        </a>
-        {% endfor %}
-      </div>
+          <div class="news-head">
+            <p class="post-header">{{ post.title }}</p>
+            <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
     </div>
   </div>
 
-  <div class="home-services" style="display: none;">
+  <!-- <div class="home-services sections" style="display: none;">
     <h2>Services</h2>
 
     <div class="products-list">
@@ -85,10 +87,21 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="home-clients">
-    <!-- <div>hi</div> -->
+  <div class="home-clients sections">
+    <h2 class="section-header">Our Clients</h2>
+    <div class="clients-logo">
+      <img src="{{ url_for('static', filename='images/clients/apple-black-logo-svgrepo-com.svg') }}" alt=''>
+      <img src="{{ url_for('static', filename='images/clients/hello-kitty-logo-svgrepo-com.svg') }}" alt=''>
+      <img src="{{ url_for('static', filename='images/clients/kfc-2-logo-svgrepo-com.svg') }}" alt=''>
+      <img src="{{ url_for('static', filename='images/clients/mcdonald-s-15-logo-svgrepo-com.svg') }}" alt=''>
+      <img src="{{ url_for('static', filename='images/clients/microsoft-logo-svgrepo-com.svg') }}" alt=''>
+      <img src="{{ url_for('static', filename='images/clients/nasa-6-logo-svgrepo-com.svg') }}" alt=''>
+      <img
+        src="{{ url_for('static', filename='images/clients/counter-strike-global-offensive-2-logo-svgrepo-com.svg') }}"
+        alt=''>
+    </div>
   </div>
 </div>
 {% endblock %}

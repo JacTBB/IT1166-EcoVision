@@ -13,7 +13,6 @@
 
     <div class="news-section">
       <div class="news-header">
-        <h1 style="color: white">Latest News</h1>
         {% if current_user.is_authenticated == true and (current_user.type == 'admin' or current_user.type == 'author')
         %}
         <div style="position: relative" class="administrator-editing-tools">
@@ -40,6 +39,10 @@
 
         </div>
         {% endif %}
+
+        <h1>News</h1>
+        <p>Read about the insights and happenings on sustainability in companies all over the world
+        </p>
       </div>
 
       <div class="news-column">
@@ -47,13 +50,13 @@
         {% if post.postid == setFeaturedNews %}
         <a href="{{ url_for('main.news', postid=post.postid) }}" style="width: 100%;">
           <div class="featured-news">
+            <div class="featured-tag">Featured</div>
             <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" alt="" />
-            <div>
-              <div class="featured-tag">Featured</div>
-              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
+            <div class="featured-head">
               <h2>
                 {{ post.title }}
               </h2>
+              <p class="news-date">{{ post.date.strftime('%B %d, %Y') }}</p>
 
             </div>
           </div>
@@ -64,6 +67,7 @@
         {% for post in data|reverse %}
         <a href="{{ url_for('main.news', postid=post.postid) }}">
           <div class="catalog postid_{{ post.postid }}">
+            <div class="featured-tag">{{post.post_type}}</div>
             <div class="catalog-image-container">
               <img src="{{ url_for('static', filename='images/uploads/' + post.image_name) }}" loading="lazy" />
             </div>

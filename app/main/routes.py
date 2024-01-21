@@ -1,4 +1,3 @@
-from turtle import st
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import asc, desc
 from app import socketio
@@ -25,7 +24,7 @@ from string import ascii_lowercase, ascii_uppercase
 @main.route('/')
 def home():
 
-    return render_template('main/home.html', news=Post.query.order_by(desc(Post.postid)).all())
+    return render_template('main/home.html', news=Post.query.order_by(desc(Post.postid)).limit(4))
 
 
 @main.route('/services')
@@ -40,7 +39,50 @@ def news():
     addPost = request.args.get('addpost')
     deletePost = request.args.get('deletepost')
     status_message = None
+
+    # TODO: Pagination
+    # POSTS_PER_PAGE = 5
+    # page = request.args.get('page', 1, type=int)
+    # posts = Post.query.order_by(Post.date_posted.desc()).paginate(page, POSTS_PER_PAGE, False)
+    # next_url = url_for('main.news', page=posts.next_num) if posts.has_next else None
+    # prev_url = url_for('main.news', page=posts.prev_num) if posts.has_prev else None
+    # return render_template('main/news.html', posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+    # View article
+    if postid is not None and not current_user.is_authenticated:
+        form = ArticleForm()
+        query = query_data(Post, filter_by={'postid': postid}, all=False)
+        if query is not None:
+            return render_template('main/article.html', article=query, form=form, status_message=status_message)
+
+    # Admin and Author only
     if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+
+        # Edit article
+        if postid is not None and current_user.is_authenticated:
+            form = ArticleForm()
+            if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+                if request.method == 'POST':
+                    if form.validate_on_submit():
+                        print(form.content.data)
+                        try:
+                            post = Post.query.filter_by(postid=postid).first()
+                            post.image_name = form.image_view_onNews.data
+                            post.title = form.title.data
+                            post.content = form.content.data
+
+                            db.session.add(post)
+                            db.session.commit()
+                            status_message = "Article updated successfully!"
+                        except Exception as e:
+                            print(f"Error occurred: {e}")
+                            db.session.rollback()
+                            status_message = "Failed to update article! Contact Administrator."
+
+        query = query_data(Post, filter_by={'postid': postid}, all=False)
+        if query is not None:
+            return render_template('main/article.html', article=query, form=form, status_message=status_message)
+
         # Delete article
         if deletePost is not None:
             try:
@@ -99,33 +141,7 @@ def news():
                 print(f"Error occurred: {e}")
                 db.session.rollback()
 
-        # Edit article
-        if postid is not None:
-            form = ArticleForm()
-            if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
-                if request.method == 'POST':
-                    if form.validate_on_submit():
-                        print(form.content.data)
-                        try:
-                            post = Post.query.filter_by(postid=postid).first()
-                            post.image_name = form.image_view_onNews.data
-                            post.title = form.title.data
-                            post.content = form.content.data
-
-                            db.session.add(post)
-                            db.session.commit()
-                            status_message = "Article updated successfully!"
-                        except Exception as e:
-                            print(f"Error occurred: {e}")
-                            db.session.rollback()
-                            status_message = "Failed to update article! Contact Administrator."
-
-        query = query_data(Post, filter_by={'postid': postid}, all=False)
-        if query is not None:
-            return render_template('main/article.html', article=query, form=form, status_message=status_message)
-
     query = query_data(Post, all=True)
-
     first_exist_featured_post = Post.query.filter_by(
         featured_post=True).first()
 

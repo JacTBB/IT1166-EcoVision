@@ -7,9 +7,13 @@
     left: 0;
     top: 0;
     background-position: center center;
-    object-fit: cover;
+    object-fit: fill;
     z-index: -1;
-    filter: opacity(0.5);
+    filter: brightness(0.7) contrast(0.9);
+}
+
+.news-page {
+    position: relative;
 }
 
 .news-page .news {
@@ -22,22 +26,22 @@
     padding-bottom: 50px;
 }
 
-.news-page .news .news-header {
-    margin-top: 50px;
-    white-space: nowrap;
+.news-page .news-header {
     width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
+    padding: 20px;
+    padding-top: 50px;
 }
 
-.news-header {
-    padding: 50px;
+.news-page .news-header p {
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .news-header h1 {
+    color: white;
     text-align: left;
     font-size: 2.5rem;
+    font-weight: 600;
 }
 
 .add-post-button {
@@ -72,10 +76,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: inherit;
+    color: var(--main-color);
     width: auto;
     margin: 0 auto;
+    padding-top: 70px;
 }
+
+/* Featured News */
 
 .featured-news {
     display: flex;
@@ -84,20 +91,20 @@
     align-items: flex-start;
     background-color: #c5e7d1;
     color: inherit;
-    border-radius: 12px;
+    border-radius: 6px;
     transition: 0.2s ease;
     position: relative;
 }
 
 
 .featured-news:hover {
-    background-color: #80a38b;
+    background-color: #70997d;
     transition: 0.2s ease;
     color: white;
 }
 
 .featured-news img {
-    height: 280px;
+    height: 400px;
     width: 100%;
     position: relative;
     display: flex;
@@ -105,15 +112,16 @@
     object-position: center;
     transition: 0.2s ease;
     pointer-events: none;
-    border-radius: 12px 12px 0 0;
+    border-radius: 6px 6px 0 0;
 }
 
-.featured-news:hover img {
+.featured-news:hover img,
+.featured-news:hover .featured-tag {
     transform: scale(1.008);
     transition: 0.2s ease;
 }
 
-.featured-news>div {
+.featured-news .featured-head {
     display: flex;
     flex-direction: column;
     word-break: break-word;
@@ -125,7 +133,8 @@
 .featured-tag {
     position: absolute;
     right: 20px;
-    background-color: #6b9478;
+    top: 20px;
+    background-color: #389355;
     padding: 7px;
     border-radius: 30px;
     font-weight: 500;
@@ -134,7 +143,7 @@
     color: white;
     letter-spacing: 1px;
     vertical-align: middle;
-
+    z-index: 1;
 }
 
 
@@ -179,10 +188,11 @@
     display: flex;
     flex-direction: column;
     width: 462px;
-    background: #c5e7d1;
+    background: white;
     border-radius: 6px;
     word-break: break-word;
     overflow: hidden;
+    transition: 0.2s ease;
 }
 
 .news-section .catalog-image-container {

@@ -102,7 +102,7 @@
 
 #sidenav {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
   position: fixed;
   top: 0;
   padding: 1rem;
@@ -144,10 +144,49 @@
   transition: all 0.1s ease;
 }
 
-#sidenav ul li:hover::after {
-  width: 100%;
+#sidenav ul li a i {
+  width: 20px;
+  text-align: center;
 }
 
 #sidenav .nav-selected {
   color: black;
+}
+
+#sidenav .nav-collapse-div {
+  margin-top: auto;
+  font-weight: normal;
+}
+
+#sidenav .nav-collapse-div button {
+  width: 100%;
+  background: none;
+  text-align: center;
+  border: none;
+}
+
+#sidenav .nav-collapse-div button:hover {
+  font-weight: bold;
+}
+
+#nav-collapsed {
+  position: fixed;
+  bottom: 0;
+  width: 35px;
+  height: 35px;
+  background-color: rgb(220, 230, 220);
+  border: none;
+  border-top: solid 1px gray;
+  border-right: solid 1px gray;
+  text-align: center;
+}
+
+#nav-collapsed:hover {
+  width: 35px;
+  height: 35px;
+  background-color: rgb(210, 220, 210);
+}
+
+.sidenavanimation {
+  transform: translateX(-180px)
 }
