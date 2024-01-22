@@ -8,31 +8,36 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-  <section>
-    <h2>Inventory</h2>
-    <div class="addlocation">
-      <a href="{{ url_for('staff.product_add') }}">
-        <p>Add Product</p>
-      </a>
+<div class="manage">
+    <div class="top-bar">
+      <div class="title">
+        <h1>Inventory</h1>
+        <!-- <a href="{{ url_for('staff.product_add') }}">Add Product</a> -->
+      </div>
     </div>
-    <table id="locations">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th colspan="2">Actions</th>
-      </tr>
-      {% for id, product in products.items() %}
-        <tr>
-          <td>{{ id }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.quantity }}</td>
-          <td rowspan="2"><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
-          <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
-        <tr>
-      {% endfor %}
-    </table>
-  </section>
-</div>
+    <div class="first-bar">
+      <div class="add">
+        <a href="{{ url_for('staff.product_add') }}"> Add Product</a>
+      </div>
+      <div class="second-bar">
+        <table class="table1" border="0">
+          <tr>    
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th colspan="2">Actions</th>
+          </tr>
+          {% for id, product in products.items() %}
+            <tr>
+              <td>{{ id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.quantity }}</td>
+              <td><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
+              <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
+            <tr>
+          {% endfor %}
+        </table> 
+      </div>
+    </div>
+  </div>
 {% endblock %}

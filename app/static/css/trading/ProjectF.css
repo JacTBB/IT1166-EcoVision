@@ -65,7 +65,7 @@ td:nth-child(1) {
     font-weight: bolder;
     font-size: x-large;
 }
-td:nth-child(7) a{
+td:nth-child(5) a{
     color: green;
     font-size: 1.3rem;
     text-decoration: none;
