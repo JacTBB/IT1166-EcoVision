@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'layouts/client.html' %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Client Chat - EcoVision{% endblock %}
+
+
+{% block head %}
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="{{url_for('static', filename='css/main/room/chats.css')}}">
   <title>Business Chats</title>
-</head>
+  {% endblock %}
 
-<body>
 
+  {% block content %}
   <!-- start: Chat -->
   <section class="chat-section">
     <div class="chat-container">
+
       <!-- start: Content -->
       <div class="chat-content">
         <!-- start: Content side -->
@@ -545,8 +546,5 @@
     </div>
   </section>
   <!-- end: Chat -->
-
   <script src="{{ url_for('static', filename='js/chats.js')}}"></script>
-</body>
-
-</html>
+  {% endblock %}

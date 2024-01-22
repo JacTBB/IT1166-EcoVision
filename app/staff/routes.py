@@ -182,4 +182,7 @@ def enquiry_edit(enquiry):
 
     return render_template("staff/enquiries_edit.html", form=form)
 
+@staff.route('/staff/chats')
+def chats():
+    return render_template('main/room/staffchat.html')  
 
