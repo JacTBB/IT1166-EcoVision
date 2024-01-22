@@ -7,7 +7,7 @@ from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm
-from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm
+from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
 
 
@@ -608,7 +608,13 @@ def account():
     form3.address.data = g.company.address
     form3.logo.data = g.company.logo
     
-    return render_template("client/account.html", form1=form1, form2=form2, form3=form3)
+    form4 = UpdatePaymentForm()
+    form4.name.data = g.company.payment_name
+    form4.card_no.data = g.company.payment_card_no
+    form4.expiry.data = g.company.payment_expiry
+    form4.cvc.data = g.company.payment_cvc
+    
+    return render_template("client/account.html", form1=form1, form2=form2, form3=form3, form4=form4)
 
 
 
@@ -697,5 +703,36 @@ def account_update_company():
             db.session.rollback()
     else:
         flash("Company Profile Validation Error!")
+
+    return redirect(url_for('client.account'))
+
+
+
+@client.route("/account/update/payment", methods=["POST"])
+@login_required
+@check_user_type(['client'])
+def account_update_payment():
+    form4 = UpdatePaymentForm()
+    
+    if form4.validate_on_submit():
+        try:
+            companyData = Company.query.get(g.company.id)
+
+            name = request.form.get("name")
+            card_no = request.form.get("card_no")
+            expiry = request.form.get("expiry")
+            cvc = request.form.get("cvc")
+
+            companyData.payment_name = name
+            companyData.payment_card_no = card_no
+            companyData.payment_expiry = expiry
+            companyData.payment_cvc = cvc
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    else:
+        flash("Payment Method Validation Error!")
 
     return redirect(url_for('client.account'))

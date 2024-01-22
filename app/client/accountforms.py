@@ -22,3 +22,11 @@ class UpdateCompanyForm(FlaskForm):
     phone_number = IntegerField(validators=[DataRequired()])
     address = StringField(validators=[DataRequired()])
     logo = URLField(validators=[DataRequired()])
+
+
+
+class UpdatePaymentForm(FlaskForm):
+    name = StringField(validators=[DataRequired()])
+    card_no = IntegerField(validators=[DataRequired()])
+    expiry = IntegerField(validators=[DataRequired()])
+    cvc = IntegerField(validators=[DataRequired()])
