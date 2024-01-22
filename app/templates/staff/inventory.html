@@ -3,41 +3,39 @@
 {% block title %}Inventory - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/locations.css') }}" />
-  <link rel="stylesheet" href="{{url_for('static', filename='css/staff/main.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staff/locations.css') }}" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/staff/main.css')}}">
 {% endblock %}
 
 {% block content %}
 <div class="manage">
-    <div class="top-bar">
-      <div class="title">
-        <h1>Inventory</h1>
-        <!-- <a href="{{ url_for('staff.product_add') }}">Add Product</a> -->
-      </div>
-    </div>
-    <div class="first-bar">
-      <div class="add">
-        <a href="{{ url_for('staff.product_add') }}"> Add Product</a>
-      </div>
-      <div class="second-bar">
-        <table class="table1" border="0">
-          <tr>    
-            <th>ID</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th colspan="2">Actions</th>
-          </tr>
-          {% for id, product in products.items() %}
-            <tr>
-              <td>{{ id }}</td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.quantity }}</td>
-              <td><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
-              <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
-            <tr>
-          {% endfor %}
-        </table> 
-      </div>
+  <div class="top-bar">
+    <div class="title">
+      <h1>Inventory</h1>
+      <!-- <a href="{{ url_for('staff.product_add') }}">Add Product</a> -->
     </div>
   </div>
+  <div class="first-bar">
+    <div class="second-bar">
+      <a href="{{ url_for('staff.product_add') }}" class=" btn btn-light"> Add Product</a>
+      <table class="table1" border="0">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th colspan="2">Actions</th>
+        </tr>
+        {% for id, product in products.items() %}
+        <tr>
+          <td>{{ id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td><a href="{{ url_for('staff.product_edit', product=id) }}">Edit</a></td>
+          <td><a href="{{ url_for('staff.product_delete', product=id) }}">Delete</a></td>
+        <tr>
+          {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}
