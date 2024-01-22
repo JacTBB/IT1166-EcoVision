@@ -181,3 +181,5 @@ def enquiry_edit(enquiry):
             db.session.rollback()
 
     return render_template("staff/enquiries_edit.html", form=form)
+
+

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/main/contact.css')}}" />
 <script src="{{url_for('static', filename='js/darkmode.js')}}"></script>
 
-<link rel="stylesheet" href="{{url_for('static', filename='css/main/room/chat.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/main/room/chatbot.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
   integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
   crossorigin="anonymous"></script>
@@ -128,6 +128,6 @@
     }
   });
 </script>
-<script src="{{url_for('static', filename='js/chat.js')}}"></script>
+<script src="{{url_for('static', filename='js/chatbot.js')}}"></script>
 <script src="{{ url_for('static', filename='js/contactus.js')}}"></script>
 {% endblock %}
