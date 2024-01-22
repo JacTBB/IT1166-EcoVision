@@ -640,6 +640,8 @@ def account_update_personal():
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
+    else:
+        flash("Personal Profile Validation Error!")
 
     return redirect(url_for('client.account'))
 
@@ -662,6 +664,8 @@ def account_update_password():
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
+    else:
+        flash("Change Password Validation Error!")
 
     return redirect(url_for('client.account'))
 
@@ -691,5 +695,7 @@ def account_update_company():
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
+    else:
+        flash("Company Profile Validation Error!")
 
     return redirect(url_for('client.account'))
