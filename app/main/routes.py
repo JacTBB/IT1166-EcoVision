@@ -397,5 +397,5 @@ def chats():
     return render_template('main/room/staffchat.html')  
 
 @main.route('/client/chats')
-def chats():
+def chats_client():
     return render_template('main/room/clientchats.html')
