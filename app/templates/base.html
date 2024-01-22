@@ -42,6 +42,19 @@
   {% block content %}{% endblock %}
 
   {% block footer %}{% endblock %}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class=flashes>
+        <h2>Warning!</h2>
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}
 </body>
 
 </html>

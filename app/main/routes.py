@@ -155,7 +155,7 @@ def news():
 
 @main.route('/contact', methods=['GET', 'POST'])
 def contact():
-    error_message = None
+    error_message = ""
     form = ContactForm()
     if form.validate_on_submit():
         try:
@@ -163,12 +163,15 @@ def contact():
                                   company_email=form.company_email.data, industry=form.industry.data, company_size=form.company_size.data)
             db.session.add(contact)
             db.session.commit()
+            error_message = "Thank you for your enquiry. We will get back to you as soon as possible."
+
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
-
-        error_message = "Thank you for your enquiry. We will get back to you as soon as possible."
-
+            error_message = "Failed to send enquiry. Please try again later."
+            
+        print(error_message)
+        
     return render_template('main/contact.html', form=form, error_message=error_message)
 
 
@@ -389,3 +392,6 @@ def disconnect():
     # print(f"{name} has left the room {room}")
 
 # end of chat room function
+@main.route('/contact/chatui')
+def chatui():
+    return render_template('main/room/chats.html')  
