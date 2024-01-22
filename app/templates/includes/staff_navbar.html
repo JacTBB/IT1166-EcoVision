@@ -75,8 +75,8 @@
       </a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'staff.dashboard' else '' }}"
-        href="{{ url_for('staff.dashboard') }}">
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.chats' else '' }}"
+        href="{{ url_for('main.chats') }}">
         <i class="fa fa-comments" aria-hidden="true"></i>
         Staff Chats
       </a>
@@ -140,7 +140,7 @@
   </div>
 </nav>
 
-<button id="nav-collapsed" class="d-show" onclick="sidenav()">
+<button id="nav-collapsed" class="d-none" onclick="sidenav()">
   <i class="fa fa-angle-double-right" aria-hidden="true"></i>
 </button>
 
