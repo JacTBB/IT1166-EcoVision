@@ -395,3 +395,7 @@ def disconnect():
 @main.route('/staff/chats')
 def chats():
     return render_template('main/room/staffchat.html')  
+
+@main.route('/client/chats')
+def chats():
+    return render_template('main/room/clientchats.html')
