@@ -3,20 +3,19 @@
 {% block title %}Users - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/client/main.css') }}" />
-<link rel="stylesheet" href="{{ url_for('static', filename='css/client/locations.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
 {% endblock %}
 
 {% block content %}
-<div class="container" id="main">
+<div id="content">
   <section>
     <h2>Users</h2>
-    <div class="addlocation">
+    <div class="addrow">
       <a href="{{ url_for('auth.user_add', type=type) }}">
         <p>Add Users</p>
       </a>
     </div>
-    <table id="locations">
+    <table>
       <tr>
         <th>ID</th>
         <th>Username</th>

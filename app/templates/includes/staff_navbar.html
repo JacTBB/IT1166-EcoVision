@@ -1,6 +1,9 @@
-<nav>
-  <div class="nav-logo">
-    <a href="{{ url_for('staff.dashboard')}}">{{ current_user.company }}</a>
+<nav id="topnav">
+  <div class="nav-title">
+    <div class="nav-logo">
+      <img src="{{ url_for('static', filename='images/icon-nobackground.png') }}" />
+    </div>
+    <a href="{{ url_for('staff.dashboard')}}">EcoVision</a>
   </div>
 
   <ul>
@@ -10,7 +13,152 @@
     </li>
     <li>
       <a class="{{ 'nav-selected' if request.endpoint == 'auth.account' else '' }}"
-        href="{{ url_for('auth.account') }}">Account</a>
+        href="{{ url_for('auth.account') }}">
+        <p class="username">{{ current_user.username }}</p>
+        <div class="profilepicture">
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+      </a>
     </li>
   </ul>
 </nav>
+
+<nav id="sidenav">
+  <ul>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.dashboard' else '' }}"
+        href="{{ url_for('staff.dashboard') }}">
+        <i class="fa fa-home" aria-hidden="true"></i>
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'client.companies' else '' }}"
+        href="{{ url_for('client.companies') }}">
+        <i class="fa fa-building" aria-hidden="true"></i>
+        Business Management
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.companies' else '' }}"
+        href="{{ url_for('staff.companies') }}">
+        <i class="fa fa-building" aria-hidden="true"></i>
+        Business Dashboard
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.dashboard' else '' }}"
+        href="{{ url_for('staff.dashboard') }}">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+        Business Chats
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.products' else '' }}"
+        href="{{ url_for('staff.products') }}">
+        <i class="fa fa-archive" aria-hidden="true"></i>
+        Inventory
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.enquiries' else '' }}"
+        href="{{ url_for('staff.enquiries') }}">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+        Enquiries
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'trading.projects' else '' }}"
+        href="{{ url_for('trading.projects') }}">
+        <i class="fa fa-leaf" aria-hidden="true"></i>
+        Carbon Trading
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.dashboard' else '' }}"
+        href="{{ url_for('staff.dashboard') }}">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+        Staff Chats
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}"
+        href="{{ url_for('main.news') }}">
+        <i class="fa fa-newspaper" aria-hidden="true"></i>
+        News Platform
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
+        href="{{ url_for('auth.users', type='client') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Client
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
+        href="{{ url_for('auth.users', type='author') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Authors
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
+        href="{{ url_for('auth.users', type='technician') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Technician
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
+        href="{{ url_for('auth.users', type='consultant') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Consultants
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
+        href="{{ url_for('auth.users', type='manager') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Managers
+      </a>
+    </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
+        href="{{ url_for('auth.users', type='admin') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Admins
+      </a>
+    </li>
+  </ul>
+
+  <div class="nav-collapse-div">
+    <hr>
+    <button onclick="sidenav()">
+      <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+      <span>Collapse</span>
+    </button>
+  </div>
+</nav>
+
+<button id="nav-collapsed" class="d-none" onclick="sidenav()">
+  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+</button>
+
+<script>
+  var sidenavopen = true
+  function sidenav() {
+    if (sidenavopen == true) {
+      sidenavopen = false
+      document.getElementById('sidenav').classList.toggle('sidenavanimation')
+      document.getElementById('content').classList.toggle('contentanimation')
+      document.getElementById('nav-collapsed').classList.toggle('d-none')
+    }
+    else {
+      sidenavopen = true
+      document.getElementById('sidenav').classList.toggle('sidenavanimation')
+      document.getElementById('content').classList.toggle('contentanimation')
+      document.getElementById('nav-collapsed').classList.toggle('d-none')
+    }
+  }
+</script>

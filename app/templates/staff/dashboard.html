@@ -3,76 +3,11 @@
 {% block title %}Dashboard - EcoVision{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/staff/dashboard.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/staff/dashboard.css') }}" />
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-  <div id="main">
-    <aside>
-      <div>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'staff.dashboard' else '' }}"
-          href="{{ url_for('staff.dashboard') }}">
-          <p>Overview</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'client.companies' else '' }}"
-          href="{{ url_for('client.companies') }}">
-          <p>Business Management</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'staff.companies' else '' }}"
-          href="{{ url_for('staff.companies') }}">
-          <p>Business Dashboard</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">
-          <p>Business chats</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'staff.products' else '' }}"
-          href="{{ url_for('staff.products') }}">
-          <p>Inventory</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'staff.enquiries' else '' }}"
-          href="{{url_for('staff.enquiries')}}">
-          <p>Enquiries</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'trading.projects' else '' }}"
-          href="{{ url_for('trading.projects') }}">
-          <p>Carbon Trading Platform</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.login' else '' }}" href="#">
-          <p>Staff Chat Platform</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'main.news' else '' }}"
-          href="{{ url_for('main.news') }}">
-          <p>News Platform</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
-          href="{{ url_for('auth.users', type='client') }}">
-          <p>Manage Clients</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
-          href="{{ url_for('auth.users', type='author') }}">
-          <p>Manage Authors</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
-          href="{{ url_for('auth.users', type='technician') }}">
-          <p>Manage Technicians</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
-          href="{{ url_for('auth.users', type='consultant') }}">
-          <p>Manage Consultants</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
-          href="{{ url_for('auth.users', type='manager') }}">
-          <p>Manage Managers</p>
-        </a>
-        <a id="nav1" class="{{ 'side-nav-selected' if request.endpoint == 'auth.users' else '' }}"
-          href="{{ url_for('auth.users', type='admin') }}">
-          <p>Manage Admins</p>
-        </a>
-      </div>
-      <div>
-    </aside>
-
+  <div id="content">
     <section>
       <div class="announcements">
         <h2>Announcements</h2>
@@ -85,5 +20,4 @@
       </div>
     </section>
   </div>
-</div>
 {% endblock %}
