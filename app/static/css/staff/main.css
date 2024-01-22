@@ -1,42 +1,94 @@
-#main {
-    position: relative;
-    top: 59px;
+.manage {
+    padding-top: 100px;
 }
-
-#main>div {
-    position: relative;
-    top: 20px;
-}
-
-section h2,
-div h2 {
+.title h1{ 
     text-align: center;
-    font-size: 25px;
+    justify-content: center;    
+    width: 100%;
+    font-weight: bolder;
+    font-size: 4em;
+}
+.top-bar {
+    margin-bottom: 50px;
+}
+
+.first-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.add {
+    display: flex;  
+    justify-content: flex-start;
+    text-align: right;
+    font-size: xx-large;
     font-weight: bold;
-    color: inherit;
+    background-color: beige;
+    border: groove;
+}
+.add a {
+	color: #3399ff;
+  position: relative;
+  text-decoration: none;
+  font-weight: bold;
+}
+.add a:hover{
+    color: grey;
 }
 
-table {
-    border-color: rgb(182, 182, 182);
+.table1 {
+    font-size: xx-large;
+    color: black;   
+    border-collapse: separate;
+    border-spacing: 0px 2px;
+}
+.table1 th{
+    border-bottom: 2px solid black;
+    text-align: left;
+    padding-right: 100px;
+    padding-left: 100px;
+    background-color: #ada8a8;
 }
 
-table th {
-    font-size: 20px;
+.table1 td{
+    padding-right: 100px;
+    padding-left: 100px;
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
-
-table td,
-table th {
-    color: inherit;
-}
-
-table a {
-    color: #3399ff;
-    /* lighter blue */
-    text-decoration: none;
+.table1 th:nth-child(1){
     font-weight: bold;
+    text-align: left;
+    background-color: darkgrey;
+}
+.table1 th:nth-child(4){
+    border-right: 2px solid black;
 }
 
-table a:hover {
-    color: #007acc;
-    /* slightly darker blue */
+.table1 td:nth-child(1){
+    font-weight: bold;
+    text-align: left;
+    background-color: darkgrey;
 }
+
+.table1 a {
+	color: #3399ff;
+  position: relative;
+  text-decoration: none;
+  font-weight: bold;
+}
+.table1 a:hover{
+    color: white;
+}
+
+/* Presentational Styles
+body {
+	display: grid;
+  font-family: 'Poppins', sans-serif;
+  font-size: 27px;
+  font-weight: 700;
+  height: 100vh;
+	place-items: center;
+} */
