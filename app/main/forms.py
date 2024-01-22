@@ -19,9 +19,11 @@ class ContactForm(FlaskForm):
     company_name = StringField('Company Name', validators=[
                                DataRequired()], render_kw={"placeholder": "Company Name"})
     company_email = EmailField('Company Email', validators=[
-        DataRequired()], render_kw={"placeholder": "Company Email"})
+                                DataRequired()], render_kw={"placeholder": "Company Email"})
     industry = StringField('Industry', validators=[DataRequired()], render_kw={
                            "placeholder": "Industry"})
     company_size = IntegerField('Company Size', validators=[
                                 DataRequired()], render_kw={"placeholder": "Company Size"})
+    company_note = StringField('Company Note', validators=[
+                                 DataRequired()], render_kw={"placeholder": "Leave us a note"})
     submit = SubmitField("Submit")
