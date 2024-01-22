@@ -195,15 +195,19 @@ h2:before {
     width: 100%;
     padding: 50px;
     display: flex;
-
 }
+.checkout-cart {
+    padding-left: 50px;
+    font-size: 1.3rem;
+}
+
 .discover {
     padding-left: 60px;
     text-align: left;
     justify-content: left;    
     font-size: larger;
 }
-.discover a {
+.discover a , .checkout-cart a{
     color: green;
     font-size: 1.3rem;
     text-decoration: none;
@@ -241,4 +245,8 @@ h2:before {
     &:hover:after {
         transform: translateX(0);
     }
+}
+.form-footer {
+    text-align: right;
+    font-size: larger;
 }
