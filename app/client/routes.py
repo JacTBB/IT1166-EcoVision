@@ -736,3 +736,10 @@ def account_update_payment():
         flash("Payment Method Validation Error!")
 
     return redirect(url_for('client.account'))
+
+
+
+
+@client.route('/client/chats')
+def chats_client():
+    return render_template('main/room/clientchat.html')

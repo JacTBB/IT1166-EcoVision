@@ -392,10 +392,4 @@ def disconnect():
     # print(f"{name} has left the room {room}")
 
 # end of chat room function
-@main.route('/staff/chats')
-def chats():
-    return render_template('main/room/staffchat.html')  
 
-@main.route('/client/chats')
-def chats_client():
-    return render_template('main/room/clientchats.html')
