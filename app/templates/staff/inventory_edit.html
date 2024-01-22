@@ -7,13 +7,41 @@
 {% endblock %}
 
 {% block content %}
-<div style="padding: 10px;">
-  <h1 style="padding-top: 50px;">Edit Product</h1>
-  <form action="" method="POST">
-    <div>{{form.name.label}}{{form.name}}</div>
-    <div>{{form.quantity.label}}{{form.quantity}}</div>
-    <div>{{form.submit()}}</div>
+<!-- CSS  -->
+<style>
+  #form1 {
+    padding-top: 100px;
+  } 
+  #form1 {
+    justify-content: center;
+    align-items: center;
+  }
+  #form1 form{
+    border: groove;
+    border-color: #ada8a8;
+    border-radius: 50px;
+    padding: 50px;
+    width: 45%;   
+    font-size: xx-large;  
+    background-color: white;
+  }
+ .div1 {
+  padding: 40px; 
+ }
+ h1 {
+  font-weight: bold;
+ }
+</style>
+<!-- CSS -->
+<!-- new -->  
+<section id="form1">
+  <form action=" " method="post">
+      <h1>Add  product</h1>
+      <div class="div1"> Enter name : {{form.name}}</div>
+      <div class="div1"> Enter quantity : {{form.quantity}}</div>
+      <div class="div1">{{form.submit()}}</div>
     {{ form.csrf_token }}
   </form>
-</div>
+</section>
+<!-- new -->
 {% endblock %}
