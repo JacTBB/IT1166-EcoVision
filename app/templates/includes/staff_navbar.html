@@ -82,8 +82,7 @@
       </a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}"
-        href="{{ url_for('main.news') }}">
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}">
         <i class="fa fa-newspaper" aria-hidden="true"></i>
         News Platform
       </a>
@@ -141,7 +140,7 @@
   </div>
 </nav>
 
-<button id="nav-collapsed" class="d-none" onclick="sidenav()">
+<button id="nav-collapsed" class="d-show" onclick="sidenav()">
   <i class="fa fa-angle-double-right" aria-hidden="true"></i>
 </button>
 
