@@ -13,9 +13,12 @@ html {
 }
 
 body {
-  background-color: #456c52;
   /* Main Theme color */
-  background-color: #436f4e;
+  background-color: #456c52;
+  /* Light Theme color */
+  background-color: #16371f;
+  /* Dark Theme color */
+  background-color: #81b58e;
   font-family: "Nunito";
 
   --main-color: white;
@@ -36,7 +39,6 @@ h1 {
 
 p {
   margin-bottom: 0;
-
 }
 
 .container-fluid {
@@ -48,7 +50,6 @@ footer {
   position: relative;
   top: 0;
 }
-
 
 /* Minimalist Scrollbar */
 ::-webkit-scrollbar {

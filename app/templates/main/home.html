@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="home-news sections">
+  <div class="home-news sections" style="display: none;">
     <h2 class="section-header">News & Insights</h2>
     <div class="news-row">
       {% for post in news|sort(attribute="postid", reverse=true) %}
@@ -89,7 +89,7 @@
     </div>
   </div> -->
 
-  <div class="home-clients sections">
+  <div class="home-clients sections" style="display: none;">
     <h2 class="section-header">Our Clients</h2>
     <div class="clients-logo">
       <img src="{{ url_for('static', filename='images/clients/apple-black-logo-svgrepo-com.svg') }}" alt=''>
