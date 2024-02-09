@@ -1,0 +1,85 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Carbon Trading - EcoVision{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/main.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/trading/dashboard.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="Welcome-block">
+      <img src="{{url_for('static', filename='images/Carbon Trading2.png')}}" alt="">
+      <h1>
+        your personal automated carbon offset</h1>
+      <h3>
+        We help change the carbon that you created into oxygen and green energy for everypone to use</h3>
+    </div>
+  
+    <div class="How-To">
+      <div class="Para1">
+        <div> <img src="../../static/images/RainForest.avif" alt="images"> </div>
+        <h2>Carbon Trading is the first step to help make the world a better place!</h2>
+        <br>
+        <h3>EcoVision has been the #1 company to assist in helping green projects all around the
+          world, we have worked with Apple Inc, Unilever, walmart IKEA and many more. we aim to
+          reduce climate change as much as 50% by 2050.
+        </h3>
+  
+      </div>
+      <div class="testing">
+        <script>
+            function showParagraph(id) {
+                // Loop through all paragraphs
+                for (var i = 1; i <= 4; i++) {
+                    var paragraph = document.getElementById("hidden-paragraph" + i);
+                    
+                    // Check if the current paragraph is the one to be shown
+                    if (i == id) {
+                        // If it's the one to be shown, toggle its display
+                        if (paragraph.style.display === "none") {
+                            paragraph.style.display = "block";
+                        } else {
+                            paragraph.style.display = "none";
+                        }
+                    } else {
+                        // If it's not the one to be shown, hide it
+                        paragraph.style.display = "none";
+                    }
+                }
+            }
+        </script>
+    </div>
+    
+    <div id="Para2">
+        <h2>How does carbon trading work</h2>
+        <div class="Steps">
+          <div class="StepsContent">
+              <div class="Step1">
+                  <button onclick="showParagraph(1)">Step : 1</button>
+              </div>
+              <div class="Step2">
+                  <button onclick="showParagraph(2)">Step : 2</button>
+              </div>
+              <div class="Step3">
+                  <button onclick="showParagraph(3)">Step : 3</button>
+              </div>
+              <div class="Step4">
+                  <button onclick="showParagraph(4)">Step : 4</button>
+              </div>
+          </div>
+          <div class="Paragraphs">
+            <div class="paragraph-container">
+              <p id="hidden-paragraph1" class="hidden-paragraph" style="display: none;">Locate Project that you wish to purchase</p>
+              <p id="hidden-paragraph2" class="hidden-paragraph" style="display: none;">Click on View more on any project</p>
+              <p id="hidden-paragraph3" class="hidden-paragraph" style="display: none;">Add to cart, the amount of stock you would like to purchase</p>
+              <p id="hidden-paragraph4" class="hidden-paragraph" style="display: none;">Click send invoice, and we will send you an email!</p>
+            </div>
+          </div>
+      </div>
+      
+        <hr>
+    </div> 
+
+    {% endblock %}

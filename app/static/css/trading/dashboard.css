@@ -78,6 +78,14 @@ body {
     padding: 100px;
 }
 
+#Para2 button {
+    text-align: center;
+    color: green;
+}
+#Para2 hr {
+    padding-bottom: 100px;
+}
+
 #Para2 h2 {
     font-size: 3.5em;
     text-align: center;
@@ -86,44 +94,48 @@ body {
     font-weight: bolder;
     justify-content: center;
 }
-#Para2 hr {
-    padding-bottom: 100px;
+.Steps {
+    font-size: 2.5em;
+}
+
+.Step1{
+    padding-top: 40px;
+}
+.Step2{
+    padding-top: 40px;
+}
+.Step3{
+    padding-top: 40px;
+}
+.Step4{
+    padding-top: 40px;
 }
 
 .Steps {
     display: flex;
-    text-align: center;
-    justify-content: center;
 }
 
-.Steps h3 {
-    padding-bottom: 40px;
-    font-size: 2.5em;
+.StepsContent {
+    flex: 1;
 }
 
-.Step1 {
-    padding: 35px;
-    font-size: large;
-    font-weight: bold;
+.Paragraphs {
+    flex: 1;
+    padding-left: 20px;
 }
 
-.Step2 {
-    padding: 35px;
-    font-size: large;
-    font-weight: bold;
+.paragraph-container {
+    background-color: beige;
+    padding: 10px; /* Padding around the content */
+    margin-bottom: 10px; /* Margin at the bottom to separate paragraphs */
 }
 
-.Step3 {
-    padding: 35px;
-    font-size: large;
-    font-weight: bold;
-}
 
-.Step4 {
-    padding: 35px;
-    font-size: large;
-    font-weight: bold;
-}
+
+
+
+
+
 
 .Project-Cells {
     background-color: beige;

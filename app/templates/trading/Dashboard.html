@@ -28,34 +28,60 @@
       </h3>
 
     </div>
-
-
-    <div id="Para2">
+    <div class="testing">
+      <script>
+          function showParagraph(id) {
+              // Loop through all paragraphs
+              for (var i = 1; i <= 4; i++) {
+                  var paragraph = document.getElementById("hidden-paragraph" + i);
+                  
+                  // Check if the current paragraph is the one to be shown
+                  if (i == id) {
+                      // If it's the one to be shown, toggle its display
+                      if (paragraph.style.display === "none") {
+                          paragraph.style.display = "block";
+                      } else {
+                          paragraph.style.display = "none";
+                      }
+                  } else {
+                      // If it's not the one to be shown, hide it
+                      paragraph.style.display = "none";
+                  }
+              }
+          }
+      </script>
+  </div>
+  
+  <div id="Para2">
       <h2>How does carbon trading work</h2>
       <div class="Steps">
-        <div class="Step1">
-          <h3>1</h3>
-          <p>Locate Project that you wish to purchase</p>
+        <div class="StepsContent">
+            <div class="Step1">
+                <button onclick="showParagraph(1)">Step : 1</button>
+            </div>
+            <div class="Step2">
+                <button onclick="showParagraph(2)">Step : 2</button>
+            </div>
+            <div class="Step3">
+                <button onclick="showParagraph(3)">Step : 3</button>
+            </div>
+            <div class="Step4">
+                <button onclick="showParagraph(4)">Step : 4</button>
+            </div>
         </div>
-
-        <div class="Step2">
-          <h3>2</h3>
-          <p>Click on View more on any project</p>
+        <div class="Paragraphs">
+          <div class="paragraph-container">
+            <p id="hidden-paragraph1" class="hidden-paragraph" style="display: none;">Locate Project that you wish to purchase</p>
+            <p id="hidden-paragraph2" class="hidden-paragraph" style="display: none;">Click on View more on any project</p>
+            <p id="hidden-paragraph3" class="hidden-paragraph" style="display: none;">Add to cart, the amount of stock you would like to purchase</p>
+            <p id="hidden-paragraph4" class="hidden-paragraph" style="display: none;">Click send invoice, and we will send you an email!</p>
+          </div>
         </div>
-
-        <div class="Step3">
-          <h3>3</h3>
-          <p>Add to cart, the amount of stock you would like to purchase</p>
-        </div>
-
-        <div class="Step4">
-          <h3>4</h3>
-          <p>Click send invoice, and we will send you an email!</p>
-        </div>
-      </div>
-      <hr>
     </div>
+    
+      <hr>
   </div>
+  
 
   <div class="Project-Cells">
     {% if current_user.is_authenticated == true and (current_user.type == "client" or current_user.type == "client") %}

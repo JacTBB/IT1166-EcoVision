@@ -51,6 +51,10 @@ def home():
 
     return render_template('trading/Dashboard.html', projects = projects)
 
+@trading.route("/about")
+def about():
+    return render_template('trading/AboutCarbon.html')
+
 @trading.route("/Checkout")
 @login_required
 def Checkout():
