@@ -10,6 +10,9 @@ from app.models.Company import Company
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
+from string import ascii_lowercase
+import random
+import os
 
 
 
@@ -672,9 +675,9 @@ def account():
 @login_required
 @check_user_type(['client'])
 def account_update_personal():
-    form1 = UpdatePersonalForm()
+    form = UpdatePersonalForm()
     
-    if form1.validate_on_submit():
+    if form.validate_on_submit():
         try:
             userData = Client.query.get(current_user.id)
             
@@ -683,14 +686,21 @@ def account_update_personal():
             username = request.form.get("username")
             email = request.form.get("email")
             phone_number = request.form.get("phone_number")
-            profile_pictue = request.form.get("profile_pictue")
+            
+            profile_pictue = form.profile_picture.data
+            profile_pictue_filename = "profile-"
+            for i in range(10):
+                profile_pictue_filename += random.choice(ascii_lowercase)
+            profile_pictue.save(os.path.join(
+                './app/static/images/uploads', f'{profile_pictue_filename}'
+            ))
             
             userData.first_name = first_name
             userData.last_name = last_name
             userData.username = username
             userData.email = email
             userData.phone_number = phone_number
-            userData.profile_pictue = profile_pictue
+            userData.profile_picture = profile_pictue_filename
 
             db.session.commit()
         except Exception as e:
@@ -698,6 +708,9 @@ def account_update_personal():
             db.session.rollback()
     else:
         flash("Personal Profile Validation Error!")
+        for input in form:
+            if input.errors:
+                flash(f'\n{input.name} - {input.errors}')
 
     return redirect(url_for('client.account'))
 
@@ -707,9 +720,9 @@ def account_update_personal():
 @login_required
 @check_user_type(['client'])
 def account_update_password():
-    form2 = ChangePasswordForm()
+    form = ChangePasswordForm()
     
-    if form2.validate_on_submit():
+    if form.validate_on_submit():
         try:
             userData = Client.query.get(current_user.id)
             
@@ -731,21 +744,28 @@ def account_update_password():
 @login_required
 @check_user_type(['client'])
 def account_update_company():
-    form3 = UpdateCompanyForm()
+    form = UpdateCompanyForm()
     
-    if form3.validate_on_submit():
+    if form.validate_on_submit():
         try:
             companyData = Company.query.get(g.company.id)
 
             email = request.form.get("email")
             phone_number = request.form.get("phone_number")
             address = request.form.get("address")
-            logo = request.form.get("logo")
+            
+            logo = form.logo.data
+            logo_filename = "logo-"
+            for i in range(10):
+                logo_filename += random.choice(ascii_lowercase)
+            logo.save(os.path.join(
+                './app/static/images/uploads', f'{logo_filename}'
+            ))
 
             companyData.email = email
             companyData.phone_number = phone_number
             companyData.address = address
-            companyData.logo = logo
+            companyData.logo = logo_filename
 
             db.session.commit()
         except Exception as e:

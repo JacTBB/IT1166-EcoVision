@@ -57,7 +57,7 @@ with app.app_context():
                           email="company@company.com",
                           phone_number="65501234",
                           address="SG 1234",
-                          logo="https://cdn-icons-png.flaticon.com/512/1643/1643650.png",
+                          logo="",
                           plan="free")
         db.session.add(company)
 
@@ -83,7 +83,7 @@ with app.app_context():
                           email="company@company.com",
                           phone_number="65501234",
                           address="SG 1234",
-                          logo="https://cdn-icons-png.flaticon.com/512/1643/1643650.png",
+                          logo="",
                           plan="custom")
         db.session.add(company)
 

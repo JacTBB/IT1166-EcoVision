@@ -33,7 +33,7 @@
 
           <section id="section-p1">
             <div class="profilepicture">
-              <img src="{{ current_user.profile_picture }}" />
+              <img src="{{ url_for('static', filename='images/uploads/' + current_user.profile_picture) }}" />
             </div>
             <h3>{{ current_user.username }}</h3>
           </section>
@@ -41,7 +41,7 @@
           <hr>
 
           <section id="section-p2">
-            <form action="{{ url_for('client.account_update_personal') }}" method="post" class="row g-3 needs-validation" novalidate>
+            <form action="{{ url_for('client.account_update_personal') }}" method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
               
               <div class="col-md-4">
                 <label for="input-p2-1" class="form-label">First name</label>
@@ -159,7 +159,7 @@
 
           <section id="section-c1">
             <div class="profilepicture">
-              <img src="{{ g.company.logo }}" />
+              <img src="{{ url_for('static', filename='images/uploads/' + g.company.logo) }}" />
             </div>
             <h3>{{ g.company.name }}</h3>
           </section>
@@ -167,7 +167,7 @@
           <hr>
 
           <section id="section-c2">
-            <form action="{{ url_for('client.account_update_company') }}" method="post" class="row g-3 needs-validation" novalidate>
+            <form action="{{ url_for('client.account_update_company') }}" method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
 
               <div class="col-md-6">
                 <label for="input-c2-1" class="form-label">Primary Email</label>
