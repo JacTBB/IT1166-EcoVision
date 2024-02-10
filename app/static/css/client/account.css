@@ -39,6 +39,10 @@
 
 
 
+#right-pane {
+    width: 100%;
+}
+
 #right-pane h2 {
     margin-bottom: 5px;
     padding: 5px 10px;
@@ -118,4 +122,29 @@ hr {
 
 #company-profile #section-c3 {
     max-width: 800px;
+}
+
+
+
+#billing #section-b1 p {
+    margin: 5px 0;
+}
+
+#billing .paymentbutton {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    max-width: 250px;
+    background-color: rgb(240, 245, 240);
+    border: none;
+    border-radius: 10px;
+    color: rgb(80,80,80);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+#billing .paymentbutton:hover {
+    color: black;
+    font-weight: bold;
 }

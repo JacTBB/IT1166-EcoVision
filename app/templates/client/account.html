@@ -217,52 +217,15 @@
 
           <section id="section-b1">
             <h3>Payment Method</h3>
-            <p>Visa Card: {{ g.company.payment_card_no }}
+            <p>Card: **** **** **** {{ g.company.payment_card_no[-4:] }}</p>
+            <p>Expires: {{ g.company.payment_expiry }}
+            <a class="paymentbutton" href={{ url_for('client.account_update_payment') }}>Update Payment Method</a>
           </section>
 
           <hr>
 
           <section id="section-b2">
-            <form action="{{ url_for('client.account_update_payment') }}" method="post" class="row g-3 needs-validation" novalidate>
-
-              <div class="col-md-6">
-                <label for="input-b2-1" class="form-label">Card Name</label>
-                {{ form4.name(id_="input-b2-1", class_="form-control") }}
-                <div class="invalid-feedback">
-                  Please provide a valid name.
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <label for="input-b2-2" class="form-label">Card Number</label>
-                {{ form4.card_no(id_="input-b2-2", class_="form-control") }}
-                <div class="invalid-feedback">
-                  Please provide a valid card number.
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <label for="input-b2-3" class="form-label">Expiry</label>
-                {{ form4.expiry(id_="input-b2-3", class_="form-control") }}
-                <div class="invalid-feedback">
-                  Please provide a valid expiry date.
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <label for="input-b2-4" class="form-label">CVC</label>
-                {{ form4.cvc(id_="input-b2-4", class_="form-control") }}
-                <div class="invalid-feedback">
-                  Please provide a valid card CVC.
-                </div>
-              </div>
-
-              <div class="col-12">
-                {{ form4.csrf_token }}
-                <button class="btn button" type="submit">Update Payment Method</button>
-              </div>
-
-            </form>
+            <h3>Transaction History</h3>
           </section>
 
         </div>

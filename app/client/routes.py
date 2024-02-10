@@ -661,13 +661,7 @@ def account():
     form3.address.data = g.company.address
     form3.logo.data = g.company.logo
     
-    form4 = UpdatePaymentForm()
-    form4.name.data = g.company.payment_name
-    form4.card_no.data = g.company.payment_card_no
-    form4.expiry.data = g.company.payment_expiry
-    form4.cvc.data = g.company.payment_cvc
-    
-    return render_template("client/account.html", form1=form1, form2=form2, form3=form3, form4=form4)
+    return render_template("client/account.html", form1=form1, form2=form2, form3=form3)
 
 
 
@@ -735,6 +729,9 @@ def account_update_password():
             db.session.rollback()
     else:
         flash("Change Password Validation Error!")
+        for input in form:
+            if input.errors:
+                flash(f'\n{input.name} - {input.errors}')
 
     return redirect(url_for('client.account'))
 
@@ -773,39 +770,48 @@ def account_update_company():
             db.session.rollback()
     else:
         flash("Company Profile Validation Error!")
+        for input in form:
+            if input.errors:
+                flash(f'\n{input.name} - {input.errors}')
 
     return redirect(url_for('client.account'))
 
 
 
-@client.route("/account/update/payment", methods=["POST"])
+@client.route("/account/update/payment", methods=["GET", "POST"])
 @login_required
 @check_user_type(['client'])
 def account_update_payment():
-    form4 = UpdatePaymentForm()
+    form = UpdatePaymentForm()
     
-    if form4.validate_on_submit():
-        try:
-            companyData = Company.query.get(g.company.id)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                companyData = Company.query.get(g.company.id)
 
-            name = request.form.get("name")
-            card_no = request.form.get("card_no")
-            expiry = request.form.get("expiry")
-            cvc = request.form.get("cvc")
+                name = request.form.get("name")
+                card_no = request.form.get("card_no")
+                expiry = request.form.get("expiry")
+                cvc = request.form.get("cvc")
 
-            companyData.payment_name = name
-            companyData.payment_card_no = card_no
-            companyData.payment_expiry = expiry
-            companyData.payment_cvc = cvc
+                companyData.payment_name = name
+                companyData.payment_card_no = card_no
+                companyData.payment_expiry = expiry
+                companyData.payment_cvc = cvc
 
-            db.session.commit()
-        except Exception as e:
-            print(f"Error occurred: {e}")
-            db.session.rollback()
-    else:
-        flash("Payment Method Validation Error!")
+                db.session.commit()
+                
+                return redirect(url_for('client.account'))
+            except Exception as e:
+                print(f"Error occurred: {e}")
+                db.session.rollback()
+        else:
+            flash("Payment Method Validation Error!")
+            for input in form:
+                if input.errors:
+                    flash(f'\n{input.name} - {input.errors}')
 
-    return redirect(url_for('client.account'))
+    return render_template("client/account_payment.html", form=form)
 
 
 
