@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
         self.username = username
         self.email = email
         self.phone_number = "00000000"
-        self.profile_picture = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        self.profile_picture = "icon.jpg"
         self.type = type
 
     def get_id(self):

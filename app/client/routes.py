@@ -755,11 +755,11 @@ def account_update_company():
             address = request.form.get("address")
             
             logo = form.logo.data
-            logo_filename = "logo-"
+            logo_filename = "uploads/logo-"
             for i in range(10):
                 logo_filename += random.choice(ascii_lowercase)
             logo.save(os.path.join(
-                './app/static/images/uploads', f'{logo_filename}'
+                './app/static/images', f'{logo_filename}'
             ))
 
             companyData.email = email
