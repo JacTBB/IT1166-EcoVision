@@ -20,7 +20,7 @@
         href="{{ url_for('client.account') }}">
         <p class="username">{{ current_user.username }}</p>
         <div class="profilepicture">
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <img src="{{ url_for('static', filename='images/uploads/' + current_user.profile_picture) }}" />
         </div>
       </a>
     </li>

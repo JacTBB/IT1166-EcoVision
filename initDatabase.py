@@ -57,7 +57,7 @@ with app.app_context():
                           email="company@company.com",
                           phone_number="65501234",
                           address="SG 1234",
-                          logo="https://cdn-icons-png.flaticon.com/512/1643/1643650.png",
+                          logo="",
                           plan="free")
         db.session.add(company)
 
@@ -83,7 +83,7 @@ with app.app_context():
                           email="company@company.com",
                           phone_number="65501234",
                           address="SG 1234",
-                          logo="https://cdn-icons-png.flaticon.com/512/1643/1643650.png",
+                          logo="",
                           plan="custom")
         db.session.add(company)
 
@@ -103,12 +103,14 @@ with app.app_context():
                                   carbonfootprint=randint(200, 500), energyusage=randint(200, 500), waterusage=randint(200, 500))
                 db.session.add(utility)
 
+        countDocument = 0
         for j in range(1, 3):
             documents = []
             for k in range(1, 4):
-                documents.append(k)
-                document = Document(company=i, name=f"Document {k}", created=datetime(2023, j, 1), updated=datetime(2023, j, 2),
+                countDocument += 1
+                document = Document(company=i, name=f"Document {j}-{k}", assessment=j, created=datetime(2023, j, 1), updated=datetime(2023, j, 2),
                                     content="Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consecteteeeur")
+                documents.append(countDocument)
                 db.session.add(document)
 
             assessment = Assessment(company=i, location=f"SG {j}", name=f"Office {j}", type="Environmental Impact Assessment",
