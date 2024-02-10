@@ -1,5 +1,5 @@
 from app.database import db
-from sqlalchemy import Integer, String, Date, PickleType
+from sqlalchemy import Integer, String, Date, JSON
 from sqlalchemy.orm import Mapped, mapped_column
 
 
@@ -29,11 +29,12 @@ class Assessment(db.Model):
     start_date: Mapped[Date] = mapped_column(Date)
     completed_date: Mapped[Date] = mapped_column(Date, nullable=True)
     progress: Mapped[int] = mapped_column(Integer)
-    documents = db.Column(PickleType)
+    documents = db.Column(JSON)
 
 class Document(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     company: Mapped[int] = mapped_column(Integer)
+    assessment: Mapped[int] = mapped_column(Integer)
     name: Mapped[str] = mapped_column(String)
     created: Mapped[Date] = mapped_column(Date)
     updated: Mapped[Date] = mapped_column(Date)

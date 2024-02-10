@@ -57,3 +57,8 @@ class EditAssessmentForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     type = StringField(validators=[InputRequired()], render_kw={"placeholder": "Type"})
     progress = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Progress"})
+    
+
+
+class AddDocumentForm(FlaskForm):
+    name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})

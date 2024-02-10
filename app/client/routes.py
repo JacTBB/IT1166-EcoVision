@@ -1,12 +1,13 @@
 from flask import render_template, request, redirect, url_for, session, g, flash
 from app.client import client
 from app.database import db
+from sqlalchemy.orm.attributes import flag_modified
 from flask_login import login_required, current_user
 from app.auth import check_user_type
 from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
-from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm
+from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
 
@@ -468,7 +469,7 @@ def assessment(assessment):
     
     documents = {}
     for documentID in assessmentData.documents:
-        document = db.session.query(Document).filter_by(company=g.company.id, id=documentID).first()
+        document = db.session.query(Document).filter_by(company=g.company.id, assessment=assessment, id=documentID).first()
         documents[documentID] = document
 
     return render_template('client/assessment.html', assessment=assessmentData, documents=documents)
@@ -563,11 +564,11 @@ def assessment_delete(assessment):
 
 
 
-@client.route("/document/<document>", methods=['GET', 'POST'])
+@client.route("/assessment/<assessment>/document/<document>", methods=['GET', 'POST'])
 @login_required
 @check_user_type(['admin', 'manager', 'consultant', 'client'])
-def document(document):
-    document = db.session.query(Document).filter_by(company=g.company.id, id=document).first()
+def document(assessment, document):
+    document = db.session.query(Document).filter_by(company=g.company.id, assessment=assessment, id=document).first()
     
     if request.method == 'POST':
         try:
@@ -580,6 +581,55 @@ def document(document):
             db.session.rollback()
 
     return render_template('client/document.html', document=document)
+
+
+
+@client.route("/assessment/<assessment>/document/add", methods=['GET', 'POST'])
+@login_required
+@check_user_type(['admin', 'manager', 'consultant'])
+def document_add(assessment):
+    form = AddDocumentForm()
+
+    if form.validate_on_submit():
+        try:
+            name = request.form.get("name")
+            timestamp = datetime.now()
+
+            document = Document(company=g.company.id, assessment=assessment, name=name, created=timestamp, updated=timestamp, content="")
+            db.session.add(document)
+            
+            assessmentData = db.session.query(Assessment).filter_by(company=g.company.id,id=assessment).first()
+            assessmentData.documents.append(document.id)
+            flag_modified(assessmentData, 'documents')
+            
+            db.session.commit()
+            return redirect(url_for('client.document', assessment=assessment, document=document.id))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("client/document_add.html", form=form)
+
+
+
+@client.route("/assessment/<assessment>/document/<document>/delete")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant'])
+def document_delete(assessment, document):
+    try:
+        document = db.session.query(Document).filter_by(company=g.company.id, assessment=assessment, id=document).first()
+        
+        assessmentData = db.session.query(Assessment).filter_by(company=g.company.id,id=assessment).first()
+        assessmentData.documents.remove(document.id)
+        flag_modified(assessmentData, 'documents')
+        
+        db.session.delete(document)
+        db.session.commit()
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        db.session.rollback()
+
+    return redirect(url_for('client.assessment', assessment=assessment))
 
 
 
