@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, IntegerField, EmailField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 
 
 
@@ -28,6 +28,5 @@ class UpdateCompanyForm(FlaskForm):
 
 class UpdatePaymentForm(FlaskForm):
     name = StringField(validators=[DataRequired()])
-    card_no = IntegerField(validators=[DataRequired()])
-    expiry = IntegerField(validators=[DataRequired()])
-    cvc = IntegerField(validators=[DataRequired()])
+    card_no = StringField(validators=[DataRequired(), Length(min=16,max=16)])
+    cvc = StringField(validators=[DataRequired(), Length(min=3,max=4)])

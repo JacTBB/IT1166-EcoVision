@@ -27,11 +27,19 @@
         </div>
       </div>
 
-      <div class="col-md-6">
-        <label for="expiry" class="form-label">Expiry</label>
-        {{ form.expiry(id_="expiry", class_="form-control") }}
+      <div class="col-md-3">
+        <label for="expiry-month" class="form-label">Expiry Month</label>
+        <input class="form-control" id="expiry-month" name="expiry-month" required type="number" min=1 max=12>
         <div class="invalid-feedback">
-          Please provide a valid expiry date.
+          Please provide a valid expiry month.
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="expiry-year" class="form-label">Expiry Year</label>
+        <input class="form-control" id="expiry-year" name="expiry-year" required type="number" min=2024 max=2099>
+        <div class="invalid-feedback">
+          Please provide a valid expiry year.
         </div>
       </div>
 

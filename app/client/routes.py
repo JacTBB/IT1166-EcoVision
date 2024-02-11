@@ -815,8 +815,11 @@ def account_update_payment():
 
                 name = request.form.get("name")
                 card_no = request.form.get("card_no")
-                expiry = request.form.get("expiry")
+                expiry_month = request.form.get("expiry-month")
+                expiry_year = request.form.get("expiry-year")
                 cvc = request.form.get("cvc")
+                
+                expiry = f"{expiry_month}/{expiry_year[2:]}"
 
                 companyData.payment_name = name
                 companyData.payment_card_no = card_no
