@@ -28,6 +28,14 @@ def get_company():
     if not 'company' in session:
         if request.endpoint == 'client.company_view':
             return
+        if request.endpoint == 'client.companies':
+            return
+        if request.endpoint == 'client.company_add':
+            return
+        if request.endpoint == 'client.company_edit':
+            return
+        if request.endpoint == 'client.company_delete':
+            return
         return redirect(url_for('staff.companies'))
         
     company = Company.query.get(session['company'])
@@ -156,11 +164,14 @@ def company_add():
         try:
             name = request.form.get("name")
             industry = request.form.get("industry")
-            address = request.form.get("address")
             email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            address = request.form.get("address")
             plan = request.form.get("plan")
+            
+            logo = "icon.jpg"
 
-            company = Company(name=name, industry=industry, address=address, email=email, plan=plan)
+            company = Company(name=name, industry=industry, email=email, phone_number=phone_number, address=address, logo=logo, plan=plan)
             db.session.add(company)
             db.session.commit()
 
@@ -190,18 +201,21 @@ def company_edit(company):
         try:
             name = request.form.get("name")
             industry = request.form.get("industry")
-            address = request.form.get("address")
             email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            address = request.form.get("address")
             plan = request.form.get("plan")
 
             if name:
                 companyData.name = name
             if industry:
                 companyData.industry = industry
-            if address:
-                companyData.address = address
             if email:
                 companyData.email = email
+            if phone_number:
+                companyData.phone_number = phone_number
+            if address:
+                companyData.address = address
             if plan:
                 companyData.plan = plan
 
