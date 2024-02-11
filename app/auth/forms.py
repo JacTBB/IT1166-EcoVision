@@ -19,13 +19,11 @@ class RegisterForm(FlaskForm):
     
     company_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Name"})
     company_industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Industry"})
-    company_email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Email"})
+    company_email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Company Email"})
     company_phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Phone number"})
     company_address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Address"})
     
     submit = SubmitField("Register")
-
-
 
 class AddUserForm(FlaskForm):
     username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
