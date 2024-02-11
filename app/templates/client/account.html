@@ -33,7 +33,7 @@
 
           <section id="section-p1">
             <div class="profilepicture">
-              <img src="{{ url_for('static', filename='images/uploads/' + current_user.profile_picture) }}" />
+              <img src="{{ url_for('static', filename='images/' + current_user.profile_picture) }}" />
             </div>
             <h3>{{ current_user.username }}</h3>
           </section>
@@ -159,7 +159,7 @@
 
           <section id="section-c1">
             <div class="profilepicture">
-              <img src="{{ url_for('static', filename='images/uploads/' + g.company.logo) }}" />
+              <img src="{{ url_for('static', filename='images/' + g.company.logo) }}" />
             </div>
             <h3>{{ g.company.name }}</h3>
           </section>
@@ -217,8 +217,12 @@
 
           <section id="section-b1">
             <h3>Payment Method</h3>
-            <p>Card: **** **** **** {{ g.company.payment_card_no[-4:] }}</p>
-            <p>Expires: {{ g.company.payment_expiry }}
+            {% if g.company.payment_card_no %}
+              <p>Card: **** **** **** {{ g.company.payment_card_no[-4:] }}</p>
+              <p>Expires: {{ g.company.payment_expiry }}</p>
+            {% else %}
+              <p>Please add a payment method</p>
+            {% endif %}
             <a class="paymentbutton" href={{ url_for('client.account_update_payment') }}>Update Payment Method</a>
           </section>
 
@@ -226,6 +230,23 @@
 
           <section id="section-b2">
             <h3>Transaction History</h3>
+
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Price</th>
+              </tr>
+              {% for id, transaction in transactions.items() %}
+                <tr>
+                  <td>{{ id }}</td>
+                  <td>{{ transaction.name }}</td>
+                  <td>{{ transaction.date }}</td>
+                  <td>{{ transaction.price }}</td>
+                <tr>
+              {% endfor %}
+            </table>
           </section>
 
         </div>
@@ -256,6 +277,13 @@
       }
 
       page('personal-profile');
+
+      const queryString = window.location.search
+      const urlParams = new URLSearchParams(queryString)
+      const pageQuery = urlParams.get('page')
+      
+      if (pageQuery == 'company-profile') page('company-profile')
+      if (pageQuery == 'billing') page('billing')
     </script>
 
     <script>

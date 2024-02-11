@@ -7,6 +7,7 @@ from app.auth import check_user_type
 from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
+from app.models.Transaction import Transaction
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
@@ -26,6 +27,14 @@ def get_company():
     
     if not 'company' in session:
         if request.endpoint == 'client.company_view':
+            return
+        if request.endpoint == 'client.companies':
+            return
+        if request.endpoint == 'client.company_add':
+            return
+        if request.endpoint == 'client.company_edit':
+            return
+        if request.endpoint == 'client.company_delete':
             return
         return redirect(url_for('staff.companies'))
         
@@ -155,11 +164,14 @@ def company_add():
         try:
             name = request.form.get("name")
             industry = request.form.get("industry")
-            address = request.form.get("address")
             email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            address = request.form.get("address")
             plan = request.form.get("plan")
+            
+            logo = "icon.jpg"
 
-            company = Company(name=name, industry=industry, address=address, email=email, plan=plan)
+            company = Company(name=name, industry=industry, email=email, phone_number=phone_number, address=address, logo=logo, plan=plan)
             db.session.add(company)
             db.session.commit()
 
@@ -189,18 +201,21 @@ def company_edit(company):
         try:
             name = request.form.get("name")
             industry = request.form.get("industry")
-            address = request.form.get("address")
             email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            address = request.form.get("address")
             plan = request.form.get("plan")
 
             if name:
                 companyData.name = name
             if industry:
                 companyData.industry = industry
-            if address:
-                companyData.address = address
             if email:
                 companyData.email = email
+            if phone_number:
+                companyData.phone_number = phone_number
+            if address:
+                companyData.address = address
             if plan:
                 companyData.plan = plan
 
@@ -661,7 +676,16 @@ def account():
     form3.address.data = g.company.address
     form3.logo.data = g.company.logo
     
-    return render_template("client/account.html", form1=form1, form2=form2, form3=form3)
+    transactions = {}
+    transactionsData = db.session.query(Transaction).filter_by(company=g.company.id)
+    for transaction in transactionsData:
+        transactions[transaction.id] = {
+            'name': transaction.name,
+            'date': transaction.date,
+            'price': transaction.price,
+        }
+    
+    return render_template("client/account.html", form1=form1, form2=form2, form3=form3, transactions=transactions)
 
 
 
@@ -704,7 +728,7 @@ def account_update_personal():
         flash("Personal Profile Validation Error!")
         for input in form:
             if input.errors:
-                flash(f'\n{input.name} - {input.errors}')
+                flash(f'\n{input.name} - {input.errors[0]}')
 
     return redirect(url_for('client.account'))
 
@@ -731,7 +755,7 @@ def account_update_password():
         flash("Change Password Validation Error!")
         for input in form:
             if input.errors:
-                flash(f'\n{input.name} - {input.errors}')
+                flash(f'\n{input.name} - {input.errors[0]}')
 
     return redirect(url_for('client.account'))
 
@@ -772,9 +796,9 @@ def account_update_company():
         flash("Company Profile Validation Error!")
         for input in form:
             if input.errors:
-                flash(f'\n{input.name} - {input.errors}')
+                flash(f'\n{input.name} - {input.errors[0]}')
 
-    return redirect(url_for('client.account'))
+    return redirect(url_for('client.account', page='company-profile'))
 
 
 
@@ -791,8 +815,11 @@ def account_update_payment():
 
                 name = request.form.get("name")
                 card_no = request.form.get("card_no")
-                expiry = request.form.get("expiry")
+                expiry_month = request.form.get("expiry-month")
+                expiry_year = request.form.get("expiry-year")
                 cvc = request.form.get("cvc")
+                
+                expiry = f"{expiry_month}/{expiry_year[2:]}"
 
                 companyData.payment_name = name
                 companyData.payment_card_no = card_no
@@ -801,7 +828,7 @@ def account_update_payment():
 
                 db.session.commit()
                 
-                return redirect(url_for('client.account'))
+                return redirect(url_for('client.account', page='billing'))
             except Exception as e:
                 print(f"Error occurred: {e}")
                 db.session.rollback()
@@ -809,9 +836,11 @@ def account_update_payment():
             flash("Payment Method Validation Error!")
             for input in form:
                 if input.errors:
-                    flash(f'\n{input.name} - {input.errors}')
+                    flash(f'\n{input.name} - {input.errors[0]}')
 
     return render_template("client/account_payment.html", form=form)
+
+
 
 
 

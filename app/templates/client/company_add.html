@@ -1,4 +1,4 @@
-{% extends "layouts/client.html" %}
+{% extends "layouts/staff.html" %}
 
 {% block title %}Add Company - EcoVision{% endblock %}
 
@@ -27,18 +27,26 @@
       </div>
 
       <div class="col-md-4">
-        <label for="address" class="form-label">Address</label>
-        {{ form.address(id_="address", class_="form-control") }}
-        <div class="invalid-feedback">
-          Please enter a valid address.
-        </div>
-      </div>
-
-      <div class="col-md-4">
         <label for="email" class="form-label">Email</label>
         {{ form.email(id_="email", class_="form-control") }}
         <div class="invalid-feedback">
           Please enter a valid email.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        {{ form.phone_number(id_="phone_number", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid phone number.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="address" class="form-label">Address</label>
+        {{ form.address(id_="address", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid address.
         </div>
       </div>
 

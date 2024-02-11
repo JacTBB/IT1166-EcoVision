@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField, SelectField, IntegerField
+from wtforms import StringField, DateField, SelectField, IntegerField, FloatField
 from wtforms.validators import InputRequired
 
 
@@ -7,15 +7,17 @@ from wtforms.validators import InputRequired
 class AddCompanyForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Industry"})
-    address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
     email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
+    address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
     plan = SelectField(validators=[InputRequired()], choices=['free', 'custom'])
 
 class EditCompanyForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Industry"})
-    address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
     email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
+    address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
     plan = SelectField(validators=[InputRequired()], choices=['free', 'custom'])
     
     

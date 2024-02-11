@@ -148,3 +148,43 @@ hr {
     color: black;
     font-weight: bold;
 }
+
+#billing table {
+    border-collapse: collapse;
+}
+
+#billing table th {
+    font-size: 20px;
+}
+
+#billing table td,
+#billing table th {
+    padding: 5px;
+    color: inherit;
+    border: solid 1px rgb(200, 200, 200);
+}
+
+#billing table a {
+    color: #3399ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#billing table a:hover {
+    color: #007acc;
+}
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}

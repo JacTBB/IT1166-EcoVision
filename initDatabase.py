@@ -57,7 +57,7 @@ with app.app_context():
                           email="company@company.com",
                           phone_number="65501234",
                           address="SG 1234",
-                          logo="",
+                          logo="icon.jpg",
                           plan="free")
         db.session.add(company)
 
@@ -83,7 +83,7 @@ with app.app_context():
                           email="company@company.com",
                           phone_number="65501234",
                           address="SG 1234",
-                          logo="",
+                          logo="icon.jpg",
                           plan="custom")
         db.session.add(company)
 
