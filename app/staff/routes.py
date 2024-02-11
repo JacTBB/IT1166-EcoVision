@@ -6,7 +6,10 @@ from app.database import db
 from flask_login import current_user, login_required
 from app.auth import check_user_type
 from app.models.Inventory import Product
-from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo
+from app.models.Transaction import Transaction
+from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AddTransactionForm
+from datetime import datetime
+
 
 
 @staff.route("/")
@@ -182,7 +185,35 @@ def enquiry_edit(enquiry):
 
     return render_template("staff/enquiries_edit.html", form=form)
 
+
+
 @staff.route('/staff/chats')
 def chats():
     return render_template('main/room/staffchat.html')  
 
+
+
+
+@staff.route("/transaction/add", methods=['GET', 'POST'])
+@login_required
+@check_user_type(['admin', 'manager'])
+def transaction_add():
+    form = AddTransactionForm()
+
+    if form.validate_on_submit():
+        try:
+            company = request.form.get("company")
+            name = request.form.get("name")
+            date = datetime.strptime(request.form.get("date"), "%Y-%m-%d").date()
+            price = request.form.get("price")
+
+            transaction = Transaction(company=company, name=name, date=date, price=price)
+            db.session.add(transaction)
+            db.session.commit()
+
+            return redirect(url_for('staff.companies'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("staff/transaction_add.html", form=form)

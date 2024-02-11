@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField
+from wtforms import StringField, IntegerField, SubmitField, DateField, FloatField
 from wtforms.validators import InputRequired
 
 
@@ -34,3 +34,11 @@ class EditCompanyInfo(FlaskForm):
     industry = StringField(render_kw={"placeholder": "Industry"})
     company_size = StringField(render_kw={"placeholder": "Company Size"})
     submit = SubmitField('Update Company Info')
+
+
+
+class AddTransactionForm(FlaskForm):
+    company = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Company"})
+    name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
+    date = DateField(validators=[InputRequired()], render_kw={"placeholder": "Date"})
+    price = FloatField(validators=[InputRequired()], render_kw={"placeholder": "Price"})

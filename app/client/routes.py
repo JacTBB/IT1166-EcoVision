@@ -7,6 +7,7 @@ from app.auth import check_user_type
 from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
+from app.models.Transaction import Transaction
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
@@ -661,7 +662,16 @@ def account():
     form3.address.data = g.company.address
     form3.logo.data = g.company.logo
     
-    return render_template("client/account.html", form1=form1, form2=form2, form3=form3)
+    transactions = {}
+    transactionsData = db.session.query(Transaction).filter_by(company=g.company.id)
+    for transaction in transactionsData:
+        transactions[transaction.id] = {
+            'name': transaction.name,
+            'date': transaction.date,
+            'price': transaction.price,
+        }
+    
+    return render_template("client/account.html", form1=form1, form2=form2, form3=form3, transactions=transactions)
 
 
 
@@ -774,7 +784,7 @@ def account_update_company():
             if input.errors:
                 flash(f'\n{input.name} - {input.errors}')
 
-    return redirect(url_for('client.account'))
+    return redirect(url_for('client.account', page='company-profile'))
 
 
 
@@ -801,7 +811,7 @@ def account_update_payment():
 
                 db.session.commit()
                 
-                return redirect(url_for('client.account'))
+                return redirect(url_for('client.account', page='billing'))
             except Exception as e:
                 print(f"Error occurred: {e}")
                 db.session.rollback()
@@ -812,6 +822,8 @@ def account_update_payment():
                     flash(f'\n{input.name} - {input.errors}')
 
     return render_template("client/account_payment.html", form=form)
+
+
 
 
 
