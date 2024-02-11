@@ -4,93 +4,208 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/dashboardmain.css') }}" />
   {{ ckeditor.load() }}
 {% endblock %}
 
 {% block content %}
-<div class="ProjectHead">
-  <img src="../../static/images/Replant2.png" alt="">
-  <h1>Welcome to Project {{project.name}} </h1>
-</div>
+<div class="PROJECT">
+  <div class="Header">
+    <h1>{{project.type}} project by {{project.name}}</h1>
+    <hr>
+    <a href="{{url_for('trading.home')}}" class="link">back to projects</a>
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    <p>https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69214561/3/?bust=1696792028&width=720</p>
+    <p>https://images.livemint.com/img/2023/12/07/1140x641/dog-4615198_1280_1701927561029_1701927572424.jpg</p>
+    {% endif %}
+    <hr>
+  </div>
 
-<div class="projectname">
-  <h2 style="padding-top: 100px;">Project {{project.name}} - {{project.type}}</h2>
-</div>
-<div class="section">
-  <div class="S1">
+  <div class="Carosell">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Images will be added dynamically here -->
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    <div class="container mt-3">
+        <div class="form-group">
+            <label for="imageUrl">Image URL:</label>
+            <input type="text" class="form-control" id="imageUrl" placeholder="Enter image URL">
+        </div>
+        <button type="button" class="btn btn-primary" id="addImageBtn">Add Image</button>
+    </div>
+    {% endif %}
+    
+    </body>
+    
+    <script>
+      // JavaScript to manage the carousel
+
+      $(document).ready(function() {
+          const carouselInner = $('.carousel-inner');
+          const carouselIndicators = $('.carousel-indicators');
+
+          // Retrieve stored image URLs and flag from localStorage
+          let storedImageURLs = JSON.parse(localStorage.getItem('imageURLs')) || [];
+          let imagesLoaded = localStorage.getItem('imagesLoaded') === 'true';
+
+          // Load stored images to the carousel if not already loaded
+          if (imagesLoaded) {
+              storedImageURLs.forEach(addImageToCarousel);
+          }
+
+          // Add images to the carousel
+          function addImageToCarousel(imageUrl) {
+              const carouselItem = $('<div class="carousel-item"></div>');
+              if (carouselInner.children().length === 0) {
+                  carouselItem.addClass('active');
+              } 
+
+              const image = $('<img class="d-block w-100">');
+              image.attr('src', imageUrl);
+
+              carouselItem.append(image);
+              carouselInner.append(carouselItem);
+
+              // Add carousel indicator
+              const indicator = $('<li data-target="#myCarousel" data-slide-to="' + carouselIndicators.children().length + '"></li>');
+              if (carouselIndicators.children().length === 0) {
+                  indicator.addClass('active');
+              }
+              carouselIndicators.append(indicator);
+
+              // Add delete button if user is authenticated as admin or author
+              {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+              const removeBtn = $('<button type="button" class="btn btn-danger btn-sm remove-btn">Remove</button>');
+              removeBtn.click(function() {
+                  carouselItem.remove();
+                  removeImageFromLocalStorage(imageUrl);
+              });
+              carouselItem.append(removeBtn);
+              {% endif %}
+          }
+
+          // Remove image URL from localStorage
+          function removeImageFromLocalStorage(imageUrl) {
+              const index = storedImageURLs.indexOf(imageUrl);
+              if (index !== -1) {
+                  storedImageURLs.splice(index, 1);
+                  localStorage.setItem('imageURLs', JSON.stringify(storedImageURLs));
+              }
+          }
+
+          // Event handler for Add Image button
+          $('#addImageBtn').click(function() {
+              const imageUrl = $('#imageUrl').val().trim();
+              if (imageUrl !== '') {
+                  addImageToCarousel(imageUrl);
+                  $('#imageUrl').val('');
+
+                  // Store the updated image URLs and flag in localStorage
+                  storedImageURLs.push(imageUrl);
+                  localStorage.setItem('imageURLs', JSON.stringify(storedImageURLs));
+                  localStorage.setItem('imagesLoaded', true);
+              } else {
+                  alert('Please enter an image URL.');
+              }
+          });
+      });
+    </script>
+
+  </div>
+
+  <div class="details">
+    <div class="post-content">
       <div>
-        <div class='post-content'>
+        <div class='left-side'>
           {{ project.content | safe }}
         </div>
       </div>
-  </div>
 
-  <div class="S2">
-    <div class="Bot-Bar">
-      <div class="cart">
-        <div id="title">Project Stock</div>
-        <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
-          <br>
-          <div id="cart-des">
-            Project ({{project.name}}) - {{project.type}} stock. <br>
-            Current stock price : ${{project.price}} (SGD) <br>
-            Carbon offset per stock : 0.005Tons
-          </div>
-          <br>
-          <div class="quanitiy">Quanitiy │ {{formCart.stock}} │ {{project.stock}} available</div>
-          <br> 
-          <div class="submit">{{formCart.submit()}}</div>
-          <br>
-          <div>{{ formCart.csrf_token }}</div>
-        </form>
-          
+      <div class="right-side">
+        <div class="cart">
+            <div class="Cart-des1">
+              <p><b> ${{project.price}} </b>/tonne</p>
+              <p>Carbon offset per stock : 0.005Tons 
+              <br> total amount of stock : {{project.stock}} </p>
+            </div>
+
+            <br>
+
+            <div class="Cart-des2">
+              <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
+                <div >
+                  <p class="quanitiy"> Quanitiy </p>
+                  <p class="submit"> {{formCart.stock}} {{formCart.submit()}} </div> </p>
+                  <br> 
+                </div>
+                <div>{{ formCart.csrf_token }}</div>
+              </form>
+            </div>
+        </div>
+
       </div>
+
     </div>
+
+    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    <div>
+      <div class="Editior">
+        <form method="POST">
+          {{ form.hidden_tag() }}
+      
+          <h2>
+            Edit Project Details
+          </h2>
+          <div class="save">
+            <input type="submit" value="Save">
+          </div>
+          <p>
+            {{ form.content() }}
+          </p>
+      
+          <div class="form-footer">
+            <div class="status-message" style="display: inline-block;">
+              {% if status_message != none %}{{status_message}}{% endif %}</div>
+          </div>
+        </form>
+      </div>
+    {% endif %}
   </div>
 
-</div>
-<div class="findmore">
-  <br>
-  <div class="findtext">
-    <h1>Where does your money go?</h1>
-    <p>After purchasing carbon stock(credits), your money directly funds the party's management 
-      team will allocate it to the different sectors. funding can also help boost the crediablity of the project
-    causing other parties to donate. In that sense your donation can make all the difference!</p>
-  </div>
-  <div class="findimg">
-    <img src="../../static/images/Replant1.png" alt="">
-  </div>
-</div>
-<div class="moreproject">
-  <div class="discover">
-    <p>Find out / Discover more projects below!</p>
-    <a href="http://127.0.0.1/trading/">Help earth!</a>
-  </div>
 
-  <div class="checkout-cart">
-    <p>View your cart</p>
-    <a href="http://127.0.0.1/trading/Checkout">Cart</a>
-  </div>
-</div>
-{# {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %} #}
-<br>
-<hr>
-<br>
+  <div class="View">
+    <a href="{{url_for('trading.home')}}" class="link">back to projects</a>
+    <br>
 
-<div class="Editior">
-  <form method="POST">
-    {{ form.hidden_tag() }}
-
-    <h2>
-      Edit Project Details
-    </h2>
-    <p>
-      {{ form.content() }}
-    </p>
-
-    <div class="form-footer">
-      <div class="status-message" style="display: inline-block;">
-        {% if status_message != none %}{{status_message}}{% endif %}</div>
-      <input type="submit" value="Save">
+    <div class="view-projects">
+      <hr>
+      <P>Discover more projects right now!</P>
+      <hr>
     </div>
-{% endblock %}
+
+    {% for project in projects.values() %}
+      <div class="project">
+        <div class="methaneP">
+          <div class="image-container">
+            <img src="../../static/images/{{ project.type }}.jpg" alt="Your Image">
+            <div class="text-overlay">
+                <h2>{{ project.type }} | {{ project.name }}</h2>
+                <p>Stock: {{ project.stock }} Price(SGD): {{ project.price }}</p>
+                <p><a href="{{ url_for('trading.project', project=project.id) }}" class="project-link">View Project</a></p>
+            </div>
+          </div>
+          <p><a href="{{ url_for('trading.project', project=project.id) }}" class="view-link" >View project now</a> <br> <B> {{ project.type }} </B> </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock%}

@@ -59,6 +59,8 @@
   <div class="User-Info">
     <p>Based on your company we have some measured data.</p>
     <a href="#">Company stats</a>
+    <hr>
+    <br>
   </div>
   {% endif %} 
   </div>
@@ -81,9 +83,9 @@
                       <p><a href="{{ url_for('trading.project', project=project.id) }}" class="project-link">View Project</a></p>
                   </div>
                 </div>
-                <p><a href="{{ url_for('trading.project', project=project.id) }}">View project now</a> <br> <B> {{ project.type }} </B> </p>
+                <p><a href="{{ url_for('trading.project', project=project.id) }}" class="view-link" >View project now</a> <br> <B> {{ project.type }} </B> </p>
               </div>
-            </div>
+            </div> 
           {% endif %}
         {% endfor %}
       </div>
