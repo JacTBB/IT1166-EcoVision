@@ -16,11 +16,6 @@ def get_company():
         company = Company.query.get(current_user.company)
         g.company = company
         return
-    
-    if not 'company' in session:
-        if request.endpoint == 'client.company_view':
-            return
-        return redirect(url_for('staff.companies'))
         
     company = Company.query.get(session['company'])
     g.company = company

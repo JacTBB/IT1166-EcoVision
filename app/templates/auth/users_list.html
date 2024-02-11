@@ -1,0 +1,44 @@
+{% extends "layouts/staff.html" %}
+
+{% block title %}Manage Users - EcoVision{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/users_list.css')}}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+  <section>
+    <h2>Manage Users</h2>
+    <div id="list">
+      <a href="{{ url_for('auth.users', type='client') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Clients
+      </a>
+      <a href="{{ url_for('auth.users', type='author') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Authors
+      </a>
+      <a href="{{ url_for('auth.users', type='technician') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Technicians
+      </a>
+      <a href="{{ url_for('auth.users', type='consultant') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Consultants
+      </a>
+      <a href="{{ url_for('auth.users', type='manager') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Managers
+      </a>
+      <a href="{{ url_for('auth.users', type='admin') }}">
+        <i class="fa fa-address-card" aria-hidden="true"></i>
+        Manage Admins
+      </a>
+    </div>
+  </section>
+</div>
+</section>
+
+</div>
+{% endblock %}

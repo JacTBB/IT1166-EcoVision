@@ -1,0 +1,190 @@
+#content {
+    padding: 50px;
+}
+
+.account {
+    display: flex;
+    padding: 20px;
+    background-color: rgb(210, 220, 210);
+    border-radius: 20px;
+}
+
+
+
+#left-pane {
+    width: 180px;
+    margin-right: 20px;
+}
+
+#left-pane button {
+    margin: 5px 1px;
+    padding: 5px;
+    width: 100%;
+    background-color: rgb(240, 245, 240);
+    border: none;
+    border-radius: 10px;
+    color: rgb(80,80,80);
+    font-weight: bold;
+    text-align: center;
+}
+
+#left-pane button:hover {
+    color: black;
+    font-weight: bold;
+}
+
+#left-pane .logout {
+    background-color: rgb(210,240,210);
+}
+
+
+
+#right-pane {
+    width: 100%;
+}
+
+#right-pane h2 {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    font-size: 30px;
+}
+
+hr {
+    margin: 10px 10px;
+    width: calc(100% - 20px);
+    border: 0;
+    border-bottom: 2px;
+    border-style: solid;
+    border-color: rgba(10, 10, 10, 0.5);
+}
+
+.button {
+    background-color: lightgoldenrodyellow;
+}
+
+.button:hover {
+    background-color: rgb(225, 225, 188);
+}
+
+
+
+#personal-profile #section-p1 {
+    display: flex;
+    align-items: center;
+}
+
+#personal-profile #section-p1 .profilepicture {
+    margin-right: 20px;
+}
+
+#personal-profile #section-p1 .profilepicture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#personal-profile #section-p2 {
+    max-width: 800px;
+}
+
+#personal-profile #section-p3 {
+    max-width: 800px;
+}
+
+#personal-profile #section-p3 .wrong .fa-check {
+    display: none;
+}
+
+#personal-profile #section-p3 .good .fa-times {
+    display: none;
+}
+
+
+
+#company-profile #section-c1 {
+    display: flex;
+    align-items: center;
+}
+
+#company-profile #section-c1 .profilepicture {
+    margin-right: 20px;
+}
+
+#company-profile #section-c1 .profilepicture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#company-profile #section-c2 {
+    max-width: 800px;
+}
+
+#company-profile #section-c3 {
+    max-width: 800px;
+}
+
+
+
+#billing #section-b1 p {
+    margin: 5px 0;
+}
+
+#billing .paymentbutton {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    max-width: 250px;
+    background-color: rgb(240, 245, 240);
+    border: none;
+    border-radius: 10px;
+    color: rgb(80,80,80);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+#billing .paymentbutton:hover {
+    color: black;
+    font-weight: bold;
+}
+
+#billing table {
+    border-collapse: collapse;
+}
+
+#billing table th {
+    font-size: 20px;
+}
+
+#billing table td,
+#billing table th {
+    padding: 5px;
+    color: inherit;
+    border: solid 1px rgb(200, 200, 200);
+}
+
+#billing table a {
+    color: #3399ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#billing table a:hover {
+    color: #007acc;
+}
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}

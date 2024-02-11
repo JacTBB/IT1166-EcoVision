@@ -1,0 +1,47 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}Register - EcoVision{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/register.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid login-page">
+  <img src="{{ url_for('static', filename='images/pexels-lumn-1410224.webp') }}">
+  <div class="image-overlay"></div>
+  <div class="login-container">
+    <p style="color: white; font-size: 22px">Register</p>
+    <form action="" method="POST">
+      <div class="inputs">
+        <div class="group">
+          <p>Personal Details</p>
+          {{ form.first_name }}
+          {{ form.last_name }}
+          {{ form.username }}
+          {{ form.email }}
+          {{ form.phone_number }}
+          {{ form.password }}
+        </div>
+
+        <div class="group">
+          <p>Company Details</p>
+          {{ form.company_name }}
+          {{ form.company_industry }}
+          {{ form.company_email }}
+          {{ form.company_phone_number }}
+          {{ form.company_address }}
+        </div>
+      </div>
+
+      {{ form.csrf_token }}
+      <div>{{form.submit()}}</div>
+      <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+    </form>
+
+    {% if error_message %}
+    <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

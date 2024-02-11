@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, IntegerField
 from wtforms.validators import InputRequired
 
 
@@ -8,6 +8,22 @@ class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
+
+class RegisterForm(FlaskForm):
+    first_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "First Name"})
+    last_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Last Name"})
+    username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
+    password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
+    
+    company_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
+    company_industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Industry"})
+    company_email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    company_phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
+    company_address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
+    
+    submit = SubmitField("Register")
 
 
 

@@ -1,0 +1,36 @@
+#content {
+    padding: 20px;
+}
+
+section h2,
+div h2 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
+#list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+}
+
+#list a {
+    margin: 10px;
+    padding: 15px;
+    min-width: 200px;
+    list-style: none;
+    background-color: rgb(200, 210, 200);
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+#list a:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}

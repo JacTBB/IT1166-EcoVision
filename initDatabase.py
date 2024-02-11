@@ -68,8 +68,11 @@ with app.app_context():
             db.session.add(location)
 
             for k in range(1, 13):
+                energy = randint(200, 500) * 0.5 / 1000
+                water = waterusage=randint(200, 500) * 0.2 / 1000
+                carbon = round(energy + water, 5)
                 utility = Utility(company=i, location=countLocation, name=f"Utility {k}", date=datetime(2023, k, 1),
-                                  carbonfootprint=randint(200, 500), energyusage=randint(200, 500), waterusage=randint(200, 500))
+                                  carbonfootprint=carbon, energyusage=energy, waterusage=water)
                 db.session.add(utility)
 
     for i in range(3, 5):
@@ -94,13 +97,19 @@ with app.app_context():
             db.session.add(location)
 
             for k in range(1, 13):
+                energy = randint(200, 500) * 0.5 / 1000
+                water = waterusage=randint(200, 500) * 0.2 / 1000
+                carbon = round(energy + water, 5)
                 utility = Utility(company=i, location=countLocation, name=f"Utility 2022 {k}", date=datetime(2022, k, 1),
-                                  carbonfootprint=randint(200, 500), energyusage=randint(200, 500), waterusage=randint(200, 500))
+                                  carbonfootprint=carbon, energyusage=energy, waterusage=water)
                 db.session.add(utility)
 
             for k in range(1, 13):
+                energy = randint(200, 500) * 0.5 / 1000
+                water = waterusage=randint(200, 500) * 0.2 / 1000
+                carbon = round(energy + water, 5)
                 utility = Utility(company=i, location=countLocation, name=f"Utility 2023 {k}", date=datetime(2023, k, 1),
-                                  carbonfootprint=randint(200, 500), energyusage=randint(200, 500), waterusage=randint(200, 500))
+                                  carbonfootprint=carbon, energyusage=energy, waterusage=water)
                 db.session.add(utility)
 
         countDocument = 0

@@ -12,8 +12,8 @@
         href="{{ url_for('staff.dashboard') }}">Dashboard</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.account' else '' }}"
-        href="{{ url_for('auth.account') }}">
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.account' else '' }}"
+        href="{{ url_for('staff.account') }}">
         <p class="username">{{ current_user.username }}</p>
         <div class="profilepicture">
           <img src="{{ url_for('static', filename='images/' + current_user.profile_picture) }}" />
@@ -36,7 +36,7 @@
       <a class="{{ 'nav-selected' if request.endpoint == 'client.companies' else '' }}"
         href="{{ url_for('client.companies') }}">
         <i class="fa fa-building" aria-hidden="true"></i>
-        Business Management
+        Manage Business
       </a>
     </li>
     <li>
@@ -88,45 +88,10 @@
       </a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
-        href="{{ url_for('auth.users', type='client') }}">
+      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users_list' else '' }}"
+        href="{{ url_for('auth.users_list') }}">
         <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Client
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
-        href="{{ url_for('auth.users', type='author') }}">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Authors
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
-        href="{{ url_for('auth.users', type='technician') }}">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Technician
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
-        href="{{ url_for('auth.users', type='consultant') }}">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Consultants
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
-        href="{{ url_for('auth.users', type='manager') }}">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Managers
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users' else '' }}"
-        href="{{ url_for('auth.users', type='admin') }}">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Admins
+        Manage Users
       </a>
     </li>
   </ul>
