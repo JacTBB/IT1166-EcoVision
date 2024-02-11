@@ -42,14 +42,17 @@ def home():
         # else:
         #     project.typeID = 3
         projects[project.id] = {
+            'id': project.id,
             'name': project.name,
             'type': project.type,
             'stock': project.stock,
             'price': project.price,
-            # 'typeID': project.typeID
+            # 'typeID': project.type
+            # ID
         }
+    filter_value = request.args.get('category', 'all')
 
-    return render_template('trading/Dashboard.html', projects = projects)
+    return render_template('trading/Dashboard.html', projects = projects, filter_value=filter_value)
 
 @trading.route("/about")
 def about():

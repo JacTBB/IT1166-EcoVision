@@ -1,3 +1,8 @@
+.Sub-header a {
+    text-decoration: none;
+    font-weight: bolder;
+}
+
 .Header {
     padding-top: 50px;
 }
@@ -33,6 +38,7 @@
 
 }
 
+
 .Image p {
     position: relative;
     margin: 0 auto;
@@ -67,7 +73,7 @@
 .filter {
     display: inline-block;
     vertical-align: bottom;
-    margin-left: 10px; /* Adjust spacing between the paragraphs and the filter */
+    
 }
 
 .image-container {
@@ -116,6 +122,44 @@
     flex: 0 0 30%; /* Adjust width as needed */
     margin: 10px; /* Adjust margin between items */
 }
+
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .project {
+    width: calc(33.33% - 20px); /* Adjust the width as needed */
+    margin: 10px; /* Adjust the margin as needed */
+  }
+
+.filter-form {
+display: inline-block; /* Ensure the form box doesn't take up full width */
+background-color: white; /* Set background color */
+border: 1px solid black; /* Add border */
+padding: 5px 10px; /* Add padding */
+}
+
+#filterSelect {
+margin-right: 10px; /* Add some space between select and input */
+}
+
+.filter-form select {
+    border: none; /* Remove the border */
+}
+
+.filter-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+  
+.introductory-text {
+    flex: 0 0 auto; /* Don't allow text to grow or shrink */
+    padding-right: 10px; /* Add some space between text and form */ 
+    font-size: 1.3em;
+    color: grey;
+}
+  
 
 .image-container {
     position: relative;
@@ -168,84 +212,38 @@
     margin-top: 20px; /* Adjust margin as needed */
 }
 
-.RenewableP .project-link {
-    display: block;
-    color: white;
-    text-decoration: none;
-    position: relative;
-}
-
-.RenewableP .project-link::after {
-    content: "";
-    background: white;
-    mix-blend-mode: exclusion;
-    width: calc(100% + 20px);
-    height: 0;
-    position: absolute;
-    bottom: -4px;
-    left: -10px;
-    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-}
-
-.RenewableP .project-link:hover::after {
-    height: calc(100% + 8px);
-}
-
 .methaneP .project-link {
-    display: block;
-    color: white;
-    text-decoration: none;
-    position: relative;
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #fff; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline */
+}
+.methaneP .project-link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
 
-.methaneP .project-link::after {
-    content: "";
-    background: white;
-    mix-blend-mode: exclusion;
-    width: calc(100% + 20px);
-    height: 0;
-    position: absolute;
-    bottom: -4px;
-    left: -10px;
-    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+.RenewableP .project-link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #fff; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline */
 }
-
-.methaneP .project-link:hover::after {
-    height: calc(100% + 8px);
+.RenewableP .project-link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
 
 .ConvservationP .project-link {
-    display: block;
-    color: white;
-    text-decoration: none;
-    position: relative;
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #fff; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline */
 }
-
-.ConvservationP .project-link::after {
-    content: "";
-    background: white;
-    mix-blend-mode: exclusion;
-    width: calc(100% + 20px);
-    height: 0;
-    position: absolute;
-    bottom: -4px;
-    left: -10px;
-    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-}
-
-.ConvservationP .project-link:hover::after {
-    height: calc(100% + 8px);
-}
-
-a {
-    text-decoration: none;
-    border: 1px solid black;
-    background-color: white;
-    color: black;
-    padding: 3px;
-}
-
-a:hover {
-    color: white;
-    background-color: black;
+.ConvservationP .project-link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
