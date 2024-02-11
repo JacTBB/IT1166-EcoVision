@@ -12,8 +12,8 @@
         href="{{ url_for('staff.dashboard') }}">Dashboard</a>
     </li>
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.account' else '' }}"
-        href="{{ url_for('auth.account') }}">
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.account' else '' }}"
+        href="{{ url_for('staff.account') }}">
         <p class="username">{{ current_user.username }}</p>
         <div class="profilepicture">
           <img src="{{ url_for('static', filename='images/' + current_user.profile_picture) }}" />

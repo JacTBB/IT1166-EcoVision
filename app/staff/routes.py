@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort, flash
 from app.models.Contact import CompanyInfo
 from app.models.Company import Company
 from app.staff import staff
@@ -8,7 +8,18 @@ from app.auth import check_user_type
 from app.models.Inventory import Product
 from app.models.Transaction import Transaction
 from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AddTransactionForm
+from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm
+from app.models.User import Author, Technician, Consultant, Manager, Admin
 from datetime import datetime
+from string import ascii_lowercase
+import random
+import os
+
+
+
+UserList = {'author': Author,
+            'technician': Technician, 'consultant': Consultant,
+            'manager': Manager, 'admin': Admin}
 
 
 
@@ -217,3 +228,96 @@ def transaction_add():
             db.session.rollback()
 
     return render_template("staff/transaction_add.html", form=form)
+
+
+
+
+
+
+@staff.route("/account")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant', 'technician', 'author'])
+def account():
+    form1 = UpdatePersonalForm()
+    form1.first_name.data = current_user.first_name
+    form1.last_name.data = current_user.last_name
+    form1.username.data = current_user.username
+    form1.email.data = current_user.email
+    form1.phone_number.data = current_user.phone_number
+    form1.profile_picture.data = current_user.profile_picture
+    
+    form2 = ChangePasswordForm()
+    
+    return render_template("staff/account.html", form1=form1, form2=form2)
+
+
+
+@staff.route("/account/update/personal", methods=["POST"])
+@login_required
+@check_user_type(['admin', 'manager', 'consultant', 'technician', 'author'])
+def account_update_personal():
+    form = UpdatePersonalForm()
+    
+    if form.validate_on_submit():
+        try:
+            userData = UserList[current_user.type].query.get(current_user.id)
+            
+            first_name = request.form.get("first_name")
+            last_name = request.form.get("last_name")
+            username = request.form.get("username")
+            email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            
+            profile_pictue = form.profile_picture.data
+            profile_pictue_filename = "uploads/profile-"
+            for i in range(10):
+                profile_pictue_filename += random.choice(ascii_lowercase)
+            profile_pictue.save(os.path.join(
+                './app/static/images', f'{profile_pictue_filename}'
+            ))
+            
+            userData.first_name = first_name
+            userData.last_name = last_name
+            userData.username = username
+            userData.email = email
+            userData.phone_number = phone_number
+            userData.profile_picture = profile_pictue_filename
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    else:
+        flash("Personal Profile Validation Error!")
+        for input in form:
+            if input.errors:
+                flash(f'\n{input.name} - {input.errors[0]}')
+
+    return redirect(url_for('staff.account'))
+
+
+
+@staff.route("/account/update/password", methods=["POST"])
+@login_required
+@check_user_type(['admin', 'manager', 'consultant', 'technician', 'author'])
+def account_update_password():
+    form = ChangePasswordForm()
+    
+    if form.validate_on_submit():
+        try:
+            userData = UserList[current_user.type].query.get(current_user.id)
+            
+            password = request.form.get("password")
+            userData.set_password(password)
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    else:
+        flash("Change Password Validation Error!")
+        for input in form:
+            if input.errors:
+                flash(f'\n{input.name} - {input.errors[0]}')
+
+    return redirect(url_for('staff.account'))

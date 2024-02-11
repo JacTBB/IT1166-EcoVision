@@ -711,11 +711,11 @@ def account_update_personal():
             phone_number = request.form.get("phone_number")
             
             profile_pictue = form.profile_picture.data
-            profile_pictue_filename = "profile-"
+            profile_pictue_filename = "uploads/profile-"
             for i in range(10):
                 profile_pictue_filename += random.choice(ascii_lowercase)
             profile_pictue.save(os.path.join(
-                './app/static/images/uploads', f'{profile_pictue_filename}'
+                './app/static/images', f'{profile_pictue_filename}'
             ))
             
             userData.first_name = first_name
