@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="Block-content">
   <div class="Header">
     <div class="Image">
       <img src="../../static/images/CloudTree.jpg" alt="image">
@@ -21,9 +22,37 @@
       <p>Once you have purchased carbon credits, a signed letter of certification will be sent to you via your email, which is approved to use for MSE and NEA agencies!</p>
       <p><b>Find out more about carbon trading </b><a href="#">Click here</a></p>
   
-      <div class="filter">
-          <a href="#">Filter by</a>
+      <hr>
+      <div class="filter-container">
+        <div class="introductory-text">
+          <p>Fliter by</p>
+        </div>
+        <form class="filter-form" id="filterForm">
+          <select id="filterSelect" name="category">
+            <option value="all">All</option>
+            <option {{'selected' if filter_value=='Renewable'}} value="Renewable">Renewable</option>
+            <option {{'selected' if filter_value=='Conservation'}} value="Conservation">Conservation</option>
+            <option {{'selected' if filter_value=='Methane'}} value="Methane">Methane</option>
+          </select>
+          <input type="submit" value="Filter">
+        </form>
       </div>
+      <div class="admin">
+        {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+          <div class="Admin">
+            <p><a href="http://127.0.0.1:80/trading/projects">Add Project</a></p>
+          </div>
+          {% endif %}   
+      </div>
+      
+      
+
+      <script>
+          document.getElementById("filterSelect").addEventListener("change", function() {
+            document.getElementById("filterForm").submit();
+          });
+      </script>
+      <hr>
   </div>
   
   {% if current_user.is_authenticated == true and (current_user.type == "client" or current_user.type == "client") %}
@@ -35,82 +64,34 @@
   </div>
 
   <div class="Project-Cells">
-    <hr>
-    <h2 class="Projects"> Projects </h2>
+    <h2 class="Projects">Projects</h2>
     
     <div class="Projects">
-      <div class="renewable">
-        <h2 class="projects-title">Renewable</h2>
-        {% for id, project in projects.items() %}
-        {% if project.type == "Renewable" %}
-        <div class="RenewableP">
-          <div class="image-container">
-            <img src="../../static/images/Renewable.jpg" alt="Your Image">
-            <div class="text-overlay">
-                <h2>{{project.type}} | {{project.name}}</h2>
-                <p>Stock : {{project.stock}} Price(SGD) : {{project.price}} </p>
-                <p><a href="{{url_for('trading.project', project = id)}}" class="project-link" >View Project</a></p>
+      
+      <div class="projects-container">
+        {% for project in projects.values() %}
+          {% if filter_value == 'all' or project.type == filter_value %}
+            <div class="project">
+              <div class="methaneP">
+                <div class="image-container">
+                  <img src="../../static/images/{{ project.type }}.jpg" alt="Your Image">
+                  <div class="text-overlay">
+                      <h2>{{ project.type }} | {{ project.name }}</h2>
+                      <p>Stock: {{ project.stock }} Price(SGD): {{ project.price }}</p>
+                      <p><a href="{{ url_for('trading.project', project=project.id) }}" class="project-link">View Project</a></p>
+                  </div>
+                </div>
+                <p><a href="{{ url_for('trading.project', project=project.id) }}">View project now</a> <br> <B> {{ project.type }} </B> </p>
+              </div>
             </div>
-          </div>
-            <p><a href="{{url_for('trading.project', project = id)}}"> View project now </a></p>
-          </div>
-        {% endif%}
-        {% endfor %}
-      </div>
-
-
-
-      <div class="conservation">
-        <h2 class="projects-title">Convservation</h2>
-        {% for id, project in projects.items() %}
-        {% if project.type == "Convservation" %}
-        <div class="ConvservationP">
-          <div class="image-container">
-            <img src="../../static/images/Conservation.jpg" alt="Your Image">
-            <div class="text-overlay">
-                <h2>{{project.type}} | {{project.name}}</h2>
-                <p>Stock : {{project.stock}} Price(SGD) : {{project.price}} </p>
-                <p><a href="{{url_for('trading.project', project = id)}}" class="project-link" >View Project</a></p>
-            </div>
-          </div>
-            <p><a href="{{url_for('trading.project', project = id)}}"> View project now </a></p>
-          </div>
-        {% endif%}
-        {% endfor %}
-      </div>
-
-
-
-
-      <div class="methane">
-        <h2 class="projects-title">Methane</h2>
-        {% for id, project in projects.items() %}
-        {% if project.type == "Methane" %}
-        <div class="methaneP">
-          <div class="image-container">
-            <img src="../../static/images/Methane.jpg" alt="Your Image">
-            <div class="text-overlay">
-                <h2>{{project.type}} | {{project.name}}</h2>
-                <p>Stock : {{project.stock}} Price(SGD) : {{project.price}} </p>
-                <p><a href="{{url_for('trading.project', project = id)}}" class="project-link" >View Project</a></p>
-            </div>
-          </div>
-            <p><a href="{{url_for('trading.project', project = id)}}"> View project now </a></p>
-          </div>
-        {% endif %}
+          {% endif %}
         {% endfor %}
       </div>
       
+      <hr>
     </div>
-    <hr>
-    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
-    <div class="Admin">
-      <p><a href="http://127.0.0.1:80/trading/projects">Add Project</a></p>
-    </div>
-    {% endif %}
   </div>
 
-</div>
 
 
 <!-- <div class="Footer">
@@ -124,4 +105,5 @@
     </li>
   </ul>
 </div> -->
+</div>
 {% endblock %}
