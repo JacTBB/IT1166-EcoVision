@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="Block-content">
+<div id="content" class="Block-content">
   <div class="Header">
     <div class="Image">
       <img src="../../static/images/CloudTree.jpg" alt="image">
@@ -53,16 +53,27 @@
           });
       </script>
       <hr>
+    </div>
   </div>
   
-  {% if current_user.is_authenticated == true and (current_user.type == "client" or current_user.type == "client") %}
   <div class="User-Info">
     <p>Based on your company we have some measured data.</p>
-    <a href="#">Company stats</a>
+    <div class="statsbox">
+      <div>
+        <h4>Total Carbon Footprint Emitted</h4>
+        <p>{{ overview.totalcarbonfootprint|round(5) }} CO2e</p>
+      </div>
+      <div>
+        <h4>Exceeded Carbon Footprint</h4>
+        <p>{{ overview.carbonfootprintexceeded|round(5) }} CO2e</p>
+      </div>
+      <div>
+        <h4>Total Carbon Footprint Offset</h4>
+        <p>{{ overview.carbonfootprintoffsetted|round(5) }} CO2e</p>
+      </div>
+    </div>
     <hr>
     <br>
-  </div>
-  {% endif %} 
   </div>
 
   <div class="Project-Cells">

@@ -3,10 +3,6 @@
     font-weight: bolder;
 }
 
-.Header {
-    padding-top: 50px;
-}
-
 .Image {
     width: 100%;
     height: 45vh;
@@ -261,4 +257,20 @@ margin-right: 10px; /* Add some space between select and input */
 
 .User-Info {
     text-align: center;
+}
+
+.statsbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.statsbox>div {
+    margin: 5px;
+    padding: 5px;
+    max-width: 250px;
+    background-color: rgb(200,210,200);
+    border-radius: 10px;
+}
+.statsbox h4 {
+    font-size: 20px;
 }

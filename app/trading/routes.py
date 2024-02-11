@@ -4,6 +4,7 @@ from app.trading import trading
 from app.database import query_data, db
 from app.models.Company import Company
 from app.models.Trading import Projects
+from app.models.Client import Location, Utility
 from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
 
@@ -24,6 +25,24 @@ def get_company():
 
 @trading.route('/')
 def home():
+    overview = {
+        'totalcarbonfootprint': 0
+    }
+
+    locations = {}
+    locationsData = db.session.query(Location).filter_by(company=g.company.id)
+    for location in locationsData:
+        utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=location.id)
+        for utility in utilitiesData:
+            overview['totalcarbonfootprint'] += float(utility.carbonfootprint)
+    
+    # TODO:
+    overview['carbonfootprintoffsetted'] = 5
+    overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
+    overview['locations'] = len(locations)
+    
+    
+    
     projects = {}
     projectsData = db.session.query(Projects).all()
     for project in projectsData:
@@ -47,7 +66,7 @@ def home():
         }
     filter_value = request.args.get('category', 'all')
 
-    return render_template('trading/Dashboard.html', projects = projects, filter_value=filter_value)
+    return render_template('trading/Dashboard.html', overview=overview, projects=projects, filter_value=filter_value)
 
 @trading.route("/about")
 def about():

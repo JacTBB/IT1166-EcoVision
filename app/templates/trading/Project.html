@@ -13,10 +13,10 @@
   <div class="Header">
     <h1>{{project.type}} project by {{project.name}}</h1>
     <hr>
-    <a href="{{url_for('trading.home')}}" class="link">back to projects</a>
-    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
-    <p>https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69214561/3/?bust=1696792028&width=720</p>
-    <p>https://images.livemint.com/img/2023/12/07/1140x641/dog-4615198_1280_1701927561029_1701927572424.jpg</p>
+    <a href="{{url_for('trading.home')}}" class="link">Back To Projects</a>
+    {% if current_user.type == "admin" or current_user.type == "author" %}
+      <p>https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69214561/3/?bust=1696792028&width=720</p>
+      <p>https://images.livemint.com/img/2023/12/07/1140x641/dog-4615198_1280_1701927561029_1701927572424.jpg</p>
     {% endif %}
     <hr>
   </div>
@@ -33,14 +33,14 @@
             <span class="carousel-control-next-icon"></span>
         </a>
     </div>
-    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
-    <div class="container mt-3">
-        <div class="form-group">
-            <label for="imageUrl">Image URL:</label>
-            <input type="text" class="form-control" id="imageUrl" placeholder="Enter image URL">
-        </div>
-        <button type="button" class="btn btn-primary" id="addImageBtn">Add Image</button>
-    </div>
+    {% if current_user.type == "admin" or current_user.type == "author" %}
+      <div class="container mt-3">
+          <div class="form-group">
+              <label for="imageUrl">Image URL:</label>
+              <input type="text" class="form-control" id="imageUrl" placeholder="Enter image URL">
+          </div>
+          <button type="button" class="btn btn-primary" id="addImageBtn">Add Image</button>
+      </div>
     {% endif %}
     
     </body>
@@ -155,7 +155,7 @@
 
     </div>
 
-    {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
+    {% if current_user.type == "admin" or current_user.type == "author" %}
     <div>
       <div class="Editior">
         <form method="POST">
@@ -182,7 +182,7 @@
 
 
   <div class="View">
-    <a href="{{url_for('trading.home')}}" class="link">back to projects</a>
+    <a href="{{url_for('trading.home')}}" class="link">Back To Projects</a>
     <br>
 
     <div class="view-projects">

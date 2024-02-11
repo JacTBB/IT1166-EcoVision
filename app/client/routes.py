@@ -103,7 +103,6 @@ def dashboard():
     # TODO:
     overview['carbonfootprintoffsetted'] = 5
     overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
-    overview['notifications'] = 10
     overview['locations'] = len(locations)
     
     assessments = {}
