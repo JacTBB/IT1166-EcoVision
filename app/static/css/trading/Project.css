@@ -1,252 +1,172 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
 
+.PROJECT{
+    zoom: 120%;
+}
+
 body {
     font-family: "monospace" !important;
 }
-h2 {
-    padding-top: 20px;
+
+.Header {
+    padding-top: 200px;
     text-align: center;
 }
 
-h2 {
-    font-family: monospace;
-    text-align: center;
-    font-size: 50px;
-    font-weight: 400;
-    color: green;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    display: grid;
-    grid-template-columns: 1fr max-content 1fr;
-    grid-template-rows: 27px 0;
-    grid-gap: 20px;
-    align-items: center;
-}
-
-h2:after,
-h2:before {
-    content: " ";
-    display: block;
-    border-bottom: 1px solid green;
-    border-top: 1px solid green;
-    height: 5px;
-    background-color: beige;
-}
-.ProjectHead {
-    width: 100%;
-    height: 60vh;
-    position: relative;
-    z-index: -1;
-}
-
-.ProjectHead img {
-    position: absolute;
-    width: 100%;
-    height: 60vh;
-    object-fit: cover;
-    object-position: center center;
-}
-
-.ProjectHead h1 {
-    position: relative;
-    margin: 0 auto;
-    top: 55%;
-    left: 0%;
-    color: white;
-    font-size: 4.5em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    word-break: keep-all;
-    padding: 50px;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    font-family: monospace;
-
-}
-.ProjectHead h3 {
-    position: relative;
-    margin: 0 auto;
-    top: 30%;
-    left: -25%;
-    color: white;
-    font-size: 2em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    word-break: keep-all;
-    width: 40%
-}
-
-.Infomation {
-    padding: 50px;
-    font-weight: 600;
-    font-size: large;
-
-}   
-
-.Bot-Bar {  
-    padding-bottom: 100px;
-    text-align: center;
-    justify-content: center;
-    width: 100%;
-    padding-right: 50px;
-    padding-left: 50px;
-    height: 60vh;
-}
-#title{
-    font-size: 1.5em;
-    font-weight: 300;
-}
-.cart { 
-    background-color: beige;
-    width: 100%;
-    padding: 150px;
-    font-size: 1.5em;
-    font-family: monospace;
-    padding: 20px;
-    border: green solid 3px;
-    height: 60vh;
-}
-.cart :nth-child(1){
-    padding: 10px;
-    color: green;
-}
-.quanitiy {
-    border: groove;
-}
-.submit{
-    text-align: right;
-    padding-right: 55px;
-}
-#cart-des{
-    text-align: left;
-    padding-left: 55px;
-}
-#stockBar{
-    padding: 20px;
-    color: green;
-    font-size: 1em;
-    border: groove;
+.Carosell {
+    max-width: 600px; /* Set the maximum width of the carousel container */
+    margin: 0 auto; /* Center the container horizontally */
 }
 
 .post-content {
-    font-size: x-large;
-    font-family: monospace;
-    padding: 5%;
+    width: 40%;
+    margin: 0 auto; /* Center the div horizontally */
+    text-align: center; /* Center the text content inside the div */
+    padding-bottom: 50px;
+}
+
+.cart {
+    border: 1px solid black;
+    width: 100%;    
+    margin-top: 50px;
+    padding-left: 20px;
+    display: flex;
+}
+.submit {
+    text-align: left;
+}
+
+.Cart-des1, .Cart-des2 {
+    /* Add this to make them side by side */
+    display: inline-block;
+    vertical-align: top; /* Align them to the top */
+    width: 48%; /* Adjust width as needed */
+}
+
+.Cart-des1 {
+    padding-top: 10px;
+    margin-right: 2%; /* Add some space between them */
+}
+
+.cart-des{
+    font-size: 1.5em;
+}
+
+.details{
+    padding-top: 50px;
+}
+
+
+.post-content {
+    width: 70%; /* Set the width of the container to 70% */
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center; /* Center the text content inside the container */
+}
+
+.left-side,
+.right-side {
+    display: inline-block; /* Make elements behave as blocks */
+    margin: 0 auto; /* Center the elements horizontally */
+    
+}
+
+.left-side {
+    width: 100%; /* Set the width of the left side to 60% */
     background-color: beige;
-    width: 100%;
-    height: 60vh;
-    padding-top: 100px;
-}
-.S1 {
-    padding-left: 50px;
-    height: 60vh;
-}
-.Editior {
-    padding-top: 50px;
+    padding: 20px;
 }
 
-.section {
-    display: flex;
-    padding-top: 50px;
+.right-side {
+    width: 60%; /* Set the width of the right side to 40% */
 }
-
-.S1, .S2 {
-    width: 50%;
-}
-
-.S2 {
-    text-align: center;
-    justify-content: center
-}
-
-.findmore {
-    display: flex;
-    padding: 100px;
-    padding-top: 370px;
-    font-size: 1.3em;
-    font-family: monospace;
-    text-align: center;
-    justify-content: center;
-}
-.findmore h1 {
-    font-weight: bold;
-    font-size: 2.5em;
-    color: green;
-}
-.findmore p {
-    text-align: center;
-    justify-content: center;
-    padding: 40px;
-}
-.findimg img {
-    width: 100%;
-    height: 60vh;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black; /* Set background color to black */
     border-radius: 50px;
 }
-.findimg {
-    padding: 50px;
+
+/* Optional: You can also adjust the color of the arrow icon */
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+    color: white; /* Set color of the arrow icon to white */
 }
 
-.findtext, .findimg {
-    width: 50%;
-}
-.moreproject {
-    background-color: beige;
-    width: 100%;
-    padding: 50px;
-    display: flex;
-}
-.checkout-cart {
-    padding-left: 50px;
-    font-size: 1.3rem;
-}
-
-.discover {
-    padding-left: 60px;
+.quanitiy {
+    font-size: 2em;
+    font-weight: bolder;
     text-align: left;
-    justify-content: left;    
-    font-size: larger;
 }
-.discover a , .checkout-cart a{
-    color: green;
-    font-size: 1.3rem;
-    text-decoration: none;
+
+.PROJECT .link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #000; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #000; /* Text color */
+    text-decoration: none; /* Remove underline */
+}
+.PROJECT .link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
+}
+
+.View {
+    text-align: center;
+}
+
+.View .link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #000; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #000; /* Text color */
+    text-decoration: none; /* Remove underline */   
+}
+.View .link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
+}
+
+.project {
     display: inline-block;
-    font-weight: bold;
-    padding: .5em;
-    margin-left: -.5em;
-    position: relative;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    width: 30%; /* Adjust the width as needed */
+    margin-right: 2%; /* Add some space between projects */
+  }
+  
+  .project-image {
+    width: 100%; /* Adjust the image width to fit the container */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Clear any floats after the inline-block elements */
+  .clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .Editior h2{
+    text-align: center;
+  }
+  
+  .Editior .save {
+    text-align: center;
+    justify-content: center;
+  }
 
-    &:before, &:after {
-        position: absolute;
-        content: '';
-        border-bottom: 3px solid black;
-        border-radius: 1em;
-        bottom: .3em;
-        transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
+  .view-projects {
+    font-weight: bolder;
+    font-size: 2.2em;   
+    padding: 40px;
+  }
+  
 
-    &:before {
-        width: 1em;
-        transform-origin: left;
-    }
-
-    &:after {
-        width: 82%;
-        left: 1em;
-        transform: translateX(110%);
-    }
-
-    &:hover:before {
-        transform: scaleX(0.3);
-    }
-
-    &:hover:after {
-        transform: translateX(0);
-    }
+.view-link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #000; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #000; /* Text color */
+    text-decoration: none; /* Remove underline */
 }
-.form-footer {
-    text-align: right;
-    font-size: larger;
+.view-link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }

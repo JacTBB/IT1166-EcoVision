@@ -66,9 +66,6 @@ def Checkout():
             'price': project.price,
         }
 
-    print(projects)
-    print(session['cart'])
-
     cart = {}
     for item in session['cart']:
         ID = item["id"]
@@ -127,8 +124,18 @@ def project(project):
                         status_message = "Failed to update article! Contact Administrator."
                         print(f"Error occurred: {e}")
                         db.session.rollback()
-                        
-    return render_template('trading/Project.html', form=form, formCart=formCart, project=projectData)
+    
+    projects = {}
+    projectsData = db.session.query(Projects).all()
+    for project in projectsData:
+        projects[project.id] = {
+            'name': project.name,
+            'type': project.type,
+            'stock': project.stock,
+            'price': project.price,
+        }
+    
+    return render_template('trading/Project.html', form=form, formCart=formCart, project=projectData, projects=projects)
 
 @trading.route("/projects")
 @login_required

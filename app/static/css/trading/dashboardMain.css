@@ -128,10 +128,10 @@
     flex-wrap: wrap;
   }
   
-  .project {
+.project {
     width: calc(33.33% - 20px); /* Adjust the width as needed */
     margin: 10px; /* Adjust the margin as needed */
-  }
+}
 
 .filter-form {
 display: inline-block; /* Ensure the form box doesn't take up full width */
@@ -184,7 +184,6 @@ margin-right: 10px; /* Add some space between select and input */
 }
 
 .methaneP {
-    background-color: #DCE6DC;
     margin-bottom: 20px;
     padding-left: 4px;
     padding-left: 4px;
@@ -212,7 +211,7 @@ margin-right: 10px; /* Add some space between select and input */
     margin-top: 20px; /* Adjust margin as needed */
 }
 
-.methaneP .project-link {
+.project-link {
     display: inline-block; /* Display as block-level element */
     padding: 10px 20px; /* Padding inside the box */
     border: 1px solid #fff; /* Border */
@@ -220,7 +219,7 @@ margin-right: 10px; /* Add some space between select and input */
     color: #fff; /* Text color */
     text-decoration: none; /* Remove underline */
 }
-.methaneP .project-link:hover {
+.project-link:hover {
     background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
 
@@ -246,4 +245,20 @@ margin-right: 10px; /* Add some space between select and input */
 }
 .ConvservationP .project-link:hover {
     background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
+}
+
+.view-link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #000; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #000; /* Text color */
+    text-decoration: none; /* Remove underline */
+}
+.view-link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
+}
+
+.User-Info {
+    text-align: center;
 }
