@@ -17,11 +17,11 @@ class RegisterForm(FlaskForm):
     phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
     password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
     
-    company_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
-    company_industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Industry"})
-    company_email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
-    company_phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
-    company_address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Address"})
+    company_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Name"})
+    company_industry = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Industry"})
+    company_email = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Email"})
+    company_phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Phone number"})
+    company_address = StringField(validators=[InputRequired()], render_kw={"placeholder": "Company Address"})
     
     submit = SubmitField("Register")
 
