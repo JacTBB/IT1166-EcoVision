@@ -8,10 +8,6 @@ auth = Blueprint('auth', __name__)
 
 
 
-from app.auth import routes
-
-
-
 def check_user_type(userTypes):
     def decorator(func):
         @wraps(func)
@@ -21,3 +17,7 @@ def check_user_type(userTypes):
             abort(403)
         return wrapper
     return decorator
+
+
+
+from app.auth import routes
