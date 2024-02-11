@@ -17,9 +17,6 @@
         <div class="group">
           <p>Personal Details</p>
           {{ form.first_name(id_="input-p2-1", class_="form-control") }}
-          <div class="invalid-feedback">
-            Please enter your first name.
-          </div>
           {{ form.last_name(id_="input-p2-2", class_="form-control") }}
           {{ form.username(id_="input-p2-3", class_="form-control") }}
           {{ form.email(id_="input-p2-4", class_="form-control") }}
@@ -48,10 +45,3 @@
   </div>
 </div>
 {% endblock %}
-
-{#
-{{ form1.first_name(id_="input-p2-1", class_="form-control") }}
-<div class="invalid-feedback">
-  Please enter your first name.
-</div>
-#}
