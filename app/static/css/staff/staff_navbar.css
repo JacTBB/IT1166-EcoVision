@@ -1,14 +1,3 @@
-#sidenav {
-    font-size: 15px !important;
-}
-
-#sidenav ul li {
-    margin-top: 0 !important;
-}
-
-
-
-
 #topnav {
     display: flex;
     justify-content: space-between;

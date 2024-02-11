@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, session
-from app.auth import auth
+from app.auth import auth, check_user_type
 from app.database import db, query_data
 from flask_login import current_user, login_required, login_user, logout_user
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
@@ -59,8 +59,17 @@ def signup():
     return "Signup"
 
 
+@auth.route("/users")
+@login_required
+@check_user_type(['admin', 'manager'])
+def users_list():
+    return render_template('auth/users_list.html')
+
+
+
 @auth.route("/users/<type>")
 @login_required
+@check_user_type(['admin', 'manager'])
 def users(type):
     users = {}
     usersData = db.session.query(UserList[type]).all()
@@ -77,6 +86,7 @@ def users(type):
 
 @auth.route("/users/<type>/add", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def user_add(type):
     form = AddUserForm()
 
@@ -101,6 +111,7 @@ def user_add(type):
 
 @auth.route("/users/<type>/edit/<user>", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager'])
 def user_edit(type, user):
     form = EditUserForm()
 
@@ -125,6 +136,7 @@ def user_edit(type, user):
 
 @auth.route("/users/<type>/delete/<user>")
 @login_required
+@check_user_type(['admin', 'manager'])
 def user_delete(type, user):
     try:
         userData = UserList[type].query.get(user)
@@ -146,7 +158,7 @@ def user_delete(type, user):
 def account():
     if current_user.type == "client":
         return redirect(url_for('client.account'))
-    return render_template("auth/account.html")
+    return redirect(url_for('staff.account'))
 
 
 @auth.route('/logout')
