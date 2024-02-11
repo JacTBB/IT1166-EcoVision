@@ -728,7 +728,7 @@ def account_update_personal():
         flash("Personal Profile Validation Error!")
         for input in form:
             if input.errors:
-                flash(f'\n{input.name} - {input.errors}')
+                flash(f'\n{input.name} - {input.errors[0]}')
 
     return redirect(url_for('client.account'))
 
@@ -755,7 +755,7 @@ def account_update_password():
         flash("Change Password Validation Error!")
         for input in form:
             if input.errors:
-                flash(f'\n{input.name} - {input.errors}')
+                flash(f'\n{input.name} - {input.errors[0]}')
 
     return redirect(url_for('client.account'))
 
@@ -796,7 +796,7 @@ def account_update_company():
         flash("Company Profile Validation Error!")
         for input in form:
             if input.errors:
-                flash(f'\n{input.name} - {input.errors}')
+                flash(f'\n{input.name} - {input.errors[0]}')
 
     return redirect(url_for('client.account', page='company-profile'))
 
@@ -836,7 +836,7 @@ def account_update_payment():
             flash("Payment Method Validation Error!")
             for input in form:
                 if input.errors:
-                    flash(f'\n{input.name} - {input.errors}')
+                    flash(f'\n{input.name} - {input.errors[0]}')
 
     return render_template("client/account_payment.html", form=form)
 

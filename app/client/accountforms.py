@@ -1,7 +1,15 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, IntegerField, EmailField, PasswordField
+from wtforms import StringField, IntegerField, EmailField, PasswordField, ValidationError
 from wtforms.validators import DataRequired, Length
+
+
+
+def is_integer(form, field):
+    try:
+        int(field.data)
+    except ValueError:
+        raise ValidationError('Field must be an integer.')
 
 
 
@@ -28,5 +36,5 @@ class UpdateCompanyForm(FlaskForm):
 
 class UpdatePaymentForm(FlaskForm):
     name = StringField(validators=[DataRequired()])
-    card_no = StringField(validators=[DataRequired(), Length(min=16,max=16)])
-    cvc = StringField(validators=[DataRequired(), Length(min=3,max=4)])
+    card_no = StringField(validators=[DataRequired(), Length(min=16,max=16), is_integer])
+    cvc = StringField(validators=[DataRequired(), Length(min=3,max=4), is_integer])
