@@ -3,7 +3,7 @@
 {% block title %}Assessment - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/assessments.css')}}">
 {% endblock %}
 
 {% block content %}
@@ -11,13 +11,15 @@
     <section>
       <h2>Assessment</h2>
 
-      <p>ID: {{ assessment.id }}</p>
-      <p>Location: {{ assessment.location }}</p>
-      <p>Name: {{ assessment.name }}</p>
-      <p>Type: {{ assessment.type }}</p>
-      <p>Start Date: {{ assessment.start_date }}</p>
-      <p>Completed Date: {{ assessment.completed_date }}</p>
-      <p>Progress: {{ assessment.progress }}%</p>
+      <p class="title">{{ assessment.name }}</p>
+      <p class="type">{{ assessment.type }}</p>
+
+      <p><span class="label">Location:</span> {{ assessment.location }}</p>
+      <p><span class="label">Start Date:</span> {{ assessment.start_date }}</p>
+      <p><span class="label">Completed Date:</span> {{ assessment.completed_date }}</p>
+      <p><span class="label">Progress:</span> {{ assessment.progress }}%</p>
+
+      <hr>
 
       <h2>Documents</h2>
 
@@ -31,7 +33,6 @@
 
       <table>
         <tr>
-          <th>ID</th>
           <th>Name</th>
           <th>Created</th>
           <th>Updated</th>
@@ -42,7 +43,6 @@
         </tr>
         {% for id, document in documents.items() %}
           <tr>
-            <td>{{ id }}</td>
             <td>{{ document.name }}</td>
             <td>{{ document.created }}</td>
             <td>{{ document.updated }}</td>

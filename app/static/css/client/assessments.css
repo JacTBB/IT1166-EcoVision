@@ -1,0 +1,56 @@
+#content {
+    padding: 20px;
+}
+
+section h2,
+div h2 {
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.type {
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+    width: max-content;
+    font-size: 15px;
+    border-bottom: solid 1px rgb(200,200,200);
+}
+
+.label {
+    font-weight: bold;
+}
+
+
+
+table {
+    border-collapse: collapse;
+}
+
+table th {
+    font-size: 20px;
+}
+
+table td,
+table th {
+    padding: 5px;
+    color: inherit;
+    border: solid 1px rgb(200, 200, 200);
+}
+
+table a {
+    color: #3399ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #007acc;
+}
