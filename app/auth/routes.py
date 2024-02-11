@@ -154,7 +154,7 @@ def user_delete(type, user):
 def account():
     if current_user.type == "client":
         return redirect(url_for('client.account'))
-    return render_template("auth/account.html")
+    return redirect(url_for('staff.account'))
 
 
 
