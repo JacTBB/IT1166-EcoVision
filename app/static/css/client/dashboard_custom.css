@@ -42,70 +42,100 @@ h2 {
     margin: 5px;
     width: 100%;
     height: max-content;
-    background-color: rgb(210, 220, 210);
+    background-color: rgb(200, 210, 200);
     border-radius: 10px;
+}
+
+.dash-section {
+    margin: 5px;
+    margin-bottom: 10px;
+    padding: 0;
+    width: 100%;
+    height: max-content;
 }
 
 .statsbox {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
-.statsbox>div {
-    margin: 5px;
-    padding: 10px 15px;
-    border-radius: 10px;
+.statsbox .stats:last-child {
+    margin-right: 0;
 }
 
-.statsbox h3 {
-    font-size: 15px;
+.stats {
+    margin-right: 10px;
+    width: calc((100% - 20px) / 3);
+    border-radius: 5px;
+    background-color: rgb(200, 210, 200);
 }
 
-.statsbox p {
-    font-size: 12px;
+.stats .statline {
+    float: left;
+    width: 5px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+}
+
+.stats h3 {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.stats p {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    font-size: 16px;
     color: black;
     font-weight: 600;
-    text-align: center;
 }
 
 
 
-#carbonfootprint {
+#carbonfootprint .statline {
     background-color: lightsalmon;
 }
 
-#energyusage {
+#energyusage .statline {
     background-color: lightgreen;
 }
 
-#waterusage {
+#waterusage .statline {
     background-color: lightblue;
 }
 
 
 
-#carbonfootprintexceeded {
+#totalcarbonfootprint .statline {
+    background-color: lightpink;
+}
+
+#carbonfootprintexceeded .statline {
     background-color: lightcoral;
 }
 
-#carbonfootprintoffsetted {
+#carbonfootprintoffsetted .statline {
     background-color: lightgreen;
 }
 
 
 
+.listbox {
+    padding: 15px;
+    background-color: rgb(200, 210, 200);
+    border-radius: 10px;
+}
+
 table {
+    width: 100%;
     border-collapse: collapse;
 }
 
-.table-header {
-    background-color: rgba(240, 245, 240,0.8);
-}
-
 table tr {
-    background-color: rgba(240, 245, 240,0.3);
-    border-bottom: solid 1px rgb(200,200,200);
+    border-bottom: solid 1px rgb(180,180,180);
 }
 
 table th {
@@ -120,6 +150,7 @@ table th {
 }
 
 table a {
+    display: block;
     color: #3399ff;
     text-decoration: none;
     font-weight: bold;
@@ -218,18 +249,16 @@ table a:hover {
 }
 
 .manageutilities {
+    display: block;
     margin-left: auto;
     padding: 10px;
     width: 180px;
     background-color: lightgoldenrodyellow;
-}
-
-.manageutilities>a {
     color: black;
     text-align: center;
     text-decoration: none;
 }
 
-.location>h3 {
-    text-align: center;
+.manageutilities:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }

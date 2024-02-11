@@ -13,18 +13,21 @@
 {% block content %}
   <div id="content">
     <div class="cards-left">
-      <section class="dash-card">
+      <section class="dash-section">
         <h2 id="overview-title">Overview (Last Month)</h2>
         <div class="statsbox">
-          <div id="carbonfootprint">
+          <div id="carbonfootprint" class="stats">
+            <div class="statline"></div>
             <h3>Carbon Footprint</h3>
             <p>{{ overview.carbonfootprint }} CO2e</p>
           </div>
-          <div id="energyusage">
+          <div id="energyusage" class="stats">
+            <div class="statline"></div>
             <h3>Energy Usage</h3>
             <p>{{ overview.energyusage }} kWh</p>
           </div>
-          <div id="waterusage">
+          <div id="waterusage" class="stats">
+            <div class="statline"></div>
             <h3>Water Usage</h3>
             <p>{{ overview.waterusage }} Gallons</p>
           </div>
@@ -37,23 +40,30 @@
         </script>
       </section>
 
-      <section class="dash-card">
+      <section class="dash-section">
         <h2>Carbon Trading</h2>
         <div class="statsbox">
-          <div id="carbonfootprintexceeded">
+          <div id="totalcarbonfootprint" class="stats">
+            <div class="statline"></div>
+            <h3>Total Carbon Footprint Emitted</h3>
+            <p>{{ overview.totalcarbonfootprint }} CO2e</p>
+          </div>
+          <div id="carbonfootprintexceeded" class="stats">
+            <div class="statline"></div>
             <h3>Exceeded Carbon Footprint</h3>
             <p>{{ overview.carbonfootprintexceeded }} CO2e</p>
           </div>
-          <div id="carbonfootprintoffsetted">
+          <div id="carbonfootprintoffsetted" class="stats">
+            <div class="statline"></div>
             <h3>Total Carbon Footprint Offset</h3>
             <p>{{ overview.carbonfootprintoffsetted }} CO2e</p>
           </div>
         </div>
       </section>
 
-      <section class="dash-card">
+      <section class="dash-section">
         <h2>Assessments</h2>
-        <div class="statsbox">
+        <div class="listbox">
           <table>
             <tr class="table-header">
               <th>Location</th>
@@ -108,11 +118,9 @@
       <hr>
       <section class="location">
         <h2>{{ location.name }}</h2>
-        <div class="manageutilities">
-          <a href="{{ url_for('client.location_utility', location=id) }}">
-            <p>Manage Utility Bills</p>
-          </a>
-        </div>
+        <a href="{{ url_for('client.location_utility', location=id) }}" class="manageutilities">
+          <p>Manage Utility Bills</p>
+        </a>
 
         <h3>Usage Graph</h3>
         <canvas id="chart-{{ id }}"></canvas>
