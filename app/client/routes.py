@@ -7,7 +7,7 @@ from app.auth import check_user_type
 from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
-from app.models.Transaction import Transaction
+from app.models.Transaction import Transaction, CarbonPurchase
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
@@ -52,7 +52,8 @@ def dashboard():
         'carbonfootprint': 0,
         'energyusage': 0,
         'waterusage': 0,
-        'totalcarbonfootprint': 0
+        'totalcarbonfootprint': 0,
+        'carbonfootprintoffsetted': 0
     }
 
     locations = {}
@@ -100,8 +101,10 @@ def dashboard():
     
     
     
-    # TODO:
-    overview['carbonfootprintoffsetted'] = 5
+    carbonpurchasesData = db.session.query(CarbonPurchase).filter_by(company=g.company.id)
+    for carbonpurchase in carbonpurchasesData:
+        overview['carbonfootprintoffsetted'] += carbonpurchase.offset
+    
     overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
     overview['locations'] = len(locations)
     

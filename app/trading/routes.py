@@ -5,8 +5,10 @@ from app.database import query_data, db
 from app.models.Company import Company
 from app.models.Trading import Projects
 from app.models.Client import Location, Utility
+from app.models.Transaction import Transaction, CarbonPurchase
 from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
+from datetime import datetime
 
 
 
@@ -26,7 +28,8 @@ def get_company():
 @trading.route('/')
 def home():
     overview = {
-        'totalcarbonfootprint': 0
+        'totalcarbonfootprint': 0,
+        'carbonfootprintoffsetted': 0
     }
 
     locations = {}
@@ -36,8 +39,10 @@ def home():
         for utility in utilitiesData:
             overview['totalcarbonfootprint'] += float(utility.carbonfootprint)
     
-    # TODO:
-    overview['carbonfootprintoffsetted'] = 5
+    carbonpurchasesData = db.session.query(CarbonPurchase).filter_by(company=g.company.id)
+    for carbonpurchase in carbonpurchasesData:
+        overview['carbonfootprintoffsetted'] += carbonpurchase.offset
+    
     overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
     overview['locations'] = len(locations)
     
@@ -121,6 +126,37 @@ def add_to_cart(project):
     session['cart'] = cart
 
     return redirect(url_for("trading.Checkout")) 
+
+@trading.route("/purchase/<project>", methods=['POST'])
+def purchase(project):
+    projects = {}
+    projectsData = db.session.query(Projects).all()
+    for projectData in projectsData:
+        projects[projectData.id] = {
+            'name': projectData.name,
+            'type': projectData.type,
+            'stock': projectData.stock,
+            'price': projectData.price,
+        }
+    
+    projectData = projects[int(project)]
+    
+    amount = int(request.form.get("stock"))
+    
+    company = g.company.id
+    name = projectData['name']
+    date = datetime.now()
+    price = projectData['price'] * amount
+
+    transaction = Transaction(company=company, name=f"Carbon Purchase - {name}", date=date, price=price)
+    db.session.add(transaction)
+    
+    carbonpurchase = CarbonPurchase(company=company, name=f"Carbon Purchase - {name}", date=date, offset=amount)
+    db.session.add(carbonpurchase)
+    
+    db.session.commit()
+
+    return redirect(url_for("trading.home")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
 def project(project):

@@ -133,14 +133,14 @@
         <div class="cart">
             <div class="Cart-des1">
               <p><b> ${{project.price}} </b>/tonne</p>
-              <p>Carbon offset per stock : 0.005Tons 
-              <br> total amount of stock : {{project.stock}} </p>
+              <p>Carbon offset per stock : 1 CO2e
+              <br>Total amount of stock : {{project.stock}} </p>
             </div>
 
             <br>
 
             <div class="Cart-des2">
-              <form action="{{url_for('trading.add_to_cart', project = project.id)}}" method="POST">
+              <form action="{{url_for('trading.purchase', project = project.id)}}" method="POST">
                 <div >
                   <p class="quanitiy"> Quanitiy </p>
                   <p class="submit"> {{formCart.stock}} {{formCart.submit()}} </div> </p>
