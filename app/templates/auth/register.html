@@ -16,21 +16,24 @@
       <div class="inputs">
         <div class="group">
           <p>Personal Details</p>
-          {{ form.first_name }}
-          {{ form.last_name }}
-          {{ form.username }}
-          {{ form.email }}
-          {{ form.phone_number }}
-          {{ form.password }}
+          {{ form.first_name(id_="input-p2-1", class_="form-control") }}
+          <div class="invalid-feedback">
+            Please enter your first name.
+          </div>
+          {{ form.last_name(id_="input-p2-2", class_="form-control") }}
+          {{ form.username(id_="input-p2-3", class_="form-control") }}
+          {{ form.email(id_="input-p2-4", class_="form-control") }}
+          {{ form.phone_number(id_="input-p2-5", class_="form-control") }}
+          {{ form.password(id_="input-p2-6", class_="form-control") }}
         </div>
 
         <div class="group">
           <p>Company Details</p>
-          {{ form.company_name }}
-          {{ form.company_industry }}
-          {{ form.company_email }}
-          {{ form.company_phone_number }}
-          {{ form.company_address }}
+          {{ form.company_name(id_="input-p2-7", class_="form-control") }}
+          {{ form.company_industry(id_="input-p2-8", class_="form-control") }}
+          {{ form.company_email(id_="input-p2-9", class_="form-control") }}
+          {{ form.company_phone_number(id_="input-p2-11", class_="form-control") }}
+          {{ form.company_address(id_="input-p2-12", class_="form-control") }}
         </div>
       </div>
 
@@ -45,3 +48,10 @@
   </div>
 </div>
 {% endblock %}
+
+{#
+{{ form1.first_name(id_="input-p2-1", class_="form-control") }}
+<div class="invalid-feedback">
+  Please enter your first name.
+</div>
+#}

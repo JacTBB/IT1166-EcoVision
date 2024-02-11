@@ -58,7 +58,7 @@ def register():
         return redirect(url_for('auth.account'))
 
     form = RegisterForm()
-    
+
     if form.validate_on_submit():
         try:
             first_name = request.form.get("first_name")
@@ -67,7 +67,7 @@ def register():
             email = request.form.get("email")
             phone_number = request.form.get("phone_number")
             password = request.form.get("password")
-            
+
             company_name = request.form.get("company_name")
             company_industry = request.form.get("company_industry")
             company_email = request.form.get("company_email")
@@ -75,11 +75,12 @@ def register():
             company_address = request.form.get("company_address")
             company_logo = 'icon.jpg'
             company_plan = 'free'
-            
-            company = Company(name=company_name, industry=company_industry, email=company_email, phone_number=company_phone_number, address=company_address, logo=company_logo, plan=company_plan)
+
+            company = Company(name=company_name, industry=company_industry, email=company_email,
+                              phone_number=company_phone_number, address=company_address, logo=company_logo, plan=company_plan)
             db.session.add(company)
             db.session.commit()
-            
+
             client = Client(username=username, email=email)
             client.first_name = first_name
             client.last_name = last_name
@@ -93,14 +94,12 @@ def register():
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
-    else:
-        flash("Register Validation Error!")
-        for input in form:
-            if input.errors:
-                flash(f'\n{input.name} - {input.errors[0]}')
+            flash("Register Validation Error!")
+            for input in form:
+                if input.errors:
+                    flash(f'\n{input.name} - {input.errors[0]}')
 
     return render_template('auth/register.html', form=form)
-
 
 
 @auth.route("/users")
@@ -108,7 +107,6 @@ def register():
 @check_user_type(['admin', 'manager'])
 def users_list():
     return render_template('auth/users_list.html')
-
 
 
 @auth.route("/users/<type>")
