@@ -1,0 +1,45 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}Register - EcoVision{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/register.css') }}" />
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid login-page">
+  <img src="{{ url_for('static', filename='images/pexels-lumn-1410224.webp') }}">
+  <div class="image-overlay"></div>
+  <div class="login-container">
+    <p style="color: white; font-size: 22px">Register</p>
+    <form action="" method="POST">
+      <div class="inputs">
+        <div class="group">
+          <p>Personal Details</p>
+          <input type="text" name="first_name" required placeholder="First Name">
+          <input type="text" name="last_name" required placeholder="Last Name">
+          <input type="text" name="username" id="username" class="form-control" required placeholder="Username">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <div class="group">
+          <p>Company Details</p>
+          <input type="text" name="company_name" placeholder="Company Name">
+          <input type="text" name="company_industry" placeholder="Company Industry">
+          <input type="email" name="company_email" placeholder="Company Email">
+          <input type="text" name="company_phone_number" placeholder="Company Phone number">
+          <input type="text" name="company_address" placeholder="Company Address">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Register</button>
+      <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+    </form>
+
+    {% if error_message %}
+    <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

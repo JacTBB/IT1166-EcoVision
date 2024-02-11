@@ -6,11 +6,9 @@ from app.models.User import Client, Author, Technician, Consultant, Manager, Adm
 from app.auth.forms import LoginForm, SignupForm, AddUserForm, EditUserForm
 
 
-
 UserList = {'client': Client, 'author': Author,
             'technician': Technician, 'consultant': Consultant,
             'manager': Manager, 'admin': Admin}
-
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -53,14 +51,12 @@ def login():
     return render_template("auth/login.html", form=form, error_message=error_message)
 
 
-
 @auth.route("/signup", methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
         return redirect(url_for('auth.account'))
-    
-    return "Signup"
 
+    return "Signup"
 
 
 @auth.route("/users/<type>")
@@ -77,7 +73,6 @@ def users(type):
         users[user.id] = userData
 
     return render_template('auth/users.html', type=type, users=users)
-
 
 
 @auth.route("/users/<type>/add", methods=['GET', 'POST'])
@@ -104,7 +99,6 @@ def user_add(type):
     return render_template("auth/users_add.html", form=form)
 
 
-
 @auth.route("/users/<type>/edit/<user>", methods=['GET', 'POST'])
 @login_required
 def user_edit(type, user):
@@ -129,7 +123,6 @@ def user_edit(type, user):
     return render_template("auth/users_edit.html", form=form)
 
 
-
 @auth.route("/users/<type>/delete/<user>")
 @login_required
 def user_delete(type, user):
@@ -148,7 +141,6 @@ def user_delete(type, user):
         return "Error"
 
 
-
 @auth.route("/account")
 @login_required
 def account():
@@ -157,10 +149,16 @@ def account():
     return render_template("auth/account.html")
 
 
-
 @auth.route('/logout')
 @login_required
 def logout():
     session.clear()
     logout_user()
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/register')
+def register():
+    form = SignupForm()
+    print(form)
+    return render_template('auth/register.html')
