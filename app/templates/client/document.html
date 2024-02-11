@@ -3,7 +3,8 @@
 {% block title %}{{ document.name }} - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/document.css')}}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
   <script>
     tinymce.init({
@@ -19,18 +20,30 @@
     <section>
       <h2>{{ document.name }}</h2>
 
-      <p>Created Date: {{ document.created }}</p>
-      <p>Updated Date: {{ document.updated }}</p>
-
       {% if current_user.type == "client" %}
+        <button class="button" onclick="downloadPDF()">Download PDF</button>
         <hr>
-        <div>{{ document.content | safe }}</div>
+        <div id="doc">{{ document.content | safe }}</div>
       {% else %}
         <form method="POST">
+          <button class="button" onclick="downloadPDF()">Download PDF</button>
+          <input class="button" type="submit" value="Save">
           <textarea name="content" id="content" cols="30" rows="30" placeholder="Content">{{ document.content }}</textarea>
-          <input type="submit" value="Save">
         </form>
       {% endif %}
+
+      <script>
+        function downloadPDF() {
+          var doc = document.getElementById('doc')
+          var options = {
+            margin:       5,
+            filename:     '{{ document.name }}.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+          }
+      
+          html2pdf().set(options).from(doc).save();
+        }
+      </script>
     </section>
   </div>
 {% endblock %}

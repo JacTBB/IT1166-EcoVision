@@ -593,7 +593,7 @@ def assessment_delete(assessment):
 def document(assessment, document):
     document = db.session.query(Document).filter_by(company=g.company.id, assessment=assessment, id=document).first()
     
-    if request.method == 'POST':
+    if request.method == 'POST' and current_user.type != 'client':
         try:
             content = request.form.get("content")
             document.content = content
