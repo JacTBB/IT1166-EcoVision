@@ -19,17 +19,17 @@
           <div id="carbonfootprint" class="stats">
             <div class="statline"></div>
             <h3>Carbon Footprint</h3>
-            <p>{{ overview.carbonfootprint }} CO2e</p>
+            <p>{{ overview.carbonfootprint|round(5) }} CO2e</p>
           </div>
           <div id="energyusage" class="stats">
             <div class="statline"></div>
             <h3>Energy Usage</h3>
-            <p>{{ overview.energyusage }} kWh</p>
+            <p>{{ overview.energyusage|round(5) }} kWh</p>
           </div>
           <div id="waterusage" class="stats">
             <div class="statline"></div>
             <h3>Water Usage</h3>
-            <p>{{ overview.waterusage }} Gallons</p>
+            <p>{{ overview.waterusage|round(5) }} m<sup>3</sup></p>
           </div>
         </div>
 
@@ -46,17 +46,17 @@
           <div id="totalcarbonfootprint" class="stats">
             <div class="statline"></div>
             <h3>Total Carbon Footprint Emitted</h3>
-            <p>{{ overview.totalcarbonfootprint }} CO2e</p>
+            <p>{{ overview.totalcarbonfootprint|round(5) }} CO2e</p>
           </div>
           <div id="carbonfootprintexceeded" class="stats">
             <div class="statline"></div>
             <h3>Exceeded Carbon Footprint</h3>
-            <p>{{ overview.carbonfootprintexceeded }} CO2e</p>
+            <p>{{ overview.carbonfootprintexceeded|round(5) }} CO2e</p>
           </div>
           <div id="carbonfootprintoffsetted" class="stats">
             <div class="statline"></div>
             <h3>Total Carbon Footprint Offset</h3>
-            <p>{{ overview.carbonfootprintoffsetted }} CO2e</p>
+            <p>{{ overview.carbonfootprintoffsetted|round(5) }} CO2e</p>
           </div>
         </div>
       </section>

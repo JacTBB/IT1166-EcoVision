@@ -9,8 +9,8 @@
 {% block content %}
   <div id="content">
     <h1>Edit Utility</h1>
-    <form action="" method="POST" class="row g-3 needs-validation" novalidate>
-      <div class="col-md-4">
+    <form id="utilityform" action="" method="POST" class="row g-3 needs-validation" novalidate>
+      <div class="col-md-6">
         <label for="name" class="form-label">Name</label>
         {{ form.name(id_="name", class_="form-control") }}
         <div class="invalid-feedback">
@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="date" class="form-label">Date</label>
         {{ form.date(id_="date", class_="form-control") }}
         <div class="invalid-feedback">
@@ -26,15 +26,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
-        <label for="carbonfootprint" class="form-label">Carbon Footprint</label>
-        {{ form.carbonfootprint(id_="carbonfootprint", class_="form-control") }}
-        <div class="invalid-feedback">
-          Please enter a valid carbon footprint.
-        </div>
-      </div>
-
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="energyusage" class="form-label">Energy Usage</label>
         {{ form.energyusage(id_="energyusage", class_="form-control") }}
         <div class="invalid-feedback">
@@ -42,7 +34,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="waterusage" class="form-label">Water Usage</label>
         {{ form.waterusage(id_="waterusage", class_="form-control") }}
         <div class="invalid-feedback">
@@ -51,10 +43,39 @@
       </div>
 
       <div class="col-12">
+        <h4>Carbon Emissions</h4>
+        <p id="carbonemission">Please enter the utility usage.</p>
+      </div>
+
+      <div class="col-12">
         {{ form.csrf_token }}
         <button class="btn button" type="submit">Edit Utility</button>
       </div>
     </form>
+
+    <script>
+      const form = document.getElementById('utilityform')
+      const energyusage = document.getElementById('energyusage')
+      const waterusage = document.getElementById('waterusage')
+      const carbonemission = document.getElementById('carbonemission')
+
+      form.addEventListener('input', function() {
+        if (energyusage.value && waterusage.value) {
+          energy = Number(energyusage.value) * 0.5 / 1000
+          water = Number(waterusage.value) * 0.2 / 1000
+          carbonemission.innerHTML = `${(energy+water).toFixed(5)} CO2e`
+        }
+        else {
+          carbonemission.innerHTML = 'Please enter the utility usage.'
+        }
+      });
+
+      if (energyusage.value && waterusage.value) {
+        energy = Number(energyusage.value) * 0.5 / 1000
+        water = Number(waterusage.value) * 0.2 / 1000
+        carbonemission.innerHTML = `${(energy+water).toFixed(5)} CO2e`
+      }
+    </script>
 
     <script>
       const forms = document.querySelectorAll('.needs-validation')

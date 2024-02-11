@@ -35,14 +35,12 @@ class EditLocationForm(FlaskForm):
 class AddUtilityForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     date = DateField(validators=[InputRequired()], render_kw={"placeholder": "Date"})
-    carbonfootprint = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Carbon Footprint"})
     energyusage = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Energy Usage"})
     waterusage = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Water Usage"})
 
 class EditUtilityForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     date = DateField(validators=[InputRequired()], render_kw={"placeholder": "Date"})
-    carbonfootprint = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Carbon Footprint"})
     energyusage = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Energy Usage"})
     waterusage = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Water Usage"})
     

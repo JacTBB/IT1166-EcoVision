@@ -68,11 +68,11 @@ def dashboard():
         utilitiesData = db.session.query(Utility).filter_by(company=g.company.id, location=location.id)
         for utility in utilitiesData:
             utilities['timerange'].append(int(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp()))
-            utilities['carbonfootprint'].append(int(utility.carbonfootprint))
-            utilities['energyusage'].append(int(utility.energyusage))
-            utilities['waterusage'].append(int(utility.waterusage))
+            utilities['carbonfootprint'].append(float(utility.carbonfootprint))
+            utilities['energyusage'].append(float(utility.energyusage))
+            utilities['waterusage'].append(float(utility.waterusage))
             
-            overview['totalcarbonfootprint'] += int(utility.carbonfootprint)
+            overview['totalcarbonfootprint'] += float(utility.carbonfootprint)
         
         latestUtilityData = utilitiesData.order_by(Utility.date.desc()).first()
         if latestUtilityData:
@@ -83,9 +83,9 @@ def dashboard():
                 overview['energyusage'] = 0
                 overview['waterusage'] = 0
             if timerange == overview['timerange']:
-                overview['carbonfootprint'] += int(latestUtilityData.carbonfootprint)
-                overview['energyusage'] += int(latestUtilityData.energyusage)
-                overview['waterusage'] += int(latestUtilityData.waterusage)
+                overview['carbonfootprint'] += float(latestUtilityData.carbonfootprint)
+                overview['energyusage'] += float(latestUtilityData.energyusage)
+                overview['waterusage'] += float(latestUtilityData.waterusage)
             
         locations[location.id] = {
             'name': location.name,
@@ -101,7 +101,7 @@ def dashboard():
     
     
     # TODO:
-    overview['carbonfootprintoffsetted'] = 200
+    overview['carbonfootprintoffsetted'] = 5
     overview['carbonfootprintexceeded'] = overview['totalcarbonfootprint'] - overview['carbonfootprintoffsetted']
     overview['notifications'] = 10
     overview['locations'] = len(locations)
@@ -377,9 +377,12 @@ def location_utility_add(location):
             name = request.form.get("name")
             date = datetime.strptime(
                 request.form.get("date"), "%Y-%m-%d").date()
-            carbonfootprint = request.form.get("carbonfootprint")
             energyusage = request.form.get("energyusage")
             waterusage = request.form.get("waterusage")
+            
+            energycarbonfootprint = float(energyusage) * 0.5 / 1000
+            watercarbonfootprint = float(waterusage) * 0.2 / 1000
+            carbonfootprint = round(energycarbonfootprint + watercarbonfootprint, 5)
 
             utility = Utility(company=g.company.id, location=location, name=name, date=date,
                               carbonfootprint=carbonfootprint, energyusage=energyusage, waterusage=waterusage)
@@ -404,7 +407,6 @@ def location_utility_edit(location, utility):
     form = EditUtilityForm()
     form.name.data = utilityData.name
     form.date.data = utilityData.date
-    form.carbonfootprint.data = utilityData.carbonfootprint
     form.energyusage.data = utilityData.energyusage
     form.waterusage.data = utilityData.waterusage
 
@@ -412,7 +414,6 @@ def location_utility_edit(location, utility):
         try:
             name = request.form.get("name")
             date = request.form.get("date")
-            carbonfootprint = request.form.get("carbonfootprint")
             energyusage = request.form.get("energyusage")
             waterusage = request.form.get("waterusage")
 
@@ -420,12 +421,16 @@ def location_utility_edit(location, utility):
                 utilityData.name = name
             if date:
                 utilityData.date = datetime.strptime(date, "%Y-%m-%d").date()
-            if carbonfootprint:
-                utilityData.carbonfootprint = carbonfootprint
             if energyusage:
                 utilityData.energyusage = energyusage
             if waterusage:
                 utilityData.waterusage = waterusage
+            
+            energycarbonfootprint = float(utilityData.energyusage) * 0.5 / 1000
+            watercarbonfootprint = float(utilityData.waterusage) * 0.2 / 1000
+            carbonfootprint = round(energycarbonfootprint + watercarbonfootprint, 5)
+            
+            utilityData.carbonfootprint = carbonfootprint
 
             db.session.commit()
 
