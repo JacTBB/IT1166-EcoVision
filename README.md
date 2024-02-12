@@ -21,6 +21,7 @@ ___
 | System | Webpage | Creator |
 | ------ | ------- | ------- |
 | main | * | Kai Jie |
+| main | Enquiries | Ee Hern |
 | main | Chat | Ee Hern |
 | auth | * | Jackie, Edward |
 | client | * | Jackie |
@@ -37,6 +38,7 @@ ___
 | main | Chatbot | 3rd Party Chatbot | Kai Jie |
 | main | Chat | Websockets | Ee Hern |
 | client | Dashboard | Charts | Jackie |
+| client | Upgrade Account | Email | Jackie |
 | client | Assessment Payment | Email | Jackie |
 | client | Documents | WYSIWYG Editor | Jackie |
 | client | Documents | PDF Export | Jackie |
