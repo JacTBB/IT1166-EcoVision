@@ -34,10 +34,12 @@ ___
 | * | * | Email Server | Jackie |
 | main | News - Upload Image | Websockets | Kai Jie |
 | main | News | WYSIWYG Editor | Kai Jie |
+| main | Chatbot | 3rd Party Chatbot | Kai Jie |
 | main | Chat | Websockets | Ee Hern |
 | client | Dashboard | Charts | Jackie |
+| client | Assessment Payment | Email | Jackie |
 | client | Documents | WYSIWYG Editor | Jackie |
 | client | Documents | PDF Export | Jackie |
 | trading | Project | WYSIWYG Editor | Lance |
 | trading | Project | Filter | Lance |
-| trading | Purchase | Email | Jackie |
+| trading | Purchase | Email | Lance |
