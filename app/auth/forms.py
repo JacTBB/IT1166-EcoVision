@@ -5,12 +5,12 @@ from wtforms.validators import InputRequired
 
 
 class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
+    username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username", 'autofocus': True})
     password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
 
 class RegisterForm(FlaskForm):
-    first_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "First Name"})
+    first_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "First Name", 'autofocus': True})
     last_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Last Name"})
     username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
     email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
