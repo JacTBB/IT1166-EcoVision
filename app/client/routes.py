@@ -8,8 +8,8 @@ from app.auth import check_user_type
 from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
-from app.models.Transaction import Transaction, CarbonPurchase
-from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm
+from app.models.Transaction import Transaction, CarbonPurchase, AssessmentTransaction
+from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm, AddAssessmentTransactionForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
 from datetime import datetime
 from string import ascii_lowercase
@@ -585,6 +585,45 @@ def assessment_delete(assessment):
         print(f"Error occurred: {e}")
         db.session.rollback()
         return "Error"
+
+
+
+@client.route("/assessment/<assessment>/transaction/add", methods=['GET', 'POST'])
+@login_required
+@check_user_type(['admin', 'manager'])
+def assessment_transaction_add(assessment):
+    form = AddAssessmentTransactionForm()
+
+    if form.validate_on_submit():
+        try:
+            company = g.company.id
+            name = request.form.get("name")
+            description = request.form.get("description")
+            date = datetime.strptime(request.form.get("date"), "%Y-%m-%d").date()
+            price = request.form.get("price")
+
+            transaction = Transaction(company=company, name=name, date=date, price=price)
+            db.session.add(transaction)
+            
+            assessmentTransaction = AssessmentTransaction(company=company, assessment=assessment, name=name, description=description, date=date, price=price)
+            db.session.add(assessmentTransaction)
+            
+            db.session.commit()
+            
+            thread = threading.Thread(target=email_transaction, args=(g.company.email, current_user.username, price, f"Assessment Transaction - {name}"))
+            thread.start()
+
+            return redirect(url_for('client.assessments'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    else:
+        flash("Payment Method Validation Error!")
+        for input in form:
+            if input.errors:
+                flash(f'\n{input.name} - {input.errors[0]}')
+
+    return render_template("client/assessment_transaction_add.html", form=form)
 
 
 
