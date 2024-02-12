@@ -12,6 +12,7 @@ from app.models.Contact import CompanyInfo
 from datetime import datetime
 from uuid import uuid4
 import json
+from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 
 import os
 import base64
@@ -169,9 +170,9 @@ def contact():
             print(f"Error occurred: {e}")
             db.session.rollback()
             error_message = "Failed to send enquiry. Please try again later."
-            
+
         print(error_message)
-        
+
     return render_template('main/contact.html', form=form, error_message=error_message)
 
 
@@ -191,10 +192,25 @@ rooms = {}
 
 
 @main.route('/contact/room', methods=["GET", "POST"])
+@login_required
 def room():
+
+    username = current_user.username
+    UserList = {'client': Client, 'author': Author,
+                'technician': Technician, 'consultant': Consultant,
+                'manager': Manager, 'admin': Admin}
+
+    user = (query_data(Client, filter_by={'username': username}, all=False) or
+            query_data(Author, filter_by={'username': username}, all=False) or
+            query_data(Technician, filter_by={'username': username}, all=False) or
+            query_data(Consultant, filter_by={'username': username}, all=False) or
+            query_data(Manager, filter_by={'username': username}, all=False) or
+            query_data(Admin, filter_by={'username': username}, all=False))
+    print(user)
+
     session.pop('staffName', None)
     if request.method == "POST":
-        name = request.form.get("name")
+        name = username
         code = request.form.get("code")
         join = request.form.get("join", False)
         create = request.form.get("create", False)
@@ -247,6 +263,7 @@ def room():
 
 
 @main.route('/contact/room/chat', methods=["GET", "POST"])
+@login_required
 def chat():
     session.pop('customerName', None)
     getRoomCode = request.args.get("code")
@@ -260,9 +277,7 @@ def chat():
         return redirect(url_for("main.room"))
 
     query = Rooms.query.filter_by(room_code=getRoomCode).first()
-    print(query.messages)
-
-    return render_template("main/room/chat.html", code=getRoomCode, messages=query.messages or "")
+    return render_template("main/room/chat.html", code=getRoomCode)
 
 
 # for article image upload function
@@ -392,4 +407,3 @@ def disconnect():
     # print(f"{name} has left the room {room}")
 
 # end of chat room function
-
