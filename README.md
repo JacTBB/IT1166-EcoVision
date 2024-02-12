@@ -45,3 +45,8 @@ ___
 | trading | Project | WYSIWYG Editor | Lance |
 | trading | Project | Filter | Lance |
 | trading | Purchase | Email | Lance |
+
+___
+
+## Chatbot
+![Chatbot Workflow](/app/static/images/chatbot_example.png)
