@@ -7,7 +7,8 @@ from flask_login import current_user, login_required
 from app.auth import check_user_type
 from app.models.Inventory import Product
 from app.models.Transaction import Transaction
-from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AddTransactionForm
+from app.models.Staff import Announcement
+from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AnnouncementForm, AddTransactionForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm
 from app.models.User import Author, Technician, Consultant, Manager, Admin
 from datetime import datetime
@@ -23,11 +24,44 @@ UserList = {'author': Author,
 
 
 
-@staff.route("/")
+@staff.route("/", methods=['GET','POST'])
 @login_required
 @check_user_type(['admin', 'manager', 'consultant', 'technician', 'author'])
 def dashboard():
-    return render_template("staff/dashboard.html")
+    announcement = {
+        'description': "No Announcements.",
+        'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+    
+    announcementData = db.session.query(Announcement).first()
+    print(announcementData)
+    if announcementData:
+        announcement['description'] = announcementData.description
+        announcement['date'] = announcementData.date.strftime("%Y-%m-%d %H:%M:%S")
+        
+    announcementForm = AnnouncementForm()
+    
+    if announcementForm.validate_on_submit():
+        try:
+            description = request.form.get("description")
+            date = datetime.now()
+            
+            announcementData = db.session.query(Announcement).first()
+            if announcementData:
+                announcementData.description = description
+                announcementData.date = date
+                db.session.commit()
+            else:
+                announcement = Announcement(description=description, date=date)
+                db.session.add(announcement)
+                db.session.commit()
+
+            return redirect(url_for('staff.dashboard'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+    
+    return render_template("staff/dashboard.html", announcement=announcement, announcementForm=announcementForm)
 
 
 @staff.route("/products")
@@ -211,6 +245,7 @@ def chats():
 def transaction_add():
     form = AddTransactionForm()
 
+    # TODO:
     if form.validate_on_submit():
         try:
             company = request.form.get("company")

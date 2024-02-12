@@ -37,6 +37,11 @@ class EditCompanyInfo(FlaskForm):
 
 
 
+class AnnouncementForm(FlaskForm):
+    description = StringField(validators=[InputRequired()], render_kw={"placeholder": "Description"})
+
+
+
 class AddTransactionForm(FlaskForm):
     company = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Company"})
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})

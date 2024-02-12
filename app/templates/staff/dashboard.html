@@ -11,10 +11,45 @@
   <section>
     <div class="announcements">
       <h2>Announcements</h2>
+      <p>{{ announcement.description }}</p>
+      <p>{{ announcement.date }}</p>
+      {% if current_user.type == 'admin' %}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#announcementChangeModal">
+          New Announcement
+        </button>
+  
+        <!-- Modal -->
+        <div class="modal fade" id="announcementChangeModal" tabindex="-1" role="dialog" aria-labelledby="announcementChangeModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+              <form action="" method="POST">
+
+                <div class="modal-header">
+                  <h5 class="modal-title" id="announcementChangeModalLabel">New Announcement</h5>
+                </div>
+                <div class="modal-body">
+                  {{ announcementForm.description }}
+                </div>
+                <div class="modal-footer">
+                  {{ announcementForm.csrf_token }}
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
+
     <div class="tasks">
       <h2>Tasks</h2>
     </div>
+
     <div class="messages">
       <h2>Messages</h2>
     </div>
