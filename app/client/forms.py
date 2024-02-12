@@ -57,6 +57,14 @@ class EditAssessmentForm(FlaskForm):
     name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
     type = StringField(validators=[InputRequired()], render_kw={"placeholder": "Type"})
     progress = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Progress"})
+
+
+
+class AddAssessmentTransactionForm(FlaskForm):
+    name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Name"})
+    description = StringField(validators=[InputRequired()], render_kw={"placeholder": "Description"})
+    date = DateField(validators=[InputRequired()], render_kw={"placeholder": "Date"})
+    price = FloatField(validators=[InputRequired()], render_kw={"placeholder": "Price"})
     
 
 
