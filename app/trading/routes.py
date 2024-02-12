@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, session, g
 from flask_login import login_required
 from app.trading import trading
 from app.database import query_data, db
+from app.email import email_transaction
 from app.models.Company import Company
 from app.models.Trading import Projects
 from app.models.Client import Location, Utility
@@ -9,6 +10,7 @@ from app.models.Transaction import Transaction, CarbonPurchase
 from app.trading.forms import AddProjectForm, EditProjectForm, ProjectDetailsForm, AddToCart
 from flask_login import current_user
 from datetime import datetime
+import threading
 
 
 
@@ -155,7 +157,12 @@ def purchase(project):
     db.session.add(carbonpurchase)
     
     db.session.commit()
-
+    
+    
+    
+    thread = threading.Thread(target=email_transaction, args=(g.company.email, current_user.username, price, f"Carbon Purchase - {name}"))
+    thread.start()
+    
     return redirect(url_for("trading.home")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])

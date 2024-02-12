@@ -40,3 +40,4 @@ ___
 | client | Documents | PDF Export | Jackie |
 | trading | Project | WYSIWYG Editor | Lance |
 | trading | Project | Filter | Lance |
+| trading | Purchase | Email | Jackie |
