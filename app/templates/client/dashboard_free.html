@@ -12,38 +12,64 @@
 
 {% block content %}
   <div id="content">
-    <section>
-      <h1>Welcome, {{ current_user.username }}</h1>
-      <div id="overview">
-        <div id="carbonfootprint">
-          <h3>Carbon Footprint</h3>
-          <p>{{ overview.carbonfootprint }} CO2e</p>
+    <div class="cards-left">
+      <section class="dash-section">
+        <h2 id="overview-title">Overview (Last Month)</h2>
+        <div class="statsbox">
+          <div id="totalcarbonfootprint" class="stats">
+            <div class="statline"></div>
+            <h3>Total Carbon Footprint Emitted</h3>
+            <p>{{ overview.totalcarbonfootprint|round(5) }} CO2e</p>
+          </div>
+          <div id="carbonfootprint" class="stats">
+            <div class="statline"></div>
+            <h3>Carbon Footprint</h3>
+            <p>{{ overview.carbonfootprint|round(5) }} CO2e</p>
+          </div>
+          <div id="energyusage" class="stats">
+            <div class="statline"></div>
+            <h3>Energy Usage</h3>
+            <p>{{ overview.energyusage|round(5) }} kWh</p>
+          </div>
+          <div id="waterusage" class="stats">
+            <div class="statline"></div>
+            <h3>Water Usage</h3>
+            <p>{{ overview.waterusage|round(5) }} m<sup>3</sup></p>
+          </div>
         </div>
-        <div id="energyusage">
-          <h3>Energy Usage</h3>
-          <p>{{ overview.energyusage }} kWh</p>
-        </div>
-        <div id="waterusage">
-          <h3>Water Usage</h3>
-          <p>{{ overview.waterusage }} Gallons</p>
-        </div>
-        <div id="managelocations">
-          <a href="{{ url_for('client.locations') }}">
-            <h3>Manage Locations</h3>
-          </a>
-        </div>
-      </div>
-    </section>
+
+        <script>
+          title = document.getElementById("overview-title")
+          month = new Date({{ overview.timerange }}).toLocaleString('default', { month: 'long', year: 'numeric' })
+          title.textContent = `Overview (${month})`
+        </script>
+      </section>
+    </div>
+
+    <div class="cards-right">
+      <section class="dash-card">
+        <h2>Messages</h2>
+        <a class="message-button" href="{{ url_for('main.room') }}">
+          <h3>Enquiries</h3>
+        </a>
+      </section>
+
+      <section class="dash-card">
+        <h2>Locations</h2>
+        <p id="locations-stat">{{ overview.locations }}</p>
+        <a id="managelocations" href="{{ url_for('client.locations') }}">
+          <h3>Manage Locations</h3>
+        </a>
+      </section>
+    </div>
 
     {% for id, location in locations.items() %}
       <hr>
       <section class="location">
         <h2>{{ location.name }}</h2>
-        <div class="manageutilities">
-          <a href="{{ url_for('client.location_utility', location=id) }}">
-            <p>Manage Utility Bills</p>
-          </a>
-        </div>
+        <a href="{{ url_for('client.location_utility', location=id) }}" class="manageutilities">
+          <p>Manage Utility Bills</p>
+        </a>
 
         <h3>Usage Graph</h3>
         <canvas id="chart-{{ id }}"></canvas>

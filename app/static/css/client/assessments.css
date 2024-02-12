@@ -30,6 +30,21 @@ div h2 {
 
 
 
+.addrow {
+    margin-right: 0;
+    padding: 8px 6px;
+    width: 180px;
+    background-color: lightgoldenrodyellow;
+    margin-bottom: 10px;
+}
+
+.addrow > a {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
 table {
     border-collapse: collapse;
 }

@@ -4,11 +4,10 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/client/document.css')}}">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 
   <script>
     tinymce.init({
-      selector: 'textarea#content',
+      selector: 'textarea#docContent',
       plugins: 'anchor autolink image link lists media searchreplace table wordcount',
       toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat'
     });
@@ -25,23 +24,18 @@
         <hr>
         <div id="doc">{{ document.content | safe }}</div>
       {% else %}
-        <form method="POST">
-          <button class="button" onclick="downloadPDF()">Download PDF</button>
+        <form id="saveForm" method="POST">
+          <button class="button" onclick="downloadPDF()" type="button">Download PDF</button>
+          <input name="download" id="download" type="hidden" value="">
           <input class="button" type="submit" value="Save">
-          <textarea name="content" id="content" cols="30" rows="30" placeholder="Content">{{ document.content }}</textarea>
+
+          <textarea name="docContent" id="docContent" cols="30" rows="30" placeholder="Content">{{ document.content }}</textarea>
         </form>
       {% endif %}
 
       <script>
         function downloadPDF() {
-          var doc = document.getElementById('doc')
-          var options = {
-            margin:       5,
-            filename:     '{{ document.name }}.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-          }
-      
-          html2pdf().set(options).from(doc).save();
+          window.location.href = "{{ url_for('client.document_download', assessment=assessment, document=document.id) }}"
         }
       </script>
     </section>

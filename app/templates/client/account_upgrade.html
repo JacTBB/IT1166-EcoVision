@@ -1,0 +1,76 @@
+{% extends "layouts/client.html" %}
+
+{% block title %}Account Upgrade - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <h1>Account Upgrade</h1>
+    <form action="{{ url_for('client.account_upgrade') }}" method="post" class="row g-3 needs-validation" novalidate>
+
+      <div class="col-md-6">
+        <label for="name" class="form-label">Card Name</label>
+        {{ form.name(id_="name", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please provide a valid name.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="card_no" class="form-label">Card Number</label>
+        {{ form.card_no(id_="card_no", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please provide a valid card number.
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="expiry-month" class="form-label">Expiry Month</label>
+        <input class="form-control" id="expiry-month" name="expiry-month" required type="number" min=1 max=12>
+        <div class="invalid-feedback">
+          Please provide a valid expiry month.
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="expiry-year" class="form-label">Expiry Year</label>
+        <input class="form-control" id="expiry-year" name="expiry-year" required type="number" min=2024 max=2099>
+        <div class="invalid-feedback">
+          Please provide a valid expiry year.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="cvc" class="form-label">CVC</label>
+        {{ form.cvc(id_="cvc", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please provide a valid card CVC.
+        </div>
+      </div>
+
+      <div class="col-12">
+        {{ form.csrf_token }}
+        <button class="btn button" type="submit">Upgrade for $50/year</button>
+      </div>
+
+    </form>
+
+    <script>
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    </script>
+  </div>
+{% endblock %}

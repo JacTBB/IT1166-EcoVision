@@ -131,24 +131,47 @@
 
       <div class="right-side">
         <div class="cart">
-            <div class="Cart-des1">
-              <p><b> ${{project.price}} </b>/tonne</p>
-              <p>Carbon offset per stock : 1 CO2e
-              <br>Total amount of stock : {{project.stock}} </p>
-            </div>
+          <div class="Cart-des1">
+            <p><b> ${{project.price}} </b>/tonne</p>
+            <p>Carbon offset per stock : 1 CO2e
+            <br>Total amount of stock : {{project.stock}} </p>
+          </div>
 
-            <br>
+          <br>
 
-            <div class="Cart-des2">
-              <form action="{{url_for('trading.purchase', project = project.id)}}" method="POST">
-                <div >
-                  <p class="quanitiy"> Quanitiy </p>
-                  <p class="submit"> {{formCart.stock}} {{formCart.submit()}} </div> </p>
-                  <br> 
+          <div class="Cart-des2">
+            <form id="purchaseForm" action="{{ url_for('trading.purchase', project=project.id) }}" method="POST">
+              <div>
+                <p class="quantity">Quantity</p>
+                <!-- Button trigger modal -->
+                <p>{{ formCart.stock }}</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">
+                  Buy
+                </button>
+                <br> 
+              </div>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+  
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Carbon Credit Purchase</h5>
+                      </div>
+                      <div class="modal-footer">
+                        {{ formCart.csrf_token }}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                      </div>
+  
+                  </div>
                 </div>
-                <div>{{ formCart.csrf_token }}</div>
-              </form>
-            </div>
+              </div>
+
+            </form>
+
+          </div>
         </div>
 
       </div>

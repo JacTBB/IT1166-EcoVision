@@ -3,79 +3,182 @@ body {
 }
 
 hr {
-    margin: 0 25px;
-    width: calc(100% - 50px);
+    margin: 10px 10px;
+    width: calc(100% - 20px);
     border: 0;
-    border-bottom: 1px;
+    border-bottom: 2px;
     border-style: solid;
-    border-color: rgba(10, 10, 10, 0.1);
+    border-color: rgba(10, 10, 10, 0.5);
+}
+
+h2 {
+    font-size: 15px;
 }
 
 
 
-#overview {
+#content {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
 }
 
-#overview > div {
-    margin: 10px 20px;
-    padding: 10px 15px;
+.cards-left,
+.cards-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+}
+
+.cards-left {
+    width: 70%;
+}
+
+.cards-right {
+    width: 30%;
+}
+
+.dash-card {
+    margin: 5px;
+    width: 100%;
+    height: max-content;
+    background-color: rgb(200, 210, 200);
     border-radius: 10px;
 }
 
-#carbonfootprint {
+.dash-section {
+    margin: 5px;
+    margin-bottom: 10px;
+    padding: 0;
+    width: 100%;
+    height: max-content;
+}
+
+.statsbox {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.statsbox .stats:last-child {
+    margin-right: 0;
+}
+
+.stats {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: calc((100% - 20px) / 2);
+    border-radius: 10px;
+    background-color: rgb(200, 210, 200);
+}
+
+.stats .statline {
+    float: left;
+    width: 10px;
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+}
+
+.stats h3 {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.stats p {
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 5px;
+    font-size: 16px;
+    color: black;
+    font-weight: 600;
+}
+
+
+
+#carbonfootprint .statline {
     background-color: lightsalmon;
 }
 
-#energyusage {
+#energyusage .statline {
     background-color: lightgreen;
 }
 
-#waterusage {
+#waterusage .statline {
     background-color: lightblue;
 }
 
-#overview > div> p {
-    color: rgb(80, 80, 80);
-    font-weight: bold;
-}
-
-#managelocations {
+#totalcarbonfootprint .statline {
     background-color: lightpink;
 }
 
-#managelocations > a {
+
+
+.message-button {
+    display: block;
+    margin: 5px;
+    padding: 8px;
     color: black;
+    background-color: rgb(240, 245, 240);
+    border-radius: 10px;
     text-decoration: none;
 }
 
-#managelocations > a > h3 {
-    border-bottom: solid 1px black;
+.message-button:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.message-button h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
 }
 
 
 
-h2 {
-    font-size: 25px;
+#locations-stat {
+    text-align: center;
     font-weight: bold;
+    font-size: 25px;
+}
+
+#managelocations {
+    display: block;
+    margin: 5px;
+    padding: 8px;
+    color: black;
+    background-color: rgb(240, 245, 240);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+#managelocations:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#managelocations h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
 }
 
 
+
+.location {
+    width: 100%;
+}
 
 .manageutilities {
+    display: block;
     margin-left: auto;
     padding: 10px;
     width: 180px;
     background-color: lightgoldenrodyellow;
-}
-
-.manageutilities > a {
     color: black;
     text-align: center;
     text-decoration: none;
 }
 
-.location > h3 {
-    text-align: center;
+.manageutilities:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
