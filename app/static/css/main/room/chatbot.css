@@ -1,3 +1,4 @@
+
 .content {
   display: flex;
   align-items: center;
@@ -10,10 +11,19 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .join {
   display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.create-btn {
+  width: 100%;
   flex-direction: row;
   width: 100%;
 }
@@ -28,11 +38,12 @@
   border-style: solid;
   border-radius: 10px;
   background-color: whitesmoke;
-  height: 80vh;
+  height: 30vh;
+  width: 40vw;
   display: flex;
   flex-direction: column;
-  width: 80vw;
   align-items: stretch;
+  color: black;
 }
 
 .messages {
@@ -50,6 +61,10 @@ h2 {
   text-align: center;
 }
 
+h2 {
+  text-align: center;
+}
+
 #message {
   flex: 1;
 }
@@ -57,7 +72,16 @@ h2 {
 .text {
   display: flex;
   flex-direction: row;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.muted {
+  font-size: 10px;
+  color: darkgray;
   justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
