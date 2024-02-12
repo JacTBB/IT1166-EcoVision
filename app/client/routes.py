@@ -599,7 +599,7 @@ def document(assessment, document):
     
     if request.method == 'POST' and current_user.type != 'client':
         try:
-            content = request.form.get("content")
+            content = request.form.get("docContent")
             document.content = content
 
             db.session.commit()
@@ -607,7 +607,17 @@ def document(assessment, document):
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-    return render_template('client/document.html', document=document)
+    return render_template('client/document.html', assessment=assessment, document=document)
+
+
+
+@client.route("/assessment/<assessment>/document/<document>/download")
+@login_required
+@check_user_type(['admin', 'manager', 'consultant', 'client'])
+def document_download(assessment, document):
+    document = db.session.query(Document).filter_by(company=g.company.id, assessment=assessment, id=document).first()
+
+    return render_template('client/document_download.html', assessment=assessment, document=document)
 
 
 
