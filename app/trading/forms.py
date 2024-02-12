@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, IntegerField
 from wtforms.validators import InputRequired
-from flask_ckeditor import CKEditorField
 from wtforms.validators import DataRequired
 
 
@@ -22,8 +21,7 @@ class EditProjectForm(FlaskForm):
     submit = SubmitField('Update Project')
 
 class ProjectDetailsForm(FlaskForm):
-    content = CKEditorField('Content')
-    submit = SubmitField('Submit')
+    content = StringField(validators=[InputRequired()])
 
 class AddToCart(FlaskForm):
     stock = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Stock Amount"})

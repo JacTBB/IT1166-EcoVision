@@ -1,8 +1,10 @@
 from flask import render_template, request, redirect, url_for, session, g
 from flask_login import login_required
 from app.trading import trading
+from app.auth import check_user_type
 from app.database import query_data, db
 from app.email import email_transaction
+from sqlalchemy.orm.attributes import flag_modified
 from app.models.Company import Company
 from app.models.Trading import Projects
 from app.models.Client import Location, Utility
@@ -21,6 +23,25 @@ def get_company():
         company = Company.query.get(current_user.company)
         g.company = company
         return
+
+    if not 'company' in session:
+        class TempCompany:
+            def __init__(self):
+                self.name = "Admin"
+            
+        if request.endpoint == 'trading.projects':
+            g.company = TempCompany()
+            return
+        if request.endpoint == 'trading.project_add':
+            g.company = TempCompany()
+            return
+        if request.endpoint == 'trading.project_edit':
+            g.company = TempCompany()
+            return
+        if request.endpoint == 'trading.project_delete':
+            g.company = TempCompany()
+            return
+        return redirect(url_for('staff.companies'))
         
     company = Company.query.get(session['company'])
     g.company = company
@@ -28,6 +49,7 @@ def get_company():
 
 
 @trading.route('/')
+@login_required
 def home():
     overview = {
         'totalcarbonfootprint': 0,
@@ -76,60 +98,64 @@ def home():
     return render_template('trading/Dashboard.html', overview=overview, projects=projects, filter_value=filter_value)
 
 @trading.route("/about")
+@login_required
 def about():
     return render_template('trading/AboutCarbon.html')
 
-@trading.route("/Checkout")
-@login_required
-def Checkout():
-    projects = {}
-    projectsData = db.session.query(Projects).all()
-    for project in projectsData:
-        projects[project.id] = {
-            'name': project.name,
-            'type': project.type,
-            'stock': project.stock,
-            'price': project.price,
-        }
+# @trading.route("/Checkout")
+# @login_required
+# def Checkout():
+#     projects = {}
+#     projectsData = db.session.query(Projects).all()
+#     for project in projectsData:
+#         projects[project.id] = {
+#             'name': project.name,
+#             'type': project.type,
+#             'stock': project.stock,
+#             'price': project.price,
+#         }
 
-    cart = {}
-    for item in session['cart']:
-        ID = item["id"]
-        if ID in projects:
-            cart[ID] = {
-                "id": ID,
-                "name": projects[ID]['name'],
-                "type": projects[ID]['type'],
-                "stock": item['stock'],
-                "price": projects[ID]['price'],
-                "total_price" : int(item['stock']) * projects[ID]['price'],
-            }
-        else:
-            session['cart'].remove(item)
+#     cart = {}
+#     for item in session['cart']:
+#         ID = item["id"]
+#         if ID in projects:
+#             cart[ID] = {
+#                 "id": ID,
+#                 "name": projects[ID]['name'],
+#                 "type": projects[ID]['type'],
+#                 "stock": item['stock'],
+#                 "price": projects[ID]['price'],
+#                 "total_price" : int(item['stock']) * projects[ID]['price'],
+#             }
+#         else:
+#             session['cart'].remove(item)
         
-    return render_template('trading/ProjectCheckout.html', cart = cart)
+#     return render_template('trading/ProjectCheckout.html', cart = cart)
 
-@trading.route("/delete_cart/<cart_id>")
-def remove_cart(cart_id):
-    cart = session['cart']
-    for item in cart:
-        if item['id'] == int(cart_id):  
-            cart.remove(item)
-    session['cart'] = cart
-    return redirect(url_for('trading.Checkout'))
+# @trading.route("/delete_cart/<cart_id>")
+# @login_required
+# def remove_cart(cart_id):
+#     cart = session['cart']
+#     for item in cart:
+#         if item['id'] == int(cart_id):  
+#             cart.remove(item)
+#     session['cart'] = cart
+#     return redirect(url_for('trading.Checkout'))
 
-@trading.route("/add_to_cart/<project>", methods=['POST'])
-def add_to_cart(project):
-    if not 'cart' in session:
-        session['cart'] = []
+# @trading.route("/add_to_cart/<project>", methods=['POST'])
+# @login_required
+# def add_to_cart(project):
+#     if not 'cart' in session:
+#         session['cart'] = []
     
-    cart = session['cart']
-    cart.append({"id": int(project), "stock": request.form.get('stock')})
-    session['cart'] = cart
+#     cart = session['cart']
+#     cart.append({"id": int(project), "stock": request.form.get('stock')})
+#     session['cart'] = cart
 
-    return redirect(url_for("trading.Checkout")) 
+#     return redirect(url_for("trading.Checkout")) 
 
 @trading.route("/purchase/<project>", methods=['POST'])
+@login_required
 def purchase(project):
     projects = {}
     projectsData = db.session.query(Projects).all()
@@ -166,26 +192,26 @@ def purchase(project):
     return redirect(url_for("trading.home")) 
 
 @trading.route('/project/<project>', methods=['GET', 'POST'])
+@login_required
 def project(project):
     form = ProjectDetailsForm()
     formCart = AddToCart()
     projectData = Projects.query.get(project)
 
     if current_user.is_authenticated and (current_user.type == 'admin'):
-        if request.method == 'POST':
-            if form.validate_on_submit():
-                if request.form.get('csrf_token'):
-                    try:
-                        post = projectData
-                        post.content = form.content.data
+        if form.validate_on_submit():
+            try:
+                post = projectData
+                post.content = request.form.get("content")
+                print(post.content)
 
-                        db.session.add(post)
-                        db.session.commit()
-                        status_message = "Article updated successfully!"
-                    except Exception as e:
-                        status_message = "Failed to update article! Contact Administrator."
-                        print(f"Error occurred: {e}")
-                        db.session.rollback()
+                db.session.add(post)
+                db.session.commit()
+                status_message = "Article updated successfully!"
+            except Exception as e:
+                status_message = "Failed to update article! Contact Administrator."
+                print(f"Error occurred: {e}")
+                db.session.rollback()
     
     projects = {}
     projectsData = db.session.query(Projects).all()
@@ -199,8 +225,24 @@ def project(project):
     
     return render_template('trading/Project.html', form=form, formCart=formCart, project=projectData, projects=projects)
 
+@trading.route('/project/<project>/addimg', methods=['POST'])
+@login_required
+def project_addimg(project):
+    projectData = Projects.query.get(project)
+    
+    url = request.form.get("imageUrl")
+    print(url)
+
+    if url:
+        projectData.carousel.append(url)
+        flag_modified(projectData, 'carousel')
+        db.session.commit()
+    
+    return redirect(url_for('trading.project', project=project))
+
 @trading.route("/projects")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def projects():
     projects = {}
     projectsData = db.session.query(Projects).all()
@@ -215,6 +257,8 @@ def projects():
     return render_template('trading/ProjectF.html', projects=projects)   
 
 @trading.route("/project/add", methods=['GET', 'POST'])
+@login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def project_add():
     form = AddProjectForm()
 
@@ -238,6 +282,7 @@ def project_add():
 
 @trading.route("/project/<project>/edit", methods=['GET', 'POST'])
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def project_edit(project):
     form = EditProjectForm()
     
@@ -270,6 +315,7 @@ def project_edit(project):
 
 @trading.route("/project/<project>/delete")
 @login_required
+@check_user_type(['admin', 'manager', 'consultant'])
 def project_delete(project):
     try:
         projectData = Projects.query.get(project)

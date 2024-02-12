@@ -122,10 +122,12 @@
 .projects-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
   
 .project {
     width: calc(33.33% - 20px); /* Adjust the width as needed */
+    min-width: 300px;
     margin: 10px; /* Adjust the margin as needed */
 }
 
@@ -181,7 +183,6 @@ margin-right: 10px; /* Add some space between select and input */
 
 .methaneP {
     margin-bottom: 20px;
-    padding-left: 4px;
     padding-left: 4px;
 }
 
@@ -243,16 +244,12 @@ margin-right: 10px; /* Add some space between select and input */
     background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
 
-.view-link {
-    display: inline-block; /* Display as block-level element */
+.project-title {
+    display: block;
     padding: 10px 20px; /* Padding inside the box */
     border: 1px solid #000; /* Border */
     background-color: transparent; /* Transparent background */
     color: #000; /* Text color */
-    text-decoration: none; /* Remove underline */
-}
-.view-link:hover {
-    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
 
 .User-Info {

@@ -10,7 +10,6 @@ from app.models.Trading import *
 from app.models.Contact import *
 from app.models.Inventory import *
 from flask_bcrypt import Bcrypt
-from flask_ckeditor import CKEditor
 from flask_socketio import SocketIO
 
 
@@ -32,9 +31,6 @@ def create_app(config_class=Config):
         socketio.init_app(app, async_mode='threading')
 
         bcrypt = Bcrypt(app)
-
-        ckeditor = CKEditor()
-        ckeditor.init_app(app)
 
         @login_manager.user_loader
         def user_loader(user_id):

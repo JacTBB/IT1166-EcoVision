@@ -5,26 +5,39 @@
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/project.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/trading/dashboardmain.css') }}" />
-  {{ ckeditor.load() }}
+
+  <script>
+    tinymce.init({
+      selector: 'textarea#content',
+      plugins: 'anchor autolink image link lists media searchreplace table wordcount',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat'
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
-<div class="PROJECT">
+<div id="content">
   <div class="Header">
     <h1>{{project.type}} project by {{project.name}}</h1>
     <hr>
     <a href="{{url_for('trading.home')}}" class="link">Back To Projects</a>
-    {% if current_user.type == "admin" or current_user.type == "author" %}
-      <p>https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69214561/3/?bust=1696792028&width=720</p>
-      <p>https://images.livemint.com/img/2023/12/07/1140x641/dog-4615198_1280_1701927561029_1701927572424.jpg</p>
-    {% endif %}
     <hr>
   </div>
 
   <div class="Carosell">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <!-- Images will be added dynamically here -->
+        <div id="carouselinner" class="carousel-inner">
+
+          <!-- Images will be added dynamically here -->
+          {% for carousel in project.carousel %}
+            <div class="carousel-item">
+              <img class="d-block w-100" src="{{ carousel }}">
+            </div>
+          {% endfor %}
+
+          <script>
+            document.getElementById("carouselinner").querySelector('div:first-child').classList.add('active');
+          </script>
         </div>
         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
             <span class="carousel-control-prev-icon"></span>
@@ -35,89 +48,17 @@
     </div>
     {% if current_user.type == "admin" or current_user.type == "author" %}
       <div class="container mt-3">
+        <form action="{{ url_for('trading.project_addimg', project=project.id) }}" method="POST">
           <div class="form-group">
               <label for="imageUrl">Image URL:</label>
-              <input type="text" class="form-control" id="imageUrl" placeholder="Enter image URL">
+              <input type="text" class="form-control" name="imageUrl" id="imageUrl" placeholder="Enter image URL">
           </div>
-          <button type="button" class="btn btn-primary" id="addImageBtn">Add Image</button>
+          <button type="submit" class="btn btn-primary" id="addImageBtn">Add Image</button>
+        </form>
       </div>
     {% endif %}
     
     </body>
-    
-    <script>
-      // JavaScript to manage the carousel
-
-      $(document).ready(function() {
-          const carouselInner = $('.carousel-inner');
-          const carouselIndicators = $('.carousel-indicators');
-
-          // Retrieve stored image URLs and flag from localStorage
-          let storedImageURLs = JSON.parse(localStorage.getItem('imageURLs')) || [];
-          let imagesLoaded = localStorage.getItem('imagesLoaded') === 'true';
-
-          // Load stored images to the carousel if not already loaded
-          if (imagesLoaded) {
-              storedImageURLs.forEach(addImageToCarousel);
-          }
-
-          // Add images to the carousel
-          function addImageToCarousel(imageUrl) {
-              const carouselItem = $('<div class="carousel-item"></div>');
-              if (carouselInner.children().length === 0) {
-                  carouselItem.addClass('active');
-              } 
-
-              const image = $('<img class="d-block w-100">');
-              image.attr('src', imageUrl);
-
-              carouselItem.append(image);
-              carouselInner.append(carouselItem);
-
-              // Add carousel indicator
-              const indicator = $('<li data-target="#myCarousel" data-slide-to="' + carouselIndicators.children().length + '"></li>');
-              if (carouselIndicators.children().length === 0) {
-                  indicator.addClass('active');
-              }
-              carouselIndicators.append(indicator);
-
-              // Add delete button if user is authenticated as admin or author
-              {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
-              const removeBtn = $('<button type="button" class="btn btn-danger btn-sm remove-btn">Remove</button>');
-              removeBtn.click(function() {
-                  carouselItem.remove();
-                  removeImageFromLocalStorage(imageUrl);
-              });
-              carouselItem.append(removeBtn);
-              {% endif %}
-          }
-
-          // Remove image URL from localStorage
-          function removeImageFromLocalStorage(imageUrl) {
-              const index = storedImageURLs.indexOf(imageUrl);
-              if (index !== -1) {
-                  storedImageURLs.splice(index, 1);
-                  localStorage.setItem('imageURLs', JSON.stringify(storedImageURLs));
-              }
-          }
-
-          // Event handler for Add Image button
-          $('#addImageBtn').click(function() {
-              const imageUrl = $('#imageUrl').val().trim();
-              if (imageUrl !== '') {
-                  addImageToCarousel(imageUrl);
-                  $('#imageUrl').val('');
-
-                  // Store the updated image URLs and flag in localStorage
-                  storedImageURLs.push(imageUrl);
-                  localStorage.setItem('imageURLs', JSON.stringify(storedImageURLs));
-                  localStorage.setItem('imagesLoaded', true);
-              } else {
-                  alert('Please enter an image URL.');
-              }
-          });
-      });
-    </script>
 
   </div>
 
@@ -144,8 +85,8 @@
               <div>
                 <p class="quantity">Quantity</p>
                 <!-- Button trigger modal -->
-                <p>{{ formCart.stock }}</p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">
+                <p class="stock">{{ formCart.stock }}</p>
+                <button type="button" class="buy-btn" data-toggle="modal" data-target="#confirmModal">
                   Buy
                 </button>
                 <br> 
@@ -190,9 +131,7 @@
           <div class="save">
             <input type="submit" value="Save">
           </div>
-          <p>
-            {{ form.content() }}
-          </p>
+          <textarea name="content" id="content" cols="30" rows="30" placeholder="Content">{{ project.content }}</textarea>
       
           <div class="form-footer">
             <div class="status-message" style="display: inline-block;">
