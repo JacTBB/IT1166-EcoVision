@@ -76,7 +76,7 @@
         Staff Chats
       </a>
     </li>
-    {% if current_user.type == 'admin' or current_user.type == 'manager' or current_user.type == 'technician' %}
+    <!-- {% if current_user.type == 'admin' or current_user.type == 'manager' or current_user.type == 'technician' %}
       <li>
         <a class="{{ 'nav-selected' if request.endpoint == 'staff.products' else '' }}"
           href="{{ url_for('staff.products') }}">
@@ -84,7 +84,7 @@
           Inventory
         </a>
       </li>
-    {% endif %}
+    {% endif %} -->
     {% if current_user.type == 'admin' or current_user.type == 'manager' or current_user.type == 'author' %}
       <li>
         <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}">
