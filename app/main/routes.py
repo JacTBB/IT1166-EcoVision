@@ -1,3 +1,4 @@
+from re import split
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import asc, desc
 from app import socketio
@@ -206,30 +207,32 @@ def room():
             query_data(Consultant, filter_by={'username': username}, all=False) or
             query_data(Manager, filter_by={'username': username}, all=False) or
             query_data(Admin, filter_by={'username': username}, all=False))
-    print(user)
 
     session.pop('staffName', None)
     if request.method == "POST":
         name = username
         code = request.form.get("code")
-        join = request.form.get("join", False)
-        create = request.form.get("create", False)
+        join = bool(request.form.get("join", False))
+        create = bool(request.form.get("create", False))
 
         randomRoomCode = generate_unique_code(4)
 
         if not name:
             return render_template("main/room/room.html", error="Please enter a name.", code=code, name=name)
 
-        if join != False and not code:
+        if join and not code:
             return render_template("main/room/room.html", error="Please enter a room code.", code=code, name=name)
 
-        roomCode = query_data(Rooms, filter_by={"room_code": code}, all=False)
-        if roomCode is not None:
-            room_code = roomCode.room_code
-        else:
-            room_code = None
+        roomids = (room.userids for room in Rooms.query.all())
 
-        if create != False:
+        # check if user is already in a room
+        for i in roomids:
+            if user.user_id in i:
+                query = Rooms.query.filter(
+                    Rooms.userids.contains(user.user_id)).first()
+                return redirect(url_for("main.chat", code=query.room_code))
+
+        if create == True:
 
             # query = Rooms.query.filter(
             #     Rooms.userids.contains(current_user.user_id)).first()
@@ -242,20 +245,25 @@ def room():
             #         db.session.rollback()
 
             try:
-                createRoom = Rooms(host_userid=json.dumps(
-                    [str(uuid4())]), room_code=randomRoomCode)
+                createRoom = Rooms(userids=json.dumps(
+                    [user.user_id]), room_code=randomRoomCode)
                 db.session.add(createRoom)
                 db.session.commit()
+                print("Room created successfully!")
+
+                return redirect(url_for("main.chat", code=randomRoomCode))
+
             except Exception as e:
                 print(f"Error occurred: {e}")
                 db.session.rollback()
+                print("Failed to create room. Please try again later.")
 
-        elif code not in room_code.room_code:
-            return render_template("main/room/room.html", error="Room does not exist.", code=code, name=name)
+        # elif code not in room_code:
+        #     return render_template("main/room/room.html", error="Room does not exist.", code=code, name=name)
 
         session['staffName'] = name
 
-        return redirect(url_for("main.chat", code=randomRoomCode))
+        return redirect(url_for("main.room"))
 
     query = Rooms.query.all()
 
@@ -265,11 +273,13 @@ def room():
 @main.route('/contact/room/chat', methods=["GET", "POST"])
 @login_required
 def chat():
+    username = current_user.username
+
     session.pop('customerName', None)
     getRoomCode = request.args.get("code")
 
     session['roomCode'] = getRoomCode
-    session['customerName'] = "Customer"
+    session['customerName'] = username
 
     name = session.get("customerName")
 

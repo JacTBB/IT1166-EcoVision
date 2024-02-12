@@ -18,8 +18,9 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    rooms = Rooms(host_userid=json.dumps(
-        [1]), room_code=1234, who_created_account_id=0, to_who_acount_id=1)
+    # Admin UserID : Client1 UserID
+    rooms = Rooms(userids=json.dumps(
+        ['54a5cfaf-0c4f-4732-9801-5012a5684494', '30b3d2e9-c297-472f-a52b-f2540d3bc12f']), room_code=1234)
 
     db.session.add(rooms)
     # Users
@@ -30,7 +31,8 @@ with app.app_context():
         UserClass = UserList[UserType]
 
         if UserType != 'client':
-            user = UserClass(username=UserType, email=f"{UserType}_ecovision@jactbb.com")
+            email = f"{UserType}_ecovision@jactbb.com"
+            user = UserClass(username=UserType, email=email)
             user.set_password('123')
 
             db.session.add(user)
