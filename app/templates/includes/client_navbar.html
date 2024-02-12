@@ -38,6 +38,13 @@
         Dashboard
       </a>
     </li>
+    <li>
+      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}"
+        href="{{ url_for('main.news') }}">
+        <i class="fa fa-newspaper" aria-hidden="true"></i>
+        News
+      </a>
+    </li>
     {% if g.company.plan != "free" %}
       <li>
         <a class="{{ 'nav-selected' if request.endpoint == 'client.assessments' else '' }}"
