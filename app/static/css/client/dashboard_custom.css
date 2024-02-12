@@ -239,3 +239,8 @@ table a:hover {
 .manageutilities:hover {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
+
+.location canvas {
+    max-width: 600px;
+    max-height: 350px;
+}

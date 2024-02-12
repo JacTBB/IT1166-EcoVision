@@ -32,48 +32,43 @@
         Dashboard
       </a>
     </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'client.companies' else '' }}"
-        href="{{ url_for('client.companies') }}">
-        <i class="fa fa-building" aria-hidden="true"></i>
-        Manage Business
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'staff.companies' else '' }}"
-        href="{{ url_for('staff.companies') }}">
-        <i class="fa fa-building" aria-hidden="true"></i>
-        Business Dashboard
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'staff.chats' else '' }}"
-        href="{{ url_for('staff.chats') }}">
-        <i class="fa fa-comments" aria-hidden="true"></i>
-        Business Chats
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'staff.products' else '' }}"
-        href="{{ url_for('staff.products') }}">
-        <i class="fa fa-archive" aria-hidden="true"></i>
-        Inventory
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'staff.enquiries' else '' }}"
-        href="{{ url_for('staff.enquiries') }}">
-        <i class="fa fa-question-circle" aria-hidden="true"></i>
-        Enquiries
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'trading.projects' else '' }}"
-        href="{{ url_for('trading.projects') }}">
-        <i class="fa fa-leaf" aria-hidden="true"></i>
-        Carbon Trading
-      </a>
-    </li>
+    {% if current_user.type == 'admin' or current_user.type == 'manager' or current_user.type == 'consultant' %}
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'client.companies' else '' }}"
+          href="{{ url_for('client.companies') }}">
+          <i class="fa fa-building" aria-hidden="true"></i>
+          Manage Business
+        </a>
+      </li>
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'staff.companies' else '' }}"
+          href="{{ url_for('staff.companies') }}">
+          <i class="fa fa-building" aria-hidden="true"></i>
+          Business Dashboard
+        </a>
+      </li>
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'staff.chats' else '' }}"
+          href="{{ url_for('staff.chats') }}">
+          <i class="fa fa-comments" aria-hidden="true"></i>
+          Business Chats
+        </a>
+      </li>
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'staff.enquiries' else '' }}"
+          href="{{ url_for('staff.enquiries') }}">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          Enquiries
+        </a>
+      </li>
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'trading.projects' else '' }}"
+          href="{{ url_for('trading.projects') }}">
+          <i class="fa fa-leaf" aria-hidden="true"></i>
+          Carbon Trading
+        </a>
+      </li>
+    {% endif %}
     <li>
       <a class="{{ 'nav-selected' if request.endpoint == 'main.chat' else '' }}"
         href="{{ url_for('main.chat') }}">
@@ -81,19 +76,32 @@
         Staff Chats
       </a>
     </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}">
-        <i class="fa fa-newspaper" aria-hidden="true"></i>
-        News Platform
-      </a>
-    </li>
-    <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'auth.users_list' else '' }}"
-        href="{{ url_for('auth.users_list') }}">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        Manage Users
-      </a>
-    </li>
+    {% if current_user.type == 'admin' or current_user.type == 'manager' or current_user.type == 'technician' %}
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'staff.products' else '' }}"
+          href="{{ url_for('staff.products') }}">
+          <i class="fa fa-archive" aria-hidden="true"></i>
+          Inventory
+        </a>
+      </li>
+    {% endif %}
+    {% if current_user.type == 'admin' or current_user.type == 'manager' or current_user.type == 'author' %}
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'main.news' else '' }}" href="{{ url_for('main.news') }}">
+          <i class="fa fa-newspaper" aria-hidden="true"></i>
+          News Platform
+        </a>
+      </li>
+    {% endif %}
+    {% if current_user.type == 'admin' or current_user.type == 'manager' %}
+      <li>
+        <a class="{{ 'nav-selected' if request.endpoint == 'auth.users_list' else '' }}"
+          href="{{ url_for('auth.users_list') }}">
+          <i class="fa fa-address-card" aria-hidden="true"></i>
+          Manage Users
+        </a>
+      </li>
+    {% endif %}
   </ul>
 
   <div class="nav-collapse-div">
