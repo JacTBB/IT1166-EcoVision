@@ -14,3 +14,29 @@ Initialising Database
 
 Running Flask App
 `python serve.py`
+
+___
+
+## Project Overview
+| System | Webpage | Creator |
+| ------ | ------- | ------- |
+| main | * | Kai Jie |
+| main | Chat | Ee Hern |
+| auth | * | Jackie, Edward |
+| client | * | Jackie |
+| trading | * | Lance |
+| staff | * | Jackie, Luo Bin |
+
+## Advanced Features
+| System | Webpage | Feature | Creator |
+| ------ | ------- | ------- | ------- |
+| * | * | Hosting | Jackie |
+| * | * | Email Server | Jackie |
+| main | News - Upload Image | Websockets | Kai Jie |
+| main | News | WYSIWYG Editor | Kai Jie |
+| main | Chat | Websockets | Ee Hern |
+| client | Dashboard | Charts | Jackie |
+| client | Documents | WYSIWYG Editor | Jackie |
+| client | Documents | PDF Export | Jackie |
+| trading | Project | WYSIWYG Editor | Lance |
+| trading | Project | Filter | Lance |
