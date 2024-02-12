@@ -17,9 +17,15 @@
         <button id="company-profile-btn" onclick="page('company-profile')">
           Company Profile
         </button>
-        <button id="billing-btn" onclick="page('billing')">
-          Billing
-        </button>
+        {% if g.company.plan != 'free' %}
+          <button id="billing-btn" onclick="page('billing')">
+            Billing
+          </button>
+        {% else %}
+          <button id="upgrade-btn" onclick="upgrade()">
+            Upgrade
+          </button>
+        {% endif %}
         <button class="logout" onclick="logout()">
           Logout
         </button>
@@ -212,44 +218,46 @@
         </div>
 
         <div id="billing">
+            {% if g.company.plan != 'free' %}
+            
+            <h2>Billing</h2>
 
-          <h2>Billing</h2>
+            <section id="section-b1">
+              <h3>Payment Method</h3>
+              {% if g.company.payment_card_no %}
+                <p>Card: **** **** **** {{ g.company.payment_card_no[-4:] }}</p>
+                <p>Expires: {{ g.company.payment_expiry }}</p>
+              {% else %}
+                <p>Please add a payment method</p>
+              {% endif %}
+              <a class="paymentbutton" href={{ url_for('client.account_update_payment') }}>Update Payment Method</a>
+            </section>
 
-          <section id="section-b1">
-            <h3>Payment Method</h3>
-            {% if g.company.payment_card_no %}
-              <p>Card: **** **** **** {{ g.company.payment_card_no[-4:] }}</p>
-              <p>Expires: {{ g.company.payment_expiry }}</p>
-            {% else %}
-              <p>Please add a payment method</p>
+            <hr>
+
+            <section id="section-b2">
+              <h3>Transaction History</h3>
+
+              <table>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Price</th>
+                </tr>
+                {% for id, transaction in transactions.items() %}
+                  <tr>
+                    <td>{{ id }}</td>
+                    <td>{{ transaction.name }}</td>
+                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.price }}</td>
+                  <tr>
+                {% endfor %}
+              </table>
+            </section>
+
             {% endif %}
-            <a class="paymentbutton" href={{ url_for('client.account_update_payment') }}>Update Payment Method</a>
-          </section>
-
-          <hr>
-
-          <section id="section-b2">
-            <h3>Transaction History</h3>
-
-            <table>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Price</th>
-              </tr>
-              {% for id, transaction in transactions.items() %}
-                <tr>
-                  <td>{{ id }}</td>
-                  <td>{{ transaction.name }}</td>
-                  <td>{{ transaction.date }}</td>
-                  <td>{{ transaction.price }}</td>
-                <tr>
-              {% endfor %}
-            </table>
-          </section>
-
-        </div>
+          </div>
 
       </div>
     </div>
@@ -272,8 +280,12 @@
         targetElement.classList.remove('d-none')
       }
 
+      function upgrade() {
+        window.location.href="{{ url_for('client.account_upgrade') }}"
+      }
+
       function logout() {
-        window.location.href="{{ url_for('auth.logout') }}";
+        window.location.href="{{ url_for('auth.logout') }}"
       }
 
       page('personal-profile');

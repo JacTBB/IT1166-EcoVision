@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, session, g, flash
 from app.client import client
 from app.database import db
+from app.email import email_transaction
 from sqlalchemy.orm.attributes import flag_modified
 from flask_login import login_required, current_user
 from app.auth import check_user_type
@@ -14,6 +15,7 @@ from datetime import datetime
 from string import ascii_lowercase
 import random
 import os
+import threading
 
 
 
@@ -846,6 +848,62 @@ def account_update_payment():
                     flash(f'\n{input.name} - {input.errors[0]}')
 
     return render_template("client/account_payment.html", form=form)
+
+
+
+@client.route("/account/upgrade", methods=["GET", "POST"])
+@login_required
+@check_user_type(['client'])
+def account_upgrade():
+    form = UpdatePaymentForm()
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                companyData = Company.query.get(g.company.id)
+
+                name = request.form.get("name")
+                card_no = request.form.get("card_no")
+                expiry_month = request.form.get("expiry-month")
+                expiry_year = request.form.get("expiry-year")
+                cvc = request.form.get("cvc")
+                
+                expiry = f"{expiry_month}/{expiry_year[2:]}"
+
+                companyData.payment_name = name
+                companyData.payment_card_no = card_no
+                companyData.payment_expiry = expiry
+                companyData.payment_cvc = cvc
+                
+                companyData.plan = 'custom'
+                
+                
+                
+                company = g.company.id
+                date = datetime.now()
+                price = 50
+    
+                transaction = Transaction(company=company, name=f"Account Upgrade", date=date, price=price)
+                db.session.add(transaction)
+                
+                db.session.commit()
+                
+                
+                
+                thread = threading.Thread(target=email_transaction, args=(g.company.email, g.company.name, price, f"Account Upgrade"))
+                thread.start()
+                
+                return redirect(url_for('client.account', page='billing'))
+            except Exception as e:
+                print(f"Error occurred: {e}")
+                db.session.rollback()
+        else:
+            flash("Payment Method Validation Error!")
+            for input in form:
+                if input.errors:
+                    flash(f'\n{input.name} - {input.errors[0]}')
+
+    return render_template("client/account_upgrade.html", form=form)
 
 
 
