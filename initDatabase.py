@@ -30,8 +30,7 @@ with app.app_context():
         UserClass = UserList[UserType]
 
         if UserType != 'client':
-            user = UserClass(username=UserType, email=f"{
-                             UserType}_ecovision@jactbb.com")
+            user = UserClass(username=UserType, email=f"{UserType}_ecovision@jactbb.com")
             user.set_password('123')
 
             db.session.add(user)
