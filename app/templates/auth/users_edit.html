@@ -1,18 +1,85 @@
 {% extends "layouts/staff.html" %}
 
-{% block title %}Edit User - EcoVision{% endblock %}
+{% block title %}Edit {{ type.capitalize() }} - EcoVision{% endblock %}
 
-{% block head %}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+{% endblock %}
 
 {% block content %}
   <div id="content">
-    <div style="padding: 10px;">
-      <h1 style="padding-top: 50px;">Edit User</h1>
-      <form action="" method="POST">
-        <div>{{form.username}}</div>
-        <div>{{form.submit()}}</div>
+    <h1>Edit {{ type.capitalize() }}</h1>
+    <form action="" method="POST" class="row g-3 needs-validation" novalidate>
+
+      <div class="col-md-4">
+        <label for="first_name" class="form-label">First Name</label>
+        {{ form.first_name(id_="first_name", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid first_name.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="last_name" class="form-label">Last Name</label>
+        {{ form.last_name(id_="last_name", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid last_name.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="username" class="form-label">Username</label>
+        {{ form.username(id_="username", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid username.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="email" class="form-label">Email</label>
+        {{ form.email(id_="email", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid email.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        {{ form.phone_number(id_="phone_number", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid phone_number.
+        </div>
+      </div>
+
+      {% if type == 'client' %}
+        <div class="col-md-4">
+          <label for="company" class="form-label">Company</label>
+          <input class="form-control" id="company" name="company" placeholder="CompanyID" required type="number" value="{{company}}">
+          <div class="invalid-feedback">
+            Please enter a valid company.
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="col-12">
         {{ form.csrf_token }}
-      </form>
-    </div>
+        <button class="btn button" type="submit">Edit {{ type.capitalize() }}</button>
+      </div>
+    </form>
+
+    <script>
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    </script>
   </div>
 {% endblock %}

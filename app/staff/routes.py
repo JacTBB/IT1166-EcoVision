@@ -3,6 +3,7 @@ from app.models.Contact import CompanyInfo
 from app.models.Company import Company
 from app.staff import staff
 from app.database import db
+from app.email import email_transaction
 from flask_login import current_user, login_required
 from app.auth import check_user_type
 from app.models.Inventory import Product
@@ -15,6 +16,7 @@ from datetime import datetime
 from string import ascii_lowercase
 import random
 import os
+import threading
 
 
 
@@ -235,34 +237,6 @@ def enquiry_edit(enquiry):
 @staff.route('/staff/chats')
 def chats():
     return render_template('main/room/staffchat.html')  
-
-
-
-
-@staff.route("/transaction/add", methods=['GET', 'POST'])
-@login_required
-@check_user_type(['admin', 'manager'])
-def transaction_add():
-    form = AddTransactionForm()
-
-    # TODO:
-    if form.validate_on_submit():
-        try:
-            company = request.form.get("company")
-            name = request.form.get("name")
-            date = datetime.strptime(request.form.get("date"), "%Y-%m-%d").date()
-            price = request.form.get("price")
-
-            transaction = Transaction(company=company, name=name, date=date, price=price)
-            db.session.add(transaction)
-            db.session.commit()
-
-            return redirect(url_for('staff.companies'))
-        except Exception as e:
-            print(f"Error occurred: {e}")
-            db.session.rollback()
-
-    return render_template("staff/transaction_add.html", form=form)
 
 
 

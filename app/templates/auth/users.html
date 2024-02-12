@@ -9,16 +9,20 @@
 {% block content %}
 <div id="content">
   <section>
-    <h2>Users</h2>
+    <h2>{{ type.capitalize() }}</h2>
     <div class="addrow">
       <a href="{{ url_for('auth.user_add', type=type) }}">
-        <p>Add Users</p>
+        <p>Add {{ type.capitalize() }}</p>
       </a>
     </div>
     <table>
       <tr>
         <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Username</th>
+        <th>Email</th>
+        <th>Phone Number</th>
         {% if type == "client" %}
           <th>CompanyID</th>
         {% endif %}
@@ -27,9 +31,13 @@
       {% for id, user in users.items() %}
       <tr>
         <td>{{ id }}</td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
         <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone_number }}</td>
         {% if type == "client" %}
-          <th>{{ user.companyID }}</th>
+          <td>{{ user.companyID }}</td>
         {% endif %}
         <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
         <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
