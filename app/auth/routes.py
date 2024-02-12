@@ -117,7 +117,11 @@ def users(type):
     usersData = db.session.query(UserList[type]).all()
     for user in usersData:
         userData = {
-            'username': user.username
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'username': user.username,
+            'email': user.email,
+            'phone_number': user.phone_number,
         }
         if type == 'client':
             userData['companyID'] = user.company
@@ -134,37 +138,61 @@ def user_add(type):
 
     if form.validate_on_submit():
         try:
+            first_name = request.form.get("first_name")
+            last_name = request.form.get("last_name")
             username = request.form.get("username")
+            email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            company = request.form.get("company")
+            password = request.form.get("password")
 
-            user = UserList[type](username=username)
-            user.set_password('123')
+            user = UserList[type](username=username, email=email)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.phone_number = phone_number
+            user.set_password(password)
+            if type == 'client':
+                user.set_company(company)
             db.session.add(user)
             db.session.commit()
-
-            # TODO: Client Company Add, Edit Forms
 
             return redirect(url_for('auth.users', type=type))
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-    return render_template("auth/users_add.html", form=form)
+    return render_template("auth/users_add.html", form=form, type=type)
 
 
 @auth.route("/users/<type>/edit/<user>", methods=['GET', 'POST'])
 @login_required
 @check_user_type(['admin', 'manager'])
 def user_edit(type, user):
+    userData = UserList[type].query.get(user)
+    
     form = EditUserForm()
+    form.first_name.data = userData.first_name
+    form.last_name.data = userData.last_name
+    form.username.data = userData.username
+    form.email.data = userData.email
+    form.phone_number.data = userData.phone_number
 
     if request.method == 'POST':
         try:
-            userData = UserList[type].query.get(user)
-
+            first_name = request.form.get("first_name")
+            last_name = request.form.get("last_name")
             username = request.form.get("username")
+            email = request.form.get("email")
+            phone_number = request.form.get("phone_number")
+            company = request.form.get("company")
 
-            if username:
-                userData.username = username
+            userData.first_name = first_name
+            userData.last_name = last_name
+            userData.username = username
+            userData.email = email
+            userData.phone_number = phone_number
+            if type == 'client':
+                userData.set_company(company)
 
             db.session.commit()
 
@@ -173,7 +201,7 @@ def user_edit(type, user):
             print(f"Error occurred: {e}")
             db.session.rollback()
 
-    return render_template("auth/users_edit.html", form=form)
+    return render_template("auth/users_edit.html", form=form, type=type, company=userData.company)
 
 
 @auth.route("/users/<type>/delete/<user>")

@@ -26,9 +26,16 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Register")
 
 class AddUserForm(FlaskForm):
+    first_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "First Name"})
+    last_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Last Name"})
     username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
-    submit = SubmitField("Add User")
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    phone_number = StringField(validators=[InputRequired()], render_kw={"placeholder": "Phone Number"})
+    password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
 
 class EditUserForm(FlaskForm):
+    first_name = StringField(render_kw={"placeholder": "First Name"})
+    last_name = StringField(render_kw={"placeholder": "Last Name"})
     username = StringField(render_kw={"placeholder": "Username"})
-    submit = SubmitField('Update User')
+    email = EmailField(render_kw={"placeholder": "Email"})
+    phone_number = StringField(render_kw={"placeholder": "Phone Number"})
