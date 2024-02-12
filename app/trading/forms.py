@@ -27,4 +27,4 @@ class ProjectDetailsForm(FlaskForm):
 
 class AddToCart(FlaskForm):
     stock = IntegerField(validators=[InputRequired()], render_kw={"placeholder": "Stock Amount"})
-    submit = SubmitField("Add to Cart")
+    submit = SubmitField("Buy now")
