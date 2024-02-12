@@ -890,6 +890,7 @@ def account_upgrade():
                 
                 
                 
+                # TODO: UPGRADE EMAIL
                 thread = threading.Thread(target=email_transaction, args=(g.company.email, g.company.name, price, f"Account Upgrade"))
                 thread.start()
                 
