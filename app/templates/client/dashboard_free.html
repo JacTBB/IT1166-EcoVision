@@ -88,19 +88,19 @@
               labels: timerange{{ id }},
               datasets: [
                 {
-                  label: 'Carbon Footprint',
+                  label: 'Carbon Footprint (CO2e)',
                   data: {{ location.carbonfootprint }},
                   borderColor: 'rgba(255, 0, 0, 0.8)',
                   backgroundColor: 'rgba(255, 0, 0, 0.05)'
                 },
                 {
-                  label: 'Energy Usage',
+                  label: 'Energy Usage (kWh)',
                   data: {{ location.energyusage }},
                   borderColor: 'rgba(0, 255, 0, 0.8)',
                   backgroundColor: 'rgba(0, 255, 0, 0.05)'
                 },
                 {
-                  label: 'Water Usage',
+                  label: 'Water Usage (m3)',
                   data: {{ location.waterusage }},
                   borderColor: 'rgba(0, 0, 255, 0.8)',
                   backgroundColor: 'rgba(0, 0, 255, 0.05)'
@@ -127,7 +127,7 @@
                 y: {
                   title: {
                     display: true,
-                    text: 'Usage'
+                    text: 'Usage (CO2e, kWh, m3)'
                   },
                   min: 0,
                 }

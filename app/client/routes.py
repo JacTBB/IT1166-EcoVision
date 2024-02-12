@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, session, g, flash
 from app.client import client
 from app.database import db
-from app.email import email_transaction
+from app.email import email_transaction, email_upgrade_account
 from sqlalchemy.orm.attributes import flag_modified
 from flask_login import login_required, current_user
 from app.auth import check_user_type
@@ -939,8 +939,7 @@ def account_upgrade():
                 
                 
                 
-                # TODO: UPGRADE EMAIL
-                thread = threading.Thread(target=email_transaction, args=(g.company.email, g.company.name, price, f"Account Upgrade"))
+                thread = threading.Thread(target=email_upgrade_account, args=(g.company.email, g.company.name, price, f"Account Upgrade"))
                 thread.start()
                 
                 return redirect(url_for('client.account', page='billing'))
