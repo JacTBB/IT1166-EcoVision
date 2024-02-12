@@ -136,8 +136,12 @@ with app.app_context():
 
 From establishing protected areas and wildlife corridors to implementing reforestation and agroforestry initiatives, Every Effort is made to safeguard the delicate ecosystems of the Amazon and promote the well-being of its inhabitants. Empowering local communities to become stewards of their natural resources, the Project fosters a sense of ownership and responsibility, ensuring that conservation efforts are not only effective but also inclusive and equitable. By harnessing the collective wisdom of indigenous peoples, traditional knowledge, and modern science, this Conservation Project represents a beacon of hope in the face of ecological challenges, offering a glimpse into a future where humans and nature thrive in harmony, hand in hand, amidst the verdant splendor of the Amazon rainforest.
         """
+        carousel = [
+            "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69214561/3/?bust=1696792028&width=720",
+            "https://images.livemint.com/img/2023/12/07/1140x641/dog-4615198_1280_1701927561029_1701927572424.jpg"
+        ]
         project = Projects(name=f"Project {i+1}", type=types[i], stock=randint(
-            1000, 10000), price=randint(200, 400), content=content)
+            1000, 10000), price=randint(200, 400), content=content, carousel=carousel)
         db.session.add(project)
 
     db.session.commit()

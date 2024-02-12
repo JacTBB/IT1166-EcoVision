@@ -23,6 +23,27 @@
       <p><b>Find out more about carbon trading </b><a href="{{url_for('trading.about')}}">Click here</a></p>
   
       <hr>
+
+      <div class="User-Info">
+        <p>Based on your company we have some measured data.</p>
+        <div class="statsbox">
+          <div>
+            <h4>Total Carbon Footprint Emitted</h4>
+            <p>{{ overview.totalcarbonfootprint|round(5) }} CO2e</p>
+          </div>
+          <div>
+            <h4>Exceeded Carbon Footprint</h4>
+            <p>{{ overview.carbonfootprintexceeded|round(5) }} CO2e</p>
+          </div>
+          <div>
+            <h4>Total Carbon Footprint Offset</h4>
+            <p>{{ overview.carbonfootprintoffsetted|round(5) }} CO2e</p>
+          </div>
+        </div>
+        <hr>
+        <br>
+      </div>
+
       <div class="filter-container">
         <div class="introductory-text">
           <p>Fliter by</p>
@@ -40,7 +61,7 @@
       <div class="admin">
         {% if current_user.is_authenticated == true and (current_user.type == "admin" or current_user.type == "author") %}
           <div class="Admin">
-            <p><a href="http://127.0.0.1:80/trading/projects">Add Project</a></p>
+            <p><a href="{{ url_for('trading.projects') }}">Add Project</a></p>
           </div>
           {% endif %}   
       </div>
@@ -54,26 +75,6 @@
       </script>
       <hr>
     </div>
-  </div>
-  
-  <div class="User-Info">
-    <p>Based on your company we have some measured data.</p>
-    <div class="statsbox">
-      <div>
-        <h4>Total Carbon Footprint Emitted</h4>
-        <p>{{ overview.totalcarbonfootprint|round(5) }} CO2e</p>
-      </div>
-      <div>
-        <h4>Exceeded Carbon Footprint</h4>
-        <p>{{ overview.carbonfootprintexceeded|round(5) }} CO2e</p>
-      </div>
-      <div>
-        <h4>Total Carbon Footprint Offset</h4>
-        <p>{{ overview.carbonfootprintoffsetted|round(5) }} CO2e</p>
-      </div>
-    </div>
-    <hr>
-    <br>
   </div>
 
   <div class="Project-Cells">
@@ -93,8 +94,8 @@
                       <p>Stock: {{ project.stock }} Price(SGD): {{ project.price }}</p>
                       <p><a href="{{ url_for('trading.project', project=project.id) }}" class="project-link">View Project</a></p>
                   </div>
+                  <p class="project-title"> <B> {{ project.type }} | {{ project.name }} </B> </p>
                 </div>
-                <p><a href="{{ url_for('trading.project', project=project.id) }}" class="view-link" >View project now</a> <br> <B> {{ project.type }} </B> </p>
               </div>
             </div> 
           {% endif %}
