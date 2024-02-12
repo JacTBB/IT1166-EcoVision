@@ -8,3 +8,12 @@ class Announcement(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     description: Mapped[str] = mapped_column(String)
     date: Mapped[Date] = mapped_column(Date)
+
+
+
+class Task(db.Model):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(Integer)
+    user_username: Mapped[str] = mapped_column(String)
+    user_type: Mapped[str] = mapped_column(String)
+    description: Mapped[str] = mapped_column(String)

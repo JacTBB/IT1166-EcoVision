@@ -48,6 +48,34 @@
 
     <div class="tasks">
       <h2>Tasks</h2>
+      <table>
+        <tr>
+          <th>User Type</th>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Description</th>
+          {% if current_user.type == 'admin' %}
+            <th>Actions</th>
+          {% endif %}
+        </tr>
+        {% for task in tasks %}
+          {% if current_user.id == task.user_id or current_user.type == 'admin' %}
+            <tr>
+              <td>{{ task.user_type }}</td>
+              <td>{{ task.user_id }}</td>
+              <td>{{ task.user_username }}</td>
+              <td>{{ task.description }}</td>
+              {% if current_user.type == 'admin' %}
+                <td><a href="{{ url_for('staff.task_delete', task=task.id) }}">Delete</a></td>
+              {% endif %}
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </table>
+
+      {% if current_user.type == 'admin' %}
+        <a class="add-task btn btn-primary" href="{{ url_for('staff.task_add') }}">Add Task</a>
+      {% endif %}
     </div>
   </section>
 </div>

@@ -1,0 +1,51 @@
+{% extends "layouts/staff.html" %}
+
+{% block title %}Add Task - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <h1>Add Task</h1>
+    <form action="" method="POST" class="row g-3 needs-validation" novalidate>
+
+      <div class="col-md-4">
+        <label for="user_id" class="form-label">User Type - User ID</label>
+        {{ form.user_id(id_="user_id", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid user_id.
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="description" class="form-label">Description</label>
+        {{ form.description(id_="description", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid description.
+        </div>
+      </div>
+
+      <div class="col-12">
+        {{ form.csrf_token }}
+        <button class="btn button" type="submit">Add Task</button>
+      </div>
+    </form>
+
+    <script>
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    </script>
+  </div>
+{% endblock %}

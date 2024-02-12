@@ -8,8 +8,9 @@ from flask_login import current_user, login_required
 from app.auth import check_user_type
 from app.models.Inventory import Product
 from app.models.Transaction import Transaction
-from app.models.Staff import Announcement
-from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AnnouncementForm, AddTransactionForm
+from app.models.Staff import Announcement, Task
+from app.models.User import Author, Technician, Consultant, Manager, Admin
+from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AnnouncementForm, AddTransactionForm, AddTaskForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm
 from app.models.User import Author, Technician, Consultant, Manager, Admin
 from datetime import datetime
@@ -36,7 +37,6 @@ def dashboard():
     }
     
     announcementData = db.session.query(Announcement).first()
-    print(announcementData)
     if announcementData:
         announcement['description'] = announcementData.description
         announcement['date'] = announcementData.date.strftime("%Y-%m-%d %H:%M:%S")
@@ -63,7 +63,72 @@ def dashboard():
             print(f"Error occurred: {e}")
             db.session.rollback()
     
-    return render_template("staff/dashboard.html", announcement=announcement, announcementForm=announcementForm)
+    tasksData = db.session.query(Task).all()
+    
+    return render_template("staff/dashboard.html", announcement=announcement, announcementForm=announcementForm, tasks=tasksData)
+
+
+
+@staff.route('/task/add', methods=["GET", "POST"])
+@login_required
+@check_user_type(['admin', 'manager'])
+def task_add():
+    users = {}
+    users_list = []
+    
+    for UserType in UserList:
+        UserClass = UserList[UserType]
+            
+        usersData = db.session.query(UserClass).all()
+        for user in usersData:
+            users_list.append(f"{user.type}-{user.username}")
+            users[f"{user.type}-{user.username}"] = {
+                'type': user.type,
+                'id': user.id,
+                'username': user.username
+            }
+    
+    
+    form = AddTaskForm()
+    
+    form.user_id.choices = users_list
+
+    if form.validate_on_submit():
+        try:
+            user = request.form.get("user_id")
+            description = request.form.get("description")
+            
+            userData = users[user]
+            user_id = userData['id']
+            user_username = userData['username']
+            user_type = userData['type']
+
+            task = Task(user_id=user_id, user_username=user_username, user_type=user_type, description=description)
+            db.session.add(task)
+            db.session.commit()
+
+            return redirect(url_for('staff.dashboard'))
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("staff/task_add.html", form=form)
+
+
+
+@staff.route('/task/<task>/delete', methods=["GET", "POST"])
+@login_required
+@check_user_type(['admin', 'manager'])
+def task_delete(task):
+    task = Task.query.get(task)
+    db.session.delete(task)
+    db.session.commit()
+
+    return redirect(url_for('staff.dashboard'))
+
+
+
+
 
 
 @staff.route("/products")
