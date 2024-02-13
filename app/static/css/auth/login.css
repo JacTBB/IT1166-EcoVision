@@ -19,6 +19,7 @@
     width: inherit;
     object-fit: cover;
     z-index: -1;
+    filter: blur(2px);
 }
 
 .image-overlay {
@@ -40,15 +41,17 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(122, 122, 122, 0.342);
-    border-radius: 17px;
+    background-color: rgba(240,240,240, 0.9);
+    border-radius: 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
         rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     font-family: "Nunito";
 }
 
-.login-container>p {
+.login-container>h2 {
+    margin-bottom: 20px;
     font-weight: bold;
+    color: black;
 }
 
 .login-container form {
@@ -58,15 +61,19 @@ footer {
     justify-content: center;
 }
 
+.form-field {
+    margin-bottom: 10px;
+}
+
 .login-container form input {
     height: 40px;
     width: 250px;
     border: 0;
-    margin: 5px;
-    border-radius: 17px;
+    border-radius: 10px;
     padding-left: 15px;
     padding-right: 15px;
     font-size: 20px;
+    border: solid 1px gray;
 }
 
 .login-container form input::placeholder {
@@ -81,33 +88,30 @@ footer {
     color: black;
     font-family: "Nunito";
     font-size: 20px;
-    font-weight: bold;
-    border-radius: 2rem;
     height: 40px;
     padding: 0;
     cursor: pointer;
     transition: 0.3s;
+    background-color: rgb(130,190,130);
+    margin-top: 10px;
+    border: none;
+    color: white;
 }
 
 .login-container form input[type="submit"]:hover {
-    background-color: #cccccc;
+    background-color: rgb(100,160,100);
 }
 
-/* input[type='text']:focus,
-input[type='password']:focus {
-    outline: 0.15rem solid black;
-    border-radius: 2rem;
-} */
-
-.error-message {
-    color: #a31818;
-    font-size: 18px;
-    font-weight: bold;
+.subtext {
     margin-top: 10px;
-    text-align: center;
 }
 
-.error-message i {
-    font-family: 'Font Awesome 5 Pro';
-    margin-right: 10px;
+.subtext a {
+    text-decoration: none;
+    color: rgb(90, 23, 235);
+    font-weight: 700;
+}
+
+.subtext a:hover {
+    text-decoration: underline;
 }

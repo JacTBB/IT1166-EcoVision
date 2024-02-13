@@ -11,37 +11,265 @@
   <img src="{{ url_for('static', filename='images/pexels-lumn-1410224.webp') }}">
   <div class="image-overlay"></div>
   <div class="login-container">
-    <p style="color: white; font-size: 22px">Register</p>
-    <form action="" method="POST">
+    <h2>Register</h2>
+    <form action="" method="POST" class="needs-validation" novalidate>
       <div class="inputs">
         <div class="group">
-          <p>Personal Details</p>
-          {{ form.first_name(id_="input-p2-1", class_="form-control") }}
-          {{ form.last_name(id_="input-p2-2", class_="form-control") }}
-          {{ form.username(id_="input-p2-3", class_="form-control") }}
-          {{ form.email(id_="input-p2-4", class_="form-control") }}
-          {{ form.phone_number(id_="input-p2-5", class_="form-control") }}
-          {{ form.password(id_="input-p2-6", class_="form-control") }}
+          <h3>Personal Details</h3>
+
+          <div class="form-field">
+            <label for="first_name">First Name</label>
+            {{ form.first_name(id_="first_name", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid first_name.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="last_name">Last Name</label>
+            {{ form.last_name(id_="last_name", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid last_name.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email</label>
+            {{ form.email(id_="email", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid email.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="phone_number">Phone Number</label>
+            {{ form.phone_number(id_="phone_number", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid phone_number.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="username">Username</label>
+            {{ form.username(id_="username", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid username.
+            </div>
+          </div>
+
         </div>
 
         <div class="group">
-          <p>Company Details</p>
-          {{ form.company_name(id_="input-p2-7", class_="form-control") }}
-          {{ form.company_industry(id_="input-p2-8", class_="form-control") }}
-          {{ form.company_email(id_="input-p2-9", class_="form-control") }}
-          {{ form.company_phone_number(id_="input-p2-11", class_="form-control") }}
-          {{ form.company_address(id_="input-p2-12", class_="form-control") }}
+          <h3>Company Details</h3>
+
+          <div class="form-field">
+            <label for="company_name">Company Name</label>
+            {{ form.company_name(id_="company_name", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid company_name.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="company_industry">Company Industry</label>
+            {{ form.company_industry(id_="company_industry", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid company_industry.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="company_email">Company Email</label>
+            {{ form.company_email(id_="company_email", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid company_email.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="company_phone_number">Company Phone Number</label>
+            {{ form.company_phone_number(id_="company_phone_number", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid company_phone_number.
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="company_address">Company Address</label>
+            {{ form.company_address(id_="company_address", class_="form-control") }}
+            <div class="invalid-feedback">
+              Please enter a valid company_address.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="group passwordbox">
+          <h3>Password</h3>
+
+          <div>
+            <label for="input-u3-1" class="form-label">New Password</label>
+            {{ form.password(id_="input-u3-1", class_="form-control") }}
+            <div class="row">
+              <div class="col-sm-6 requirements leng">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                Minimum 8 Characters Long
+              </div>
+              <div class="col-sm-6 requirements big-letter">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                One Uppercase Letter
+              </div>
+              <div class="col-sm-6 requirements special-char">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                One Special Character
+              </div>
+              <div class="col-sm-6 requirements num">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                One Number
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="input-u3-2" class="form-label">Repeat Password</label>
+            <input type="password" class="form-control" id="input-u3-2" aria-describedby="inputGroupPrepend" placeholder="Repeat Password" required autocomplete="off">
+            <div class="row">
+              <div class="col-sm-12 requirements2 match">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                Passwords Match
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
       {{ form.csrf_token }}
       <div>{{form.submit()}}</div>
-      <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+      <p class="subtext">Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
     </form>
-
-    {% if error_message %}
-    <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
-    {% endif %}
   </div>
+
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          if (form.classList.contains('custom-validation')) {
+            if (!form.classList.contains('c-validated')) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            else {
+              form.classList.add('was-validated')
+            }
+          }
+          else {
+            form.classList.add('was-validated')
+          }
+        }, false)
+      })
+    })()
+
+
+
+    addEventListener("DOMContentLoaded", (event) => {
+      const form = document.getElementById("change-password-form")
+      const password = document.getElementById("input-u3-1");
+      const repeatPassword = document.getElementById("input-u3-2")
+      const requirements = document.querySelectorAll(".requirements");
+      const requirements2 = document.querySelectorAll(".requirements2");
+      const leng = document.querySelector(".leng");
+      const bigLetter = document.querySelector(".big-letter");
+      const num = document.querySelector(".num");
+      const specialChar = document.querySelector(".special-char");
+      const match = document.querySelector(".match");
+
+      requirements.forEach((element) => element.classList.add("wrong"));
+      requirements2.forEach((element) => element.classList.add("wrong"));
+
+      password.addEventListener("input", () => {
+        const value = password.value;
+        const isLengthValid = value.length >= 8;
+        const hasUpperCase = /[A-Z]/.test(value);
+        const hasNumber = /\d/.test(value);
+        const hasSpecialChar = /[!@#$%^&*()\[\]{}\\|;:'",<.>/?`~]/.test(value);
+
+        leng.classList.toggle("good", isLengthValid);
+        leng.classList.toggle("wrong", !isLengthValid);
+        bigLetter.classList.toggle("good", hasUpperCase);
+        bigLetter.classList.toggle("wrong", !hasUpperCase);
+        num.classList.toggle("good", hasNumber);
+        num.classList.toggle("wrong", !hasNumber);
+        specialChar.classList.toggle("good", hasSpecialChar);
+        specialChar.classList.toggle("wrong", !hasSpecialChar);
+
+        const isPasswordValid = isLengthValid && hasUpperCase && hasNumber && hasSpecialChar;
+
+        password.classList.remove("is-valid");
+        password.classList.add("is-invalid");
+
+        if (isPasswordValid) {
+          password.classList.remove("is-invalid");
+          password.classList.add("is-valid");
+
+          requirements.forEach((element) => {
+            element.classList.remove("wrong");
+            element.classList.add("good");
+          });
+        }
+
+        form.classList.remove("c-validated")
+        if (password.classList.contains("is-valid") && password2.classList.contains("is-valid")) {
+          form.classList.add("c-validated")
+        }
+      });
+
+      repeatPassword.addEventListener("input", () => {
+        const value1 = password.value;
+        const value2 = repeatPassword.value;
+        const matched = value1 == value2
+
+        match.classList.toggle("good", matched);
+        match.classList.toggle("wrong", !matched);
+
+        const isPasswordValid = matched;
+
+        repeatPassword.classList.remove("is-valid");
+        repeatPassword.classList.add("is-invalid");
+
+        if (isPasswordValid) {
+          repeatPassword.classList.remove("is-invalid");
+          repeatPassword.classList.add("is-valid");
+
+          requirements2.forEach((element) => {
+            element.classList.remove("wrong");
+            element.classList.add("good");
+          });
+        }
+
+        form.classList.remove("c-validated")
+        if (password.classList.contains("is-valid") && repeatPassword.classList.contains("is-valid")) {
+          form.classList.add("c-validated")
+        }
+      });
+    });
+  </script>
 </div>
 {% endblock %}

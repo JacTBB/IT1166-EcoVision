@@ -19,6 +19,7 @@
     width: inherit;
     object-fit: cover;
     z-index: -1;
+    filter: blur(2px);
 }
 
 .image-overlay {
@@ -34,20 +35,24 @@ footer {
 }
 
 .login-container {
+    margin-top: 55px;
+    max-width: 80%;
+    padding: 30px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(122, 122, 122, 0.342);
-    border-radius: 17px;
+    background-color: rgba(240,240,240, 0.9);
+    border-radius: 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
         rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     font-family: "Nunito";
-    padding: 25px;
 }
 
-.login-container>p {
+.login-container>h2 {
+    margin-bottom: 20px;
     font-weight: bold;
+    color: black;
 }
 
 .login-container form {
@@ -59,6 +64,7 @@ footer {
 
 .inputs {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
@@ -66,28 +72,41 @@ footer {
 
 .group {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
     justify-content: center;
     margin: 10px;
+    max-width: 45%;
 }
 
-.group p {
-    font-size: 20px;
-    font-weight: 600;
+.group h3 {
+    flex: 100%;
+    font-size: 22px;
+    font-weight: 700;
     margin-bottom: 5px;
-    color: white;
+    color: black;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.group .form-field:last-child {
+    width: calc(100% - 30px);
+}
+
+.form-field {
+    margin: 0 10px;
+    margin-bottom: 10px;
+    width: 250px;
 }
 
 .login-container form input {
     height: 40px;
-    width: 250px;
     border: 0;
-    margin: 5px;
-    border-radius: 17px;
+    border-radius: 10px;
     padding-left: 15px;
     padding-right: 15px;
     font-size: 20px;
+    border: solid 1px gray;
 }
 
 .login-container form input::placeholder {
@@ -102,33 +121,50 @@ footer {
     color: black;
     font-family: "Nunito";
     font-size: 20px;
-    font-weight: bold;
-    border-radius: 2rem;
     height: 40px;
+    width: 300px;
     padding: 0;
     cursor: pointer;
     transition: 0.3s;
+    background-color: rgb(130,190,130);
+    margin-top: 10px;
+    border: none;
+    color: white;
 }
 
 .login-container form input[type="submit"]:hover {
-    background-color: #cccccc;
+    background-color: rgb(100,160,100);
 }
 
-/* input[type='text']:focus,
-input[type='password']:focus {
-    outline: 0.15rem solid black;
-    border-radius: 2rem;
-} */
+.passwordbox {
+    max-width: 100%;
+    align-items: start;
+    padding: 0 28px;
+}
 
-.error-message {
-    color: #a31818;
-    font-size: 18px;
-    font-weight: bold;
+.passwordbox> div {
+    flex: 40%;
+    margin: 0 27px;
+}
+
+.wrong .fa-check {
+    display: none;
+}
+
+.good .fa-times {
+    display: none;
+}
+
+.subtext {
     margin-top: 10px;
-    text-align: center;
 }
 
-.error-message i {
-    font-family: 'Font Awesome 5 Pro';
-    margin-right: 10px;
+.subtext a {
+    text-decoration: none;
+    color: rgb(90, 23, 235);
+    font-weight: 700;
+}
+
+.subtext a:hover {
+    text-decoration: underline;
 }

@@ -11,18 +11,45 @@
   <img src="{{ url_for('static', filename='images/pexels-lumn-1410224.webp') }}">
   <div class="image-overlay"></div>
   <div class="login-container">
-    <p style="color: white; font-size: 22px">Login</p>
-    <form action="" method="POST">
-      <div>{{form.username(id_="input-p2-1", class_="form-control")}}</div>
-      <div>{{form.password(id_="input-p2-2", class_="form-control")}}</div>
+    <h2>Login</h2>
+    <form action="" method="POST" class="needs-validation" novalidate>
+
+      <div class="form-field">
+        <label for="username">Username</label>
+        {{ form.username(id_="username", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid username.
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="password">Password</label>
+        {{ form.password(id_="username", class_="form-control") }}
+        <div class="invalid-feedback">
+          Please enter a valid password.
+        </div>
+      </div>
+
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
-      <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
-    </form>
 
-    {% if error_message %}
-    <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
-    {% endif %}
+      <p class="subtext">Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+    </form>
   </div>
+
+  <script>
+    const forms = document.querySelectorAll('.needs-validation')
+
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  </script>
 </div>
 {% endblock %}
