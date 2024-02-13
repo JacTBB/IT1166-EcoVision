@@ -51,7 +51,7 @@ def news():
     # return render_template('main/news.html', posts=posts.items, next_url=next_url, prev_url=prev_url)
 
     # View article
-    if postid is not None:
+    if postid is not None and not (current_user.is_authenticated and current_user.type != 'client' ):
         form = ArticleForm()
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
@@ -59,12 +59,14 @@ def news():
 
     # Admin and Author only
     if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
+        print("News Admin")
 
         # Edit article
         if postid is not None and current_user.is_authenticated:
             form = ArticleForm()
             if current_user.is_authenticated and (current_user.type == 'admin' or current_user.type == 'author'):
                 if request.method == 'POST':
+                    print("EDIT ARTICLE")
                     if form.validate_on_submit():
                         print(form.content.data)
                         try:
@@ -80,6 +82,9 @@ def news():
                             print(f"Error occurred: {e}")
                             db.session.rollback()
                             status_message = "Failed to update article! Contact Administrator."
+                    else:
+                        for i in form:
+                            print(i.errors)
 
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
