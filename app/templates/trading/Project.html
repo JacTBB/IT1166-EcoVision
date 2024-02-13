@@ -163,10 +163,10 @@
                 <p>Stock: {{ project.stock }} Price(SGD): {{ project.price }}</p>
                 <p><a href="{{ url_for('trading.project', project=project.id) }}" class="project-link">View Project</a></p>
             </div>
+            <p class="project-title"> <B> {{ project.type }} | {{ project.name }} </B> </p>
           </div>
-          <p><a href="{{ url_for('trading.project', project=project.id) }}" class="view-link" >View project now</a> <br> <B> {{ project.type }} </B> </p>
         </div>
-      </div>
+      </div> 
     {% endfor %}
   </div>
 </div>
