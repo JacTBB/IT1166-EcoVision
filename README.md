@@ -21,8 +21,8 @@ ___
 | System | Webpage | Creator |
 | ------ | ------- | ------- |
 | main | * | Kai Jie |
-| main | Enquiries | Ee Hern |
-| main | Chat | Ee Hern |
+| main | Enquiries | Ee Hern, Kai Jie |
+| main | Chat | Ee Hern, Jackie |
 | auth | * | Jackie, Edward |
 | client | * | Jackie |
 | trading | * | Lance |
@@ -35,16 +35,16 @@ ___
 | * | * | Email Server | Jackie |
 | main | News - Upload Image | Websockets | Kai Jie |
 | main | News | WYSIWYG Editor | Kai Jie |
-| main | Chatbot | 3rd Party Chatbot | Kai Jie |
-| main | Chat | Websockets | Ee Hern |
+| main | Chatbot | 3rd Party Chatbot | Kai Jie, Ee Hern |
+| main | Chat | Websockets | Ee Hern, Jackie |
 | client | Dashboard | Charts | Jackie |
 | client | Upgrade Account | Email | Jackie |
 | client | Assessment Payment | Email | Jackie |
 | client | Documents | WYSIWYG Editor | Jackie |
 | client | Documents | PDF Export | Jackie |
-| trading | Project | WYSIWYG Editor | Lance |
+| trading | Project | WYSIWYG Editor | Lance, Jackie |
 | trading | Project | Filter | Lance |
-| trading | Purchase | Email | Lance |
+| trading | Purchase | Email | Lance, Jackie |
 
 ___
 
