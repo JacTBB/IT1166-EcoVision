@@ -157,24 +157,16 @@ def about():
 @trading.route("/purchase/<project>", methods=['POST'])
 @login_required
 def purchase(project):
-    projects = {}
-    projectsData = db.session.query(Projects).all()
-    for projectData in projectsData:
-        projects[projectData.id] = {
-            'name': projectData.name,
-            'type': projectData.type,
-            'stock': projectData.stock,
-            'price': projectData.price,
-        }
-    
-    projectData = projects[int(project)]
+    projectData = Projects.query.get(project)
     
     amount = int(request.form.get("stock"))
     
     company = g.company.id
-    name = projectData['name']
+    name = projectData.name
     date = datetime.now()
-    price = projectData['price'] * amount
+    price = projectData.price * amount
+    
+    projectData.stock = projectData.stock - amount
 
     transaction = Transaction(company=company, name=f"Carbon Purchase - {name}", date=date, price=price)
     db.session.add(transaction)
