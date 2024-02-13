@@ -32,6 +32,7 @@
             <td>{{ company.industry }}</td>
             <td>{{ company.address }}</td>
             <td>{{ company.email }}</td>
+            <td>{{ company.phone_number }}</td>
             <td>{{ company.plan }}</td>
             <td rowspan="2"><a href="{{ url_for('client.company_edit', company=id) }}">Edit</a></td>
             <td><a href="{{ url_for('client.company_delete', company=id) }}">Delete</a></td>

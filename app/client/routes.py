@@ -154,6 +154,7 @@ def companies():
             'industry': company.industry,
             'address': company.address,
             'email': company.email,
+            'phone_number': company.phone_number,
             'plan': company.plan
         }
 
@@ -202,6 +203,7 @@ def company_edit(company):
     form.industry.data = companyData.industry
     form.address.data = companyData.address
     form.email.data = companyData.email
+    form.phone_number.data = companyData.phone_number
     form.plan.data = companyData.plan
 
     if form.validate_on_submit():
