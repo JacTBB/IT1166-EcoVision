@@ -520,8 +520,9 @@ def assessment_add():
             name = request.form.get("name")
             type = request.form.get("type")
             progress = request.form.get("progress")
+            start_date = datetime.now()
 
-            assessment = Assessment(company=g.company.id, location=location, name=name, type=type, progress=progress)
+            assessment = Assessment(company=g.company.id, location=location, name=name, type=type, start_date=start_date, progress=progress)
             db.session.add(assessment)
             db.session.commit()
 
