@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, session, g, flash
+from app import socketio
 from app.client import client
 from app.database import db
 from app.email import email_transaction, email_upgrade_account
@@ -8,9 +9,11 @@ from app.auth import check_user_type
 from app.models.User import Client
 from app.models.Client import Location, Utility, Assessment, Document
 from app.models.Company import Company
+from app.models.Chats import Chat
 from app.models.Transaction import Transaction, CarbonPurchase, AssessmentTransaction
 from app.client.forms import AddCompanyForm, EditCompanyForm, AddLocationForm, EditLocationForm, AddUtilityForm, EditUtilityForm, AddAssessmentForm, EditAssessmentForm, AddDocumentForm, AddAssessmentTransactionForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm, UpdateCompanyForm, UpdatePaymentForm
+from flask_socketio import emit, send, join_room, leave_room
 from datetime import datetime
 from string import ascii_lowercase
 import random
@@ -959,6 +962,44 @@ def account_upgrade():
 
 
 
-@client.route('/client/chats')
+@client.route('/chat')
 def chats_client():
-    return render_template('main/room/clientchat.html')
+    company = g.company.id
+    
+    chatData = db.session.query(Chat).filter_by(company=company).first()
+    if not chatData:
+        chatData = Chat(company=company,messages=[])
+        db.session.add(chatData)
+        db.session.commit()
+    
+    messages = []
+    for message in chatData.messages:
+        time = datetime.fromtimestamp(message['timestamp']/1000)
+        msg = {
+            'username': message['username'],
+            'timestamp': time.strftime("%d/%m/%Y %H:%M:%S"),
+            'message': message['message']
+        }
+        messages.append(msg)
+    
+    return render_template('client/chat.html', room=chatData.id, messages=messages)
+
+
+
+@socketio.on('message')
+def onMessage(messageData, room):
+    print('Room', room, 'Message', messageData)
+    
+    chatData = db.session.query(Chat).filter_by(id=room).first()
+    chatData.messages.append(messageData)
+    flag_modified(chatData, 'messages')
+    db.session.commit()
+    
+    send(message=messageData, to=room)
+
+
+
+@socketio.on('join')
+def on_join(room):
+    print('RoomJoin', room)
+    join_room(room)

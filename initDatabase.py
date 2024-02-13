@@ -1,7 +1,7 @@
 from app import create_app
 from app.config import Config
 from app.database import db
-from app.models.Rooms import Rooms
+# from app.models.Rooms import Rooms
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.News import Post
 from app.models.Client import Location, Utility, Assessment, Document
@@ -18,11 +18,11 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    # Admin UserID : Client1 UserID
-    rooms = Rooms(userids=json.dumps(
-        ['54a5cfaf-0c4f-4732-9801-5012a5684494', '30b3d2e9-c297-472f-a52b-f2540d3bc12f']), room_code=1234)
-
-    db.session.add(rooms)
+    # # Admin UserID : Client1 UserID
+    # rooms = Rooms(userids=json.dumps(
+    #     ['54a5cfaf-0c4f-4732-9801-5012a5684494', '30b3d2e9-c297-472f-a52b-f2540d3bc12f']), room_code=1234)
+    # db.session.add(rooms)
+    
     # Users
     UserList = {'client': Client, 'author': Author,
                 'technician': Technician, 'consultant': Consultant,
