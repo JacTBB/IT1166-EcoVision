@@ -32,7 +32,7 @@
 table {
     border-collapse: collapse;
     border-style: solid;
-    border-color: rgb(119, 121, 120);
+    border-color: rgb(96, 97, 97);
     font-size: x-large;
     color: black;
     border-spacing: 0px 2px;
@@ -47,23 +47,23 @@ table th {
     font-weight: 720;
     padding-right: 100px;
     padding-left: 100px;
-    background-color: #a3a5a7;
+    background-color: #c1c2c4;
     justify-content: center;
 }
 
 table td{
     padding-right: 100px;
     padding-left: 100px;
-    background-color: rgb(252, 245, 228);
+    background-color: rgb(252, 247, 236);
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
 table td,
 table th {
-    padding: 5px;
+    padding: 7px;
     color: inherit;
-    border: solid 1px rgb(150, 150, 150);
+    border: solid 2px rgb(158, 158, 158);
 }
 
 table a {
