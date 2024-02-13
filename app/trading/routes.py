@@ -209,6 +209,7 @@ def project(project):
     projectsData = db.session.query(Projects).all()
     for project in projectsData:
         projects[project.id] = {
+            'id': project.id,
             'name': project.name,
             'type': project.type,
             'stock': project.stock,
