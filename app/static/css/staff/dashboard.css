@@ -31,10 +31,32 @@
 
 table {
     border-collapse: collapse;
+    border-style: solid;
+    border-color: rgb(119, 121, 120);
+    font-size: x-large;
+    color: black;
+    border-spacing: 0px 2px;
+    text-align: center;
+    justify-content: center;
+  width: 100%;
 }
 
 table th {
     font-size: 20px;
+    border-bottom: 2px solid black;
+    font-weight: 720;
+    padding-right: 100px;
+    padding-left: 100px;
+    background-color: #a3a5a7;
+    justify-content: center;
+}
+
+table td{
+    padding-right: 100px;
+    padding-left: 100px;
+    background-color: rgb(252, 245, 228);
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 table td,
@@ -53,3 +75,5 @@ table a {
 table a:hover {
     color: #007acc;
 }
+
+
