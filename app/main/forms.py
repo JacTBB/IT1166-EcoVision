@@ -24,6 +24,6 @@ class ContactForm(FlaskForm):
                            "placeholder": "Industry"})
     company_size = IntegerField('Company Size', validators=[
                                 DataRequired()], render_kw={"placeholder": "Company Size"})
-    company_note = StringField('Company Note', validators=[
+    company_note = TextAreaField('Company Note', validators=[
                                  DataRequired()], render_kw={"placeholder": "Leave us a note"})
     submit = SubmitField("Submit")
