@@ -178,3 +178,27 @@
 .view-link:hover {
     background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
 }
+
+.View .link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #000; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #000; /* Text color */
+    text-decoration: none; /* Remove underline */   
+}
+.View .link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
+}
+
+.Header .link {
+    display: inline-block; /* Display as block-level element */
+    padding: 10px 20px; /* Padding inside the box */
+    border: 1px solid #000; /* Border */
+    background-color: transparent; /* Transparent background */
+    color: #000; /* Text color */
+    text-decoration: none; /* Remove underline */   
+}
+.Header .link:hover {
+    background-color: rgba(213, 207, 207, 0.2); /* Semi-transparent white */
+}
