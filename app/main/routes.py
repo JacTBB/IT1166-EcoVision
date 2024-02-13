@@ -51,7 +51,7 @@ def news():
     # return render_template('main/news.html', posts=posts.items, next_url=next_url, prev_url=prev_url)
 
     # View article
-    if postid is not None and not current_user.is_authenticated:
+    if postid is not None:
         form = ArticleForm()
         query = query_data(Post, filter_by={'postid': postid}, all=False)
         if query is not None:
