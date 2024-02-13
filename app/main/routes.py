@@ -6,7 +6,7 @@ from app.auth import check_user_type
 from app.auth.routes import login_required, current_user
 from app.main import main
 from app.database import query_data, db
-from app.models.Rooms import Rooms
+# from app.models.Rooms import Rooms
 from app.models.News import Post
 from app.main.forms import ArticleForm, ContactForm
 from app.models.Contact import CompanyInfo
@@ -177,117 +177,117 @@ def contact():
     return render_template('main/contact.html', form=form, error_message=error_message)
 
 
-def generate_unique_code(length):
-    while True:
-        code = ""
-        for _ in range(length):
-            code += random.choice(ascii_uppercase)
+# def generate_unique_code(length):
+#     while True:
+#         code = ""
+#         for _ in range(length):
+#             code += random.choice(ascii_uppercase)
 
-        if code not in rooms:
-            break
+#         if code not in rooms:
+#             break
 
-    return code
-
-
-rooms = {}
+#     return code
 
 
-@main.route('/contact/room', methods=["GET", "POST"])
-@login_required
-def room():
-
-    username = current_user.username
-    UserList = {'client': Client, 'author': Author,
-                'technician': Technician, 'consultant': Consultant,
-                'manager': Manager, 'admin': Admin}
-
-    user = (query_data(Client, filter_by={'username': username}, all=False) or
-            query_data(Author, filter_by={'username': username}, all=False) or
-            query_data(Technician, filter_by={'username': username}, all=False) or
-            query_data(Consultant, filter_by={'username': username}, all=False) or
-            query_data(Manager, filter_by={'username': username}, all=False) or
-            query_data(Admin, filter_by={'username': username}, all=False))
-
-    session.pop('staffName', None)
-    if request.method == "POST":
-        name = username
-        code = request.form.get("code")
-        join = bool(request.form.get("join", False))
-        create = bool(request.form.get("create", False))
-
-        randomRoomCode = generate_unique_code(4)
-
-        if not name:
-            return render_template("main/room/room.html", error="Please enter a name.", code=code, name=name)
-
-        if join and not code:
-            return render_template("main/room/room.html", error="Please enter a room code.", code=code, name=name)
-
-        roomids = (room.userids for room in Rooms.query.all())
-
-        # check if user is already in a room
-        for i in roomids:
-            if user.user_id in i:
-                query = Rooms.query.filter(
-                    Rooms.userids.contains(user.user_id)).first()
-                return redirect(url_for("main.chat", code=query.room_code))
-
-        if create == True:
-
-            # query = Rooms.query.filter(
-            #     Rooms.userids.contains(current_user.user_id)).first()
-            # if query is not None:
-            #     try:
-            #         db.session.delete(query)
-            #         db.session.commit()
-            #     except Exception as e:
-            #         print(f"Error occurred: {e}")
-            #         db.session.rollback()
-
-            try:
-                createRoom = Rooms(userids=json.dumps(
-                    [user.user_id]), room_code=randomRoomCode)
-                db.session.add(createRoom)
-                db.session.commit()
-                print("Room created successfully!")
-
-                return redirect(url_for("main.chat", code=randomRoomCode))
-
-            except Exception as e:
-                print(f"Error occurred: {e}")
-                db.session.rollback()
-                print("Failed to create room. Please try again later.")
-
-        # elif code not in room_code:
-        #     return render_template("main/room/room.html", error="Room does not exist.", code=code, name=name)
-
-        session['staffName'] = name
-
-        return redirect(url_for("main.room"))
-
-    query = Rooms.query.all()
-
-    return render_template("main/room/room.html", rooms=query)
+# rooms = {}
 
 
-@main.route('/contact/room/chat', methods=["GET", "POST"])
-@login_required
-def chat():
-    username = current_user.username
+# @main.route('/contact/room', methods=["GET", "POST"])
+# @login_required
+# def room():
 
-    session.pop('customerName', None)
-    getRoomCode = request.args.get("code")
+#     username = current_user.username
+#     UserList = {'client': Client, 'author': Author,
+#                 'technician': Technician, 'consultant': Consultant,
+#                 'manager': Manager, 'admin': Admin}
 
-    session['roomCode'] = getRoomCode
-    session['customerName'] = username
+#     user = (query_data(Client, filter_by={'username': username}, all=False) or
+#             query_data(Author, filter_by={'username': username}, all=False) or
+#             query_data(Technician, filter_by={'username': username}, all=False) or
+#             query_data(Consultant, filter_by={'username': username}, all=False) or
+#             query_data(Manager, filter_by={'username': username}, all=False) or
+#             query_data(Admin, filter_by={'username': username}, all=False))
 
-    name = session.get("customerName")
+#     session.pop('staffName', None)
+#     if request.method == "POST":
+#         name = username
+#         code = request.form.get("code")
+#         join = bool(request.form.get("join", False))
+#         create = bool(request.form.get("create", False))
 
-    if getRoomCode is None or name is None:
-        return redirect(url_for("main.room"))
+#         randomRoomCode = generate_unique_code(4)
 
-    query = Rooms.query.filter_by(room_code=getRoomCode).first()
-    return render_template("main/room/chat.html", code=getRoomCode)
+#         if not name:
+#             return render_template("main/room/room.html", error="Please enter a name.", code=code, name=name)
+
+#         if join and not code:
+#             return render_template("main/room/room.html", error="Please enter a room code.", code=code, name=name)
+
+#         roomids = (room.userids for room in Rooms.query.all())
+
+#         # check if user is already in a room
+#         for i in roomids:
+#             if user.user_id in i:
+#                 query = Rooms.query.filter(
+#                     Rooms.userids.contains(user.user_id)).first()
+#                 return redirect(url_for("main.chat", code=query.room_code))
+
+#         if create == True:
+
+#             # query = Rooms.query.filter(
+#             #     Rooms.userids.contains(current_user.user_id)).first()
+#             # if query is not None:
+#             #     try:
+#             #         db.session.delete(query)
+#             #         db.session.commit()
+#             #     except Exception as e:
+#             #         print(f"Error occurred: {e}")
+#             #         db.session.rollback()
+
+#             try:
+#                 createRoom = Rooms(userids=json.dumps(
+#                     [user.user_id]), room_code=randomRoomCode)
+#                 db.session.add(createRoom)
+#                 db.session.commit()
+#                 print("Room created successfully!")
+
+#                 return redirect(url_for("main.chat", code=randomRoomCode))
+
+#             except Exception as e:
+#                 print(f"Error occurred: {e}")
+#                 db.session.rollback()
+#                 print("Failed to create room. Please try again later.")
+
+#         # elif code not in room_code:
+#         #     return render_template("main/room/room.html", error="Room does not exist.", code=code, name=name)
+
+#         session['staffName'] = name
+
+#         return redirect(url_for("main.room"))
+
+#     query = Rooms.query.all()
+
+#     return render_template("main/room/room.html", rooms=query)
+
+
+# @main.route('/contact/room/chat', methods=["GET", "POST"])
+# @login_required
+# def chat():
+#     username = current_user.username
+
+#     session.pop('customerName', None)
+#     getRoomCode = request.args.get("code")
+
+#     session['roomCode'] = getRoomCode
+#     session['customerName'] = username
+
+#     name = session.get("customerName")
+
+#     if getRoomCode is None or name is None:
+#         return redirect(url_for("main.room"))
+
+#     query = Rooms.query.filter_by(room_code=getRoomCode).first()
+#     return render_template("main/room/chat.html", code=getRoomCode)
 
 
 # for article image upload function
@@ -345,75 +345,75 @@ def handle_upload(data):
 
 # chat room function
 
-@socketio.on("message")
-def message(data):
-    roomCode = str(data['code'])
-    content = {
-        "staffName": session.get("staffName"),
-        "customerName": session.get("customerName"),
-        "message": data["data"]
-    }
+# @socketio.on("message")
+# def message(data):
+#     roomCode = str(data['code'])
+#     content = {
+#         "staffName": session.get("staffName"),
+#         "customerName": session.get("customerName"),
+#         "message": data["data"]
+#     }
 
-    session['roomCode'] = roomCode
-    send(content, to=roomCode)
-    try:
-        query = Rooms.query.filter_by(room_code=roomCode).first()
+#     session['roomCode'] = roomCode
+#     send(content, to=roomCode)
+#     try:
+#         query = Rooms.query.filter_by(room_code=roomCode).first()
 
-        if query.messages is None:
-            query.messages = []
+#         if query.messages is None:
+#             query.messages = []
 
-        query.messages = json.dumps(json.loads(str(query.messages)) +
-                                    [content["message"]])
-        db.session.commit()
-    except Exception as e:
-        print(f"Error occurred: {e}")
-        db.session.rollback()
-    # print(f"{session.get('name')} said: {data['data']}")
-
-
-@socketio.on("requestRoom")
-def connect(auth):
-    room = session.get("roomCode")
-    name = session.get("customerName")
-    print(room, name)
-    if not room or not name:
-        return
-
-    if room not in room:
-        leave_room(room)
-        return
-
-    content = {
-        'staffName': session.get("staffName"),
-        "customerName": name,
-        "message": "has entered the room"
-    }
-
-    join_room(room)
-    send(content, to=room)
-
-    # rooms[room]["members"] += 1
-    # print(f"{name} joined room {room}")
+#         query.messages = json.dumps(json.loads(str(query.messages)) +
+#                                     [content["message"]])
+#         db.session.commit()
+#     except Exception as e:
+#         print(f"Error occurred: {e}")
+#         db.session.rollback()
+#     # print(f"{session.get('name')} said: {data['data']}")
 
 
-@socketio.on("userDisconnected")
-def disconnect():
-    room = session.get("roomCode")
-    name = session.get("customerName")
-    leave_room(room)
+# @socketio.on("requestRoom")
+# def connect(auth):
+#     room = session.get("roomCode")
+#     name = session.get("customerName")
+#     print(room, name)
+#     if not room or not name:
+#         return
 
-    # if room in rooms:
-    #     rooms[room]["members"] -= 1
-    #     if rooms[room]["members"] <= 0:
-    #         del rooms[room]
+#     if room not in room:
+#         leave_room(room)
+#         return
 
-    content = {
-        'staffName': session.get("staffName"),
-        "customerName": name,
-        "message": "has left the room"
-    }
+#     content = {
+#         'staffName': session.get("staffName"),
+#         "customerName": name,
+#         "message": "has entered the room"
+#     }
 
-    send(content, to=room)
-    # print(f"{name} has left the room {room}")
+#     join_room(room)
+#     send(content, to=room)
 
-# end of chat room function
+#     # rooms[room]["members"] += 1
+#     # print(f"{name} joined room {room}")
+
+
+# @socketio.on("userDisconnected")
+# def disconnect():
+#     room = session.get("roomCode")
+#     name = session.get("customerName")
+#     leave_room(room)
+
+#     # if room in rooms:
+#     #     rooms[room]["members"] -= 1
+#     #     if rooms[room]["members"] <= 0:
+#     #         del rooms[room]
+
+#     content = {
+#         'staffName': session.get("staffName"),
+#         "customerName": name,
+#         "message": "has left the room"
+#     }
+
+#     send(content, to=room)
+#     # print(f"{name} has left the room {room}")
+
+# # end of chat room function

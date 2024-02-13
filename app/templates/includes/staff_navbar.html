@@ -48,13 +48,6 @@
         </a>
       </li>
       <li>
-        <a class="{{ 'nav-selected' if request.endpoint == 'staff.chats' else '' }}"
-          href="{{ url_for('staff.chats') }}">
-          <i class="fa fa-comments" aria-hidden="true"></i>
-          Business Chats
-        </a>
-      </li>
-      <li>
         <a class="{{ 'nav-selected' if request.endpoint == 'staff.enquiries' else '' }}"
           href="{{ url_for('staff.enquiries') }}">
           <i class="fa fa-question-circle" aria-hidden="true"></i>
@@ -70,8 +63,8 @@
       </li>
     {% endif %}
     <li>
-      <a class="{{ 'nav-selected' if request.endpoint == 'main.chat' else '' }}"
-        href="{{ url_for('main.chat') }}">
+      <a class="{{ 'nav-selected' if request.endpoint == 'staff.chats_staff' else '' }}"
+        href="{{ url_for('staff.chats_staff') }}">
         <i class="fa fa-comments" aria-hidden="true"></i>
         Staff Chats
       </a>

@@ -9,6 +9,7 @@ from app.auth import check_user_type
 from app.models.Inventory import Product
 from app.models.Transaction import Transaction
 from app.models.Staff import Announcement, Task
+from app.models.Chats import Chat
 from app.models.User import Author, Technician, Consultant, Manager, Admin
 from app.staff.forms import AddProductForm, EditProductForm, AddCompanyInfo, EditCompanyInfo, AnnouncementForm, AddTransactionForm, AddTaskForm
 from app.client.accountforms import UpdatePersonalForm, ChangePasswordForm
@@ -299,9 +300,28 @@ def enquiry_edit(enquiry):
 
 
 
-@staff.route('/staff/chats')
-def chats():
-    return render_template('main/room/staffchat.html')  
+@staff.route('/chat')
+def chats_staff():
+    company = 0
+    
+    chatData = db.session.query(Chat).filter_by(company=company).first()
+    if not chatData:
+        chatData = Chat(company=company,messages=[])
+        db.session.add(chatData)
+        db.session.commit()
+    
+    messages = []
+    for message in chatData.messages:
+        time = datetime.fromtimestamp(message['timestamp']/1000)
+        msg = {
+            'username': message['username'],
+            'timestamp': time.strftime("%d/%m/%Y %H:%M:%S"),
+            'message': message['message']
+        }
+        messages.append(msg)
+    
+    return render_template('staff/chat.html', room=chatData.id, messages=messages)
+
 
 
 

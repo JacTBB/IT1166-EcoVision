@@ -1,0 +1,107 @@
+{% extends "layouts/staff.html" %}
+
+{% block title %}Chat - EcoVision{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/chat.css')}}">
+{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <h1>Staff Chat</h1>
+
+    <div id="chatdiv">
+      <div id="chat">
+        {% for message in messages %}
+        <div class="chat-message">
+          <p class="message-username">
+            {{ message['username'] }} <span class="message-timestamp">{{ message['timestamp'] }}</span>
+          </p>
+          <p class="message-message">
+            {{ message['message'] }}
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="chatboxdiv">
+      <textarea id="chatbox"></textarea>
+      <div id="sendbuttondiv">
+        <button onclick="SendMessage()" id="sendbutton">Send</button>
+      </div>
+    </div>
+
+    <script>
+      const socket = io()
+      const room = {{ room }}
+      const myUsername = '{{ current_user.username }}'
+      var LastMessageTimestamp = 0
+
+      socket.on('connect', () => {
+        socket.emit('join', room)
+      })
+
+      socket.on('message', (MessageData) => {
+          console.log(`Received message: ${MessageData}`)
+          const chat = document.getElementById('chat')
+
+          const Message = document.createElement('div')
+          const MessageInfo = document.createElement('p')
+          const MessageP = document.createElement('p')
+
+          Message.classList.add('chat-message')
+          MessageInfo.classList.add('message-username')
+          MessageP.classList.add('message-message')
+
+          const Timestamp = new Date(MessageData.timestamp)
+          const TimestampFormatted = `${Timestamp.getDate()}/${Timestamp.getMonth()}/${Timestamp.getFullYear()} ${Timestamp.getHours()}:${Timestamp.getMinutes()}:${Timestamp.getSeconds()}`
+
+          MessageInfo.innerHTML = `${MessageData.username} <span class="message-timestamp">${TimestampFormatted}<span>`
+          MessageP.innerText = MessageData.message
+
+          Message.append(MessageInfo)
+          Message.append(MessageP)
+          chat.append(Message)
+          chat.scrollTop = chat.scrollHeight
+      })
+
+      function SendMessage(){
+          const CurrentTimestamp = Date.now()
+
+          if (CurrentTimestamp - LastMessageTimestamp > 500) {
+          const message = document.getElementById('chatbox')
+
+          if (!message.value) {
+              const SendButton = document.getElementById('sendbutton')
+              SendButton.innerText = 'Please type something!'
+              return setTimeout(() => {
+              SendButton.innerText = 'Send'
+              }, 500)
+          }
+
+          MessageData = {
+            'username': myUsername,
+            'timestamp': Date.now(),
+            'message': message.value
+          }
+          socket.emit('message', MessageData, room)
+          message.value = ''
+          LastMessageTimestamp = CurrentTimestamp
+          const SendButton = document.getElementById('sendbutton')
+              SendButton.innerText = 'Sent!'
+              return setTimeout(() => {
+              SendButton.innerText = 'Send'
+              }, 500)
+          }
+          else {
+          const SendButton = document.getElementById('sendbutton')
+          SendButton.innerText = 'Please slow down!'
+          setTimeout(() => {
+              SendButton.innerText = 'Send'
+          }, 500)
+          }
+      }
+    </script>
+  </div>
+{% endblock %}
