@@ -106,79 +106,84 @@
       </section>
     </div>
 
-    {% for id, location in locations.items() %}
-      <hr>
-      <section class="location">
-        <h2>{{ location.name }}</h2>
-        <a href="{{ url_for('client.location_utility', location=id) }}" class="manageutilities">
-          <p>Manage Utility Bills</p>
-        </a>
+    <hr>
 
-        <h3>Usage Graph</h3>
-        <canvas id="chart-{{ id }}"></canvas>
+    <h1>Locations</h1>
 
-        <script>
-          const rawtimerange{{ id }} = {{ location.timerange }}
-          const timerange{{ id }} = []
+    <div class="locations">
+      {% for id, location in locations.items() %}
+        <section class="location">
+          <h2>{{ location.name }}</h2>
+          <a href="{{ url_for('client.location_utility', location=id) }}" class="manageutilities">
+            <p>Manage Utility Bills</p>
+          </a>
 
-          rawtimerange{{ id }}.forEach((datetime) => {
-            timerange{{ id }}.push(new Date(datetime * 1000))
-          })
+          <h3>Usage Graph</h3>
+          <canvas id="chart-{{ id }}"></canvas>
 
-          const chart{{ id }} = new Chart(document.getElementById("chart-{{ id }}"), {
-            type: "line",
-            data: {
-              labels: timerange{{ id }},
-              datasets: [
-                {
-                  label: 'Carbon Footprint (CO2e)',
-                  data: {{ location.carbonfootprint }},
-                  borderColor: 'rgba(255, 0, 0, 0.8)',
-                  backgroundColor: 'rgba(255, 0, 0, 0.05)'
-                },
-                {
-                  label: 'Energy Usage (kWh)',
-                  data: {{ location.energyusage }},
-                  borderColor: 'rgba(0, 255, 0, 0.8)',
-                  backgroundColor: 'rgba(0, 255, 0, 0.05)'
-                },
-                {
-                  label: 'Water Usage (m3)',
-                  data: {{ location.waterusage }},
-                  borderColor: 'rgba(0, 0, 255, 0.8)',
-                  backgroundColor: 'rgba(0, 0, 255, 0.05)'
-                }
-              ]
-            },
-            options: {
-              plugins: {
-                legend: {
-                  position: 'bottom'
-                }
-              },
-              scales: {
-                x: {
-                  title: {
-                    display: true,
-                    text: 'Month'
+          <script>
+            const rawtimerange{{ id }} = {{ location.timerange }}
+            const timerange{{ id }} = []
+
+            rawtimerange{{ id }}.forEach((datetime) => {
+              timerange{{ id }}.push(new Date(datetime * 1000))
+            })
+
+            const chart{{ id }} = new Chart(document.getElementById("chart-{{ id }}"), {
+              type: "line",
+              data: {
+                labels: timerange{{ id }},
+                datasets: [
+                  {
+                    label: 'Carbon Footprint (CO2e)',
+                    data: {{ location.carbonfootprint }},
+                    borderColor: 'rgba(255, 0, 0, 0.8)',
+                    backgroundColor: 'rgba(255, 0, 0, 0.05)'
                   },
-                  type: 'time',
-                  time: {
-                    tooltipFormat: 'DD MMM YYYY'
+                  {
+                    label: 'Energy Usage (kWh)',
+                    data: {{ location.energyusage }},
+                    borderColor: 'rgba(0, 255, 0, 0.8)',
+                    backgroundColor: 'rgba(0, 255, 0, 0.05)'
+                  },
+                  {
+                    label: 'Water Usage (m3)',
+                    data: {{ location.waterusage }},
+                    borderColor: 'rgba(0, 0, 255, 0.8)',
+                    backgroundColor: 'rgba(0, 0, 255, 0.05)'
+                  }
+                ]
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    position: 'bottom'
                   }
                 },
-                y: {
-                  title: {
-                    display: true,
-                    text: 'Usage (CO2e, kWh, m3)'
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Month'
+                    },
+                    type: 'time',
+                    time: {
+                      tooltipFormat: 'DD MMM YYYY'
+                    }
                   },
-                  min: 0,
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Usage'
+                    },
+                    min: 0,
+                  }
                 }
               }
-            }
-          });
-        </script>
-      </section>
-    {% endfor %}
+            });
+          </script>
+        </section>
+      {% endfor %}
+      </div>
   </div>
 {% endblock %}
