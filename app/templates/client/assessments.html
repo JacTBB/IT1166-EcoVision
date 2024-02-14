@@ -3,7 +3,7 @@
 {% block title %}Assessments - EcoVision{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/forms.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/client/assessments.css')}}">
 {% endblock %}
 
 {% block content %}
@@ -19,39 +19,36 @@
         </div>
       {% endif %}
 
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Location</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Progress</th>
-          {% if current_user.type == "admin" or current_user.type == "manager" %}
-            <th colspan="1">Payments</th>
-          {% endif %}
-          {% if current_user.type != "client" %}
-            <th colspan="2">Actions</th>
-          {% endif %}
-          <th>View</th>
-        </tr>
+      <div class="assessments">
         {% for id, assessment in assessments.items() %}
-          <tr>
-            <td>{{ id }}</td>
-            <td>{{ assessment.location }}</td>
-            <td>{{ assessment.name }}</td>
-            <td>{{ assessment.type }}</td>
-            <td>{{ assessment.progress }}</td>
-            {% if current_user.type == "admin" or current_user.type == "manager" %}
-              <td><a href="{{ url_for('client.assessment_transaction_add', assessment=id) }}">Add Payment</a></td>
-            {% endif %}
-            {% if current_user.type != "client" %}
-              <td><a href="{{ url_for('client.assessment_edit', assessment=id) }}">Edit</a></td>
-              <td><a href="{{ url_for('client.assessment_delete', assessment=id) }}">Delete</a></td>
-            {% endif %}
-            <td><a href="{{ url_for('client.assessment', assessment=id) }}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></td>
-          <tr>
+          <button class="assessment" onclick="navigate({{id}})">
+            <p class="a-name">{{ assessment.name }}</p>
+            <p class="a-type">{{ assessment.type }}</p>
+            <p class="a-location">Address: {{ assessment.location }}</p>
+            <p class="a-progress">
+              Progress:
+              <div class="progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar bg-info" style="width: {{ assessment.progress }}%">{{ assessment.progress }}%</div>
+              </div>
+            </p>
+            <div class="a-buttons">
+              {% if current_user.type == "admin" or current_user.type == "manager" %}
+                <a class="a-button" href="{{ url_for('client.assessment_transaction_add', assessment=id) }}">Add Payment</a>
+              {% endif %}
+              {% if current_user.type != "client" %}
+                <a class="a-button" href="{{ url_for('client.assessment_edit', assessment=id) }}">Edit</a>
+                <a class="a-button" href="{{ url_for('client.assessment_delete', assessment=id) }}">Delete</a>
+              {% endif %}
+            </div>
+          </button>
         {% endfor %}
-      </table>
+
+        <script>
+          function navigate(id) {
+            window.location.href = `/client/assessment/${id}`
+          }
+        </script>
+      </div>
     </section>
   </div>
 {% endblock %}

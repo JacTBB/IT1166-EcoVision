@@ -5,37 +5,21 @@
 section h2,
 div h2 {
     margin-top: 10px;
+    margin-left: 10px;
     font-size: 25px;
     font-weight: bold;
 }
 
 
 
-.title {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.type {
-    margin-bottom: 10px;
-    padding-bottom: 2px;
-    width: max-content;
-    font-size: 15px;
-    border-bottom: solid 1px rgb(200,200,200);
-}
-
-.label {
-    font-weight: bold;
-}
-
-
-
 .addrow {
+    margin-left: 10px;
     margin-right: 0;
     padding: 8px 6px;
     width: 180px;
     background-color: lightgoldenrodyellow;
     margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 .addrow > a {
@@ -45,27 +29,61 @@ div h2 {
     text-decoration: none;
 }
 
-table {
-    border-collapse: collapse;
+
+
+.assessments {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-table th {
-    font-size: 20px;
-}
-
-table td,
-table th {
-    padding: 5px;
-    color: inherit;
-    border: solid 1px rgb(200, 200, 200);
-}
-
-table a {
-    color: #3399ff;
+.assessment {
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    min-width: 300px;
+    border-radius: 10px;
+    background-color: rgb(200, 210, 200);
     text-decoration: none;
+    color: black;
+    border: none;
+    text-align: left;
+}
+
+.a-name {
+    font-size: 20px;
     font-weight: bold;
 }
 
-table a:hover {
-    color: #007acc;
+.a-type {
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+
+.a-location {
+    font-size: 15px;
+}
+
+.a-progress {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.a-buttons {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+
+.a-button {
+    display: block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: lightgoldenrodyellow;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.a-button:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }

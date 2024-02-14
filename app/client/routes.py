@@ -522,7 +522,7 @@ def assessment_add():
             progress = request.form.get("progress")
             start_date = datetime.now()
 
-            assessment = Assessment(company=g.company.id, location=location, name=name, type=type, start_date=start_date, progress=progress)
+            assessment = Assessment(company=g.company.id, location=location, name=name, type=type, start_date=start_date, progress=progress, documents=[])
             db.session.add(assessment)
             db.session.commit()
 
@@ -623,11 +623,6 @@ def assessment_transaction_add(assessment):
         except Exception as e:
             print(f"Error occurred: {e}")
             db.session.rollback()
-    else:
-        flash("Payment Method Validation Error!")
-        for input in form:
-            if input.errors:
-                flash(f'\n{input.name} - {input.errors[0]}')
 
     return render_template("client/assessment_transaction_add.html", form=form)
 
