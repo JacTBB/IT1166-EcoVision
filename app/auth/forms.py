@@ -25,6 +25,12 @@ class RegisterForm(FlaskForm):
     
     submit = SubmitField("Register")
 
+class RecoveryForm(FlaskForm):
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email", 'autofocus': True})
+    submit = SubmitField("Send Recovery Email")
+
+
+
 class AddUserForm(FlaskForm):
     first_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "First Name"})
     last_name = StringField(validators=[InputRequired()], render_kw={"placeholder": "Last Name"})

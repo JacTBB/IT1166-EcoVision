@@ -1,15 +1,23 @@
 from flask import render_template, request, redirect, url_for, session, flash
 from app.auth import auth, check_user_type
 from app.database import db, query_data
+from app.email import email_register, email_recovery
 from flask_login import current_user, login_required, login_user, logout_user
 from app.models.User import Client, Author, Technician, Consultant, Manager, Admin
 from app.models.Company import Company
-from app.auth.forms import LoginForm, RegisterForm, AddUserForm, EditUserForm
+from app.auth.forms import LoginForm, RegisterForm, AddUserForm, EditUserForm, RecoveryForm
+import threading
+import uuid
 
 
 UserList = {'client': Client, 'author': Author,
             'technician': Technician, 'consultant': Consultant,
             'manager': Manager, 'admin': Admin}
+
+
+
+RecoveryList = {}
+
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -89,6 +97,9 @@ def register():
             client.set_company(company.id)
             db.session.add(client)
             db.session.commit()
+            
+            thread = threading.Thread(target=email_register, args=(email, username))
+            thread.start()
 
             return redirect(url_for('auth.login'))
         except Exception as e:
@@ -100,6 +111,81 @@ def register():
                     flash(f'\n{input.name} - {input.errors[0]}')
 
     return render_template('auth/register.html', form=form)
+
+
+@auth.route('/recovery', methods=['GET', 'POST'])
+def recovery():
+    if current_user.is_authenticated:
+        return redirect(url_for('auth.account'))
+
+    form = RecoveryForm()
+    error_message = None
+    recovery_message = None
+
+    if form.validate_on_submit():
+        try:
+            email = request.form.get("email")
+
+            user = (query_data(Client, filter_by={'email': email}, all=False) or
+                    query_data(Author, filter_by={'email': email}, all=False) or
+                    query_data(Technician, filter_by={'email': email}, all=False) or
+                    query_data(Consultant, filter_by={'email': email}, all=False) or
+                    query_data(Manager, filter_by={'email': email}, all=False) or
+                    query_data(Admin, filter_by={'email': email}, all=False))
+
+            if user:
+                RecoveryID = uuid.uuid4()
+                
+                RecoveryList[str(RecoveryID)] = user.email
+                
+                Recovery = url_for('auth.recoveryid', id=RecoveryID, _external=True)
+                
+                thread = threading.Thread(target=email_recovery, args=(email, user.username, Recovery))
+                thread.start()
+                
+                recovery_message = 'Recovery Email Sent!'
+            else:
+                error_message = "Invalid email"
+
+            db.session.commit()
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            db.session.rollback()
+
+    return render_template("auth/recovery.html", form=form, error_message=error_message, recovery_message=recovery_message)
+
+
+
+@auth.route('/recoveryid/<id>', methods=['GET', 'POST'])
+def recoveryid(id):
+    if id in RecoveryList:
+        email = RecoveryList[id]
+        
+        user = (query_data(Client, filter_by={'email': email}, all=False) or
+                    query_data(Author, filter_by={'email': email}, all=False) or
+                    query_data(Technician, filter_by={'email': email}, all=False) or
+                    query_data(Consultant, filter_by={'email': email}, all=False) or
+                    query_data(Manager, filter_by={'email': email}, all=False) or
+                    query_data(Admin, filter_by={'email': email}, all=False))
+        
+        password = str(uuid.uuid4())
+        
+        user.set_password(password)
+        
+        flash(f"Your new password is: {password}")
+        flash(f"Please change your password once logged in.")
+        
+        db.session.commit()
+        
+        RecoveryList[id] = None
+        
+        return redirect(url_for('auth.login'))
+    else:
+        return redirect(url_for('auth.recovery'))
+
+
+
+
 
 
 @auth.route("/users")

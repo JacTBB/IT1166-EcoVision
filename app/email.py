@@ -3,6 +3,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import smtplib
 from email.message import EmailMessage
+from flask import url_for
 
 load_dotenv()
 
@@ -204,6 +205,226 @@ def email_upgrade_account(receipient, username, price, description):
         <p>
             We wanted to take a moment to express our gratitude for upgrading your account to our custom plan.<br>
             Your support means a lot to us, and we're excited to provide you with even better services tailored to your needs.
+        </p>
+
+        <br>
+    
+        <p>
+            If you have any questions, contact us on the <a href="https://ecovision.jactbb.com">EcoVision</a> platform.
+        </p>
+    
+        <p>
+            Your sincerely,<br>
+            Financial Department<br>
+            EcoVision
+        </p>
+    </div>
+</body>
+</html>
+"""
+    body = body.format(username=username)
+    
+    
+    
+    message = EmailMessage()
+    message['From'] = sender_email
+    message['To'] = receipient
+    message['Subject'] = subject
+    message.add_alternative(body, subtype='html')
+
+
+    
+    with smtplib.SMTP("wednesday.mxrouting.net", 587) as server:
+        server.starttls()
+        
+        server.login(sender_email, sender_password)
+
+        server.send_message(message)
+        
+        print(f"Email to {receipient} sent successfully!")
+        
+
+
+def email_recovery(receipient, username, recovery):
+    subject = "Ecovision - Account Recovery"
+    body = """
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{
+            background-color: rgb(220, 230, 220);
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }}
+
+        #header {{
+            margin-top: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            width: max-content;
+        }}
+        #header h1 {{
+            display: flex;
+            margin: 0;
+        }}
+        #header img {{
+            width: 50px;
+            height: 50px;
+        }}
+        #header span {{
+            padding: 4px;
+            font-size: 30px;
+            font-weight: bold;
+        }}
+
+        #content {{
+            margin: 50px;
+            margin-top: 20px;
+            padding: 50px;
+            background-color: rgb(232, 238, 232);
+            border-radius: 10px;
+        }}
+        #content h2 {{
+            margin-top: 0;
+        }}
+        #content table td {{
+            padding-right: 30px;
+        }}
+        #content a {{
+            color: rgb(80,80,180);
+            text-decoration: none;
+        }}
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>
+            <img src="https://i.ibb.co/NjCMcCr/icon-nobackground.png">
+            <span>EcoVision</span>
+        </h1>
+    </div>
+
+    <div id="content">
+        <h2>
+            Dear {username},
+        </h2>
+    
+        <h3>
+            Account Recovery
+        </h3>
+        <p>
+            Recovery your account <a href="{recovery}">here</a><br>
+            If you did not request for an account recovery, please ignore this email.
+        </p>
+
+        <br>
+    
+        <p>
+            If you have any questions, contact us on the <a href="https://ecovision.jactbb.com">EcoVision</a> platform.
+        </p>
+    
+        <p>
+            Your sincerely,<br>
+            Financial Department<br>
+            EcoVision
+        </p>
+    </div>
+</body>
+</html>
+"""
+    body = body.format(username=username, recovery=recovery)
+    
+    
+    
+    message = EmailMessage()
+    message['From'] = sender_email
+    message['To'] = receipient
+    message['Subject'] = subject
+    message.add_alternative(body, subtype='html')
+
+
+    
+    with smtplib.SMTP("wednesday.mxrouting.net", 587) as server:
+        server.starttls()
+        
+        server.login(sender_email, sender_password)
+
+        server.send_message(message)
+        
+        print(f"Email to {receipient} sent successfully!")
+
+
+
+def email_register(receipient, username):
+    subject = "Ecovision - Account Register"
+    body = """
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{
+            background-color: rgb(220, 230, 220);
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }}
+
+        #header {{
+            margin-top: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            width: max-content;
+        }}
+        #header h1 {{
+            display: flex;
+            margin: 0;
+        }}
+        #header img {{
+            width: 50px;
+            height: 50px;
+        }}
+        #header span {{
+            padding: 4px;
+            font-size: 30px;
+            font-weight: bold;
+        }}
+
+        #content {{
+            margin: 50px;
+            margin-top: 20px;
+            padding: 50px;
+            background-color: rgb(232, 238, 232);
+            border-radius: 10px;
+        }}
+        #content h2 {{
+            margin-top: 0;
+        }}
+        #content table td {{
+            padding-right: 30px;
+        }}
+        #content a {{
+            color: rgb(80,80,180);
+            text-decoration: none;
+        }}
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>
+            <img src="https://i.ibb.co/NjCMcCr/icon-nobackground.png">
+            <span>EcoVision</span>
+        </h1>
+    </div>
+
+    <div id="content">
+        <h2>
+            Dear {username},
+        </h2>
+    
+        <h3>
+            Registration Confirmation
+        </h3>
+        <p>
+            Thank you for registering with us. Your account has been successfully created.<br>
+            You can now login to your account and start exploring our services.
         </p>
 
         <br>

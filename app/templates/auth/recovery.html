@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% block title %}Login - EcoVision{% endblock %}
+{% block title %}Recovery - EcoVision{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/login.css') }}" />
@@ -15,27 +15,36 @@
     <form action="" method="POST" class="needs-validation" novalidate>
 
       <div class="form-field">
-        <label for="username">Username</label>
-        {{ form.username(id_="username", class_="form-control") }}
+        <label for="email">Email</label>
+        {{ form.email(id_="email", class_="form-control") }}
         <div class="invalid-feedback">
-          Please enter a valid username.
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label for="password">Password</label>
-        {{ form.password(id_="username", class_="form-control") }}
-        <div class="invalid-feedback">
-          Please enter a valid password.
+          Please enter a valid email.
         </div>
       </div>
 
       <div>{{form.submit()}}</div>
       {{ form.csrf_token }}
 
-      <p class="subtext">Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
-      <p class="subtext">Forgot password? <a href="{{ url_for('auth.recovery') }}">Recovery</a></p>
+      <p class="subtext">Remembered your password? <a href="{{ url_for('auth.login') }}">Login</a></p>
     </form>
+  
+    {% if recovery_message %}
+      <!-- Modal -->
+      <div class="modal d-block" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Recovery Email Sent!</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="(() => {document.getElementById('confirmModal').remove()})()">Close</button>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    {% endif %}
 
     {% if error_message %}
       <p class="error-message"><i class="fa-regular fa-circle-info"></i>{{ error_message }}</p>
