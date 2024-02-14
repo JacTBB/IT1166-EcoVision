@@ -11,8 +11,8 @@
   <section>
     <div class="announcements">
       <h2>Announcements</h2>
-      <p>{{ announcement.description }}</p>
-      <p>{{ announcement.date }}</p>
+      <p id="a-description">{{ announcement.description }}</p>
+      <p id="a-date">{{ announcement.date }}</p>
       {% if current_user.type == 'admin' %}
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#announcementChangeModal">
@@ -50,8 +50,7 @@
       <h2>Tasks</h2>
       <table>
         <tr>
-          <th>User Type</th>
-          <th>User ID</th>
+          <th>Role</th>
           <th>Username</th>
           <th>Description</th>
           {% if current_user.type == 'admin' %}
@@ -59,10 +58,9 @@
           {% endif %}
         </tr>
         {% for task in tasks %}
-          {% if current_user.id == task.user_id or current_user.type == 'admin' %}
+          {% if (current_user.id == task.user_id and current_user.type == task.user_type) or current_user.type == 'admin' %}
             <tr>
               <td>{{ task.user_type }}</td>
-              <td>{{ task.user_id }}</td>
               <td>{{ task.user_username }}</td>
               <td>{{ task.description }}</td>
               {% if current_user.type == 'admin' %}
@@ -78,5 +76,41 @@
       {% endif %}
     </div>
   </section>
+
+
+
+  <script>
+    const socket = io()
+    const room = 'announcements'
+
+    socket.on('connect', () => {
+      socket.emit('join', room)
+    })
+
+    socket.on('announcements', (data) => {
+      console.log(`Received announcement: ${data}`)
+      const a_description = document.getElementById('a-description')
+      const a_date = document.getElementById('a-date')
+
+      const Timestamp = new Date(data.date)
+      const TimestampFormatted = `${Timestamp.getDate()}/${Timestamp.getMonth()}/${Timestamp.getFullYear()} ${Timestamp.getHours()}:${Timestamp.getMinutes()}:${Timestamp.getSeconds()}`
+
+      a_description.innerHTML = data.description
+      a_date.innerHTML = TimestampFormatted
+
+      var audio = new Audio("{{ url_for('static', filename='images/notification.mp3') }}")
+      audio.play()
+
+      // Request permission to display notifications
+      Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+          var notification = new Notification('Announcement', {
+              body: data.description,
+              icon: "{{ url_for('static', filename='images/icon-nobackground.png') }}"
+          });
+        }
+      });
+    })
+  </script>
 </div>
 {% endblock %}

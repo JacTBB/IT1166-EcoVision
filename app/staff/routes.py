@@ -19,6 +19,7 @@ from string import ascii_lowercase
 import random
 import os
 import threading
+from app import socketio
 
 
 
@@ -58,6 +59,8 @@ def dashboard():
                 announcement = Announcement(description=description, date=date)
                 db.session.add(announcement)
                 db.session.commit()
+            
+            socketio.emit('announcements', {'description':description, 'date':str(date)})
 
             return redirect(url_for('staff.dashboard'))
         except Exception as e:
