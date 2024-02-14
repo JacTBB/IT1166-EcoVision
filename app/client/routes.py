@@ -616,7 +616,7 @@ def assessment_transaction_add(assessment):
             
             db.session.commit()
             
-            thread = threading.Thread(target=email_transaction, args=(g.company.email, current_user.username, price, f"Assessment Transaction - {name}"))
+            thread = threading.Thread(target=email_transaction, args=(g.company.email, g.company.name, price, f"Assessment Transaction - {name}"))
             thread.start()
 
             return redirect(url_for('client.assessments'))
