@@ -30,18 +30,18 @@ def login():
 
     if form.validate_on_submit():
         try:
-            username = request.form.get("username")
+            email = request.form.get("email")
             password = request.form.get("password")
 
-            user = (query_data(Client, filter_by={'username': username}, all=False) or
-                    query_data(Author, filter_by={'username': username}, all=False) or
-                    query_data(Technician, filter_by={'username': username}, all=False) or
-                    query_data(Consultant, filter_by={'username': username}, all=False) or
-                    query_data(Manager, filter_by={'username': username}, all=False) or
-                    query_data(Admin, filter_by={'username': username}, all=False))
+            user = (query_data(Client, filter_by={'email': email}, all=False) or
+                    query_data(Author, filter_by={'email': email}, all=False) or
+                    query_data(Technician, filter_by={'email': email}, all=False) or
+                    query_data(Consultant, filter_by={'email': email}, all=False) or
+                    query_data(Manager, filter_by={'email': email}, all=False) or
+                    query_data(Admin, filter_by={'email': email}, all=False))
 
             if user:
-                if user.username == username and user.check_password(password):
+                if user.email == email and user.check_password(password):
                     login_user(user)
                     if user.type == 'client':
                         return redirect(url_for('client.dashboard'))
@@ -50,7 +50,7 @@ def login():
                 else:
                     error_message = "Invalid password"
             else:
-                error_message = "Invalid username"
+                error_message = "Invalid email"
 
             db.session.commit()
         except Exception as e:

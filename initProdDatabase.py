@@ -35,7 +35,7 @@ with app.app_context():
         UserClass = UserList[UserType]
 
         if UserType != 'client':
-            email = f"{UserType}_ecovision@jactbb.com"
+            email = f"{UserType}@jactbb.com"
             user = UserClass(username=Usernames[UserType], email=email)
             user.set_password('123')
 

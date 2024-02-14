@@ -5,7 +5,7 @@ from wtforms.validators import InputRequired
 
 
 class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username", 'autofocus': True})
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email", 'autofocus': True})
     password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
 
