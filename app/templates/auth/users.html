@@ -40,7 +40,9 @@
           <td>{{ user.companyID }}</td>
         {% endif %}
         <td><a href="{{ url_for('auth.user_edit', type=type, user=id) }}">Edit</a></td>
-        <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
+        {% if type != "admin" %}
+          <td><a href="{{ url_for('auth.user_delete', type=type, user=id) }}">Delete</a></td>
+        {% endif %}
       <tr>
         {% endfor %}
 </div>
