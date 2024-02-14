@@ -240,17 +240,15 @@
 
               <table>
                 <tr>
-                  <th>ID</th>
-                  <th>Name</th>
+                  <th>Description</th>
                   <th>Date</th>
                   <th>Price</th>
                 </tr>
                 {% for id, transaction in transactions.items() %}
                   <tr>
-                    <td>{{ id }}</td>
                     <td>{{ transaction.name }}</td>
                     <td>{{ transaction.date }}</td>
-                    <td>{{ transaction.price }}</td>
+                    <td>${{ transaction.price }}</td>
                   <tr>
                 {% endfor %}
               </table>

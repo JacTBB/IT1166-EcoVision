@@ -160,8 +160,20 @@ hr {
 #billing table td,
 #billing table th {
     padding: 5px;
+    padding-bottom: 3px;
+    padding-right: 40px;
     color: inherit;
-    border: solid 1px rgb(200, 200, 200);
+    border-bottom: solid 1px rgb(180,180,180);
+}
+
+#billing table td:first-child,
+#billing table th:first-child {
+    padding-right: 100px;
+}
+
+#billing table td:last-child,
+#billing table th:last-child {
+    padding-right: 10px;
 }
 
 #billing table a {
