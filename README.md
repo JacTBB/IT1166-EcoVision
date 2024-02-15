@@ -39,9 +39,12 @@ ___
 | main | Chat | Websockets | Ee Hern, Jackie |
 | client | Dashboard | Charts | Jackie |
 | client | Upgrade Account | Email | Jackie |
+| client | Sign Up | Email | Jackie |
+| client | Recover Account | Email | Jackie |
 | client | Assessment Payment | Email | Jackie |
 | client | Documents | WYSIWYG Editor | Jackie |
 | client | Documents | PDF Export | Jackie |
+| staff | Announcements | Websocket & Notification | Jackie |
 | trading | Project | WYSIWYG Editor | Lance, Jackie |
 | trading | Project | Filter | Lance |
 | trading | Purchase | Email | Lance, Jackie |
