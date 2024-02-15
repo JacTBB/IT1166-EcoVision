@@ -75,8 +75,8 @@ def dashboard():
         for utility in utilitiesData:
             utilities['timerange'].append(int(datetime(utility.date.year, utility.date.month, utility.date.day).timestamp()))
             utilities['carbonfootprint'].append(float(utility.carbonfootprint))
-            utilities['energyusage'].append(float(utility.energyusage))
-            utilities['waterusage'].append(float(utility.waterusage))
+            utilities['energyusage'].append(float(utility.energyusage)/1000)
+            utilities['waterusage'].append(float(utility.waterusage)/1000)
             
             overview['totalcarbonfootprint'] += float(utility.carbonfootprint)
         

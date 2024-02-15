@@ -125,19 +125,23 @@ There are various policy mechanisms at our disposal today that could mitigate th
             db.session.add(location)
 
             for k in range(1, 13):
-                energy = randint(200, 500) * 0.5 / 1000
-                water = waterusage = randint(200, 500) * 0.2 / 1000
+                energy_raw = randint(200, 500)
+                water_raw = randint(200, 500)
+                energy = energy_raw * 0.5 / 1000
+                water = water_raw * 0.2 / 1000
                 carbon = round(energy + water, 5)
                 utility = Utility(company=i, location=countLocation, name=f"Utility 2022 {k}", date=datetime(2022, k, 1),
-                                  carbonfootprint=carbon, energyusage=energy, waterusage=water)
+                                  carbonfootprint=carbon, energyusage=energy_raw, waterusage=water_raw)
                 db.session.add(utility)
 
             for k in range(1, 13):
-                energy = randint(200, 500) * 0.5 / 1000
-                water = waterusage = randint(200, 500) * 0.2 / 1000
+                energy_raw = randint(200, 500)
+                water_raw = randint(200, 500)
+                energy = energy_raw * 0.5 / 1000
+                water = water_raw * 0.2 / 1000
                 carbon = round(energy + water, 5)
                 utility = Utility(company=i, location=countLocation, name=f"Utility 2023 {k}", date=datetime(2023, k, 1),
-                                  carbonfootprint=carbon, energyusage=energy, waterusage=water)
+                                  carbonfootprint=carbon, energyusage=energy_raw, waterusage=water_raw)
                 db.session.add(utility)
 
         countDocument = 0
