@@ -23,7 +23,7 @@
     background-color: rgb(240, 245, 240);
     border: none;
     border-radius: 10px;
-    color: rgb(80,80,80);
+    color: rgb(80, 80, 80);
     font-weight: bold;
     text-align: center;
 }
@@ -34,7 +34,7 @@
 }
 
 #left-pane .logout {
-    background-color: rgb(210,240,210);
+    background-color: rgb(210, 240, 210);
 }
 
 
@@ -138,7 +138,7 @@ hr {
     background-color: rgb(240, 245, 240);
     border: none;
     border-radius: 10px;
-    color: rgb(80,80,80);
+    color: rgb(80, 80, 80);
     font-weight: bold;
     text-align: center;
     text-decoration: none;
@@ -163,7 +163,7 @@ hr {
     padding-bottom: 3px;
     padding-right: 40px;
     color: inherit;
-    border-bottom: solid 1px rgb(180,180,180);
+    border-bottom: solid 1px rgb(180, 180, 180);
 }
 
 #billing table td:first-child,
@@ -199,4 +199,15 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
+}
+
+.pw-validations {
+    display: none;
+}
+
+form input[type="password"]:focus+.pw-validations {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
 }
