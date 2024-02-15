@@ -10,7 +10,7 @@
 }
 
 .login-page img {
-    position: absolute;
+    position: fixed;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -35,28 +35,29 @@ footer {
 }
 
 .login-container {
-    margin-top: 55px;
+    margin-top: 100px;
     max-width: 80%;
     padding: 30px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(240,240,240, 0.9);
+    background-color: rgba(240, 240, 240, 0.9);
     border-radius: 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
         rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     font-family: "Nunito";
 }
 
-@media (max-width: 1500px) {
+/* @media (max-width: 1500px) {
     .login-container {
         margin-top: 200px;
     }
-}
-@media (max-width: 750px) {
+} */
+
+@media (max-width: 708px) {
     .login-container {
-        margin-top: 300px;
+        margin-top: 500px;
     }
 }
 
@@ -73,10 +74,10 @@ footer {
     justify-content: center;
 }
 
-.inputs {
+.details-fields {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: center;
 }
@@ -87,22 +88,31 @@ footer {
     flex-direction: row;
     justify-content: center;
     margin: 10px;
-    max-width: 45%;
+    /* flex: 0 1 0; */
+    max-width: 700px;
 }
 
-.group h3 {
+.group h3, .passwordbox h3 {
     flex: 100%;
+    width: auto;
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 5px;
     color: black;
     text-align: center;
-    text-decoration: underline;
 }
 
 /* .group .form-field:last-child {
     width: calc(100% - 30px);
 } */
+
+hr {
+    width: 50%;
+    margin: 5px auto;
+    border: 0;
+    border-top: 1px solid black;
+
+}
 
 .form-field {
     margin: 0 10px;
@@ -137,26 +147,44 @@ footer {
     padding: 0;
     cursor: pointer;
     transition: 0.3s;
-    background-color: rgb(130,190,130);
+    background-color: rgb(130, 190, 130);
     margin-top: 10px;
     border: none;
     color: white;
 }
 
 .login-container form input[type="submit"]:hover {
-    background-color: rgb(100,160,100);
+    background-color: rgb(100, 160, 100);
 }
 
 .passwordbox {
-    max-width: 100%;
-    align-items: start;
-    padding: 0 28px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.passwordbox> div {
-    flex: 40%;
-    margin: 0 27px;
+.passwordbox>div {
+    width: 100%;
 }
+
+
+.pw-validations {
+    display: none;
+}
+
+.pw-validations>div {
+    width: 100% !important;
+}
+
+
+.passwordbox input[type="password"]:focus+.pw-validations {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
 
 .wrong .fa-check {
     display: none;
