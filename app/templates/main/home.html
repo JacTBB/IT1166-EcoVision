@@ -12,6 +12,12 @@
 {% block content %}
 <div class="container-fluid home-page">
   <div class="home">
+
+    <a href="#aboutus" class="mini-arrow">
+      <i class="fas fa-arrow-down"></i>
+      Scroll down
+    </a>
+
     <div class="home-slider">
       <img src="{{ url_for('static', filename='images/carousel_renewables.webp') }}" />
       <img src="{{ url_for('static', filename='images/decarbonisation.webp') }}" />
@@ -30,7 +36,7 @@
     </div>
   </div>
 
-  <div class="home-aboutus sections">
+  <div id="aboutus" class="home-aboutus sections">
     <div class="aboutus">
       <img src="{{url_for('static', filename='images/pexels-photo-4603779.jpeg')}}" alt="">
       <p>

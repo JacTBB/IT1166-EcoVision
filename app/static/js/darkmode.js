@@ -9,12 +9,12 @@ $(document).ready(function () {
     var getBorderColor = $("form input[type='text']").css("border-color");
 
     if (getBorderColor === "rgb(255, 255, 255)") {
-      $("form input[type='text'], form input[type='number'], form input[type='email']").css(
+      $("form input[type='text'], form input[type='number'], form textarea, form input[type='email']").css(
         "border-color",
         "black"
       );
     } else {
-      $("form input[type='text'], form input[type='number'], form input[type='email']").css(
+      $("form input[type='text'], form input[type='number'], form input[type='email'], form textarea").css(
         "border-color",
         "white"
       );

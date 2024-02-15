@@ -36,6 +36,7 @@
   pointer-events: none;
 }
 
+
 .home-page .home .home-slider img {
   flex: 0 0 100%;
   height: inherit;
@@ -63,8 +64,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 92vh;
+  height: 100vh;
   width: 100%;
+}
+
+.home .mini-arrow {
+  position: absolute;
+  top: 85%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: white;
+  font-size: 1.1rem;
+  z-index: 1;
+  display: inline-flex;
+  flex-flow: column;
+  align-items: center;
+
+  animation: bounce 1s infinite linear alternate;
+  transition: 0.2s ease;
+
+  text-decoration: none;
+}
+
+.home .mini-arrow:hover {
+  color: #adadad;
+  transition: 0.2s ease;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .home .slider-buttons {
@@ -134,12 +172,12 @@
 
 .home-aboutus .aboutus p {
   position: absolute;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 500;
   line-height: 1.222;
   color: inherit;
   text-align: center;
-  width: 500px;
+  width: 550px;
   padding: 20px;
 }
 
