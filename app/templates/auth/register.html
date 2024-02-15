@@ -13,7 +13,7 @@
   <div class="login-container">
     <h2>Register</h2>
     <form action="" method="POST" class="needs-validation" novalidate>
-      <div class="details-fields">
+      <div class="inputs">
         <div class="group">
           <h3>Personal Details</h3>
 
@@ -58,7 +58,7 @@
           </div>
 
         </div>
-        <hr width="100%">
+
         <div class="group">
           <h3>Company Details</h3>
 
@@ -101,56 +101,56 @@
               Please enter a valid company_address.
             </div>
           </div>
-        </div>
-      </div>
-      <hr>
-      <div class="passwordbox">
-        <h3>Password</h3>
 
-        <div>
-          <label for="input-u3-1" class="form-label">Password</label>
-          {{ form.password(id_="input-u3-1", class_="form-control") }}
-          <div class="row pw-validations">
-            <div class="col-sm-6 requirements leng">
-              <i class="fa fa-check" style="color:#18ff84;"></i>
-              <i class="fa fa-times" style="color:#FF0004;"></i>
-              Minimum 8 Characters Long
-            </div>
-            <div class="col-sm-6 requirements big-letter">
-              <i class="fa fa-check" style="color:#18ff84;"></i>
-              <i class="fa fa-times" style="color:#FF0004;"></i>
-              One Uppercase Letter
-            </div>
-            <div class="col-sm-6 requirements special-char">
-              <i class="fa fa-check" style="color:#18ff84;"></i>
-              <i class="fa fa-times" style="color:#FF0004;"></i>
-              One Special Character
-            </div>
-            <div class="col-sm-6 requirements num">
-              <i class="fa fa-check" style="color:#18ff84;"></i>
-              <i class="fa fa-times" style="color:#FF0004;"></i>
-              One Number
+        </div>
+
+        <div class="group passwordbox">
+          <h3>Password</h3>
+
+          <div>
+            <label for="input-u3-1" class="form-label">New Password</label>
+            {{ form.password(id_="input-u3-1", class_="form-control") }}
+            <div class="row">
+              <div class="col-sm-6 requirements leng">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                Minimum 8 Characters Long
+              </div>
+              <div class="col-sm-6 requirements big-letter">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                One Uppercase Letter
+              </div>
+              <div class="col-sm-6 requirements special-char">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                One Special Character
+              </div>
+              <div class="col-sm-6 requirements num">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                One Number
+              </div>
             </div>
           </div>
-        </div>
 
-        <div>
-          <label for="input-u3-2" class="form-label">Repeat Password</label>
-          <input type="password" class="form-control" id="input-u3-2" aria-describedby="inputGroupPrepend"
-            placeholder="Repeat Password" required autocomplete="off">
-          <div class="row pw-validations">
-            <div class="col-sm-12 requirements2 match">
-              <i class="fa fa-check" style="color:#18ff84;"></i>
-              <i class="fa fa-times" style="color:#FF0004;"></i>
-              Passwords Match
+          <div>
+            <label for="input-u3-2" class="form-label">Repeat Password</label>
+            <input type="password" class="form-control" id="input-u3-2" aria-describedby="inputGroupPrepend" placeholder="Repeat Password" required autocomplete="off">
+            <div class="row">
+              <div class="col-sm-12 requirements2 match">
+                <i class="fa fa-check" style="color:#18ff84;"></i>
+                <i class="fa fa-times" style="color:#FF0004;"></i>
+                Passwords Match
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
 
       {{ form.csrf_token }}
-      <div>{{form.submit(class_="btn-register")}}</div>
+      <div>{{form.submit()}}</div>
       <p class="subtext">Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
     </form>
   </div>
