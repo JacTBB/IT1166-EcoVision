@@ -89,9 +89,9 @@ footer {
     text-decoration: underline;
 }
 
-.group .form-field:last-child {
+/* .group .form-field:last-child {
     width: calc(100% - 30px);
-}
+} */
 
 .form-field {
     margin: 0 10px;
