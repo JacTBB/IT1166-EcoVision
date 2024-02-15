@@ -318,7 +318,7 @@ def chats_staff():
         time = datetime.fromtimestamp(message['timestamp']/1000)
         msg = {
             'username': message['username'],
-            'timestamp': time.strftime("%b %d, %Y - %H:%M"),
+            'timestamp': time.strftime("%b %d, %Y, %r"),
             'message': message['message']
         }
         messages.append(msg)

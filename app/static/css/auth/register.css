@@ -49,6 +49,17 @@ footer {
     font-family: "Nunito";
 }
 
+@media (max-width: 1500px) {
+    .login-container {
+        margin-top: 200px;
+    }
+}
+@media (max-width: 750px) {
+    .login-container {
+        margin-top: 300px;
+    }
+}
+
 .login-container>h2 {
     margin-bottom: 20px;
     font-weight: bold;

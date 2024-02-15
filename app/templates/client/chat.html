@@ -15,8 +15,7 @@
       {% for message in messages %}
       <div class="chat-message">
         <p class="message-username">
-          {{ message['username'] }} <span class="message-timestamp">{{ message['timestamp']
-            }}</span>
+          {{ message['username'] }} <span class="message-timestamp">{{ message['timestamp'] }}</span>
         </p>
         <p class="message-message">
           {{ message['message'] }}
@@ -56,7 +55,8 @@
       MessageP.classList.add('message-message')
 
       const Timestamp = new Date(MessageData.timestamp)
-      const TimestampFormatted = `${Timestamp.getDate()}/${Timestamp.getMonth()}/${Timestamp.getFullYear()} ${Timestamp.getHours()}:${Timestamp.getMinutes()}:${Timestamp.getSeconds()}`
+      const options = { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }
+      const TimestampFormatted = `${Timestamp.toLocaleString('en-US', options)}`
 
       MessageInfo.innerHTML = `${MessageData.username} <span class="message-timestamp">${TimestampFormatted}<span>`
       MessageP.innerText = MessageData.message
